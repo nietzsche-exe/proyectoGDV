@@ -1,0 +1,35 @@
+<persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd" version="2.2">
+<persistence-unit name="GestionViajes">
+	<class>modelo.Usuario</class>
+<properties>
+<!--  En Hibernate 6 es mejor no habilitar esto pues con
+			org.hibernate.SQL 
+				y org.hibernate.orm.jdbc.bind ya recuperamos todos los SQL <property
+			name="hibernate.show_sql" 
+				value="true" />  -->
+<property name="hibernate.connection.autocommit" value="false"/>
+<property name="hibernate.format_sql" value="true"/>
+<!--  c3p0 es una librería Java que proporciona una forma eficiente
+			de 
+				gestionar las conexiones de BD. Concretamente, proporciona un pool de
+			conexiones 
+				y gestiona muy bien la liberación de recursos (statements, resultsets, etc) 
+				Necesitamos añadir la correspondiente dependencia en el fichero pom.xml Algunas 
+				de las propiedades disponibles son: 
+				<property name="hibernate.c3p0.min_size">5</property> 
+				<property name="hibernate.c3p0.max_size">20</property> 
+				<property name="hibernate.c3p0.acquire_increment">5</property> 
+				<property name="hibernate.c3p0.timeout">1800</property> 
+			 -->
+<property name="hibernate.c3p0.min_size" value="10"/>
+<property name="hibernate.generate_statistics" value="true"/>
+<!--  En Hibernate 6 no es necesario especificar el dialecto de SGBDs
+				<property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" /> 
+			 -->
+<property name="jakarta.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
+<property name="jakarta.persistence.jdbc.user" value="root"/>
+<property name="jakarta.persistence.jdbc.password" value="JThbjbZDPeMPVcUhOyyOOKHIummtKGnu"/>
+<property name="jakarta.persistence.jdbc.url" value="jdbc:mysql://root:JThbjbZDPeMPVcUhOyyOOKHIummtKGnu@roundhouse.proxy.rlwy.net:14666/gestion_viajes"/><!-- railway->gestion_viajes -->
+</properties>
+</persistence-unit>
+</persistence>
