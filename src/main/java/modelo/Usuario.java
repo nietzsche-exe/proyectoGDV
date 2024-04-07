@@ -32,6 +32,15 @@ public class Usuario implements Serializable{
 	
 	@Column(name="email")
 	private String email;
+	
+	
+	
+	public Usuario(String nombre, String contrasenia, String email) {
+		super();
+		this.nombre = nombre;
+		this.contrasenia = contrasenia;
+		this.email = email;
+	}
 
 	public Integer getId_usuario() {
 		return id_usuario;

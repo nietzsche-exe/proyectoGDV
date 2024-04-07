@@ -19,18 +19,38 @@
 <head>
 <meta charset="UTF-8">
 <title>Login</title>
+<script>
+        function validarCampos() {
+            var correoUsuario = document.getElementById("correoUsuario").value;
+            var contraseniaUsuario = document.getElementById("contrasenia").value;
+            var btnIniciarSesion = document.getElementById("acceder");
+
+            if (correoUsuario === "" || contraseniaUsuario === "") {
+                btnIniciarSesion.disabled = true;
+            } else {
+                btnIniciarSesion.disabled = false;
+            }
+        }
+    </script>
 </head>
 <body>
 <h2>Iniciar Sesión</h2>
-    <form name="login" action="LoginController" method="post">
-    	<input type="hidden" name="opcion" value="registrarse">
+	<c:if test="${not empty error}">
+	    <p style="color: red;">${error}</p>
+	</c:if>
+	
+    <form name="login" action="LoginController" method="post" onsubmit="return validarCampos()">
+
+    	<input type="hidden" name="opcion" value="iniciarSesion">
     	
-        <label for="username">Nombre de Usuario:</label><br>
-        <input type="text" id="username" name="username"><br>
-        <label for="password">Contraseña:</label><br>
-        <input type="password" id="password" name="password"><br><br>
-        <input type="submit" value="Iniciar Sesión">
+        <label for="correoUsuario">Correo electronico:</label><br>
+        <input type="text" id="correoUsuario" name="correoUsuario" oninput="validarCampos()"><br>
+        <label for="contrasenia">Contraseña:</label><br>
+        <input type="password" id="contrasenia" name="contrasenia" oninput="validarCampos()"><br><br>
+        
+        <input id="acceder" type="submit" value="Iniciar Sesión" disabled>
         <a href="javascript:void(0)" onclick="javascript:document.login.opcion.value='registrarse';document.login.submit();">Registrarse</a>
+    	
     </form>
     <form>
     <table>
@@ -74,9 +94,7 @@
 					em.close();
 					//LOGGER.info("EntityManager cerrado");
 				}
-			%>
-			
- 		
+			%> 		
     		
     </table>
     </form>
