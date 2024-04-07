@@ -92,9 +92,16 @@ public class LoginController extends HttpServlet {
 		 * request.getRequestDispatcher("borrarActor.jsp"); rd.forward(request,
 		 * response); break;
 		 */
-			default:
-				// es el cliente quien deber� invocar a este recurso
-				response.sendRedirect("login.jsp");
+        
+        
+		case "Loger":
+			response.sendRedirect("login.jsp");
+			
+			break;
+			
+		default:
+			// es el cliente quien deber� invocar a este recurso
+			response.sendRedirect("index.jsp");
 	
 		}
 		
