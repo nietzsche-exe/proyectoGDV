@@ -1,3 +1,6 @@
+<%@page import="javax.xml.parsers.DocumentBuilderFactory"%>
+<%@page import="jakarta.xml.bind.Element"%>
+<%@page import="org.w3c.dom.Document"%>
 <%@page import="modelo.Usuario"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -48,7 +51,7 @@
         <label for="contrasenia">Contraseña:</label><br>
         <input type="password" id="contrasenia" name="contrasenia" oninput="validarCampos()"><br><br>
         
-        <input id="acceder" type="submit" value="Iniciar Sesión" disabled>
+        <input id="acceder" type="submit" value="Iniciar Sesión" disabled >
         <a href="javascript:void(0)" onclick="javascript:document.login.opcion.value='registrarse';document.login.submit();">Registrarse</a>
     	
     </form>
