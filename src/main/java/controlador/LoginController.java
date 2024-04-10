@@ -59,6 +59,9 @@ public class LoginController extends HttpServlet {
 			break;
 		case "perfil": // es el cliente quien deber� invocar a este recurso
 			response.sendRedirect("perfilUsuario.jsp"); 
+			break;
+		case "NuevoViaje": // es el cliente quien invoca este recurso al presionar el oton de Crear Viaje
+			response.sendRedirect("nuevoViaje.jsp"); 
 			break; 
 		case "iniciarSesion":
 			// Obtén los valores de los campos de nombre de usuario y contraseña del formulario
