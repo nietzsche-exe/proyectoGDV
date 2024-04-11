@@ -4,26 +4,43 @@
 <head>
 <meta charset="UTF-8">
 <title>Página Principal</title>
+
 </head>
 <body>
-    <button id="btnIniciarSesion">Iniciar Sesión</button>
+
+<div class="container">
+	
+	<!-- <form name="frm_PaginaPrincipal" method="POST" action="LoginControlador">
+		
+		<input type="hidden" name="opcion" value="login">
+		
+		<button><a href="javascript:void(0)" onclick="javascript:document.frm_PaginaPrincipal.opcion.value='vistaActores';document.frm_PaginaPrincipal.submit();"> Listado de Actores </a></p>
+		<p><a href="javascript:void(0)" onclick="javascript:document.frm_PaginaPrincipal.opcion.value='vistaDirectores';document.frm_PaginaPrincipal.submit();"> Listado de Directores </a></p>	
+	</form> -->
+	
+
+	<button id="btnIniciarSesion">Iniciar Sesión</button>
     <button id="btnRegistro">Registrarse</button>
 
     <script>
         // Función para redirigir al usuario a la página de inicio de sesión
         function redirectToLoginPage() {
-            window.location.href = "login.jsp"; 
+            window.location.href = "login.jsp"; // Cambia "pagina-de-inicio-de-sesion.jsp" por la ruta de tu página de inicio de sesión
         }
 
         // Función para redirigir al usuario a la página de registro
         function redirectToRegistroPage() {
-            window.location.href = "registro.jsp"; 
+            window.location.href = "registro.jsp"; // Cambia "pagina-de-registro.jsp" por la ruta de tu página de registro
         }
 
+        // Agregar un event listener al botón de inicio de sesión para que llame a la función redirectToLoginPage cuando se haga clic en él
         document.getElementById("btnIniciarSesion").addEventListener("click", redirectToLoginPage);
-		
+
+        // Agregar un event listener al botón de registro para que llame a la función redirectToRegistroPage cuando se haga clic en él
         document.getElementById("btnRegistro").addEventListener("click", redirectToRegistroPage);
     </script>
+    
+
     <h1>Resumen del Sitio Web de Gestión de Viajes</h1>
     <p>
     
@@ -53,5 +70,7 @@
 		En resumen, nuestro sitio web de gestión de viajes es una herramienta integral que ofrece una experiencia personalizada y sin complicaciones para planificar, reservar y gestionar viajes de manera eficiente y segura. Con una amplia gama de destinos y servicios, así como un sólido soporte al cliente, estamos comprometidos a hacer que cada viaje sea una experiencia inolvidable para nuestros usuarios.
 		    	
     </p>
+</div>
+
 </body>
 </html>

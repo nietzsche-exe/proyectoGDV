@@ -11,6 +11,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import modelo.HibernateUtils;
 import modelo.Usuario;
 import util.EmailValidator;
@@ -141,6 +142,9 @@ public class LoginController extends HttpServlet {
 
 		case "perfil": // es el cliente quien deber� invocar a este recurso
 			response.sendRedirect("perfilUsuario.jsp"); 
+			break;
+		case "NuevoViaje": // es el cliente quien invoca este recurso al presionar el oton de Crear Viaje
+			response.sendRedirect("nuevoViaje.jsp"); 
 			break; 
 		case "iniciarSesion":
 			// Obtén los valores de los campos de nombre de usuario y contraseña del formulario
@@ -153,14 +157,19 @@ public class LoginController extends HttpServlet {
             consulta.setParameter("correo", email);
             try {
             	Usuario usuario = (Usuario) consulta.getSingleResult();
+            	
             	if (usuario != null && usuario.getContrasenia().equals(password)) {
-            		// 	Si las credenciales son válidas, redirige a la página de perfil
-            		response.sendRedirect("perfilUsuario.jsp");
+            	    // Almacena los datos del usuario en la sesión
+            	    HttpSession session = request.getSession();
+            	    session.setAttribute("usuario", usuario);
+            	    // Redirige a la página de perfil
+            	    response.sendRedirect("perfilUsuario.jsp");
             	} else {
-            		// Si las credenciales no son válidas, redirige de nuevo al formulario de inicio de sesión con un mensaje de error
-            		request.setAttribute("error", "Nombre de usuario o contraseña incorrectos");
-            		request.getRequestDispatcher("login.jsp").forward(request, response);
+            	    // Si las credenciales no son válidas, redirige de nuevo al formulario de inicio de sesión con un mensaje de error
+            	    request.setAttribute("error", "Nombre de usuario o contraseña incorrectos");
+            	    request.getRequestDispatcher("login.jsp").forward(request, response);
             	}
+            	
             }catch(NoResultException e) {
             	request.setAttribute("error", "Nombre de usuario o contraseña incorrectas");
             	request.getRequestDispatcher("login.jsp").forward(request, response);
