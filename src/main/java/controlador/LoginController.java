@@ -1,6 +1,7 @@
 package controlador;
 
 import jakarta.persistence.EntityManager;
+
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.Query;
@@ -12,6 +13,10 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import modelo.HibernateUtils;
 import modelo.Usuario;
+import util.EmailValidator;
+
+import java.util.List;
+import java.util.UUID;
 
 import java.io.IOException;
 
@@ -20,9 +25,13 @@ import java.io.IOException;
  */
 public class LoginController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	@SuppressWarnings("unchecked")
 	protected void procesarPeticion(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException{
 		response.setContentType("text/html;charset=UTF-8");
-		String nombreUsuario,password,passwordRe,email;
+		String nombreUsuario="",password="",passwordRe="",email = "hola";
+		String token="";
+		
+		String codVerificacion="";
 		String operacion = request.getParameter("opcion");
 		if (operacion == null){
 			operacion = "";
@@ -42,21 +51,94 @@ public class LoginController extends HttpServlet {
 			password= request.getParameter("contrasenia");
 			passwordRe= request.getParameter("contraseniaRe");
 			email= request.getParameter("correoUsuario");
-			Usuario nuevoUsuario=new Usuario(nombreUsuario,password,email);
-			EntityManager em1= HibernateUtils.getEmf().createEntityManager();
-			EntityTransaction transacion=em1.getTransaction();
-			try {
-				transacion.begin();
-				em1.persist(nuevoUsuario);
-				transacion.commit();
-			}catch(Exception e) {
-				System.err.println(e.getMessage());
-				transacion.rollback();
-			}finally{
-				em1.close();
+			String extensionCorreo=email.substring(email.length()-10, email.length());
+			EntityManager em1= modelo.HibernateUtils.getEmf().createEntityManager();
+		
+			Query q1= em1.createQuery("FROM Usuario");
+			List<Usuario> usuarios = q1.getResultList(); 
+			for(Usuario user:usuarios) {
+				if(user.getEmail().compareTo(email)==0) {
+					request.setAttribute("error", "El correo electronico ya esta en uso");
+	        		request.getRequestDispatcher("registro.jsp").forward(request, response);
+				}else if (user.getNombre().compareTo(nombreUsuario)==0) {
+					request.setAttribute("error", "El nombre de usuario ya esta en uso");
+	        		request.getRequestDispatcher("registro.jsp").forward(request, response);
+				}
 			}
-			response.sendRedirect("login.jsp");
+			
+			if((password.compareTo(passwordRe)!=0)) {
+				request.setAttribute("error", "Las contraseñas debe coincidir");
+        		request.getRequestDispatcher("registro.jsp").forward(request, response);
+			}else if(extensionCorreo.compareTo("@gmail.com")!=0){
+				System.out.println(email.substring(email.length()-10, email.length()));
+				request.setAttribute("error", "Correo no valido");
+        		request.getRequestDispatcher("registro.jsp").forward(request, response);
+			}else if(!(password.matches(".*[A-Z].*"))) {
+				request.setAttribute("error", "La contraseña debe contener como mínimo una mayuscula");
+        		request.getRequestDispatcher("registro.jsp").forward(request, response);
+			}else if(!(password.matches(".*[0-9].*"))){
+				request.setAttribute("error", "La contraseña debe contener un numero");
+        		request.getRequestDispatcher("registro.jsp").forward(request, response);
+			}else if(nombreUsuario.matches(".*[!¡@#$%^&*()¿?¬~].*")) {
+				request.setAttribute("error", "El nombre de usuario no debe contener un caracter especial");
+        		request.getRequestDispatcher("registro.jsp").forward(request, response);
+			}else if(nombreUsuario.length()<3) {
+				request.setAttribute("error", "El nombre de usuario debe ser superior a 3 caracteres");
+        		request.getRequestDispatcher("registro.jsp").forward(request, response);
+			}else if(!(password.matches(".*[!¡@#$%^&*()¿?¬~].*"))) {
+				request.setAttribute("error", "La contraseña debe contener como mínimo un caracter especial");
+        		request.getRequestDispatcher("registro.jsp").forward(request, response);
+			}
+			//Try catch exceptiones java.lang.IllegalStateException
+			else {
+		    // Guardar los datos del usuario y el token de confirmación en la sesión del usuario
+		    request.getSession().setAttribute("nombreUsuario", nombreUsuario);
+		    request.getSession().setAttribute("password", password);
+		    request.getSession().setAttribute("email", email);
+		    System.out.println(nombreUsuario + " " + password + " " + email);
+		    token = generarToken();
+		    System.out.println("Token creado: " + token);
+		    EmailValidator.enviarCorreo(email, token);
+		    request.getSession().setAttribute("token",token);
+		    System.out.println("Correo enviado");
+		 // Redirigir a una página para que el usuario confirme su correo electrónico
+		    //request.setAttribute("token", token);
+		    request.getRequestDispatcher("confirmar_correo.jsp").forward(request, response);
+		}break;
+		case "verificarCorreo":
+			codVerificacion = request.getParameter("cod_verificacion");
+			nombreUsuario = (String) request.getSession().getAttribute("nombreUsuario");
+			password = (String) request.getSession().getAttribute("password");
+			email = (String) request.getSession().getAttribute("email");
+			token=(String) request.getSession().getAttribute("token");
+			System.out.println(nombreUsuario+" "+password+" "+email);
+			System.out.println("TokenDef: " + token);
+			System.out.println("codVeri: " + codVerificacion);
+			if (token.compareTo(codVerificacion) != 0) {
+			    request.setAttribute("token", token);
+			    request.setAttribute("email", email);
+			    request.setAttribute("error", "Codigo de verificacion incorrecto");
+			    request.getRequestDispatcher("confirmar_correo.jsp").forward(request, response);
+			} else {
+			    Usuario nuevoUsuario = new Usuario(nombreUsuario, password, email);
+			    System.out.println(nuevoUsuario);
+			    EntityManager em2 = HibernateUtils.getEmf().createEntityManager();
+			    EntityTransaction transacion = em2.getTransaction();
+			    try {
+			        transacion.begin();
+			        em2.persist(nuevoUsuario);
+			        transacion.commit();
+			        System.out.println("Usuario Subido");
+			    } catch (Exception e) {
+			        System.err.println(e.getMessage());
+			        transacion.rollback();
+			    } finally {
+			        em2.close();
+			    }
+			    response.sendRedirect("login.jsp");
+			}
 			break;
+
 		case "perfil": // es el cliente quien deber� invocar a este recurso
 			response.sendRedirect("perfilUsuario.jsp"); 
 			break; 
@@ -107,8 +189,13 @@ public class LoginController extends HttpServlet {
 		
 	}
 	
+	private String generarToken() {
+        // Implementa la lógica para generar un token de confirmación único
+        return UUID.randomUUID().toString();
+    }
+	
 	/**
-	 * Método controlador para las peticiones HTTP GET que delega al método `procesarPeticion`.
+	 * Método contro	lador para las peticiones HTTP GET que delega al método `procesarPeticion`.
 	 *
 	 * @param request  Objeto de solicitud HTTP servlet.
 	 * @param response Objeto de respuesta HTTP servlet.
