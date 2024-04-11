@@ -1,0 +1,71 @@
+/* Estilos CSS para el menú */
+#menu-container {
+    position: relative;
+    display: inline-block; /* Hace que el contenedor ocupe solo el espacio que necesitan sus elementos hijos */
+}
+
+ul {
+    position: absolute;
+    top: 100%; /* Coloca el menú debajo de la imagen */
+    border: #C0C0C0 2px solid;;
+    border-radius: 10px;
+    border-color: #EAEDED;
+    display: none; /* Por defecto ocultamos el menú */
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    background-color: white;
+    width: 170%; /* Establece el ancho máximo del menú desplegable */
+}
+
+#nada{
+    background: #F2D7D5;
+}
+#usuario{
+    font-size: medium;
+    background: #F2D7D5;
+    display: block;
+    text-align: center;
+    text-decoration: none;
+    padding: 14px 16px;
+    font-family: arial;
+}
+#correo{
+    font-size: small;
+    display: block;
+    text-align: center;
+    text-decoration: none;
+    padding: 14px 16px;
+    font-family: arial;
+}
+
+li a {
+    font-size: small;
+    font-family: arial;
+    display: block;
+    text-align: left;
+    color: black;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+li a:hover {
+    background-color: #EAEDED;
+}
+
+#menu-icon {
+    cursor: pointer; /* Cambia el cursor a pointer para indicar que es clickable */
+    height:15%;
+    width: 15%;
+}
+#menu-icon:hover {
+    opacity: 0.5;
+}
+#imgSalir{
+    height:6%;
+    width: 6%;
+}
+#imgConfig{
+    height:7%;
+    width: 7%;
+}
