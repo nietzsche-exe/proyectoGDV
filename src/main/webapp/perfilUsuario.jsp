@@ -1,3 +1,4 @@
+<%@page import="modelo.Usuario"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -9,10 +10,24 @@
 </head>
 <body>
 
-	<%
-    String idUsuario = request.getParameter("id_usuario");
-    out.println("ID del usuario: " + idUsuario);
-	%>
+		<%
+			// Obtiene la sesión actual
+			HttpSession a = request.getSession();
+			// Obtiene los datos del usuario almacenados en la sesión
+			Usuario usuario = (Usuario) a.getAttribute("usuario");
+			
+			// Verifica si el usuario está autenticado
+			if(usuario != null) {
+			    // Aquí puedes mostrar los datos del usuario, por ejemplo:
+			%>
+			    <p>Bienvenido, <%= usuario.getNombre() %></p>
+			    <!-- Otros datos del usuario -->
+			<%
+			} else {
+			    // Si el usuario no está autenticado, redirige al formulario de inicio de sesión
+				%><p>Bienvenido</p><%
+			}
+		%>
 	
 	
 	<div id="content-container">
@@ -23,10 +38,10 @@
 	
 	        <ul id="menu">
 	        	<li id="nada">&nbsp;</li>
-	            <li id="usuario">USUARIO</li>
-	            <li id="correo">CORREO@CORREO.COM</li>
+	            <li id="usuario"><%= usuario.getNombre() %></li>
+	            <li id="correo"><%= usuario.getEmail() %></li>
 	            <li>&nbsp;</li>
-	            <li><a href="#salir"><img id="imgSalir" src="Resources/salir.jpg"> Cerrar Sesion</a></li>
+	            <li><a href="index.jsp"><img id="imgSalir" src="Resources/salir.jpg"> Cerrar Sesion</a></li>
 	            <li><a href="#config"><img id="imgConfig" src="Resources/config.png">Configuración</a></li>
 	        </ul>
 	    </div>

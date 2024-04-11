@@ -10,6 +10,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import modelo.HibernateUtils;
 import modelo.Usuario;
 
@@ -74,14 +75,19 @@ public class LoginController extends HttpServlet {
             consulta.setParameter("correo", email);
             try {
             	Usuario usuario = (Usuario) consulta.getSingleResult();
+            	
             	if (usuario != null && usuario.getContrasenia().equals(password)) {
-            		// 	Si las credenciales son válidas, redirige a la página de perfil
-            		response.sendRedirect("perfilUsuario.jsp");
+            	    // Almacena los datos del usuario en la sesión
+            	    HttpSession session = request.getSession();
+            	    session.setAttribute("usuario", usuario);
+            	    // Redirige a la página de perfil
+            	    response.sendRedirect("perfilUsuario.jsp");
             	} else {
-            		// Si las credenciales no son válidas, redirige de nuevo al formulario de inicio de sesión con un mensaje de error
-            		request.setAttribute("error", "Nombre de usuario o contraseña incorrectos");
-            		request.getRequestDispatcher("login.jsp").forward(request, response);
+            	    // Si las credenciales no son válidas, redirige de nuevo al formulario de inicio de sesión con un mensaje de error
+            	    request.setAttribute("error", "Nombre de usuario o contraseña incorrectos");
+            	    request.getRequestDispatcher("login.jsp").forward(request, response);
             	}
+            	
             }catch(NoResultException e) {
             	request.setAttribute("error", "Nombre de usuario o contraseña incorrectas");
             	request.getRequestDispatcher("login.jsp").forward(request, response);
