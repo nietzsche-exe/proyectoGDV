@@ -28,6 +28,7 @@
 				%><p>Bienvenido</p><%
 			}
 		%>
+		
 	
 	
 	<div id="content-container">
