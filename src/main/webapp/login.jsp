@@ -48,8 +48,9 @@
         <label for="contrasenia">Contraseña:</label><br>
         <input type="password" id="contrasenia" name="contrasenia" oninput="validarCampos()"><br><br>
         
-        <input id="acceder" type="submit" value="Iniciar Sesión" disabled>
+        <input id="acceder" onclick="" type="submit" value="Iniciar Sesión" disabled>
         <a href="javascript:void(0)" onclick="javascript:document.login.opcion.value='registrarse';document.login.submit();">Registrarse</a>
+    	
     	
     </form>
     <form>
@@ -82,6 +83,9 @@
 							<td> <%= usuario.getNombre() %></td>
 							<td> <%= usuario.getContrasenia() %></td>
 							<td> <%= usuario.getEmail() %></td>
+							<td>
+                				<a href="perfilUsuario.jsp?id_usuario=<%= usuario.getId_usuario() %>">Iniciar sesión</a>
+            				</td>
 						</tr>
 						<%
 					}
