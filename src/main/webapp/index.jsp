@@ -10,13 +10,13 @@
 
 <div class="container">
 	
-	<!-- <form name="frm_PaginaPrincipal" method="POST" action="LoginControlador">
-		
-		<input type="hidden" name="opcion" value="login">
-		
-		<button><a href="javascript:void(0)" onclick="javascript:document.frm_PaginaPrincipal.opcion.value='vistaActores';document.frm_PaginaPrincipal.submit();"> Listado de Actores </a></p>
-		<p><a href="javascript:void(0)" onclick="javascript:document.frm_PaginaPrincipal.opcion.value='vistaDirectores';document.frm_PaginaPrincipal.submit();"> Listado de Directores </a></p>	
-	</form> -->
+	<!-- 
+		<form name="frm_Pagina_principal" method="POST" action="LoginController">
+
+			<button id="btnIniciarSesion" onclick="javascript:document.frm_Pagina_principal.opcion.value='iniciarSesion';document.frm_Pagina_principal.submit();">Iniciar Sesión</button>
+			<button id="btnRegistro" onclick="javascript:document.frm_Pagina_principal.opcion.value='registrarNuevoUsuario';document.frm_Pagina_principal.submit();">Registrarse</button>
+		</form>
+	-->
 	
 
 	<button id="btnIniciarSesion">Iniciar Sesión</button>
