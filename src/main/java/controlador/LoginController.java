@@ -35,9 +35,9 @@ public class LoginController extends HttpServlet {
 		switch(operacion){
 		
 		case "registrarse": // es el servidor quien redirije internamente hacia la vista registrarse
-		    rd = request.getRequestDispatcher("registro.jsp");
-		    rd.forward(request, response);
-		    break;
+		    	rd = request.getRequestDispatcher("registro.jsp");
+		    	rd.forward(request, response);
+		    	break;
 		case "registrarNuevoUsuario"://Se realiza el insert de un nuevo usuario en la base de datos 
 			nombreUsuario= request.getParameter("nombreUsuario");
 			password= request.getParameter("contrasenia");
@@ -65,36 +65,36 @@ public class LoginController extends HttpServlet {
 			response.sendRedirect("nuevoViaje.jsp"); 
 			break; 
 		case "iniciarSesion":
-		    // Obtén los valores de los campos de nombre de usuario y contraseña del formulario
-	            email = request.getParameter("correoUsuario");
-	            password = request.getParameter("contrasenia");
+		    	// Obtén los valores de los campos de nombre de usuario y contraseña del formulario
+	            	email = request.getParameter("correoUsuario");
+	           	 password = request.getParameter("contrasenia");
 	   
-	            // Realiza la verificación con la base de datos
-	            EntityManager em = HibernateUtils.getEmf().createEntityManager();
-	            Query consulta = em.createQuery("SELECT u FROM Usuario u WHERE u.email = :correo");
-	            consulta.setParameter("correo", email);
-	            try {
-	            	Usuario usuario = (Usuario) consulta.getSingleResult();
+	            	// Realiza la verificación con la base de datos
+	           	EntityManager em = HibernateUtils.getEmf().createEntityManager();
+	            	Query consulta = em.createQuery("SELECT u FROM Usuario u WHERE u.email = :correo");
+	            	consulta.setParameter("correo", email);
+	            	try {
+	            		Usuario usuario = (Usuario) consulta.getSingleResult();
 	            	
-	            	if (usuario != null && usuario.getContrasenia().equals(password)) {
-	            	    // Almacena los datos del usuario en la sesión
-	            	    HttpSession session = request.getSession();
-	            	    session.setAttribute("usuario", usuario);
-	            	    // Redirige a la página de perfil
-	            	    response.sendRedirect("perfilUsuario.jsp");
-	            	} else {
-	            	    // Si las credenciales no son válidas, redirige de nuevo al formulario de inicio de sesión con un mensaje de error
-	            	    request.setAttribute("error", "Nombre de usuario o contraseña incorrectos");
-	            	    request.getRequestDispatcher("login.jsp").forward(request, response);
+	            		if (usuario != null && usuario.getContrasenia().equals(password)) {
+	            	    		// Almacena los datos del usuario en la sesión
+	            	   		HttpSession session = request.getSession();
+	            	    		session.setAttribute("usuario", usuario);
+	            	    		// Redirige a la página de perfil
+	            	   		response.sendRedirect("perfilUsuario.jsp");
+	            		} else {
+	            	    		// Si las credenciales no son válidas, redirige de nuevo al formulario de inicio de sesión con un mensaje de error
+			            	request.setAttribute("error", "Nombre de usuario o contraseña incorrectos");
+			            	request.getRequestDispatcher("login.jsp").forward(request, response);
+	            		}
+	            	
+	            	}catch(NoResultException e) {
+	            		request.setAttribute("error", "Nombre de usuario o contraseña incorrectas");
+	            		request.getRequestDispatcher("login.jsp").forward(request, response);
+	            	}finally{
+	            		em.close();
 	            	}
-	            	
-	            }catch(NoResultException e) {
-	            	request.setAttribute("error", "Nombre de usuario o contraseña incorrectas");
-	            	request.getRequestDispatcher("login.jsp").forward(request, response);
-	            }finally{
-	            	em.close();
-	            }
-            break;
+            	   	break;
          
 		 /* case "borrarActor": // es el servidor quien redirije
 		 * internamente hacia la vista procNuevoActor.jsp rd =
