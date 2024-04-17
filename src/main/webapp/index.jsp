@@ -9,17 +9,8 @@
 <body>
 
 <div class="container">
-	
-	<!-- 
-		<form name="frm_Pagina_principal" method="POST" action="LoginController">
 
-			<button id="btnIniciarSesion" onclick="javascript:document.frm_Pagina_principal.opcion.value='iniciarSesion';document.frm_Pagina_principal.submit();">Iniciar Sesión</button>
-			<button id="btnRegistro" onclick="javascript:document.frm_Pagina_principal.opcion.value='registrarNuevoUsuario';document.frm_Pagina_principal.submit();">Registrarse</button>
-		</form>
-	-->
-	
-
-	<button id="btnIniciarSesion">Iniciar Sesión</button>
+    <button id="btnIniciarSesion">Iniciar Sesión</button>
     <button id="btnRegistro">Registrarse</button>
 
     <script>
