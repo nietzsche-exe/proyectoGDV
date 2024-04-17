@@ -13,7 +13,7 @@ HttpSession a = request.getSession();
 Usuario usuario = (Usuario) a.getAttribute("usuario");
 if(usuario.getModo_oscuro == false) {
 %>
-	<link rel="stylesheet" href="Styles/cssA.css">
+	<link rel="stylesheet" href="Styles/cssPerfilUsuario_Claro.css">
 <%
 } else {
 %>	
