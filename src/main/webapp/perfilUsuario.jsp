@@ -53,10 +53,44 @@ if(usuario.getModo_oscuro == false) {
 	            <li>&nbsp;</li>
 	            <li><a href="index.jsp"><img id="imgSalir" src="Resources/salir.jpg"> Cerrar Sesion</a></li>
 	            <li><a href="#config"><img id="imgConfig" src="Resources/config.png">Configuración</a></li>
+		    if(usuario.getModo_oscuro == false) {
+%>
+			<li><button id="btnOscuro">Cambiar tema a oscuro</button></li>
+<%
+		    } else {
+%>	
+			<li><button id="btnClaro">Cambiar tema a claro</button></li>
+<%
+		    }
+%>
+		    
 	        </ul>
 	    </div>
 	</div>
-	
+
+    
+
+    <script>
+        // Función para redirigir al usuario a la página de inicio de sesión
+        function temaClaro() {
+	    //Aqui hay que cambiar la variable en la base de datos a CLARO o sea la variable en FALSE
+            window.location.href = "perfilUsuario.jsp"; // Cambia "pagina-de-inicio-de-sesion.jsp" por la ruta de tu página de inicio de sesión
+        }
+
+        // Función para redirigir al usuario a la página de registro
+        function temaOscuro() {
+	    //Aqui hay que cambiar la variable en la base de datos a OSCURO o sea la variable en TRUE
+            window.location.href = "perfilUsuario.jsp"; // Cambia "pagina-de-registro.jsp" por la ruta de tu página de registro
+        }
+
+        // Agregar un event listener al botón de inicio de sesión para que llame a la función redirectToLoginPage cuando se haga clic en él
+        document.getElementById("btnClaro").addEventListener("click", temaClaro);
+
+        // Agregar un event listener al botón de registro para que llame a la función redirectToRegistroPage cuando se haga clic en él
+        document.getElementById("btnOscuro").addEventListener("click", temaOscuro);
+    </script>
+
+
 	<h1>Resumen del Sitio Web de Gestión de Viajes</h1>
     <p>
     
