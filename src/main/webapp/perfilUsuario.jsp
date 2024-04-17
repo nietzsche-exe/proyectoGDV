@@ -6,16 +6,25 @@
 <head>
 <meta charset="UTF-8">
 <title>Perfil de Usuario</title>
-<link rel="stylesheet" href="Styles/cssA.css">
+<%
+// Obtiene la sesión actual
+HttpSession a = request.getSession();
+// Obtiene los datos del usuario almacenados en la sesión
+Usuario usuario = (Usuario) a.getAttribute("usuario");
+if(usuario.getModo_oscuro == false) {
+%>
+	<link rel="stylesheet" href="Styles/cssA.css">
+<%
+} else {
+%>	
+	<link rel="stylesheet" href="Styles/cssB.css">
+<%
+}
+%>
 </head>
 <body>
 
-		<%
-			// Obtiene la sesión actual
-			HttpSession a = request.getSession();
-			// Obtiene los datos del usuario almacenados en la sesión
-			Usuario usuario = (Usuario) a.getAttribute("usuario");
-			
+			<%
 			// Verifica si el usuario está autenticado
 			if(usuario != null) {
 			    // Aquí puedes mostrar los datos del usuario, por ejemplo:
