@@ -33,6 +33,8 @@ public class Usuario implements Serializable{
 	@Column(name="email")
 	private String email;
 	
+	@Column(name="modo_oscuro")
+	private Boolean tema;
 	
 	
 	public Usuario(String nombre, String contrasenia, String email) {
@@ -74,6 +76,15 @@ public class Usuario implements Serializable{
 		this.email = email;
 	}
 
+	public Boolean getTema() {
+		return tema;
+	}
+
+	public void setTema(Boolean tema) {
+		this.tema = tema;
+	}
+
+	
 	@Override
 	public int hashCode() {
 		return Objects.hash(contrasenia, email, id_usuario, nombre);
