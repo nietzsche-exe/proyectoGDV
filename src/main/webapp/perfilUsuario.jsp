@@ -11,7 +11,7 @@
 HttpSession a = request.getSession();
 // Obtiene los datos del usuario almacenados en la sesión
 Usuario usuario = (Usuario) a.getAttribute("usuario");
-if(usuario.getModo_oscuro == false) {
+if(usuario.getTema() == false) {
 %>
 	<link rel="stylesheet" href="Styles/cssPerfilUsuario_Claro.css">
 <%
@@ -53,7 +53,8 @@ if(usuario.getModo_oscuro == false) {
 	            <li>&nbsp;</li>
 	            <li><a href="index.jsp"><img id="imgSalir" src="Resources/salir.jpg"> Cerrar Sesion</a></li>
 	            <li><a href="#config"><img id="imgConfig" src="Resources/config.png">Configuración</a></li>
-		    if(usuario.getModo_oscuro == false) {
+<%		    
+		    if(usuario.getTema() == false) {
 %>
 			<li><button id="btnOscuro">Cambiar tema a oscuro</button></li>
 <%
