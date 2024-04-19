@@ -1,6 +1,7 @@
 package controlador;
 
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.Query;
@@ -16,6 +17,9 @@ import modelo.Usuario;
 
 import java.io.IOException;
 
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+
 /**
  * Servlet implementation class LoginController
  */
@@ -24,6 +28,7 @@ public class LoginController extends HttpServlet {
 	protected void procesarPeticion(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException{
 		response.setContentType("text/html;charset=UTF-8");
 		String nombreUsuario,password,passwordRe,email;
+		Boolean tema;
 		String operacion = request.getParameter("opcion");
 		if (operacion == null){
 			operacion = "";
@@ -67,7 +72,7 @@ public class LoginController extends HttpServlet {
 		case "iniciarSesion":
 		    	// Obtén los valores de los campos de nombre de usuario y contraseña del formulario
 	            	email = request.getParameter("correoUsuario");
-	           	 password = request.getParameter("contrasenia");
+	           	 	password = request.getParameter("contrasenia");
 	   
 	            	// Realiza la verificación con la base de datos
 	           	EntityManager em = HibernateUtils.getEmf().createEntityManager();
@@ -79,7 +84,7 @@ public class LoginController extends HttpServlet {
 	            		if (usuario != null && usuario.getContrasenia().equals(password)) {
 	            	    		// Almacena los datos del usuario en la sesión
 	            	   		HttpSession session = request.getSession();
-	            	    		session.setAttribute("usuario", usuario);
+	            	   		session.setAttribute("usuario", usuario);
 	            	    		// Redirige a la página de perfil
 	            	   		response.sendRedirect("perfilUsuario.jsp");
 	            		} else {
@@ -107,11 +112,57 @@ public class LoginController extends HttpServlet {
 			response.sendRedirect("login.jsp");
 			
 			break;
-			
+		
+		case "cambiar_tema":
+		    // Obtén el id del usuario de la sesión
+		    HttpSession session = request.getSession();
+		    Usuario usuario = (Usuario) session.getAttribute("usuario");
+		    int idUsuario = usuario.getId_usuario();
+
+		    // Crea un EntityManager a partir de la EntityManagerFactory
+		    EntityManagerFactory emf = HibernateUtils.getEmf();
+		    EntityManager em2 = emf.createEntityManager();
+		    EntityTransaction transaction = null;
+
+		    try {
+		        // Inicia una transacción
+		        transaction = em2.getTransaction();
+		        transaction.begin();
+
+		        // Busca al usuario en la base de datos por su id
+		        Usuario user = em2.find(Usuario.class, idUsuario);
+
+		        // Verifica si el usuario existe
+		        if (user != null) {
+		            // Actualiza el tema del usuario
+		            user.setTema(!user.getTema()); // Cambia el tema
+
+		            // Guarda los cambios en la base de datos
+		            em2.merge(user);
+		            transaction.commit();
+		        }
+
+		        // Redirige al usuario a la página principal
+		        response.sendRedirect("perfilUsuario.jsp");
+		    } catch (Exception e) {
+		        // Maneja cualquier excepción
+		        if (transaction != null && transaction.isActive()) {
+		            transaction.rollback();
+		        }
+		        e.printStackTrace();
+		    } finally {
+		        // Cierra el EntityManager
+		    	em2.close();
+		    }
+		    break;
+
+
+		
 		default:
 			// es el cliente quien deber� invocar a este recurso
+			
 			response.sendRedirect("index.jsp");
-	
+			
 		}
 		
 	}
