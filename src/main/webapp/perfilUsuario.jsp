@@ -46,6 +46,7 @@ if(usuario.getTema() == false) {
 <body>
 	<form name="tema" action="LoginController" method="POST">
 		<input type="hidden" name="opcion" value="cambiar_tema">
+		<div id="Encabezado">
             <%
             // Verifica si el usuario está autenticado
             if(usuario != null) {
@@ -58,43 +59,43 @@ if(usuario.getTema() == false) {
                 // Si el usuario no está autenticado, redirige al formulario de inicio de sesión
                 %><p>Bienvenido</p><%
             }
-        %>
+        	%>
         
         
     
-    <div id="content-container">
-    <button id="btnCreacionViaje">Creacion de viaje</button>
-    <button id="btnEliminacionViaje">Eliminacion de Viaje</button>        
-	    <div id="menu-container">
-	    	<img src="Resources/perfil.jpg" alt="Menú" id="menu-icon">
-	    	
-	            <ul id="menu">
-	                <li id="nada">&nbsp;</li>
-	                <li id="usuario"><%= usuario.getNombre() %></li>
-	                <li id="correo"><%= usuario.getEmail() %></li>
-	                <li>&nbsp;</li>
-	                <li><a href="index.jsp"><img id="imgSalir" src="Resources/salir.jpg"> Cerrar Sesion</a></li>
-	                <li><a href="#config"><img id="imgConfig" src="Resources/config.png">Configuración</a></li>
-	<%          
-	            if(usuario.getTema() == false) {
-	%>			
-	            	<li><a href="javascript:void(0)" onclick="javascript:document.tema.opcion.value='cambiar_tema';document.tema.submit();">Cambiar tema a oscuro</a></li>
-				
-	<%
-	            } else {
-	%>  
-	            	<li><a href="javascript:void(0)" onclick="javascript:document.tema.opcion.value='cambiar_tema';document.tema.submit();">Cambiar tema a claro</a></li>
-	            
-	<%
-	            }
-	%>
-	            
-	            </ul>
-        	
-        </div>
-    </div>
+		    <div id="content-container">
+		    <button id="btnCreacionViaje">Creacion de viaje</button>
+		    <button id="btnEliminacionViaje">Eliminacion de Viaje</button>        
+			    <div id="menu-container">
+			    	<img src="Resources/perfil.jpg" alt="Menú" id="menu-icon">
+			    	
+			            <ul id="menu">
+			                <li id="nada">&nbsp;</li>
+			                <li id="usuario"><%= usuario.getNombre() %></li>
+			                <li id="correo"><%= usuario.getEmail() %></li>
+			                <li>&nbsp;</li>
+			                <li><a href="index.jsp"><img id="imgSalir" src="Resources/salir.jpg"> Cerrar Sesion</a></li>
+			                <li><a href="javascript:void(0)" onclick="javascript:document.tema.opcion.value='cambiar_tema';document.tema.submit();">Cambiar tema a oscuro</a></li>
+			<%          
+			            if(usuario.getTema() == false) {
+			%>			
+			            	<li><a href="javascript:void(0)" onclick="javascript:document.tema.opcion.value='cambiar_tema';document.tema.submit();">Cambiar tema a oscuro</a></li>
+						
+			<%
+			            } else {
+			%>  
+			            	<li><a href="javascript:void(0)" onclick="javascript:document.tema.opcion.value='cambiar_tema';document.tema.submit();">Cambiar tema a claro</a></li>
+			            
+			<%
+			            }
+			%>
+			            
+			            </ul>
+		        	
+		        </div>
+		    </div>
 
-
+		</div>
     <script src="JavaScript/script.js"></script>
     
 	
