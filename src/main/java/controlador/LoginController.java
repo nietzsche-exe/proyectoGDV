@@ -156,7 +156,14 @@ public class LoginController extends HttpServlet {
 		    }
 		    break;
 
-
+		case "config":
+			
+			
+			
+			
+			
+			response.sendRedirect("configuracion.jsp");
+			break;
 		
 		default:
 			// es el cliente quien deber� invocar a este recurso
