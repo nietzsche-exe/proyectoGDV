@@ -75,7 +75,7 @@ if(usuario.getTema() == false) {
 			                <li id="correo"><%= usuario.getEmail() %></li>
 			                <li>&nbsp;</li>
 			                <li><a href="index.jsp"><img id="imgSalir" src="Resources/salir.jpg"> Cerrar Sesion</a></li>
-			                <li><a href="javascript:void(0)" onclick="javascript:document.tema.opcion.value='cambiar_tema';document.tema.submit();">Cambiar tema a oscuro</a></li>
+			                <li><a href="javascript:void(0)" onclick="javascript:document.tema.opcion.value='config';document.tema.submit();"><img id="imgConfig" src="Resources/config.png"> Configuracion</a></li>
 			<%          
 			            if(usuario.getTema() == false) {
 			%>			
