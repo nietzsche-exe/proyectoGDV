@@ -92,10 +92,10 @@ if(usuario.getTema() == false) {
 			            
 			            </ul>
 		        	
-		        </div>
-		    </div>
-
-		</div>
+			        </div>
+			    </div>
+	
+			</div>
     <script src="JavaScript/script.js"></script>
     
 	

@@ -158,13 +158,99 @@ public class LoginController extends HttpServlet {
 
 		case "config":
 			
-			
-			
-			
-			
 			response.sendRedirect("configuracion.jsp");
 			break;
 		
+		case "validarUser":
+			nombreUsuario= request.getParameter("nombreUsuario");
+			
+			
+			
+			 // Obtén el id del usuario de la sesión
+		    HttpSession session2 = request.getSession();
+		    Usuario usuario2 = (Usuario) session2.getAttribute("usuario");
+		    int idUsuario2 = usuario2.getId_usuario();
+
+		    // Crea un EntityManager a partir de la EntityManagerFactory
+		    EntityManagerFactory emf2 = HibernateUtils.getEmf();
+		    EntityManager em3 = emf2.createEntityManager();
+		    EntityTransaction transaction2 = null;
+
+		    try {
+		        // Inicia una transacción
+		    	transaction2 = em3.getTransaction();
+		    	transaction2.begin();
+
+		        // Busca al usuario en la base de datos por su id
+		        Usuario user = em3.find(Usuario.class, idUsuario2);
+
+		        // Verifica si el usuario existe
+		        if (user != null) {
+		            // Actualiza el tema del usuario
+		            user.setNombre(nombreUsuario); // Cambia el usuario
+
+		            // Guarda los cambios en la base de datos
+		            em3.merge(user);
+		            transaction2.commit();
+		        }
+
+		        // Redirige al usuario a la página principal
+		        response.sendRedirect("configuracion.jsp");
+		    } catch (Exception e) {
+		        // Maneja cualquier excepción
+		        if (transaction2 != null && transaction2.isActive()) {
+		        	transaction2.rollback();
+		        }
+		        e.printStackTrace();
+		    } finally {
+		        // Cierra el EntityManager
+		    	em3.close();
+		    }
+		    break;
+		
+		case "validar_tema":
+		    // Obtén el id del usuario de la sesión
+		    HttpSession session3 = request.getSession();
+		    Usuario usuario3 = (Usuario) session3.getAttribute("usuario");
+		    int idUsuario3 = usuario3.getId_usuario();
+
+		    // Crea un EntityManager a partir de la EntityManagerFactory
+		    EntityManagerFactory emf3 = HibernateUtils.getEmf();
+		    EntityManager em4 = emf3.createEntityManager();
+		    EntityTransaction transactio3 = null;
+
+		    try {
+		        // Inicia una transacción
+		        transaction = em4.getTransaction();
+		        transaction.begin();
+
+		        // Busca al usuario en la base de datos por su id
+		        Usuario user = em4.find(Usuario.class, idUsuario3);
+
+		        // Verifica si el usuario existe
+		        if (user != null) {
+		            // Actualiza el tema del usuario
+		            user.setTema(!user.getTema()); // Cambia el tema
+
+		            // Guarda los cambios en la base de datos
+		            em4.merge(user);
+		            transaction.commit();
+		        }
+
+		        // Redirige al usuario a la página principal
+		        response.sendRedirect("configuracion.jsp");
+		    } catch (Exception e) {
+		        // Maneja cualquier excepción
+		        if (transactio3 != null && transactio3.isActive()) {
+		        	transactio3.rollback();
+		        }
+		        e.printStackTrace();
+		    } finally {
+		        // Cierra el EntityManager
+		    	em4.close();
+		    }
+		    break;
+		    
 		default:
 			// es el cliente quien deber� invocar a este recurso
 			
