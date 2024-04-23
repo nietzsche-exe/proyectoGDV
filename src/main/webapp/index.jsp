@@ -10,6 +10,8 @@
 
 <div class="container">
 
+	
+
     <button id="btnIniciarSesion">Iniciar Sesión</button>
     <button id="btnRegistro">Registrarse</button>
 

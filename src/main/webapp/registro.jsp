@@ -29,7 +29,7 @@
 </head>
 <body>
 	<h1>Registro</h1>
-	<form  action="LoginController" method="post" onsubmit="return validarInputs()">
+	<form  action="LoginController" method="post" onsubmit="return validarInputs()">	
 		<input type="hidden" name="opcion" value="registrarNuevoUsuario">
 		
         <label for="nombreUsuario">Nombre de Usuario:</label><br>
