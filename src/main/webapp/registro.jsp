@@ -15,7 +15,7 @@
 		    <p style="color: red;">${error}</p>
 	</c:if>
 	
-	<form  action="LoginController" method="post">
+	<form  action="LoginController" method="post">	
 		<input type="hidden" name="opcion" value="registrarNuevoUsuario">
 		
         <label for="nombreUsuario">Nombre de Usuario</label><br>

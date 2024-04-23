@@ -1,42 +1,48 @@
-/* Estilos CSS para el menú */
+body {
+    background-color: #000000; /* Fondo negro para toda la pantalla */
+    color: #ffffff; /* Texto blanco */
+}
+
 #menu-container {
     position: relative;
-    display: inline-block; /* Hace que el contenedor ocupe solo el espacio que necesitan sus elementos hijos */
+    display: inline-block;
 }
 
 ul {
     position: absolute;
-    top: 100%; /* Coloca el menú debajo de la imagen */
-    border: #C0C0C0 2px solid;;
+    top: 100%;
+    border: #EAEDED 2px solid;
     border-radius: 10px;
-    border-color: #EAEDED;
-    display: none; /* Por defecto ocultamos el menú */
+    display: none;
     list-style-type: none;
     margin: 0;
     padding: 0;
-    background-color: white;
-    width: 170%; /* Establece el ancho máximo del menú desplegable */
+    background-color: #1e1e1e; /* Fondo negro */
+    width: 170%;
 }
 
 #nada{
-    background: #F2D7D5;
+    background: rgb(0, 0, 160);	
 }
 #usuario{
     font-size: medium;
-    background: #F2D7D5;
+    background: rgb(0, 0, 160);
     display: block;
     text-align: center;
     text-decoration: none;
     padding: 14px 16px;
     font-family: arial;
+    color: #ffffff; /* Texto blanco */
 }
 #correo{
+    background: #1e1e1e;
     font-size: small;
     display: block;
     text-align: center;
     text-decoration: none;
     padding: 14px 16px;
     font-family: arial;
+    color: #ffffff; /* Texto blanco */
 }
 
 li a {
@@ -44,17 +50,17 @@ li a {
     font-family: arial;
     display: block;
     text-align: left;
-    color: black;
+    color: #ffffff; /* Texto blanco */
     padding: 14px 16px;
     text-decoration: none;
 }
 
 li a:hover {
-    background-color: #EAEDED;
+    background-color: #2a2a2a; /* Gris oscuro para resaltar el hover */
 }
 
 #menu-icon {
-    cursor: pointer; /* Cambia el cursor a pointer para indicar que es clickable */
+    cursor: pointer;
     height:15%;
     width: 15%;
 }

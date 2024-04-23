@@ -9,17 +9,10 @@
 <body>
 
 <div class="container">
-	
-	<!-- <form name="frm_PaginaPrincipal" method="POST" action="LoginControlador">
-		
-		<input type="hidden" name="opcion" value="login">
-		
-		<button><a href="javascript:void(0)" onclick="javascript:document.frm_PaginaPrincipal.opcion.value='vistaActores';document.frm_PaginaPrincipal.submit();"> Listado de Actores </a></p>
-		<p><a href="javascript:void(0)" onclick="javascript:document.frm_PaginaPrincipal.opcion.value='vistaDirectores';document.frm_PaginaPrincipal.submit();"> Listado de Directores </a></p>	
-	</form> -->
+
 	
 
-	<button id="btnIniciarSesion">Iniciar Sesión</button>
+    <button id="btnIniciarSesion">Iniciar Sesión</button>
     <button id="btnRegistro">Registrarse</button>
 
     <script>

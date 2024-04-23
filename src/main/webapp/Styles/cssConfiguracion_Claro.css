@@ -1,0 +1,30 @@
+@charset "UTF-8";
+
+.biblioteca{
+	float: left;
+	padding: 1%;
+	background-color: #F2D7D5;
+}
+.biblioteca div {
+	height: 100%;
+	width: 7%;
+	background-color: #F2D7D5;
+}
+
+.resultados{
+	margin-left: 30%;
+	margin-top: 5%;
+}
+
+.a { 
+	empty-cells: hide; 
+	border-collapse: collapse;
+} 
+
+td,th { 
+	border: 1px solid black;
+	padding: 2%;
+}
+table {
+	width: 50%;
+}
