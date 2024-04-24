@@ -1,3 +1,4 @@
+<%@page import="org.hibernate.internal.build.AllowSysOut"%>
 <%@page import="jakarta.persistence.Query"%>
 <%@page import="modelo.Usuario"%>
 <%@page import="modelo.HibernateUtils"%>
@@ -11,8 +12,6 @@
 <link rel="stylesheet" href="Styles/cssConfiguracion_Claro.css">
 <meta charset="UTF-8">
 <title>Página Configuracion</title>
-
-
 </head>
 <body>
   <form name="datos" action="LoginController" method="post" onsubmit="return validarInputs()">
@@ -32,12 +31,28 @@ Usuario usuario = (Usuario) a.getAttribute("usuario");
 
 EntityManager em = HibernateUtils.getEmf().createEntityManager();
 
-Query query = em.createQuery("SELECT u.nombre FROM Usuario u WHERE u.id = :id");
-query.setParameter("id", usuario.getId_usuario());
+Query query = em.createQuery("SELECT u.nombre FROM Usuario u WHERE u.id = :idUsuario");
+query.setParameter("idUsuario", usuario.getId_usuario());
 
 String nom = (String) query.getSingleResult();
 
 usuario.setNombre(nom);
+
+Query query2 = em.createQuery("SELECT u.tema FROM Usuario u WHERE u.id = :id");
+query2.setParameter("id", usuario.getId_usuario());
+
+Boolean tema = (Boolean) query2.getSingleResult();
+
+usuario.setTema(tema);
+
+Query query3 = em.createQuery("SELECT u.email FROM Usuario u WHERE u.id = :idUsuario");
+query3.setParameter("idUsuario", usuario.getId_usuario());
+
+String email = (String) query3.getSingleResult();
+
+usuario.setEmail(email);
+
+System.out.println(email);
 
 boolean principal = true, datPer = false, seguridad = false, privacidad = false;
 
@@ -98,6 +113,10 @@ if(usuario != null) {
 	
 		<p>Mostrar Datos Personales</p>
 		
+		<c:if test="${not empty error}">
+		    <p style="color: red;">${error}</p>
+		</c:if>
+	
 		<table class="a">
 			<tr>
 			    <th>Datos</th>
@@ -112,19 +131,19 @@ if(usuario != null) {
 			<tr>
 			    <td>Email</td>
 			    <td><%= usuario.getEmail() %></td>
-			    <td></td>
+			    <td><input type="email" id="emailUsuario" name="emailUsuario" oninput="validarEmail()"> <input id="confirmarEmail" onclick="javascript:document.datos.opcion.value='validar_correo';document.datos.submit();" type="submit" value="Confirmar" disabled></td>
 			</tr>
 			<tr>
 			    <td>Tema</td>
 			    <%if (usuario.getTema()){
 			    %>
 			    	<td>Oscuro</td>
-			    	<td><input id="confirmarTemaClaro" onclick="javascript:document.datos.opcion.value='validar_tema';document.datos.submit();" value="Cambiar Tema a Claro"></td>
+			    	<td><input id="confirmarTemaClaro" onclick="javascript:document.datos.opcion.value='validar_tema';document.datos.submit();" value="Cambiar Tema a Claro" type="submit"></td>
 			    <% 
 			    } else {
 			    %>
 			    <td>Claro</td>
-			    <td><input id="confirmarTemaOscuro" onclick="javascript:document.datos.opcion.value='validar_tema';document.datos.submit();" value="Cambiar Tema a Oscuro"></td>
+			    <td><input id="confirmarTemaOscuro" onclick="javascript:document.datos.opcion.value='validar_tema';document.datos.submit();" value="Cambiar Tema a Oscuro" type="submit"></td>
 			    <%
 			    }
 			    %>
@@ -132,8 +151,8 @@ if(usuario != null) {
 			</tr>
 			<tr>
 			    <td>Contraseña</td>
-			    <td><%= usuario.getContrasenia() %></td>
-			    <td></td>
+			    <td ><%= usuario.getContrasenia() %></td>
+			    <td><input type="hidden" id="contrasena" value="tucontraseña123"></td>
 			</tr>
 		</table>
 		
@@ -169,12 +188,23 @@ if(usuario != null) {
 		*/
 		function validarUsuario(){
 			var nombreUsuario = document.getElementById("nombreUsuario").value;
-			var btnRegistrarme=document.getElementById("confirmarUsuario");
+			var btnNombre=document.getElementById("confirmarUsuario");
 			
 			if (nombreUsuario === "") {
-				btnRegistrarme.disabled = true;                	
+				btnNombre.disabled = true;                	
             } else {
-                btnRegistrarme.disabled = false;
+            	btnNombre.disabled = false;
+            }
+		}
+		
+		function validarEmail(){
+			var nombreUsuario = document.getElementById("emailUsuario").value;
+			var btnEmail=document.getElementById("confirmarEmail");
+			
+			if (nombreUsuario === "") {
+				btnEmail.disabled = true;                	
+            } else {
+            	btnEmail.disabled = false;
             }
 		}
 	</script>
