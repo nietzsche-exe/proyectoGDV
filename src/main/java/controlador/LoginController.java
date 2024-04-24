@@ -98,7 +98,7 @@ public class LoginController extends HttpServlet {
 				} else if (!(password.matches(".*[!¡@#$%^&*()¿?¬~].*"))) {
 					request.setAttribute("error", "La contraseña debe contener como mínimo un caracter especial");
 					request.getRequestDispatcher("registro.jsp").forward(request, response);
-				} else if ((password.length() <= 8) || (password.length() > 20)) {
+				} else if ((password.length() < 8) || (password.length() > 20)) {
 					request.setAttribute("error",
 							"La contraseña no puede ser inferior a los 8 caracteres ni superior a los 20");
 					request.getRequestDispatcher("registro.jsp").forward(request, response);
@@ -203,44 +203,44 @@ public class LoginController extends HttpServlet {
 			response.sendRedirect("login.jsp");
 			break;
 		case "cambiar_tema":
-		    // Obtén el id del usuario de la sesión
+			
 		    HttpSession session = request.getSession();
 		    Usuario usuario = (Usuario) session.getAttribute("usuario");
 		    int idUsuario = usuario.getId_usuario();
 
-		    // Crea un EntityManager a partir de la EntityManagerFactory
+		  	
 		    EntityManagerFactory emf = HibernateUtils.getEmf();
 		    EntityManager em2 = emf.createEntityManager();
 		    EntityTransaction transaction = null;
 
 		    try {
-		        // Inicia una transacción
+		    	
 		        transaction = em2.getTransaction();
 		        transaction.begin();
 
-		        // Busca al usuario en la base de datos por su id
+		       	
 		        Usuario user = em2.find(Usuario.class, idUsuario);
 
-		        // Verifica si el usuario existe
+		      	
 		        if (user != null) {
-		            // Actualiza el tema del usuario
-		            user.setTema(!user.getTema()); // Cambia el tema
+		         	
+		            user.setTema(!user.getTema()); 	
 
-		            // Guarda los cambios en la base de datos
+		            
 		            em2.merge(user);
 		            transaction.commit();
 		        }
 
-		        // Redirige al usuario a la página principal
+		       	
 		        response.sendRedirect("perfilUsuario.jsp");
 		    } catch (Exception e) {
-		        // Maneja cualquier excepción
+		        	
 		        if (transaction != null && transaction.isActive()) {
 		            transaction.rollback();
 		        }
 		        e.printStackTrace();
 		    } finally {
-		        // Cierra el EntityManager
+		        	
 		    	em2.close();
 		    }
 		    break;
@@ -253,102 +253,172 @@ public class LoginController extends HttpServlet {
 		case "validarUser":
 			nombreUsuario= request.getParameter("nombreUsuario");
 			
-			
-			
-			 // Obtén el id del usuario de la sesión
 		    HttpSession session2 = request.getSession();
 		    Usuario usuario2 = (Usuario) session2.getAttribute("usuario");
 		    int idUsuario2 = usuario2.getId_usuario();
 
-		    // Crea un EntityManager a partir de la EntityManagerFactory
 		    EntityManagerFactory emf2 = HibernateUtils.getEmf();
 		    EntityManager em3 = emf2.createEntityManager();
 		    EntityTransaction transaction2 = null;
+		    
+		    Query q1 = em3.createQuery("FROM Usuario");
+			List<Usuario> usuarios = q1.getResultList();
+			
+		    for (Usuario user : usuarios) {
 
+				if (user.getNombre().compareTo(nombreUsuario) == 0) {
+					request.setAttribute("error", "El nombre de usuario ya esta en uso");
+					request.getRequestDispatcher("configuracion.jsp?datPer=true").forward(request, response);
+				}
+
+			}
+		    
 		    try {
-		        // Inicia una transacción
 		    	transaction2 = em3.getTransaction();
 		    	transaction2.begin();
 
-		        // Busca al usuario en la base de datos por su id
 		        Usuario user = em3.find(Usuario.class, idUsuario2);
 
-		        // Verifica si el usuario existe
 		        if (user != null) {
-		            // Actualiza el tema del usuario
-		            user.setNombre(nombreUsuario); // Cambia el usuario
-
-		            // Guarda los cambios en la base de datos
+		            user.setNombre(nombreUsuario); 
+		            
 		            em3.merge(user);
+		            
 		            transaction2.commit();
 		        }
 
-		        // Redirige al usuario a la página principal
-		        response.sendRedirect("configuracion.jsp");
+		        response.sendRedirect("configuracion.jsp?datPer=true");
 		    } catch (Exception e) {
-		        // Maneja cualquier excepción
 		        if (transaction2 != null && transaction2.isActive()) {
 		        	transaction2.rollback();
 		        }
 		        e.printStackTrace();
 		    } finally {
-		        // Cierra el EntityManager
 		    	em3.close();
 		    }
 		    break;
 		
 		case "validar_tema":
-		    // Obtén el id del usuario de la sesión
 		    HttpSession session3 = request.getSession();
 		    Usuario usuario3 = (Usuario) session3.getAttribute("usuario");
 		    int idUsuario3 = usuario3.getId_usuario();
-
-		    // Crea un EntityManager a partir de la EntityManagerFactory
+		    
 		    EntityManagerFactory emf3 = HibernateUtils.getEmf();
 		    EntityManager em4 = emf3.createEntityManager();
-		    EntityTransaction transactio3 = null;
+		    EntityTransaction transaction3 = null;
 
 		    try {
-		        // Inicia una transacción
-		        transaction = em4.getTransaction();
-		        transaction.begin();
+		    	transaction3 = em4.getTransaction();
+		        transaction3.begin();
 
-		        // Busca al usuario en la base de datos por su id
 		        Usuario user = em4.find(Usuario.class, idUsuario3);
 
-		        // Verifica si el usuario existe
 		        if (user != null) {
-		            // Actualiza el tema del usuario
-		            user.setTema(!user.getTema()); // Cambia el tema
+		            user.setTema(!user.getTema());
 
-		            // Guarda los cambios en la base de datos
 		            em4.merge(user);
-		            transaction.commit();
+		            transaction3.commit();
 		        }
 
-		        // Redirige al usuario a la página principal
-		        response.sendRedirect("configuracion.jsp");
+		        response.sendRedirect("configuracion.jsp?datPer=true");
 		    } catch (Exception e) {
-		        // Maneja cualquier excepción
-		        if (transactio3 != null && transactio3.isActive()) {
-		        	transactio3.rollback();
+		        if (transaction3 != null && transaction3.isActive()) {
+		        	transaction3.rollback();
 		        }
 		        e.printStackTrace();
 		    } finally {
-		        // Cierra el EntityManager
 		    	em4.close();
 		    }
 		    break;
+		
 		    
+		case "validar_correo":
+			
+			email = request.getParameter("emailUsuario");
+			String extensionCorreo2 = email.substring(email.length() - 10, email.length());
+			EntityManagerFactory emf4 = HibernateUtils.getEmf();
+		    EntityManager em5 = emf4.createEntityManager();
+			
+		    Query q2 = em5.createQuery("FROM Usuario");
+			List<Usuario> usuarios2 = q2.getResultList();
+			for (Usuario user : usuarios2) {
+
+				if (user.getEmail().compareTo(email) == 0) {
+					request.setAttribute("error", "El correo electronico ya esta en uso");
+					request.getRequestDispatcher("configuracion.jsp?datPer=true").forward(request, response);
+				}
+
+			}
+			if (extensionCorreo2.compareTo("@gmail.com") != 0) {
+				System.out.println(email.substring(email.length() - 10, email.length()));
+				request.setAttribute("error", "Correo no valido");
+				request.getRequestDispatcher("configuracion.jsp?datPer=true").forward(request, response);
+			}
+			else {
+				request.getSession().setAttribute("email", email);
+				
+				token = generarToken();
+				System.out.println("Token creado: " + token);
+				
+				EmailValidator.enviarCorreo(email, token);
+				request.getSession().setAttribute("token", token);
+				System.out.println("Correo enviado");
+				
+				request.getRequestDispatcher("confirmar_correo2.jsp").forward(request, response);
+			}
+			
+			break;
+		    
+		case "verificarCorreo2":
+			HttpSession session4 = request.getSession();
+		    Usuario usuario4 = (Usuario) session4.getAttribute("usuario");
+		    int idUsuario4 = usuario4.getId_usuario();
+		    
+			codVerificacion = request.getParameter("cod_verificacion");
+			email = (String) request.getSession().getAttribute("email");
+			token = (String) request.getSession().getAttribute("token");
+			System.out.println("TokenDef: " + token);
+			System.out.println("codVeri: " + codVerificacion);
+			if (token.compareTo(codVerificacion) != 0) {
+				request.setAttribute("token", token);
+				request.setAttribute("email", email);
+				request.setAttribute("error", "Codigo de verificacion incorrecto");
+				request.getRequestDispatcher("confirmar_correo.jsp").forward(request, response);
+			} else {
+				
+				EntityManager em6 = HibernateUtils.getEmf().createEntityManager();
+				EntityTransaction transaction4 = em6.getTransaction();
+				
+				try {
+					transaction4.begin();
+					
+					Usuario user = em6.find(Usuario.class, idUsuario4);
+
+			        if (user != null) {
+			            user.setEmail(email); 
+
+			            em6.merge(user);
+			            transaction4.commit();
+			        }
+			        
+					System.out.println("Usuario Subido");
+				} catch (Exception e) {
+					System.err.println(e.getMessage());
+					transaction4.rollback();
+				} finally {
+					em6.close();
+				}
+				response.sendRedirect("configuracion.jsp?datPer=true");
+			}
+			break;
+			
 		default:
-			// es el cliente quien deber� invocar a este recurso
 			response.sendRedirect("index.jsp");
 		}
 
 	}
 
 	private String generarToken() {
-		// Implementa la lógica para generar un token de confirmación único
 		return UUID.randomUUID().toString();
 	}
 
