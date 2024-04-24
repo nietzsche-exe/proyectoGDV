@@ -141,7 +141,7 @@ public class LoginController extends HttpServlet {
 				request.setAttribute("error", "Codigo de verificacion incorrecto");
 				request.getRequestDispatcher("confirmar_correo.jsp").forward(request, response);
 			} else {
-				Usuario nuevoUsuario = new Usuario(nombreUsuario, password, email);
+				Usuario nuevoUsuario = new Usuario(nombreUsuario, password, email, false);
 				System.out.println(nuevoUsuario);
 				EntityManager em2 = HibernateUtils.getEmf().createEntityManager();
 				EntityTransaction transacion = em2.getTransaction();
