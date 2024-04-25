@@ -52,7 +52,12 @@ String email = (String) query3.getSingleResult();
 
 usuario.setEmail(email);
 
-System.out.println(email);
+Query query4 = em.createQuery("SELECT u.contrasenia FROM Usuario u WHERE u.id = :idUsuario");
+query4.setParameter("idUsuario", usuario.getId_usuario());
+
+String password = (String) query4.getSingleResult();
+
+usuario.setContrasenia(password);
 
 boolean principal = true, datPer = false, seguridad = false, privacidad = false;
 
@@ -151,8 +156,8 @@ if(usuario != null) {
 			</tr>
 			<tr>
 			    <td>Contraseña</td>
-			    <td ><%= usuario.getContrasenia() %></td>
-			    <td><input type="hidden" id="contrasena" value="tucontraseña123"></td>
+			    <td ><input type="text" id="campo-oculto" readonly> <input type="hidden" id="contrasena" value="<%= usuario.getContrasenia() %>"></td>
+			    <td><input type="password" id="passwordUsuario" name="passwordUsuario" oninput="validarPassword()"> <input id="confirmarPassword" onclick="javascript:document.datos.opcion.value='validar_password';document.datos.submit();" type="submit" value="Confirmar" disabled></td>
 			</tr>
 		</table>
 		
@@ -207,6 +212,28 @@ if(usuario != null) {
             	btnEmail.disabled = false;
             }
 		}
+		
+		function validarPassword(){
+			var passwordUsuario = document.getElementById("passwordUsuario").value;
+			var btnPassword=document.getElementById("confirmarPassword");
+			
+			if (passwordUsuario === "") {
+				btnPassword.disabled = true;                	
+            } else {
+            	btnPassword.disabled = false;
+            }
+		}
+		
+		window.onload = function() {
+            // Obtener la contraseña predefinida
+            var contrasena = document.getElementById("contrasena").value;
+            // Obtener la longitud de la contraseña
+            var longitud = contrasena.length;
+            // Crear una cadena de puntos de la misma longitud
+            var puntos = "*".repeat(longitud);
+            // Asignar la cadena de puntos al campo de contraseña
+            document.getElementById("campo-oculto").value = puntos;
+        };
 	</script>
 	</form>
 </body>
