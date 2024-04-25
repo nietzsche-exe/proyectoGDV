@@ -9,7 +9,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="stylesheet" href="Styles/cssConfiguracion_Claro.css">
+<link rel="stylesheet" href="Styles/Configuracion/cssConfiguracion_Claro.css">
 <meta charset="UTF-8">
 <title>Página Configuracion</title>
 </head>
