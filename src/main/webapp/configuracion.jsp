@@ -52,7 +52,12 @@ String email = (String) query3.getSingleResult();
 
 usuario.setEmail(email);
 
-System.out.println(email);
+Query query4 = em.createQuery("SELECT u.contrasenia FROM Usuario u WHERE u.id = :idUsuario");
+query4.setParameter("idUsuario", usuario.getId_usuario());
+
+String password = (String) query4.getSingleResult();
+
+usuario.setContrasenia(password);
 
 boolean principal = true, datPer = false, seguridad = false, privacidad = false;
 
