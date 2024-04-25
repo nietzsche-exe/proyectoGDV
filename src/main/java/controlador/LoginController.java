@@ -442,6 +442,7 @@ public class LoginController extends HttpServlet {
 			
 		case "validar_password":
 			password = request.getParameter("passwordUsuario");
+			
 			HttpSession session5 = request.getSession();
 		    Usuario usuario5 = (Usuario) session5.getAttribute("usuario");
 		    email = usuario5.getEmail();
