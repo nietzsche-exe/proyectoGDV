@@ -22,6 +22,8 @@
 			<a href="quienSomos.jsp?seguridad=true">Destinos</a>
 			<a href="quienSomos.jsp?privacidad=true">Reservas</a>
 			<a href="quienSomos.jsp?privacidad=true">Itinerarios</a>
+			<a href="quienSomos.jsp?privacidad=true">Opiniones</a>
+			<a href="quienSomos.jsp?privacidad=true">Soporte</a>
 		</div>
 	</div>
     
@@ -34,7 +36,10 @@
 	    
 			Nuestro sitio web de gestión de viajes es una plataforma integral diseñada para facilitar la planificación, reserva y gestión de viajes para usuarios individual o grupos. Con una interfaz intuitiva y diversas funcionalidades, proporcionamos una experiencia completa para satisfacer las necesidades de nuestros usuarios. A continuación se presentan los aspectos principales de nuestro sitio web:
 		
-		</p>
+		</p><p>
+		En resumen, nuestro sitio web de gestión de viajes es una herramienta integral que ofrece una experiencia personalizada y sin complicaciones para planificar, reservar y gestionar viajes de manera eficiente y segura. Con una amplia gama de destinos y servicios, así como un sólido soporte al cliente, estamos comprometidos a hacer que cada viaje sea una experiencia inolvidable para nuestros usuarios.
+		    	
+    </p>
 	</div>
 	<div id="Contenedor_Texto1" class="Contenedor_Texto">
 		<h4>Inicio de Sesión y Registro:</h4>
@@ -71,10 +76,7 @@
 	</p>
 	</div>
 	<div id="Contenedor_Texto7" class="Contenedor_Texto">
-	<p>
-		En resumen, nuestro sitio web de gestión de viajes es una herramienta integral que ofrece una experiencia personalizada y sin complicaciones para planificar, reservar y gestionar viajes de manera eficiente y segura. Con una amplia gama de destinos y servicios, así como un sólido soporte al cliente, estamos comprometidos a hacer que cada viaje sea una experiencia inolvidable para nuestros usuarios.
-		    	
-    </p>
+	
     </div>
     
 	
