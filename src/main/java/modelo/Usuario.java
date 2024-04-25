@@ -37,11 +37,12 @@ public class Usuario implements Serializable{
 	private Boolean tema;
 	
 	
-	public Usuario(String nombre, String contrasenia, String email) {
+	public Usuario(String nombre, String contrasenia, String email, Boolean tema) {
 		super();
 		this.nombre = nombre;
 		this.contrasenia = contrasenia;
 		this.email = email;
+		this.tema = tema;
 	}
 
 	public Integer getId_usuario() {
