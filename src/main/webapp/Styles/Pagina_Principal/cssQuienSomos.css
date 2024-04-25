@@ -65,6 +65,20 @@ img{
 	padding: 0.7%;
 	width: 25%;
 }
+.Enlaces {
+	background-color: white;
+	padding: 0.3%;
+	text-decoration: none;
+	color: black;
+}
+.Enlaces:hover {
+	opacity: 0.8;
+}
+
+
+
+
+
 
 
 

@@ -17,16 +17,19 @@
 	    	<button id="btnRegistro" class="Botones">Registrarse</button>
 		</div>
 		<div class="biblioteca">
-			<a href="quienSomos.jsp?principal=true">Informacion Principal</a>
-			<a href="quienSomos.jsp?datPer=true">Inicio/Registro</a>
-			<a href="quienSomos.jsp?seguridad=true">Destinos</a>
-			<a href="quienSomos.jsp?privacidad=true">Reservas</a>
-			<a href="quienSomos.jsp?privacidad=true">Itinerarios</a>
-			<a href="quienSomos.jsp?privacidad=true">Opiniones</a>
-			<a href="quienSomos.jsp?privacidad=true">Soporte</a>
+			<a href="quienSomos.jsp?principal=true" class="Enlaces">Informacion Principal</a>
+			<a href="quienSomos.jsp?inicio-registro=true" class="Enlaces">Inicio/Registro</a>
+			<a href="quienSomos.jsp?destino=true" class="Enlaces">Destinos</a>
+			<a href="quienSomos.jsp?reserva=true" class="Enlaces">Reservas</a>
+			<a href="quienSomos.jsp?itinerarios=true" class="Enlaces">Itinerarios</a>
+			<a href="quienSomos.jsp?privacidad=true" class="Enlaces">Opiniones</a>
+			<a href="quienSomos.jsp?privacidad=true" class="Enlaces">Soporte</a>
 		</div>
 	</div>
+
+
     
+    int jnszdgkdblk = 123;
     
     
     
