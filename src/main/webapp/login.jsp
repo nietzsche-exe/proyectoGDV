@@ -1,5 +1,4 @@
 <%@page import="javax.xml.parsers.DocumentBuilderFactory"%>
-<%@page import="jakarta.xml.bind.Element"%>
 <%@page import="org.w3c.dom.Document"%>
 <%@page import="modelo.Usuario"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"

@@ -1,0 +1,101 @@
+
+.Encabezado {
+  	background-color: #FF2300;
+  	padding: 0.5%;
+  	position: relative;
+}
+
+.Contenedor_Botones {
+  	position: absolute;
+	top: 50%;
+  	transform: translateY(-50%);
+  	right: 0.5%;
+  	display: flex;
+  	align-items: center;
+  	width: 18%;
+}
+
+.Botones {
+  	margin-left: 1%;
+  	margin-right: 3%;
+  	cursor: pointer;
+  	background-color: white;
+  	border: none;
+  	padding: 3% 6%;
+}
+.Botones:hover {
+  opacity: 0.8;
+}
+.Contenedor_Logo {
+	margin-left: 50%;
+}
+img{
+	height: 6%;
+	width: 7%;
+}
+
+.Cuerpo {
+	margin-top: 3%;
+	margin-left: 5%;
+	margin-right: 5%;
+	background-color: #96FF96;
+	border-radius: 10px;
+	border-color: black;
+	font-family: arial;
+}
+.Contenedor_Titulo {
+	float: top;
+	margin-top: 2%;
+	padding-top: 1%;
+	margin-left: 20%;
+	margin-right: 20%;
+}
+#titulo1 {
+	text-align: center;
+}
+#Contenedor_Texto1, #Contenedor_Texto2, #Contenedor_Texto3 {
+	display: inline-block;
+	margin-left: 4%;
+	margin-top: 1%;
+	
+}
+.Contenedor_Texto {
+	background-color: #FFC1C1;
+	border-radius: 10px;
+	padding: 0.7%;
+	width: 25%;
+}
+.Enlaces {
+	background-color: white;
+	padding: 0.3%;
+	text-decoration: none;
+	color: black;
+}
+.Enlaces:hover {
+	opacity: 0.8;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

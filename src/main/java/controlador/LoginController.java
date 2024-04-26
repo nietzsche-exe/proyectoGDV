@@ -21,8 +21,6 @@ import java.util.UUID;
 
 import java.io.IOException;
 
-import org.hibernate.Session;
-import org.hibernate.Transaction;
 
 /**
  * Servlet implementation class LoginController
@@ -60,71 +58,79 @@ public class LoginController extends HttpServlet {
 			password = request.getParameter("contrasenia");
 			passwordRe = request.getParameter("contraseniaRe");
 			email = request.getParameter("correoUsuario");
-			String extensionCorreo = email.substring(email.length() - 10, email.length());
-			EntityManager em1 = modelo.HibernateUtils.getEmf().createEntityManager();
-			try {
-				Query q1 = em1.createQuery("FROM Usuario");
-				List<Usuario> usuarios = q1.getResultList();
-				for (Usuario user : usuarios) {
-
-					if (user.getEmail().compareTo(email) == 0) {
-						request.setAttribute("error", "El correo electronico ya esta en uso");
+			if (email.length()<=10) {
+				request.setAttribute("error", "Formato de correo no valido");
+				request.getRequestDispatcher("registro.jsp").forward(request, response);
+			}
+			else {
+				String extensionCorreo = email.substring(email.length() - 10, email.length());
+				EntityManager em1 = modelo.HibernateUtils.getEmf().createEntityManager();
+				try {
+					Query q1 = em1.createQuery("FROM Usuario");
+					List<Usuario> usuarios = q1.getResultList();
+					for (Usuario user : usuarios) {
+	
+						if (user.getEmail().compareTo(email) == 0) {
+							request.setAttribute("error", "El correo electronico ya esta en uso");
+							request.getRequestDispatcher("registro.jsp").forward(request, response);
+						} else if (user.getNombre().compareTo(nombreUsuario) == 0) {
+							request.setAttribute("error", "El nombre de usuario ya esta en uso");
+							request.getRequestDispatcher("registro.jsp").forward(request, response);
+						}
+	
+					}
+					if ((password.compareTo(passwordRe) != 0)) {
+						request.setAttribute("error", "Las contraseñas debe coincidir");
 						request.getRequestDispatcher("registro.jsp").forward(request, response);
-					} else if (user.getNombre().compareTo(nombreUsuario) == 0) {
-						request.setAttribute("error", "El nombre de usuario ya esta en uso");
+					} else if (extensionCorreo.compareTo("@gmail.com") != 0) {
+						System.out.println(email.substring(email.length() - 10, email.length()));
+						request.setAttribute("error", "Correo no valido");
+						request.getRequestDispatcher("registro.jsp").forward(request, response);
+					} else if (!(password.matches(".*[A-Z].*"))) {
+						request.setAttribute("error", "La contraseña debe contener como mínimo una mayuscula");
+						request.getRequestDispatcher("registro.jsp").forward(request, response);
+					} else if (!(password.matches(".*[0-9].*"))) {
+						request.setAttribute("error", "La contraseña debe contener un numero");
+						request.getRequestDispatcher("registro.jsp").forward(request, response);
+					} else if (nombreUsuario.matches(".*[!¡@#$%^&*()¿?¬~].*")) {
+						request.setAttribute("error", "El nombre de usuario no debe contener un caracter especial");
+						request.getRequestDispatcher("registro.jsp").forward(request, response);
+					} else if (nombreUsuario.length() < 3) {
+						request.setAttribute("error", "El nombre de usuario debe ser superior a 3 caracteres");
+						request.getRequestDispatcher("registro.jsp").forward(request, response);
+					} else if (!(password.matches(".*[!¡@#$%^&*()¿?¬~].*"))) {
+						request.setAttribute("error", "La contraseña debe contener como mínimo un caracter especial");
+						request.getRequestDispatcher("registro.jsp").forward(request, response);
+					} else if ((password.length() < 8) || (password.length() > 20)) {
+						request.setAttribute("error",
+								"La contraseña no puede ser inferior a los 8 caracteres ni superior a los 20");
 						request.getRequestDispatcher("registro.jsp").forward(request, response);
 					}
-
-				}
-				if ((password.compareTo(passwordRe) != 0)) {
-					request.setAttribute("error", "Las contraseñas debe coincidir");
-					request.getRequestDispatcher("registro.jsp").forward(request, response);
-				} else if (extensionCorreo.compareTo("@gmail.com") != 0) {
-					System.out.println(email.substring(email.length() - 10, email.length()));
-					request.setAttribute("error", "Correo no valido");
-					request.getRequestDispatcher("registro.jsp").forward(request, response);
-				} else if (!(password.matches(".*[A-Z].*"))) {
-					request.setAttribute("error", "La contraseña debe contener como mínimo una mayuscula");
-					request.getRequestDispatcher("registro.jsp").forward(request, response);
-				} else if (!(password.matches(".*[0-9].*"))) {
-					request.setAttribute("error", "La contraseña debe contener un numero");
-					request.getRequestDispatcher("registro.jsp").forward(request, response);
-				} else if (nombreUsuario.matches(".*[!¡@#$%^&*()¿?¬~].*")) {
-					request.setAttribute("error", "El nombre de usuario no debe contener un caracter especial");
-					request.getRequestDispatcher("registro.jsp").forward(request, response);
-				} else if (nombreUsuario.length() < 3) {
-					request.setAttribute("error", "El nombre de usuario debe ser superior a 3 caracteres");
-					request.getRequestDispatcher("registro.jsp").forward(request, response);
-				} else if (!(password.matches(".*[!¡@#$%^&*()¿?¬~].*"))) {
-					request.setAttribute("error", "La contraseña debe contener como mínimo un caracter especial");
-					request.getRequestDispatcher("registro.jsp").forward(request, response);
-				} else if ((password.length() <= 8) || (password.length() > 20)) {
-					request.setAttribute("error",
-							"La contraseña no puede ser inferior a los 8 caracteres ni superior a los 20");
-					request.getRequestDispatcher("registro.jsp").forward(request, response);
+	
+					// Try catch exceptiones java.lang.IllegalStateException
+					else {
+						// Guardar los datos del usuario y el token de confirmación en la sesión del
+						// usuario
+						request.getSession().setAttribute("nombreUsuario", nombreUsuario);
+						request.getSession().setAttribute("password", password);
+						request.getSession().setAttribute("email", email);
+						System.out.println(nombreUsuario + " " + password + " " + email);
+						token = generarToken();
+						System.out.println("Token creado: " + token);
+						EmailValidator.enviarCorreo(email, token);
+						request.getSession().setAttribute("token", token);
+						System.out.println("Correo enviado");
+						// Redirigir a una página para que el usuario confirme su correo electrónico
+						// request.setAttribute("token", token);
+						request.getRequestDispatcher("confirmar_correo.jsp").forward(request, response);
+	
+					}
+				} catch (IllegalStateException e) {
+					System.out.println(e.getMessage());
 				}
 
-				// Try catch exceptiones java.lang.IllegalStateException
-				else {
-					// Guardar los datos del usuario y el token de confirmación en la sesión del
-					// usuario
-					request.getSession().setAttribute("nombreUsuario", nombreUsuario);
-					request.getSession().setAttribute("password", password);
-					request.getSession().setAttribute("email", email);
-					System.out.println(nombreUsuario + " " + password + " " + email);
-					token = generarToken();
-					System.out.println("Token creado: " + token);
-					EmailValidator.enviarCorreo(email, token);
-					request.getSession().setAttribute("token", token);
-					System.out.println("Correo enviado");
-					// Redirigir a una página para que el usuario confirme su correo electrónico
-					// request.setAttribute("token", token);
-					request.getRequestDispatcher("confirmar_correo.jsp").forward(request, response);
-
-				}
-			} catch (IllegalStateException e) {
-				System.out.println(e.getMessage());
 			}
+			
 			break;
 		case "verificarCorreo":
 			codVerificacion = request.getParameter("cod_verificacion");
@@ -231,8 +237,6 @@ public class LoginController extends HttpServlet {
 		            transaction.commit();
 		        }
 
-		        // Redirige al usuario a la página principal
-		        response.sendRedirect("perfilUsuario.jsp");
 		    } catch (Exception e) {
 		        // Maneja cualquier excepción
 		        if (transaction != null && transaction.isActive()) {
@@ -240,8 +244,10 @@ public class LoginController extends HttpServlet {
 		        }
 		        e.printStackTrace();
 		    } finally {
-		        // Cierra el EntityManager
+
 		    	em2.close();
+		    	
+		    	response.sendRedirect("perfilUsuario.jsp");
 		    }
 		    break;
 
@@ -265,36 +271,53 @@ public class LoginController extends HttpServlet {
 		    EntityManager em3 = emf2.createEntityManager();
 		    EntityTransaction transaction2 = null;
 
-		    try {
-		        // Inicia una transacción
-		    	transaction2 = em3.getTransaction();
-		    	transaction2.begin();
-
-		        // Busca al usuario en la base de datos por su id
-		        Usuario user = em3.find(Usuario.class, idUsuario2);
-
-		        // Verifica si el usuario existe
-		        if (user != null) {
-		            // Actualiza el tema del usuario
-		            user.setNombre(nombreUsuario); // Cambia el usuario
-
-		            // Guarda los cambios en la base de datos
-		            em3.merge(user);
-		            transaction2.commit();
-		        }
-
-		        // Redirige al usuario a la página principal
-		        response.sendRedirect("configuracion.jsp");
-		    } catch (Exception e) {
-		        // Maneja cualquier excepción
-		        if (transaction2 != null && transaction2.isActive()) {
-		        	transaction2.rollback();
-		        }
-		        e.printStackTrace();
-		    } finally {
-		        // Cierra el EntityManager
-		    	em3.close();
-		    }
+		    if (nombreUsuario.matches(".*[!¡@#$%^&*()¿?¬~].*")) {
+				request.setAttribute("error", "El nombre de usuario no debe contener un caracter especial");
+				request.getRequestDispatcher("configuracion.jsp?datPer=true").forward(request, response);
+			} else if (nombreUsuario.length() < 3) {
+				request.setAttribute("error", "El nombre de usuario debe ser superior a 3 caracteres");
+				request.getRequestDispatcher("configuracion.jsp?datPer=true").forward(request, response);
+			}
+			else {
+				Query q1 = em3.createQuery("FROM Usuario");
+				List<Usuario> usuarios = q1.getResultList();
+				
+			    for (Usuario user : usuarios) {
+	
+					if (user.getNombre().compareTo(nombreUsuario) == 0) {
+						request.setAttribute("error", "El nombre de usuario ya esta en uso");
+						request.getRequestDispatcher("configuracion.jsp?datPer=true").forward(request, response);
+					}
+	
+				}
+			    
+			    try {
+			    	transaction2 = em3.getTransaction();
+			    	transaction2.begin();
+	
+			        Usuario user = em3.find(Usuario.class, idUsuario2);
+	
+			        if (user != null) {
+			            user.setNombre(nombreUsuario); 
+			            
+			            em3.merge(user);
+			            
+			            transaction2.commit();
+			        }
+	
+			        
+			    } catch (Exception e) {
+			        if (transaction2 != null && transaction2.isActive()) {
+			        	transaction2.rollback();
+			        }
+			        e.printStackTrace();
+			    } finally {
+			    	em3.close();
+			    	
+			    	response.sendRedirect("configuracion.jsp?datPer=true");
+			    }
+			}
+		    
 		    break;
 		
 		case "validar_tema":
@@ -326,8 +349,6 @@ public class LoginController extends HttpServlet {
 		            transaction.commit();
 		        }
 
-		        // Redirige al usuario a la página principal
-		        response.sendRedirect("configuracion.jsp");
 		    } catch (Exception e) {
 		        // Maneja cualquier excepción
 		        if (transactio3 != null && transactio3.isActive()) {
@@ -337,9 +358,196 @@ public class LoginController extends HttpServlet {
 		    } finally {
 		        // Cierra el EntityManager
 		    	em4.close();
+		    	
+		    	response.sendRedirect("configuracion.jsp?datPer=true");
 		    }
 		    break;
 		    
+
+		case "validar_correo":
+			
+			email = request.getParameter("emailUsuario");
+			if (email.length()<=10) {
+				request.setAttribute("error", "Formato de correo no valido");
+				request.getRequestDispatcher("configuracion.jsp?datPer=true").forward(request, response);
+			}
+			else {
+				String extensionCorreo2 = email.substring(email.length() - 10, email.length());
+				EntityManagerFactory emf4 = HibernateUtils.getEmf();
+			    EntityManager em5 = emf4.createEntityManager();
+				
+			    Query q2 = em5.createQuery("FROM Usuario");
+				List<Usuario> usuarios2 = q2.getResultList();
+				for (Usuario user : usuarios2) {
+	
+					if (user.getEmail().compareTo(email) == 0) {
+						request.setAttribute("error", "El correo electronico ya esta en uso");
+						request.getRequestDispatcher("configuracion.jsp?datPer=true").forward(request, response);
+					}
+	
+				}
+				if (extensionCorreo2.compareTo("@gmail.com") != 0) {
+					
+					request.setAttribute("error", "Correo no valido");
+					request.getRequestDispatcher("configuracion.jsp?datPer=true").forward(request, response);
+				}
+				else {
+					request.getSession().setAttribute("email", email);
+					
+					token = generarToken();
+					System.out.println("Token creado: " + token);
+					
+					EmailValidator.cambio_correo(email, token);
+					request.getSession().setAttribute("token", token);
+					System.out.println("Correo enviado");
+					
+					request.getRequestDispatcher("confirmar_correo2.jsp").forward(request, response);
+				}
+			}
+			
+			
+			break;
+		    
+		case "verificarCorreo2":
+			HttpSession session4 = request.getSession();
+		    Usuario usuario4 = (Usuario) session4.getAttribute("usuario");
+		    int idUsuario4 = usuario4.getId_usuario();
+		    
+			codVerificacion = request.getParameter("cod_verificacion");
+			email = (String) request.getSession().getAttribute("email");
+			token = (String) request.getSession().getAttribute("token");
+			System.out.println("TokenDef: " + token);
+			System.out.println("codVeri: " + codVerificacion);
+			if (token.compareTo(codVerificacion) != 0) {
+				request.setAttribute("token", token);
+				request.setAttribute("email", email);
+				request.setAttribute("error", "Codigo de verificacion incorrecto");
+				request.getRequestDispatcher("confirmar_correo.jsp").forward(request, response);
+			} else {
+				
+				EntityManager em6 = HibernateUtils.getEmf().createEntityManager();
+				EntityTransaction transaction4 = em6.getTransaction();
+				
+				try {
+					transaction4.begin();
+					
+					Usuario user = em6.find(Usuario.class, idUsuario4);
+
+			        if (user != null) {
+			            user.setEmail(email); 
+
+			            em6.merge(user);
+			            transaction4.commit();
+			        }
+			        
+					System.out.println("Usuario Subido");
+				} catch (Exception e) {
+					System.err.println(e.getMessage());
+					transaction4.rollback();
+				} finally {
+					em6.close();
+					
+					response.sendRedirect("configuracion.jsp?datPer=true");
+				}
+				
+			}
+			break;
+			
+		case "validar_password":
+			password = request.getParameter("passwordUsuario");
+			
+			HttpSession session5 = request.getSession();
+		    Usuario usuario5 = (Usuario) session5.getAttribute("usuario");
+		    email = usuario5.getEmail();
+			
+			
+			if (!(password.matches(".*[A-Z].*"))) {
+				request.setAttribute("error", "La contraseña debe contener como mínimo una mayuscula");
+				request.getRequestDispatcher("configuracion.jsp?datPer=true").forward(request, response);
+			} 
+			else if (!(password.matches(".*[0-9].*"))) {
+				request.setAttribute("error", "La contraseña debe contener un numero");
+				request.getRequestDispatcher("configuracion.jsp?datPer=true").forward(request, response);
+			} 
+			else if (!(password.matches(".*[!¡@#$%^&*()¿?¬~].*"))) {
+				request.setAttribute("error", "La contraseña debe contener como mínimo un caracter especial");
+				request.getRequestDispatcher("configuracion.jsp?datPer=true").forward(request, response);
+			}
+			else if ((password.length() < 8) || (password.length() > 20)) {
+				request.setAttribute("error",
+						"La contraseña no puede ser inferior a los 8 caracteres ni superior a los 20");
+				request.getRequestDispatcher("configuracion.jsp?datPer=true").forward(request, response);
+			}
+			else {
+				
+				request.getSession().setAttribute("email", email);
+				request.getSession().setAttribute("password", password);
+				
+				token = generarToken();
+				System.out.println("Token creado: " + token);
+				
+				EmailValidator.cambio_password(email, token);
+				request.getSession().setAttribute("token", token);
+				System.out.println("Correo enviado");
+				
+				request.getRequestDispatcher("confirmar_password.jsp").forward(request, response);
+				
+			}
+			
+			
+			break;
+		
+		case "verificar_password":
+			password = (String) request.getSession().getAttribute("password");
+			
+			HttpSession session6 = request.getSession();
+		    Usuario usuario6 = (Usuario) session6.getAttribute("usuario");
+		    int idUsuario6 = usuario6.getId_usuario();
+		    
+			codVerificacion = request.getParameter("cod_verificacion");
+			email = (String) request.getSession().getAttribute("email");
+			token = (String) request.getSession().getAttribute("token");
+			System.out.println("TokenDef: " + token);
+			System.out.println("codVeri: " + codVerificacion);
+			
+			if (token.compareTo(codVerificacion) != 0) {
+				request.setAttribute("token", token);
+				request.setAttribute("email", email);
+				request.setAttribute("error", "Codigo de verificacion incorrecto");
+				request.getRequestDispatcher("confirmar_password.jsp").forward(request, response);
+			} else {
+				
+				EntityManagerFactory emf5 = HibernateUtils.getEmf();
+			    EntityManager em5 = emf5.createEntityManager();
+			    EntityTransaction transaction5 = null;
+				
+			    try {
+			    	transaction5 = em5.getTransaction();
+			    	transaction5.begin();
+
+			        Usuario user = em5.find(Usuario.class, idUsuario6);
+
+			        if (user != null) {
+			            user.setContrasenia(password);
+
+			            em5.merge(user);
+			            transaction5.commit();
+			        }
+
+			        
+			    } catch (Exception e) {
+			        if (transaction5 != null && transaction5.isActive()) {
+			        	transaction5.rollback();
+			        }
+			        e.printStackTrace();
+			    } finally {
+			    	em5.close();
+			    	
+			    	response.sendRedirect("configuracion.jsp?datPer=true");
+			    }
+			
+			}
+			break;
 		default:
 			// es el cliente quien deber� invocar a este recurso
 			response.sendRedirect("index.jsp");

@@ -34,11 +34,11 @@ usuario.setTema(tema);
 
 if(usuario.getTema() == false) {
 %>
-    <link rel="stylesheet" href="Styles/cssPerfilUsuario_Claro.css">
+    <link rel="stylesheet" href="Styles/Perfil_Usuario/cssPerfilUsuario_Claro.css">
 <%
 } else {
 %>  
-    <link rel="stylesheet" href="Styles/cssPerfilUsuario_Oscuro.css">
+    <link rel="stylesheet" href="Styles/Perfil_Usuario/cssPerfilUsuario_Oscuro.css">
 <%
 }
 %>
