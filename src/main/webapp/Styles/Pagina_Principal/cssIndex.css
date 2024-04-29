@@ -1,0 +1,40 @@
+body {
+	padding: 0%;
+	margin: 0%;
+}
+.Encabezado {
+    background-color: #FF2300; 
+    padding: 0.5%; 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+}
+
+.Contenedor_Logo {
+    max-width: 150px;
+}
+
+.Contenedor_Botones {
+    margin-left: auto;
+}
+
+.Botones {
+    background-color: #96FF96;
+    padding: 10px 20px; 
+    border: none;
+    border-radius: 5px; 
+    margin-left: 10px; 
+}
+.Botones:hover {
+  	opacity: 0.8;
+  	cursor: pointer;
+  	
+}
+.Botones:active {
+	background-color: #93FFBF;
+}
+#logo{
+	height: 75%;
+	width: 50%;
+	border-radius: 5px;
+}

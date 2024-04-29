@@ -24,13 +24,15 @@
 
 </head>
 <body>
-<h2>Iniciar Sesión</h2>
+
+	<h2>Iniciar Sesión</h2>
+	
 	<c:if test="${not empty error}">
 	    <p style="color: red;">${error}</p>
 	</c:if>
 	
-    <form name="login" action="LoginController" method="post" ">
-    
+    <form name="login" action="LoginController" method="post">
+    	
     	<input type="hidden" name="opcion" value="iniciarSesion">
     	
         <label for="correoUsuario">Correo electronico:</label><br>
