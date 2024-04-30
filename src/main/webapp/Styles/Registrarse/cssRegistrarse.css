@@ -2,36 +2,30 @@ body {
 	padding: 0%;
 	margin: 0%;
 	font-family: arial;
-	background-color: #FFF1F1;
+	background-color: #BDFFBC;
 }
-.Contenedor_InicoSesion {
+
+.Contenedor_Registrarse {
 	position: absolute;
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
 	background-color: white;
 	border-radius: 5px;
-	border: 2px solid #61C41C;
+	border: 2px solid red;
 	text-align: center;
-	width: 30%;
-}
-#imgPerfil {
-	border-radius: 20px;
-	left: 50%;
-	width: 20%;
-	height: 30%;
-	display: block;
-	margin: 0 auto;
+	width: 50%;
 }
 .Botones {
 	margin-top: 7%;
+	margin-bottom: 2%;
 	border-radius: 5px;
-	background-color: #96FF96;
+	background-color: red;
 	cursor: pointer;
 	text-decoration: none;
-	color: black;
+	color: white;
 	font-size: small;
-	padding: 3% 6%;
+	padding: 1.5% 3%;
 	border: none;
 	font-weight: bold;
 }
@@ -39,24 +33,31 @@ body {
 	opacity: 0.7;
 }
 .Botones:active {
-	background-color: aqua;
-}
-#Texto_Error {
-	margin-top: 3%; 
+	background-color: orange;
 }
 #Contenedor_Cabecero {
-	padding-top: 10%;
-	padding-bottom: 3%;
-	background-color: #61C41C;
+	padding-top: 5%;
+	padding-bottom: 0.5%;
+	background-color: red;
 	color: white;
 	font-weight: bold;
 }
-#Contenedor_Cuerpo {
-	padding-bottom: 10%;
+#imgPerfil {
+	border-radius: 10px;
+	left: 50%;
+	width: 5%;
+	height: 10%;
+	display: block;
+	margin: 0 auto;
+}
+.Texto_Ayuda {
+	font-size: x-small;
 }
 .Boton_Escribir {
 	margin-top: 1%;
 	border-radius: 5px;
-	width: 70%;
+	width: 35%;
 }
+
+
 
