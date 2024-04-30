@@ -1,26 +1,73 @@
-#menu-container {
-    position: relative;
-    display: inline-block; /* Hace que el contenedor ocupe solo el espacio que necesitan sus elementos hijos */
+body {
+	padding: 0%;
+	margin: 0%;
+}
+.Encabezado {
+    background-color: #FF2300;
+    padding: 0.5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%; /* Asegura que el encabezado ocupe todo el ancho de la pantalla */
 }
 
-ul {
+.Contenedor_Logo {
+    max-width: 150px;
+}
+
+.Contenedor_Botones {
+    margin-left: auto;
+    background-color: orange;
+    padding-bottom: 1%;
+}
+
+.Botones {
+    background-color: #96FF96;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+.Botones:hover {
+    opacity: 0.8;
+}
+
+#logo {
+    width: 75%; 
+    border-radius: 5px;
+}
+
+#Texto_Bienvenido {
+	margin-left: 20%;
+    color: white;
+}
+
+#menu-container {
+    display: inline-block;
+}
+
+#menu {
     position: absolute;
-    top: 100%; /* Coloca el menú debajo de la imagen */
-    border: #C0C0C0 2px solid;;
-    border-radius: 10px;
-    border-color: #EAEDED;
-    display: none; /* Por defecto ocultamos el menú */
+    top: 100%;
+    border: 2px solid #C0C0C0;
+    border-radius: 2px;
+    display: none;
     list-style-type: none;
     margin: 0;
     padding: 0;
     background-color: white;
-    width: 170%; /* Establece el ancho máximo del menú desplegable */
+    width: auto; /* Ajusta el ancho automáticamente */
+    margin-right: 75%;
 }
 
-#nada{
+#nada {
+    border-radius: 2px;
     background: #F2D7D5;
 }
-#usuario{
+
+#usuario {
     font-size: medium;
     background: #F2D7D5;
     display: block;
@@ -29,7 +76,8 @@ ul {
     padding: 14px 16px;
     font-family: arial;
 }
-#correo{
+
+#correo {
     font-size: small;
     display: block;
     text-align: center;
@@ -38,7 +86,7 @@ ul {
     font-family: arial;
 }
 
-li a {
+.Botones_Despliegue {
     font-size: small;
     font-family: arial;
     display: block;
@@ -48,23 +96,30 @@ li a {
     text-decoration: none;
 }
 
-li a:hover {
+.Botones_Despliegue:hover {
     background-color: #EAEDED;
 }
 
 #menu-icon {
-    cursor: pointer; /* Cambia el cursor a pointer para indicar que es clickable */
-    height:15%;
-    width: 15%;
+    max-width: 150px;
+    border-radius: 30px;
+    cursor: pointer;
+    height: 5%;
+    width: 25%; /* Ajusta el ancho automáticamente */
+    padding-bottom: 0%;
 }
+
 #menu-icon:hover {
     opacity: 0.5;
 }
-#imgSalir{
-    height:6%;
+
+#imgSalir {
+    height: 6%;
     width: 6%;
 }
-#imgConfig{
-    height:7%;
+
+#imgConfig {
+    height: 7%;
     width: 7%;
 }
+
