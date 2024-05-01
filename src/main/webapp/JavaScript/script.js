@@ -1,7 +1,14 @@
 // Obtener la referencia de la imagen del menú y el menú desplegable
     var menuIcon = document.getElementById("menu-icon");
     var menu = document.getElementById("menu");
-
+    //!!Borrar los onclick y <script> de los jsp y en su lugar almacenarlos en js
+    // de la carpeta JavaScript debe haber un js por cada jsp
+    //Evitar usar document(SOLO PARA recoger ids)
+    
+	//let btnCreacionViaje=document.getElementById("btnCreacionViaje");
+	//btnCreacionViaje.innerHTML=""
+	//btnCreacionViaje.style.visibility="visible"
+    
     // Agregar un evento de clic a la imagen del menú
     menuIcon.addEventListener("click", function(event) {
         // Si el menú está oculto, mostrarlo; si no, ocultarlo
@@ -21,5 +28,7 @@
             menu.style.display = "none";
         }
     });
+    
+    
     
     

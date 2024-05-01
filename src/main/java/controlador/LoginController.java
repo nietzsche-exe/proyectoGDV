@@ -19,6 +19,11 @@ import util.EmailValidator;
 import java.util.List;
 import java.util.UUID;
 
+import com.amadeus.Amadeus;
+import com.amadeus.Params;
+import com.amadeus.exceptions.ResponseException;
+import com.amadeus.resources.City;
+
 import java.io.IOException;
 
 
@@ -34,6 +39,8 @@ public class LoginController extends HttpServlet {
 		response.setContentType("text/html;charset=UTF-8");
 		String nombreUsuario = "", password = "", passwordRe = "", email = "hola";
 		String token = "";
+		String nomCiudad="";
+		String codigo="";
 
 		String codVerificacion = "";
 
@@ -171,6 +178,48 @@ public class LoginController extends HttpServlet {
 			break;
 		case "NuevoViaje": // es el cliente quien invoca este recurso al presionar el oton de Crear Viaje
 			response.sendRedirect("nuevoViaje.jsp");
+			break;
+		case "buscarHotel":
+			String fechaEntrada=request.getParameter("fechaEntrada");
+			String fechaSalida=request.getParameter("fechaSalida");
+			String numeroPersonas=request.getParameter("numeroPersonas");
+	    	System.out.println("Fecha de Entrada: "+fechaEntrada+"\nFecha de Salida: "+fechaSalida+"\nNumero de personas: "+numeroPersonas);
+
+			nomCiudad= request.getParameter("destino");
+			System.out.println(nomCiudad);
+			
+			Amadeus amadeus =iniciarApi();
+			try {
+				City[] ciudad=amadeus.referenceData.locations.cities.get(Params.with("keyword", nomCiudad));
+				codigo=ciudad[0].getIataCode();
+			} catch (ResponseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			request.setAttribute("fechaEntrada", fechaEntrada);
+			request.setAttribute("fechaSalida", fechaSalida);
+			request.setAttribute("numeroPersonas", numeroPersonas);
+			
+			request.setAttribute("nombreCiudad", nomCiudad);
+			request.setAttribute("sesionAmadeus", amadeus);
+			request.setAttribute("codIATA", codigo);
+			request.getRequestDispatcher("ofertasHoteles.jsp").forward(request, response);
+			break;
+		case "guardarOfertaHotel":
+			Amadeus sesion=iniciarApi();
+			codigo=(String)request.getParameter("codigoIATA2");
+			fechaEntrada=(String) request.getParameter("fechaEntrada2");
+			fechaSalida=(String) request.getParameter("fechaSalida2");
+			numeroPersonas=(String) request.getParameter("numeroPersonas2");
+			System.out.println(codigo+" "+fechaEntrada+" "+fechaSalida+" "+numeroPersonas);
+			request.setAttribute("codigoIATA3", codigo);
+			request.setAttribute("fechaEntrada3", fechaEntrada);
+			request.setAttribute("fechaSalida3", fechaSalida);
+			request.setAttribute("numeroPersonas3", numeroPersonas);
+			
+			request.setAttribute("sesionAmadeus",sesion );
+			
+			request.getRequestDispatcher("ofertasTransporte.jsp").forward(request, response);
 			break;
 		case "iniciarSesion":
 			// Obtén los valores de los campos de nombre de usuario y contraseña del
@@ -559,7 +608,14 @@ public class LoginController extends HttpServlet {
 		// Implementa la lógica para generar un token de confirmación único
 		return UUID.randomUUID().toString();
 	}
-
+	
+	protected Amadeus iniciarApi() {
+		//Initialize using parameters
+		Amadeus amadeus = Amadeus
+		        .builder("ptncDDPN6h0AZL1kMKSrGquLu1yUPeGk", "RUZhm8NigqOrNrDw")
+		        .build();
+		return amadeus;
+	}
 	/**
 	 * Método controlador para las peticiones HTTP GET que delega al método
 	 * `procesarPeticion`.

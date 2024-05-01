@@ -56,7 +56,7 @@ if(usuario.getTema() == false) {
 			</div>
 			<div class="Contenedor_Botones">
 			
-				<button id="btnCreacionViaje" class="Botones">Creacion de viaje</button>
+				<button id="btnCreacionViaje" onclick="javascript:document.tema.opcion.value='NuevoViaje';document.tema.submit();" class="Botones">Creacion de viaje</button>
 			    <button id="btnEliminacionViaje" class="Botones">Eliminacion de Viaje</button>
 			    <div id="menu-container">
 				    <img src="Resources/perfil.jpg" alt="Menú" id="menu-icon">
