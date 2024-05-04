@@ -43,6 +43,8 @@ public class LoginController extends HttpServlet {
 		String codigo="";
 
 		String codVerificacion = "";
+		
+		String codigoPaisOrigen="",codigoPaisDestino="";
 
 		String operacion = request.getParameter("opcion");
 		if (operacion == null) {
@@ -211,12 +213,16 @@ public class LoginController extends HttpServlet {
 			fechaEntrada=(String) request.getParameter("fechaEntrada2");
 			fechaSalida=(String) request.getParameter("fechaSalida2");
 			numeroPersonas=(String) request.getParameter("numeroPersonas2");
-			System.out.println(codigo+" "+fechaEntrada+" "+fechaSalida+" "+numeroPersonas);
+			codigoPaisOrigen=(String) request.getParameter("codigoIATAOrigen");
+			codigoPaisDestino=(String) request.getParameter("codigoIATADestino");
+			System.out.println("case: guardarOfertaHotel ["+codigo+" "+fechaEntrada+" "+fechaSalida+" "+numeroPersonas);
+			
 			request.setAttribute("codigoIATA3", codigo);
 			request.setAttribute("fechaEntrada3", fechaEntrada);
 			request.setAttribute("fechaSalida3", fechaSalida);
 			request.setAttribute("numeroPersonas3", numeroPersonas);
-			
+			request.setAttribute("codigoIATAOrigen2", codigoPaisOrigen);
+			request.setAttribute("codigoIATADestino2", codigoPaisDestino);
 			request.setAttribute("sesionAmadeus",sesion );
 			
 			request.getRequestDispatcher("ofertasTransporte.jsp").forward(request, response);

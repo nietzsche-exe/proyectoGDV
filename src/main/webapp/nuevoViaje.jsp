@@ -10,7 +10,7 @@
 <body>
 
 <h1>Buscar un hotel</h1>
-	
+<h3>(El nombre de las ciudades deben ser en ingles)</h3>
 	<form name="buscar" action="LoginController" method="post">
 		<input type="hidden" name="opcion" value="buscarHotel">
 		

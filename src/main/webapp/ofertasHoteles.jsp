@@ -24,6 +24,8 @@
 	pageEncoding="UTF-8"%>
 
 <%
+//Necesario transportar datos del usuario
+
 //Get list of hotels by city code
 //Cada vez que el usuario refresque se actualizara			
 Amadeus amadeus = (Amadeus) request.getAttribute("sesionAmadeus");
@@ -122,7 +124,7 @@ request.setAttribute("sesionAmadeus", amadeus);
 			<td style="border: 2px; border-style: solid; border-color: black;">Hab. Categoria</td>
 			<td style="border: 2px; border-style: solid; border-color: black;">Nº camas/Hab</td>
 			<td style="border: 2px; border-style: solid; border-color: black;">Tipo Camas</td>
-			<td style="border: 2px; border-style: solid; border-color: black;">Descipcion</td>
+			<td style="border: 2px; border-style: solid; border-color: black;">Descripcion</td>
 			<td style="border: 2px; border-style: solid; border-color: black;">Acompañantes</td>
 			<td style="border: 2px; border-style: solid; border-color: black;">Precio por noche/</td>
 			<td style="border: 2px; border-style: solid; border-color: black;">Precio Total(+ añadidos)</td>
@@ -166,8 +168,10 @@ request.setAttribute("sesionAmadeus", amadeus);
 					<input type="hidden" name="hotelId" value="<%=infoOferta.getId()%>">
 					<input type="hidden" name="fechaEntrada2" value="<%=fechaEntrada%>">
 					<input type="hidden" name="fechaSalida2" value="<%=fechaSalida%>">
-					<input type="hidden" name="numPersonas2" value="<%=numeroPersonas%>">
+					<input type="hidden" name="numeroPersonas2" value="<%=numeroPersonas%>">
 					<input type="hidden" name="codigoIATA2" value="<%=airportCode%>">
+					<input type="hidden" name="codigoIATAOrigen" value="ES"><!-- Se cambiara por la ubicacion del usuario con la API de googleMaps -->
+					<input type="hidden" name="codigoIATADestino" value="<%=hotel.getAddress().getCountryCode()%>">
 					<input type="submit" value="Reservar(No funciona)">
 				</form>
 			</td>
