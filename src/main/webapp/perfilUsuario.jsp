@@ -51,39 +51,38 @@ if(usuario.getTema() == false) {
 			<div class="Contenedor_Logo">
 				<img id="logo" alt="Logo" src="Resources/logo.png">
 			</div>
-			<div>
-				<h1 id="Texto_Bienvenido"><b>Bienvenido, <%= usuario.getNombre() %></b></h1>
-			</div>
-			<div class="Contenedor_Botones">
 			
-				<button id="btnCreacionViaje" onclick="javascript:document.tema.opcion.value='NuevoViaje';document.tema.submit();" class="Botones">Creacion de viaje</button>
-			    <button id="btnEliminacionViaje" class="Botones">Eliminacion de Viaje</button>
-			    <div id="menu-container">
-				    <img src="Resources/perfil.jpg" alt="Menú" id="menu-icon">
-				    	<ul id="menu">
-				                <li id="nada">&nbsp;</li>
-				                <li id="usuario"><%= usuario.getNombre() %></li>
-				                <li id="correo"><%= usuario.getEmail() %></li>
-				                <li>&nbsp;</li>
-				                <li class="Botones_Despliegue"><a href="index.jsp"><img id="imgSalir" src="Resources/salir.jpg"> Cerrar Sesion</a></li>
-				                <li class="Botones_Despliegue"><a href="javascript:void(0)" onclick="javascript:document.tema.opcion.value='config';document.tema.submit();"><img id="imgConfig" src="Resources/config.png"> Configuracion</a></li>
+			<div class="Contenedor_Botones">
+				<button id="btnCreacionViaje" onclick="javascript:document.tema.opcion.value='NuevoViaje';document.tema.submit();" class="Botones">Creación de viaje</button>
+			    <button id="btnEliminacionViaje" class="Botones">Eliminación de Viaje</button>
+			</div>
+			
+			<div id="menu-container">
+				<img src="Resources/perfil.jpg" alt="Menú" id="menu-icon">
+				    <ul id="menu">
+						<li id="nada">&nbsp;</li>
+			            <li id="usuario"><%= usuario.getNombre() %></li>
+			            <li id="correo"><%= usuario.getEmail() %></li>
+			            <li>&nbsp;</li>
+			            <li class="Botones_Despliegue"><a href="index.jsp"><img id="imgSalir" src="Resources/salir.jpg"> Cerrar Sesion</a></li>
+			            <li class="Botones_Despliegue"><a href="javascript:void(0)" onclick="javascript:document.tema.opcion.value='config';document.tema.submit();"><img id="imgConfig" src="Resources/config.png"> Configuracion</a></li>
 	<%          
-				            if(usuario.getTema() == false) {
+				        if(usuario.getTema() == false) {
 	%>			
-				            	<li><a href="javascript:void(0)" onclick="javascript:document.tema.opcion.value='cambiar_tema';document.tema.submit();">Cambiar tema a oscuro</a></li>
+				            <li class="Botones_Despliegue"><a href="javascript:void(0)" onclick="javascript:document.tema.opcion.value='cambiar_tema';document.tema.submit();">Cambiar tema a oscuro</a></li>
 							
 	<%
-				            } else {
+				        } else {
 	%>  
-				            	<li><a href="javascript:void(0)" onclick="javascript:document.tema.opcion.value='cambiar_tema';document.tema.submit();">Cambiar tema a claro</a></li>
+				            <li class="Botones_Despliegue"><a href="javascript:void(0)" onclick="javascript:document.tema.opcion.value='cambiar_tema';document.tema.submit();">Cambiar tema a claro</a></li>
 				            
 	<%
-				            }
+				        }
 	%>
 				            
-						</ul>
-					</div>
+					</ul>
 			</div>
+			
 		</header>
     
     <script src="JavaScript/script.js"></script>
