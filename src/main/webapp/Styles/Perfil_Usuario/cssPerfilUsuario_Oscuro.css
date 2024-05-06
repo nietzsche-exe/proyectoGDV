@@ -1,77 +1,131 @@
 body {
-    background-color: #000000; /* Fondo negro para toda la pantalla */
-    color: #ffffff; /* Texto blanco */
+	padding: 0%;
+	margin: 0%;
+	background-color: black;
+	color: white;
+}
+.Encabezado {
+    background-color: darkblue;
+    padding: 0.5%;
+    display: flex;
+    align-items: center;
+    width: 99%;
+}
+
+.Contenedor_Logo {
+    max-width: 150px;
+}
+
+.Contenedor_Botones {
+    margin-right: 40%;
+    padding-bottom: 1%;
+    margin-left: 5%;	
+}
+
+.Botones {
+	font-weight: bold;
+    background-color: green;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    color: white;
+}
+
+.Botones:hover {
+    opacity: 0.8;
+}
+
+#logo {
+    width: 75%; 
+    border-radius: 5px;
 }
 
 #menu-container {
-    position: relative;
     display: inline-block;
+    position: relative;
+    margin-right: 13%;
+    color: white;
 }
 
-ul {
+#menu {
     position: absolute;
     top: 100%;
-    border: #EAEDED 2px solid;
+    border: 2px solid white;
     border-radius: 10px;
     display: none;
     list-style-type: none;
     margin: 0;
     padding: 0;
-    background-color: #1e1e1e; /* Fondo negro */
-    width: 170%;
+    background-color: black;
+    width: 200%;
+    z-index: 1;
 }
 
-#nada{
-    background: rgb(0, 0, 160);	
+#nada {
+    border-top-left-radius: 9px;
+    border-top-right-radius: 9px;
+    background: blue;
 }
-#usuario{
+
+#usuario {
     font-size: medium;
-    background: rgb(0, 0, 160);
+    background: blue;
     display: block;
     text-align: center;
     text-decoration: none;
     padding: 14px 16px;
     font-family: arial;
-    color: #ffffff; /* Texto blanco */
 }
-#correo{
-    background: #1e1e1e;
+
+#correo {
     font-size: small;
     display: block;
     text-align: center;
     text-decoration: none;
     padding: 14px 16px;
     font-family: arial;
-    color: #ffffff; /* Texto blanco */
 }
 
-li a {
+.Botones_Despliegue, a {
+	font-weight: bold;
     font-size: small;
     font-family: arial;
     display: block;
     text-align: left;
-    color: #ffffff; /* Texto blanco */
+    color: white;
     padding: 14px 16px;
     text-decoration: none;
 }
 
-li a:hover {
-    background-color: #2a2a2a; /* Gris oscuro para resaltar el hover */
+.Botones_Despliegue:hover{
+    background-color: #8076FF;
+    
+}
+#btnCambiarTema:hover {
+	border-bottom-left-radius: 9px;
+	border-bottom-right-radius: 9px;
 }
 
 #menu-icon {
+    max-width: 150px;
+    border-radius: 30px;
     cursor: pointer;
-    height:15%;
-    width: 15%;
+    height: 5%;
+    width: 25%; /* Ajusta el ancho automáticamente */
+    padding-bottom: 0%;
 }
+
 #menu-icon:hover {
     opacity: 0.5;
 }
-#imgSalir{
-    height:6%;
+
+#imgSalir {
+    height: 6%;
     width: 6%;
 }
-#imgConfig{
-    height:7%;
+
+#imgConfig {
+    height: 7%;
     width: 7%;
 }

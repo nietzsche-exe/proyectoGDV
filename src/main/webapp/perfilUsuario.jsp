@@ -69,12 +69,12 @@ if(usuario.getTema() == false) {
 	<%          
 				        if(usuario.getTema() == false) {
 	%>			
-				            <li class="Botones_Despliegue"><a href="javascript:void(0)" onclick="javascript:document.tema.opcion.value='cambiar_tema';document.tema.submit();">Cambiar tema a oscuro</a></li>
+				            <li id="btnCambiarTema" class="Botones_Despliegue"><a href="javascript:void(0)" onclick="javascript:document.tema.opcion.value='cambiar_tema';document.tema.submit();">Cambiar tema a oscuro</a></li>
 							
 	<%
 				        } else {
 	%>  
-				            <li class="Botones_Despliegue"><a href="javascript:void(0)" onclick="javascript:document.tema.opcion.value='cambiar_tema';document.tema.submit();">Cambiar tema a claro</a></li>
+				            <li id="btnCambiarTema" class="Botones_Despliegue"><a href="javascript:void(0)" onclick="javascript:document.tema.opcion.value='cambiar_tema';document.tema.submit();">Cambiar tema a claro</a></li>
 				            
 	<%
 				        }
