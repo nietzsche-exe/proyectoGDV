@@ -6,9 +6,8 @@ body {
     background-color: #FF2300;
     padding: 0.5%;
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    width: 100%; /* Asegura que el encabezado ocupe todo el ancho de la pantalla */
+    width: 100%;
 }
 
 .Contenedor_Logo {
@@ -16,17 +15,17 @@ body {
 }
 
 .Contenedor_Botones {
-    margin-left: auto;
-    background-color: orange;
+    margin-right: 40%;
     padding-bottom: 1%;
+    margin-left: 5%;	
 }
 
 .Botones {
+	font-weight: bold;
     background-color: #96FF96;
     padding: 10px 20px;
     border: none;
     border-radius: 5px;
-    margin-left: 10px;
     cursor: pointer;
 }
 
@@ -46,6 +45,8 @@ body {
 
 #menu-container {
     display: inline-block;
+    position: relative;
+    margin-right: 13%;
 }
 
 #menu {
@@ -58,8 +59,8 @@ body {
     margin: 0;
     padding: 0;
     background-color: white;
-    width: auto; /* Ajusta el ancho automáticamente */
-    margin-right: 75%;
+    width: 200%;
+    z-index: 1;
 }
 
 #nada {
@@ -86,7 +87,7 @@ body {
     font-family: arial;
 }
 
-.Botones_Despliegue {
+.Botones_Despliegue, a {
     font-size: small;
     font-family: arial;
     display: block;
