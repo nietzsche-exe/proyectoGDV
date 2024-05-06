@@ -7,7 +7,7 @@ body {
     padding: 0.5%;
     display: flex;
     align-items: center;
-    width: 100%;
+    width: 99%;
 }
 
 .Contenedor_Logo {
@@ -38,11 +38,6 @@ body {
     border-radius: 5px;
 }
 
-#Texto_Bienvenido {
-	margin-left: 20%;
-    color: white;
-}
-
 #menu-container {
     display: inline-block;
     position: relative;
@@ -53,7 +48,7 @@ body {
     position: absolute;
     top: 100%;
     border: 2px solid #C0C0C0;
-    border-radius: 2px;
+    border-radius: 10px;
     display: none;
     list-style-type: none;
     margin: 0;
@@ -64,7 +59,8 @@ body {
 }
 
 #nada {
-    border-radius: 2px;
+    border-top-left-radius: 9px;
+    border-top-right-radius: 9px;
     background: #F2D7D5;
 }
 
@@ -88,6 +84,7 @@ body {
 }
 
 .Botones_Despliegue, a {
+	font-weight: bold;
     font-size: small;
     font-family: arial;
     display: block;
@@ -99,6 +96,11 @@ body {
 
 .Botones_Despliegue:hover {
     background-color: #EAEDED;
+}
+
+#btnCambiarTema:hover {
+	border-bottom-left-radius: 9px;
+	border-bottom-right-radius: 9px;
 }
 
 #menu-icon {
