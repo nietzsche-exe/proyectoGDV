@@ -16,6 +16,7 @@ import modelo.HibernateUtils;
 import modelo.Usuario;
 import util.EmailValidator;
 
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -25,6 +26,8 @@ import com.amadeus.exceptions.ResponseException;
 import com.amadeus.resources.City;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 
 
 /**
@@ -237,15 +240,51 @@ public class LoginController extends HttpServlet {
 			EntityManager em = HibernateUtils.getEmf().createEntityManager();
 			Query consulta = em.createQuery("SELECT u FROM Usuario u WHERE u.email = :correo");
 			consulta.setParameter("correo", email);
+			
+			
+			
 			try {
 				Usuario usuario = (Usuario) consulta.getSingleResult();
 
 				if (usuario != null && usuario.getContrasenia().equals(password)) {
-					// Almacena los datos del usuario en la sesión
-					HttpSession session = request.getSession();
+					EntityManager em2 = HibernateUtils.getEmf().createEntityManager();
+					Query query2 = em2.createQuery("SELECT u.ultima_conexion_temporal FROM Usuario u WHERE u.id = :id");
+					query2.setParameter("id", usuario.getId_usuario());
+					
+					LocalDateTime  ultima_conexion_temporal =  (LocalDateTime) query2.getSingleResult();
+					
+				    EntityManagerFactory emf = HibernateUtils.getEmf();
+				    EntityManager em3 = emf.createEntityManager();
+				    EntityTransaction transaction = null;
+
+				    try {
+				        transaction = em3.getTransaction();
+				        transaction.begin();
+
+				        Usuario user = em3.find(Usuario.class, usuario.getId_usuario());
+
+				        if (user != null) {
+				            user.setUltima_conexion(ultima_conexion_temporal);
+				            user.setUltima_conexion_temporal(LocalDateTime.now());
+				            
+				            em3.merge(user);
+				            transaction.commit();
+				        }
+
+				    } catch (Exception e) {
+				        // Maneja cualquier excepción
+				        if (transaction != null && transaction.isActive()) {
+				            transaction.rollback();
+				        }
+				        e.printStackTrace();
+				    }
+				    
+				    HttpSession session = request.getSession();
 					session.setAttribute("usuario", usuario);
-					// Redirige a la página de perfil
+					
 					response.sendRedirect("perfilUsuario.jsp");
+					
+					
 				} else {
 					// Si las credenciales no son válidas, redirige de nuevo al formulario de inicio
 					// de sesión con un mensaje de error

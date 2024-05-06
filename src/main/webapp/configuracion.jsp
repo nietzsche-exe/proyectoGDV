@@ -1,8 +1,11 @@
+<%@page import="java.time.format.DateTimeFormatter"%>
+<%@page import="java.time.LocalDateTime"%>
 <%@page import="org.hibernate.internal.build.AllowSysOut"%>
 <%@page import="jakarta.persistence.Query"%>
 <%@page import="modelo.Usuario"%>
 <%@page import="modelo.HibernateUtils"%>
 <%@page import="jakarta.persistence.EntityManager"%>
+<%@ page import="java.text.SimpleDateFormat" %>
 
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
@@ -59,6 +62,13 @@ String password = (String) query4.getSingleResult();
 
 usuario.setContrasenia(password);
 
+Query query5 = em.createQuery("SELECT u.ultima_conexion FROM Usuario u WHERE u.id = :idUsuario");
+query5.setParameter("idUsuario", usuario.getId_usuario());
+
+LocalDateTime ultima_conexion = (LocalDateTime) query5.getSingleResult();
+
+usuario.setUltima_conexion(ultima_conexion);
+
 boolean principal = true, datPer = false, seguridad = false, privacidad = false;
 
 if(usuario != null) {
@@ -110,7 +120,10 @@ if(usuario != null) {
     	seguridad = false;
     	privacidad = true;
     }
+
 %>
+
+
 <div class="resultados">
 <%
     if (datPer == true){
@@ -159,9 +172,28 @@ if(usuario != null) {
 			    <td ><input type="text" id="campo-oculto" readonly> <input type="hidden" id="contrasena" value="<%= usuario.getContrasenia() %>"></td>
 			    <td><input type="password" id="passwordUsuario" name="passwordUsuario" oninput="validarPassword()"> <input id="confirmarPassword" onclick="javascript:document.datos.opcion.value='validar_password';document.datos.submit();" type="submit" value="Confirmar" disabled></td>
 			</tr>
+			<tr>
+			    <td>Ultima Conexion</td>
+<%
+			    
+
+			    if (usuario.getUltima_conexion() != null) {
+			    	LocalDateTime fechaActual = usuario.getUltima_conexion();
+			        DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+			        String ultimaConexion = formatoFecha.format(fechaActual);
+%>
+			        <td colspan="2">Última conexión: <%= ultimaConexion %></td>
+<%
+			    } else {
+%>
+			        <td colspan="2">No hay información de la última conexión disponible porque es la primera vez que inicias sesion.</td>
+<%
+			    }
+%>
+			</tr>
 		</table>
 		
-		
+
 <%
     }
     else if (seguridad == true){
