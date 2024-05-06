@@ -1,6 +1,7 @@
 package modelo;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 import jakarta.persistence.Column;
@@ -35,6 +36,12 @@ public class Usuario implements Serializable{
 	
 	@Column(name="modo_oscuro")
 	private Boolean tema;
+	
+	@Column(name="ultima_conexion")
+	private LocalDateTime  ultima_conexion;
+	
+	@Column(name="ultima_conexion_temporal")
+	private LocalDateTime  ultima_conexion_temporal;
 	
 	
 	public Usuario(String nombre, String contrasenia, String email, Boolean tema) {
@@ -84,8 +91,23 @@ public class Usuario implements Serializable{
 	public void setTema(Boolean tema) {
 		this.tema = tema;
 	}
-
 	
+	public LocalDateTime  getUltima_conexion() {
+		return ultima_conexion;
+	}
+
+	public void setUltima_conexion(LocalDateTime  ultima_conexion) {
+		this.ultima_conexion = ultima_conexion;
+	}
+
+	public LocalDateTime  getUltima_conexion_temporal() {
+		return ultima_conexion_temporal;
+	}
+
+	public void setUltima_conexion_temporal(LocalDateTime  ultima_conexion_temporal) {
+		this.ultima_conexion_temporal = ultima_conexion_temporal;
+	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(contrasenia, email, id_usuario, nombre);
