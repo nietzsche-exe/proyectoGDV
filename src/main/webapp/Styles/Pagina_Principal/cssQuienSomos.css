@@ -45,15 +45,6 @@ body {
 	border-radius: 5px;
 }
 
-.Cuerpo {
-	margin-top: 10%;
-	margin-left: 5%;
-	margin-right: 5%;
-	background-color: green;
-	border-radius: 10px;
-	border-color: black;
-	font-family: arial;
-}
 .Contenedor_Titulo {
 	margin-top: 10%;
 	float: top;
