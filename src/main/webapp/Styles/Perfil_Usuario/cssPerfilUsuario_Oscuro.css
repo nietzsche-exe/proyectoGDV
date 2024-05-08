@@ -1,131 +1,133 @@
 body {
 	padding: 0%;
 	margin: 0%;
-	background-color: #353535;
-	color: white;
+	background-color: #222; /* Cambiado a oscuro */
+	color: #FFF; /* Cambiado a blanco */
 }
+
 .Encabezado {
-    background-color: darkblue;
-    padding: 0.5%;
-    display: flex;
-    align-items: center;
-    width: 99%;
+	background-color: darkblue; /* Cambiado a oscuro */
+	padding: 0.5%;
+	display: flex;
+	align-items: center;
+	width: 99%;
 }
 
 .Contenedor_Logo {
-    max-width: 150px;
+	max-width: 150px;
 }
 
 .Contenedor_Botones {
-    margin-right: 40%;
-    padding-bottom: 1%;
-    margin-left: 5%;	
+	margin-right: 40%;
+	padding-bottom: 1%;
+	margin-left: 5%;	
 }
 
 .Botones {
 	font-weight: bold;
-    background-color: green;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    color: white;
+	background-color: #444; /* Cambiado a oscuro */
+	padding: 10px 20px;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+	color: #FFF; /* Cambiado a blanco */
 }
 
 .Botones:hover {
-    opacity: 0.8;
+	opacity: 0.8;
 }
 
 #logo {
-    width: 75%; 
-    border-radius: 5px;
+	width: 75%; 
+	border-radius: 5px;
 }
 
 #menu-container {
-    display: inline-block;
-    position: relative;
-    margin-right: 13%;
-    color: white;
+	display: inline-block;
+	position: relative;
+	margin-right: 13%;
 }
 
 #menu {
-    position: absolute;
-    top: 100%;
-    border: 2px solid white;
-    border-radius: 10px;
-    display: none;
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    background-color: black;
-    width: 200%;
-    z-index: 1;
+	position: absolute;
+	top: 100%;
+	border: 2px solid #666; /* Cambiado a oscuro */
+	border-radius: 10px;
+	display: none;
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	background-color: #444; /* Cambiado a oscuro */
+	width: 200%;
+	z-index: 1;
 }
 
 #nada {
-    border-top-left-radius: 9px;
-    border-top-right-radius: 9px;
-    background: blue;
+	border-top-left-radius: 9px;
+	border-top-right-radius: 9px;
+	background: #848AE3; /* Cambiado a oscuro */
 }
 
 #usuario {
-    font-size: medium;
-    background: blue;
-    display: block;
-    text-align: center;
-    text-decoration: none;
-    padding: 14px 16px;
-    font-family: arial;
+	font-size: medium;
+	background: #848AE3; /* Cambiado a oscuro */
+	display: block;
+	text-align: center;
+	text-decoration: none;
+	padding: 14px 16px;
+	font-family: arial;
+	color: #FFF; /* Cambiado a blanco */
 }
 
 #correo {
-    font-size: small;
-    display: block;
-    text-align: center;
-    text-decoration: none;
-    padding: 14px 16px;
-    font-family: arial;
+	font-size: small;
+	display: block;
+	text-align: center;
+	text-decoration: none;
+	padding: 14px 16px;
+	font-family: arial;
+	color: #FFF; /* Cambiado a blanco */
 }
 
 .Botones_Despliegue, a {
 	font-weight: bold;
-    font-size: small;
-    font-family: arial;
-    display: block;
-    text-align: left;
-    color: white;
-    padding: 14px 16px;
-    text-decoration: none;
+	font-size: small;
+	font-family: arial;
+	display: block;
+	text-align: left;
+	color: #FFF; /* Cambiado a blanco */
+	padding: 14px 16px;
+	text-decoration: none;
 }
 
-.Botones_Despliegue:hover{
-    background-color: #8076FF;
-    
+.Botones_Despliegue:hover {
+	background-color: #666; /* Cambiado a oscuro */
 }
+
 #btnCambiarTema:hover {
 	border-bottom-left-radius: 9px;
 	border-bottom-right-radius: 9px;
 }
 
 #menu-icon {
-    max-width: 150px;
-    border-radius: 30px;
-    cursor: pointer;
-    height: 5%;
-    width: 25%; /* Ajusta el ancho automáticamente */
-    padding-bottom: 0%;
+	max-width: 150px;
+	border-radius: 30px;
+	cursor: pointer;
+	height: 5%;
+	width: 25%; /* Ajusta el ancho automáticamente */
+	padding-bottom: 0%;
 }
 
 #menu-icon:hover {
-    opacity: 0.5;
+	opacity: 0.5;
 }
 
 #imgSalir {
-    height: 6%;
-    width: 6%;
+	height: 6%;
+	width: 6%;
 }
 
 #imgConfig {
-    height: 7%;
-    width: 7%;
+	height: 7%;
+	width: 7%;
 }
