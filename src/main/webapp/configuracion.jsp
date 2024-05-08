@@ -308,6 +308,45 @@
 		    }
 		    else {
 %>
+				<div class="Contenedor_Texto">
+					<p class="Titulo2">
+						Resumen del proyecto
+					</p>
+					<p class="Texto2">
+						El proyecto GDV, abreviatura de Gestión de Viajes, tiene como objetivo primordial simplificar la búsqueda en línea de 
+						ofertas de viajes y destinos turísticos. Esto será posible a través de una aplicación web diseñada para permitir 
+						a los usuarios registrarse, generar itinerarios personalizados y crear viajes según sus preferencias y datos suministrados.
+					</p>
+					<br>
+					<p class="Texto2">
+						Registro e Inicio de Sesión: Los usuarios pueden registrarse con un nombre de usuario único, correo electrónico y contraseña. 
+						Se establecen requisitos para cada campo, como longitud mínima y restricciones de caracteres. El correo electrónico debe ser 
+						único y del dominio "@gmail.com". Se confirma la dirección de correo electrónico mediante tokens. Se implementa un sistema 
+						de inicio de sesión que muestra la fecha de la última conexión del usuario.
+					</p>
+					<p class="Texto2">
+						Creación de Viajes: Los usuarios pueden crear viajes proporcionando información como destino, fechas, número de personas, 
+						rango de precios y origen del viaje. Tienen la opción de permitir que la aplicación acceda a su ubicación.
+					</p>
+					<p class="Texto2">
+						Búsqueda de Ofertas y Creación de Itinerarios: La aplicación utiliza APIs para buscar ofertas de vuelos y alojamientos en 
+						varias páginas web. Se genera un itinerario personalizado para cada usuario, que incluye lugares turísticos populares como museos, 
+						restaurantes y actividades.
+					</p>
+					<p class="Texto2">		
+						Notificaciones por Email: Se envían alertas por correo electrónico a los usuarios para recordar fechas importantes relacionadas 
+						con sus viajes.
+					</p>
+					<p class="Texto2">		
+						Gestión de Viajes: Los usuarios pueden eliminar los viajes que ya no deseen mantener.
+					</p>
+					<p class="Texto2">		
+						Configuración de Usuario: Se proporciona un apartado de ajustes donde los usuarios pueden cambiar su nombre de usuario, 
+						contraseña, correo electrónico, activar un modo oscuro y ver un historial de viajes realizados.
+					</p>
+					
+					
+				</div>
 <%
     		}
 %>
@@ -360,6 +399,15 @@
 	            // Asignar la cadena de puntos al campo de contraseña
 	            document.getElementById("campo-oculto").value = puntos;
 	        };
+	        
+	        $(document).ready(function(){
+	            // Cuando se haga clic en un título
+	            $('.Titulo2').click(function(){
+	                // Encuentra el siguiente elemento de clase Texto2 y cambia su visibilidad
+	                $(this).next('.Texto2').slideToggle();
+	            });
+	        });
+
 		</script>
 	</form>
 </body>

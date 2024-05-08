@@ -7,7 +7,7 @@ body {
 .Encabezado {
   	background-color: #FF2300;
   	padding: 0.5%;
-  	width: 100%;
+  	width: 99%;
   	padding-bottom: 1%;
 }
 
@@ -66,6 +66,7 @@ body {
 	opacity: 0.8;
 }
 
+/*Datos Personales*/
 .Tabla {
 	margin-top: 3%;
 	margin-left: 20%;
@@ -130,3 +131,44 @@ body {
 .Confirmar:hover {
 	opacity: 0.8;
 }
+
+/*Informacion Principal*/
+
+/* Estilos para el contenedor principal */
+.Contenedor_Texto {
+    background-color: #f8f9fa; /* Fondo gris claro */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Sombra suave */
+}
+
+/* Estilos para los títulos */
+.Titulo2 {
+    font-size: 24px;
+    color: #333333; /* Texto oscuro */
+    margin-bottom: 15px;
+    cursor: pointer; /* Cambia el cursor al hacer hover */
+}
+
+/* Estilos para el texto */
+.Texto2 {
+    font-size: 16px;
+    color: #555555; /* Texto gris */
+    line-height: 1.6;
+    margin-bottom: 15px;
+    display: none; /* Oculta el texto por defecto */
+}
+
+/* Estilos para los enlaces */
+.Texto2 a {
+    color: #007bff; /* Enlace azul */
+    text-decoration: none;
+    transition: color 0.3s ease; /* Transición suave */
+}
+
+/* Cambia el color del enlace al pasar el ratón */
+.Texto2 a:hover {
+    color: #0056b3; /* Cambio de color al pasar el ratón */
+    text-decoration: underline;
+}
+
