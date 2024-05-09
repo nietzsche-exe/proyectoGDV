@@ -61,7 +61,10 @@ request.setAttribute("sesionAmadeus", amadeus);
 <body>
 	<h1>Ciudad: ${param.destino}</h1>
 	<h2>Codigo IATA: ${codIATA}</h2>
-
+	
+	<div id="map" style="height: 500px; width: 100%;"></div>
+	
+	
 	<%
 	String fechaEntrada = (String) request.getAttribute("fechaEntrada");
 	String fechaSalida = (String) request.getAttribute("fechaSalida");
@@ -98,6 +101,10 @@ request.setAttribute("sesionAmadeus", amadeus);
 					<input type="hidden" name="numeroPersonas"
 						value="<%=numeroPersonas%>"> <input type="submit"
 						value="Ver detalles">
+					<!-- 
+					<input type="button" name="latitude" value="//hotel.getGeoCode().getLatitude() ">
+					<input type="button" name="longitude" value="//hotel.getGeoCode().getLongitude() ">
+					 -->
 				</form>
 			</td>
 		</tr>
@@ -198,6 +205,9 @@ request.setAttribute("sesionAmadeus", amadeus);
 	<c:if test="${not empty errorMessage}">
 		<p>${errorMessage}</p>
 	</c:if>
+
+	<script src="JavaScript/map.js"></script>
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCmNYNcpFgAX0QLerv3_P3CJZoop9VnSSs&callback=iniciarMap"></script>
 
 </body>
 </html>

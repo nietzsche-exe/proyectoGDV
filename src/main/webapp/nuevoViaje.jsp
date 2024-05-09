@@ -10,6 +10,8 @@
 <body>
 
 <h1>Buscar un hotel</h1>
+
+
 <h3>(El nombre de las ciudades deben ser en ingles)</h3>
 	<form name="buscar" action="LoginController" method="post">
 		<input type="hidden" name="opcion" value="buscarHotel">
@@ -25,6 +27,9 @@
 		<label>Numero de personas</label><br>
 		<input type="number" name="numeroPersonas" min="1" max="5" required="required" value="1"><br>
 		<input id="busca" type="submit"  value="Buscar"> <br>
+		
 	</form>
+	
+	
 </body>
 </html>

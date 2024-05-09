@@ -8,7 +8,7 @@
 </head>
 <body>
 
-	
+
 	<header class="Encabezado">
 		<div class="Contenedor_Logo">
 			<img id="logo" alt="Logo" src="Resources/logo.png">
@@ -19,9 +19,9 @@
 	    	<button id="btnRegistro" class="Botones"><b>Registrarse</b></button>
 		</div>
 	</header>
-    	
+ 
     <a href="pruebas.jsp">Enlace a pruebas</a>
-	
+
 
 	<script>
         // Función para redirigir al usuario a la página de inicio de sesión
@@ -46,5 +46,6 @@
         
         document.getElementById("btnQuienSomos").addEventListener("click", redirectToQuienSomos);
     </script>
+
 </body>
 </html>
