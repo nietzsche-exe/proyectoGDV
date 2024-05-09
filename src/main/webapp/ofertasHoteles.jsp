@@ -34,7 +34,7 @@ ArrayList<Hotel> listaHoteles = new ArrayList<Hotel>();
 String airportCode = (String) request.getAttribute("codIATA");
 try {
 	hotels = amadeus.referenceData.locations.hotels.byCity.get(Params.with("cityCode", airportCode));
-	for (int a = 0; a < 10; a++) {
+	for (int a = 0; a < 50; a++) {
 		System.out.println(hotels[a].toString());
 		listaHoteles.add(hotels[a]);
 	}
@@ -72,6 +72,19 @@ request.setAttribute("sesionAmadeus", amadeus);
 	if (!(listaHoteles.isEmpty())) {
 		
 		for (Hotel hotel : listaHoteles) {
+			
+			try {
+
+				HotelOfferSearch[] ofertasHotel = amadeus.shopping.hotelOffersSearch.get(Params
+						.with("hotelIds", hotel.getHotelId())
+						.and("adults", Integer.valueOf(numeroPersonas))
+						.and("childs", 0)
+						.and("checkInDate", fechaEntrada)
+						.and("checkOutDate", fechaSalida)
+						.and("roomQuantity", 1).and("bestRateOnly", true));
+				System.out.println("Consulta " + 1 + ": " + ofertasHotel.toString());
+				System.out.println("Oferta " + 1 + ": " + ofertasHotel[0].toString());
+				System.out.println("Id Oferta " + 1 + ": " + ofertasHotel[0].getOffers()[0].getId());
 		%>
 	<table style="border: 2px; border-style: solid; border-color: black;">
 		<thead><%=request.getAttribute("codIATA")%></thead>
@@ -82,7 +95,7 @@ request.setAttribute("sesionAmadeus", amadeus);
 			<td colspan="2">Codigo Hotel</td>
 		</tr>
 		<tr style="border: 2px; border-style: solid; border-color: black;">
-
+			
 			<td style="border: 2px; border-style: solid; border-color: black;"><%=hotel.getName()%></td>
 			<td style="border: 2px; border-style: solid; border-color: black;" colspan="10"><%=hotel.getAddress()%> <br> Falta Implementar la
 				Geolocalizacion inversa(Api de Google Maps,...?)</td>
@@ -98,22 +111,14 @@ request.setAttribute("sesionAmadeus", amadeus);
 					<input type="hidden" name="numeroPersonas"
 						value="<%=numeroPersonas%>"> <input type="submit"
 						value="Ver detalles">
+					<input type="button" name="latitude" value="<%=hotel.getGeoCode().getLatitude() %>">
+					<input type="button" name="longitude" value="<%=hotel.getGeoCode().getLongitude() %>">
 				</form>
 			</td>
 		</tr>
 		<tr style="border: 2px; border-style: solid; border-color: black;">
 		<%
-		try {
-
-			HotelOfferSearch[] ofertasHotel = amadeus.shopping.hotelOffersSearch.get(Params
-					.with("hotelIds", hotel.getHotelId())
-					.and("adults", Integer.valueOf(numeroPersonas))
-					.and("childs", 1).and("checkInDate", fechaEntrada)
-					.and("checkOutDate", fechaSalida)
-					.and("roomQuantity", 1).and("bestRateOnly", true));
-			System.out.println("Consulta " + 1 + ": " + ofertasHotel.toString());
-			System.out.println("Oferta " + 1 + ": " + ofertasHotel[0].toString());
-			System.out.println("Id Oferta " + 1 + ": " + ofertasHotel[0].getOffers()[0].getId());
+		
 		%>
 			<td style="border: 2px; border-style: solid; border-color: black;">Id Oferta</td>
 			<td style="border: 2px; border-style: solid; border-color: black;">Fecha de entrada</td>
@@ -172,16 +177,14 @@ request.setAttribute("sesionAmadeus", amadeus);
 					<input type="hidden" name="codigoIATA2" value="<%=airportCode%>">
 					<input type="hidden" name="codigoIATAOrigen" value="ES"><!-- Se cambiara por la ubicacion del usuario con la API de googleMaps -->
 					<input type="hidden" name="codigoIATADestino" value="<%=hotel.getAddress().getCountryCode()%>">
-					<input type="submit" value="Reservar(No funciona)">
+					<input type="submit" value="Reservar">
 				</form>
 			</td>
 		
 
 		<%
 		} catch (ClientException e) {
-		%>
-			<td colspan="11" style="border: 2px; border-style: solid; border-color: black;">No se han encontrado habitaciones para el hotel	</td>		
-		<%
+			System.out.println("El hotel no dispone de habitaciones");
 		}
 
 		}

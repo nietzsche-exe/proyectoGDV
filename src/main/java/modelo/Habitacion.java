@@ -7,6 +7,9 @@ import java.util.Objects;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -18,9 +21,12 @@ public class Habitacion implements Serializable{
 	@Id
 	@Column(name = "id_habitacion")
 	private String id_habitacion;
-	
+	/*@OneToOne
+	@JoinColumn(name = "id_hotel")
+	private Hotel id_hotel;
+	*/
 	@Column(name = "id_hotel")
-	private String id_hotel;
+	private Integer id_hotel;
 	
 	@Column(name = "fecha_entrada")
 	private LocalDate fecha_entrada;
@@ -43,7 +49,12 @@ public class Habitacion implements Serializable{
 	@Column(name = "precio_total")
 	private Double precio_total;
 
-	public Habitacion(String id_habitacion, String id_hotel, LocalDate fecha_entrada, LocalDate fecha_salida,
+	//@ManyToOne
+	//@JoinColumn(name="id_habitacion")
+	//@Column(name="id_habitacion")
+	//private Viaje viaje;
+	
+	public Habitacion(String id_habitacion, Integer id_hotel, LocalDate fecha_entrada, LocalDate fecha_salida,
 			Integer habitacion_disponible, Integer numero_camas, String tipo_cama, Double precio_noche,
 			Double precio_total) {
 		super();
@@ -66,11 +77,11 @@ public class Habitacion implements Serializable{
 		this.id_habitacion = id_habitacion;
 	}
 
-	public String getId_hotel() {
+	public Integer getId_hotel() {
 		return id_hotel;
 	}
 
-	public void setId_hotel(String id_hotel) {
+	public void setId_hotel(Integer id_hotel) {
 		this.id_hotel = id_hotel;
 	}
 

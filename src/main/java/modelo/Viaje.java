@@ -1,11 +1,15 @@
 package modelo;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -18,12 +22,17 @@ public class Viaje implements Serializable{
 	@Column(name = "id_viaje")
 	private Integer id_viaje;
 	
-	@Column(name = "id_usuario")
+	//@OneToOne
+	//@JoinColumn(name = "id_usuario")
+	@Column(name="id_usuario")
 	private Integer id_usuario;
 	
 	@Column(name = "id_habitacion")
 	private String id_habitacion;
-
+	/*
+	@OneToMany(mappedBy = "viaje")
+	private List<Habitacion> habitaciones;
+	*/
 	public Viaje(Integer id_viaje, Integer id_usuario, String id_habitacion) {
 		super();
 		this.id_viaje = id_viaje;
