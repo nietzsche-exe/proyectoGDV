@@ -1,3 +1,4 @@
+<%@page import="java.time.LocalDate"%>
 <%@page import="java.time.format.DateTimeFormatter"%>
 <%@page import="java.time.LocalDateTime"%>
 <%@page import="org.hibernate.internal.build.AllowSysOut"%>
@@ -18,40 +19,33 @@
 	
 	EntityManager em = HibernateUtils.getEmf().createEntityManager();
 	
-	Query query = em.createQuery("SELECT u.nombre FROM Usuario u WHERE u.id = :idUsuario");
+	Query query = em.createQuery("SELECT u.nombre, u.tema, u.email, u.contrasenia, u.ultima_conexion, u.sexo, " + 
+									"u.num_telefono, u.fecha_nacimiento, u.ultima_modificacion_contrasenna FROM Usuario u WHERE u.id = :idUsuario");
 	query.setParameter("idUsuario", usuario.getId_usuario());
+
+	Object[] resultado = (Object[]) query.getSingleResult();
+
+	String nom = (String) resultado[0];
+	Boolean tema = (Boolean) resultado[1];
+	String email = (String) resultado[2];
+	String password = (String) resultado[3];
+	LocalDateTime ultima_Conexion = (LocalDateTime) resultado[4];
+	String sexo = (String) resultado[5];
+	String telefono = (String) resultado[6];
+	LocalDate fecha_nacimiento = (LocalDate) resultado[7];
+	LocalDate ultima_modificacion_contrasenna = (LocalDate) resultado[8];
 	
-	String nom = (String) query.getSingleResult();
 	
 	usuario.setNombre(nom);
-	
-	Query query2 = em.createQuery("SELECT u.tema FROM Usuario u WHERE u.id = :id");
-	query2.setParameter("id", usuario.getId_usuario());
-	
-	Boolean tema = (Boolean) query2.getSingleResult();
-	
 	usuario.setTema(tema);
-	
-	Query query3 = em.createQuery("SELECT u.email FROM Usuario u WHERE u.id = :idUsuario");
-	query3.setParameter("idUsuario", usuario.getId_usuario());
-	
-	String email = (String) query3.getSingleResult();
-	
 	usuario.setEmail(email);
-	
-	Query query4 = em.createQuery("SELECT u.contrasenia FROM Usuario u WHERE u.id = :idUsuario");
-	query4.setParameter("idUsuario", usuario.getId_usuario());
-	
-	String password = (String) query4.getSingleResult();
-	
 	usuario.setContrasenia(password);
+	usuario.setUltima_conexion(ultima_Conexion);
+	usuario.setSexo(sexo);
+	usuario.setNum_telefono(telefono);
+	usuario.setFecha_nacimiento(fecha_nacimiento);
+	usuario.setUltima_modificacion_contrasenna(ultima_modificacion_contrasenna);
 	
-	Query query5 = em.createQuery("SELECT u.ultima_conexion FROM Usuario u WHERE u.id = :idUsuario");
-	query5.setParameter("idUsuario", usuario.getId_usuario());
-	
-	LocalDateTime ultima_conexion = (LocalDateTime) query5.getSingleResult();
-	
-	usuario.setUltima_conexion(ultima_conexion);
 	
 	boolean principal = true, datPer = false, seguridad = false, privacidad = false;
 	
@@ -188,12 +182,17 @@
 					</tr>
 					<tr class="Filas">
 					    <td class="Columna_1">Fecha de nacimiento</td>
-					    <td class="Columna_2">Aquí va la fecha</td>
+<%
+					    	LocalDate fecha_N = usuario.getFecha_nacimiento();
+					        DateTimeFormatter formatoNacimiento = DateTimeFormatter.ofPattern("dd / MM / yyyy");
+					        String nacimiento = formatoNacimiento.format(fecha_N);
+%>
+					    <td class="Columna_2"><%= nacimiento %></td>
 					    <td class="Columna_3">Cambiar fecha de nacimiento</td>
 					</tr>
 					<tr class="Filas">
 					    <td class="Columna_1">Sexo</td>
-					    <td class="Columna_2">Aquí va el sexo</td>
+					    <td class="Columna_2"><%= usuario.getSexo() %></td>
 					    <td class="Columna_3">Cambiar sexo</td>
 					</tr>
 					<tr class="Filas">
@@ -251,8 +250,8 @@
 					</tr>
 					<tr class="Filas">
 					    <td class="Columna_1">Número de Telefono</td>
-					    <td class="Columna_2">Aquí va el telefono</td>
-					    <td class="Columna_3">Cambiar telefono</td>
+					    <td class="Columna_2"><%= usuario.getNum_telefono() %></td>
+					    <td class="Columna_3"><input type="number" id="telefonoUsuario" name="telefonoUsuario" oninput="validarTelefono()"> <input class="Confirmar" id="confirmarTelefono" onclick="javascript:document.datos.opcion.value='validar_telefono';document.datos.submit();" type="submit" value="Confirmar" disabled></td>
 					</tr>
 				</table>
 				
@@ -276,11 +275,11 @@
 					<tr class="Filas">
 					    <td class="Columna_1">Última Modificación</td>
 <%
-					    if (usuario.getUltima_conexion() != null) {
+					    if (usuario.getUltima_modificacion_contrasenna() != null) {
 					    	
-					    	LocalDateTime fechaActual = usuario.getUltima_conexion();
-					        DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
-					        String ultimaConexion = formatoFecha.format(fechaActual);
+					    	LocalDate fecha = usuario.getUltima_modificacion_contrasenna();
+					        DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("dd / MM / yyyy");
+					        String ultimaConexion = formatoFecha.format(fecha);
 %>
 			        		<td colspan="2" class="Columna_2">Última modificación: <%= ultimaConexion %></td>
 <%
@@ -368,14 +367,28 @@
 			}
 			
 			function validarEmail(){
-				var nombreUsuario = document.getElementById("emailUsuario").value;
+				var emailUsuario = document.getElementById("emailUsuario").value;
 				var btnEmail=document.getElementById("confirmarEmail");
 				
-				if (nombreUsuario === "") {
+				if (emailUsuario === "") {
 					btnEmail.disabled = true;                	
 	            } else {
 	            	btnEmail.disabled = false;
 	            }
+			}
+			
+			function validarTelefono() {
+			    var telefonoUsuario = document.getElementById("telefonoUsuario").value;
+			    var btnTelefono = document.getElementById("confirmarTelefono");
+
+			    // Expresión regular para validar que el teléfono tenga exactamente 9 dígitos y no comience con 6 o 7
+			    var regex = /^[6-7]\d{8}$/;
+
+			    if (telefonoUsuario === "" || !regex.test(telefonoUsuario)) {
+			        btnTelefono.disabled = true;
+			    } else {
+			        btnTelefono.disabled = false;
+			    }
 			}
 			
 			function validarPassword(){
@@ -388,6 +401,7 @@
 	            	btnPassword.disabled = false;
 	            }
 			}
+			
 			
 			window.onload = function() {
 	            // Obtener la contraseña predefinida

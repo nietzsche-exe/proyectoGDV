@@ -15,10 +15,12 @@ import jakarta.servlet.http.HttpSession;
 import modelo.HibernateUtils;
 import modelo.Usuario;
 import util.EmailValidator;
+import util.Genero;
 
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
+import java.util.spi.LocaleServiceProvider;
 
 import com.amadeus.Amadeus;
 import com.amadeus.Params;
@@ -27,6 +29,7 @@ import com.amadeus.resources.City;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 
@@ -40,7 +43,8 @@ public class LoginController extends HttpServlet {
 	protected void procesarPeticion(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
 		response.setContentType("text/html;charset=UTF-8");
-		String nombreUsuario = "", password = "", passwordRe = "", email = "hola";
+		String nombreUsuario = "", password = "", passwordRe = "", email = "hola", telefono = "", sexo = "";
+		LocalDate fecha_nacimiento = null;
 		String token = "";
 		String nomCiudad="";
 		String codigo="";
@@ -62,7 +66,7 @@ public class LoginController extends HttpServlet {
 
 		    rd = request.getRequestDispatcher("registro.jsp");
 		    rd.forward(request, response);
-		    	
+		    
 			break;
 		case "registrarNuevoUsuario":// Se realiza el insert de un nuevo usuario en la base de datos
 
@@ -70,6 +74,11 @@ public class LoginController extends HttpServlet {
 			password = request.getParameter("contrasenia");
 			passwordRe = request.getParameter("contraseniaRe");
 			email = request.getParameter("correoUsuario");
+			sexo = request.getParameter("genero");
+			telefono = request.getParameter("num_telefono");
+			fecha_nacimiento = LocalDate.parse(request.getParameter("fecha_nacimiento"));
+			
+			
 			if (email.length()<=10) {
 				request.setAttribute("error", "Formato de correo no valido");
 				request.getRequestDispatcher("registro.jsp").forward(request, response);
@@ -85,8 +94,13 @@ public class LoginController extends HttpServlet {
 						if (user.getEmail().compareTo(email) == 0) {
 							request.setAttribute("error", "El correo electronico ya esta en uso");
 							request.getRequestDispatcher("registro.jsp").forward(request, response);
-						} else if (user.getNombre().compareTo(nombreUsuario) == 0) {
+						} 
+						else if (user.getNombre().compareTo(nombreUsuario) == 0) {
 							request.setAttribute("error", "El nombre de usuario ya esta en uso");
+							request.getRequestDispatcher("registro.jsp").forward(request, response);
+						}
+						else if (user.getNum_telefono().compareTo(telefono) == 0) {
+							request.setAttribute("error", "El número de teléfono ya esta en uso");
 							request.getRequestDispatcher("registro.jsp").forward(request, response);
 						}
 	
@@ -117,6 +131,14 @@ public class LoginController extends HttpServlet {
 						request.setAttribute("error",
 								"La contraseña no puede ser inferior a los 8 caracteres ni superior a los 20");
 						request.getRequestDispatcher("registro.jsp").forward(request, response);
+					} else if (telefono.length() < 9 || telefono.length() > 9) {
+						request.setAttribute("error",
+								"El numero de telefono tienen que tener 9 dígitos");
+						request.getRequestDispatcher("registro.jsp").forward(request, response);
+					} else if ('6' != telefono.charAt(0) && '7' != telefono.charAt(0)) {
+						request.setAttribute("error",
+								"El numero de telefono tiene que empezar por 6 o 7");
+						request.getRequestDispatcher("registro.jsp").forward(request, response);
 					}
 	
 					// Try catch exceptiones java.lang.IllegalStateException
@@ -126,7 +148,10 @@ public class LoginController extends HttpServlet {
 						request.getSession().setAttribute("nombreUsuario", nombreUsuario);
 						request.getSession().setAttribute("password", password);
 						request.getSession().setAttribute("email", email);
-						System.out.println(nombreUsuario + " " + password + " " + email);
+						request.getSession().setAttribute("genero", sexo);
+						request.getSession().setAttribute("num_telefono", telefono);
+						request.getSession().setAttribute("fecha_nacimiento", fecha_nacimiento);
+						System.out.println(nombreUsuario + " " + password + " " + email + " " + telefono + " " + sexo + " " + fecha_nacimiento);
 						token = generarToken();
 						System.out.println("Token creado: " + token);
 						EmailValidator.enviarCorreo(email, token);
@@ -149,6 +174,9 @@ public class LoginController extends HttpServlet {
 			nombreUsuario = (String) request.getSession().getAttribute("nombreUsuario");
 			password = (String) request.getSession().getAttribute("password");
 			email = (String) request.getSession().getAttribute("email");
+			sexo = (String) request.getSession().getAttribute("genero");
+			telefono = (String) request.getSession().getAttribute("num_telefono");
+			fecha_nacimiento = (LocalDate) request.getSession().getAttribute("fecha_nacimiento");
 			token = (String) request.getSession().getAttribute("token");
 			System.out.println(nombreUsuario + " " + password + " " + email);
 			System.out.println("TokenDef: " + token);
@@ -159,8 +187,8 @@ public class LoginController extends HttpServlet {
 				request.setAttribute("error", "Codigo de verificacion incorrecto");
 				request.getRequestDispatcher("confirmar_correo.jsp").forward(request, response);
 			} else {
-				Usuario nuevoUsuario = new Usuario(nombreUsuario, password, email, false);
-				System.out.println(nuevoUsuario);
+				Usuario nuevoUsuario = new Usuario(nombreUsuario, password, email, false, sexo, telefono, fecha_nacimiento, LocalDate.now());
+				System.out.println(nuevoUsuario.toString());
 				EntityManager em2 = HibernateUtils.getEmf().createEntityManager();
 				EntityTransaction transacion = em2.getTransaction();
 				try {
@@ -169,6 +197,7 @@ public class LoginController extends HttpServlet {
 					transacion.commit();
 					System.out.println("Usuario Subido");
 				} catch (Exception e) {
+					System.out.println(nuevoUsuario.toString());
 					System.err.println(e.getMessage());
 					transacion.rollback();
 				} finally {
@@ -618,12 +647,13 @@ public class LoginController extends HttpServlet {
 			    try {
 			    	transaction5 = em5.getTransaction();
 			    	transaction5.begin();
-
+			    	
 			        Usuario user = em5.find(Usuario.class, idUsuario6);
 
 			        if (user != null) {
 			            user.setContrasenia(password);
-
+			            user.setUltima_modificacion_contrasenna(LocalDate.now());
+			            
 			            em5.merge(user);
 			            transaction5.commit();
 			        }
@@ -642,6 +672,45 @@ public class LoginController extends HttpServlet {
 			
 			}
 			break;
+			
+		case "validar_telefono":
+			telefono = request.getParameter("telefonoUsuario");
+			
+			HttpSession session7 = request.getSession();
+		    Usuario usuario7 = (Usuario) session7.getAttribute("usuario");
+		    int idUsuario7 = usuario7.getId_usuario();
+			
+		    EntityManagerFactory emf6 = HibernateUtils.getEmf();
+		    EntityManager em6 = emf6.createEntityManager();
+		    EntityTransaction transaction6 = null;
+			
+		    try {
+		    	transaction6 = em6.getTransaction();
+		    	transaction6.begin();
+		    	
+		        Usuario user = em6.find(Usuario.class, idUsuario7);
+
+		        if (user != null) {
+		            user.setNum_telefono(telefono);
+		            
+		            em6.merge(user);
+		            transaction6.commit();
+		        }
+
+		        
+		    } catch (Exception e) {
+		        if (transaction6 != null && transaction6.isActive()) {
+		        	transaction6.rollback();
+		        }
+		        e.printStackTrace();
+		    } finally {
+		    	em6.close();
+		    	
+		    	response.sendRedirect("configuracion.jsp?datPer=true");
+		    }
+			
+			break;
+			
 		default:
 			// es el cliente quien deber� invocar a este recurso
 			response.sendRedirect("index.jsp");

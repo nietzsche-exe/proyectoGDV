@@ -1,6 +1,7 @@
 package modelo;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -10,6 +11,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import util.Genero;
 
 @Entity
 @Table(name="usuarios", schema="gestion_viajes")
@@ -43,14 +45,32 @@ public class Usuario implements Serializable{
 	@Column(name="ultima_conexion_temporal")
 	private LocalDateTime  ultima_conexion_temporal;
 	
+	@Column(name="sexo")
+	private String sexo;
 	
-	public Usuario(String nombre, String contrasenia, String email, Boolean tema) {
-		super();
+	@Column(name="telefono")
+	private String num_telefono;
+	
+	@Column(name="ultima_modificacion_contrasenna")
+	private LocalDate ultima_modificacion_contrasenna;
+	
+	@Column(name="fecha_nacimiento")
+	private LocalDate fecha_nacimiento;
+	
+
+	public Usuario(String nombre, String contrasenia, String email, Boolean tema, String sexo, String num_telefono, 
+			LocalDate fecha_nacimiento, LocalDate ultima_modificacion_contrasenna ) {
+		
 		this.nombre = nombre;
 		this.contrasenia = contrasenia;
 		this.email = email;
 		this.tema = tema;
+		this.sexo = sexo;
+		this.num_telefono = num_telefono;
+		this.fecha_nacimiento = fecha_nacimiento;
+		this.ultima_modificacion_contrasenna = ultima_modificacion_contrasenna;
 	}
+
 
 	public Integer getId_usuario() {
 		return id_usuario;
@@ -108,6 +128,39 @@ public class Usuario implements Serializable{
 		this.ultima_conexion_temporal = ultima_conexion_temporal;
 	}
 
+	public String getSexo() {
+		return sexo;
+	}
+
+	public void setSexo(String sexo) {
+		this.sexo = sexo;
+	}
+
+	public String getNum_telefono() {
+		return num_telefono;
+	}
+
+	public void setNum_telefono(String num_telefono) {
+		this.num_telefono = num_telefono;
+	}
+
+	public LocalDate getUltima_modificacion_contrasenna() {
+		return ultima_modificacion_contrasenna;
+	}
+
+	public void setUltima_modificacion_contrasenna(LocalDate ultima_modificacion_contrasenna) {
+		this.ultima_modificacion_contrasenna = ultima_modificacion_contrasenna;
+	}
+
+	public LocalDate getFecha_nacimiento() {
+		return fecha_nacimiento;
+	}
+
+	public void setFecha_nacimiento(LocalDate fecha_nacimiento) {
+		this.fecha_nacimiento = fecha_nacimiento;
+	}
+
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(contrasenia, email, id_usuario, nombre);
@@ -124,6 +177,14 @@ public class Usuario implements Serializable{
 		Usuario other = (Usuario) obj;
 		return Objects.equals(contrasenia, other.contrasenia) && Objects.equals(email, other.email)
 				&& Objects.equals(id_usuario, other.id_usuario) && Objects.equals(nombre, other.nombre);
+	}
+
+
+	@Override
+	public String toString() {
+		return "Usuario [id_usuario=" + id_usuario + ", nombre=" + nombre + ", contrasenia=" + contrasenia + ", email="
+				+ email + ", tema=" + tema + ", sexo=" + sexo + ", num_telefono=" + num_telefono + ", fecha_nacimiento="
+				+ fecha_nacimiento + "]";
 	}
 	
 	
