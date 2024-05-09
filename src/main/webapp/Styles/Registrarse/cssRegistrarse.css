@@ -1,63 +1,69 @@
 body {
-	padding: 0%;
-	margin: 0%;
-	font-family: arial;
-	background-color: #BDFFBC;
+    background-color: #BDFFBC; /* Color de fondo */
+    font-family: Arial, sans-serif;
 }
 
 .Contenedor_Registrarse {
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
-	background-color: white;
-	border-radius: 5px;
-	border: 2px solid red;
-	text-align: center;
-	width: 50%;
+    max-width: 600px;
+    margin: 0 auto;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding-bottom: 2%;
+    border-radius: 10px;
+    margin-top: 5%;
+    margin-bottom: 5%;
+    border: 5px solid red;
 }
-.Botones {
-	margin-top: 7%;
-	margin-bottom: 2%;
-	border-radius: 5px;
-	background-color: red;
-	cursor: pointer;
-	text-decoration: none;
-	color: white;
-	font-size: small;
-	padding: 1.5% 3%;
-	border: none;
-	font-weight: bold;
-}
-.Botones:hover {
-	opacity: 0.7;
-}
-.Botones:active {
-	background-color: orange;
-}
+
 #Contenedor_Cabecero {
-	padding-top: 5%;
-	padding-bottom: 0.5%;
-	background-color: red;
-	color: white;
-	font-weight: bold;
+    text-align: center;
+    margin-bottom: 5%;
+    background-color: red;
+    color: #fff;
 }
+
 #imgPerfil {
-	border-radius: 10px;
-	left: 50%;
-	width: 5%;
-	height: 10%;
-	display: block;
-	margin: 0 auto;
+	margin-top: 2%;
+    margin-bottom: 1%;
+    border-radius: 10px;
 }
+
+h1 {
+    color: #fff;
+    margin-bottom: 2%;
+}
+
+#Contenedor_Cuerpo {
+	margin: 5%;
+}
+
 .Texto_Ayuda {
-	font-size: x-small;
-}
-.Boton_Escribir {
-	margin-top: 1%;
-	border-radius: 5px;
-	width: 35%;
+    font-size: 12px;
+    color: #666;
 }
 
+.Boton_Escribir,
+select {
+    width: 90%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
 
+.Botones {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #FF5733;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    font-size: medium;
+}
 
+.Botones:hover {
+    background-color: #FF794D;
+}
