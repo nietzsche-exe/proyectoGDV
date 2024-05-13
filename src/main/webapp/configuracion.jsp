@@ -188,12 +188,25 @@
 					        String nacimiento = formatoNacimiento.format(fecha_N);
 %>
 					    <td class="Columna_2"><%= nacimiento %></td>
-					    <td class="Columna_3">Cambiar fecha de nacimiento</td>
+<%
+							LocalDate fechaMinima = LocalDate.now().minusYears(18);
+%>
+					    <td class="Columna_3">
+							<input type="date" id="fechaUsuario" name="fechaUsuario" max="<%= fechaMinima %>" oninput="validarFecha()">
+							<input class="Confirmar" id="confirmarFecha" onclick="javascript:document.datos.opcion.value='validar_fecha';document.datos.submit();" type="submit" value="Confirmar" disabled>
+						</td>
 					</tr>
 					<tr class="Filas">
 					    <td class="Columna_1">Sexo</td>
 					    <td class="Columna_2"><%= usuario.getSexo() %></td>
-					    <td class="Columna_3">Cambiar sexo</td>
+					    <td class="Columna_3">
+						    <select id="sexoUsuario" class="Opciones" name="sexoUsuario">
+								<option value="Masculino">Masculino</option>
+					            <option value="Femenino">Femenino</option>
+					            <option value="Otro">Otro</option>
+					        </select>
+					        <input class="Confirmar" id="confirmarSexo" onclick="javascript:document.datos.opcion.value='validar_sexo';document.datos.submit();" type="submit" value="Confirmar">
+					    </td>
 					</tr>
 					<tr class="Filas">
 			    		<td class="Columna_1">Tema</td>
@@ -351,9 +364,10 @@
 %>
 
 		<script>
-		/*Comprueba que todos los campos esten rellenados, cuando todos esten completos
-			comprobara que ambas contraseñas sean iguales,
-			entonces habilitara el boton "Confirmar"
+			/*	
+				Comprueba que todos los campos esten rellenados, cuando todos esten completos
+				comprobara que ambas contraseñas sean iguales,
+				entonces habilitara el boton "Confirmar"
 			*/
 			function validarUsuario(){
 				var nombreUsuario = document.getElementById("nombreUsuario").value;
@@ -380,8 +394,6 @@
 			function validarTelefono() {
 			    var telefonoUsuario = document.getElementById("telefonoUsuario").value;
 			    var btnTelefono = document.getElementById("confirmarTelefono");
-
-			    // Expresión regular para validar que el teléfono tenga exactamente 9 dígitos y no comience con 6 o 7
 			    var regex = /^[6-7]\d{8}$/;
 
 			    if (telefonoUsuario === "" || !regex.test(telefonoUsuario)) {
@@ -401,6 +413,26 @@
 	            	btnPassword.disabled = false;
 	            }
 			}
+			
+			function validarFecha() {
+			    var fechaUsuario = document.getElementById("fechaUsuario").value;
+			    var btnFecha = document.getElementById("confirmarFecha");
+			    var fechaNacimiento = new Date(fechaUsuario);
+			    var hoy = new Date();
+			    var edad = hoy.getFullYear() - fechaNacimiento.getFullYear();
+			    var mes = hoy.getMonth() - fechaNacimiento.getMonth();
+			    
+			    if (mes < 0 || (mes === 0 && hoy.getDate() < fechaNacimiento.getDate())) {
+			        edad--;
+			    }
+
+			    if (fechaUsuario === "" || edad < 18 || edad > 130) {
+			        btnFecha.disabled = true;
+			    } else {
+			        btnFecha.disabled = false;
+			    }
+			}
+
 			
 			
 			window.onload = function() {
