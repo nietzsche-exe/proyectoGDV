@@ -53,6 +53,7 @@ if(usuario.getTema() == false) {
 			</div>
 			
 			<div class="Contenedor_Botones">
+				<input type="hidden" name="sesionUsuario" value="<%= usuario%>">
 				<button id="btnCreacionViaje" onclick="javascript:document.tema.opcion.value='NuevoViaje';document.tema.submit();" class="Botones">Creación de viaje</button>
 			    <button id="btnEliminacionViaje" class="Botones">Eliminación de Viaje</button>
 			</div>

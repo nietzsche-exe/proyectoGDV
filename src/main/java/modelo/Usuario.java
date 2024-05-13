@@ -3,6 +3,7 @@ package modelo;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 
 import jakarta.persistence.Column;
@@ -10,8 +11,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import util.Genero;
+
 
 @Entity
 @Table(name="usuarios", schema="gestion_viajes")
@@ -57,6 +59,18 @@ public class Usuario implements Serializable{
 	@Column(name="fecha_nacimiento")
 	private LocalDate fecha_nacimiento;
 	
+	@OneToMany(mappedBy = "usuario")
+	private List<Viaje> viajes;
+	
+
+	public List<Viaje> getViajes() {
+		return viajes;
+	}
+
+	public void setViajes(List<Viaje> viajes) {
+		this.viajes = viajes;
+	}
+
 
 	public Usuario(String nombre, String contrasenia, String email, Boolean tema, String sexo, String num_telefono, 
 			LocalDate fecha_nacimiento, LocalDate ultima_modificacion_contrasenna ) {

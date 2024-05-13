@@ -3,12 +3,12 @@ package modelo;
 import java.io.Serializable;
 import java.util.Objects;
 
-import jakarta.annotation.Generated;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -43,8 +43,17 @@ public class Direccion implements Serializable{
 	
 	@Column(name = "calle")
 	private String nombre_calle;
-
 	
+	@OneToOne(mappedBy = "direccion")
+	private Hotel hotel;
+	
+	public Hotel getHotel() {
+	    return hotel;
+	}
+
+	public void setHotel(Hotel hotel) {
+	    this.hotel = hotel;
+	}
 	
 	public Direccion(Integer id_direccion, String codigo_pais, String nombre_pais, String codigo_ciudad,
 			String nombre_ciudad, String codigo_postal, String nombre_calle) {
@@ -135,7 +144,18 @@ public class Direccion implements Serializable{
 				&& Objects.equals(nombre_ciudad, other.nombre_ciudad) && Objects.equals(nombre_pais, other.nombre_pais);
 	}
 	
-	
+	@Override
+	public String toString() {
+		if(this.hotel==null) {
+			return "Direccion [id_direccion=" + id_direccion + ", codigo_pais=" + codigo_pais + ", nombre_pais="
+					+ nombre_pais + ", codigo_ciudad=" + codigo_ciudad + ", nombre_ciudad=" + nombre_ciudad
+					+ ", codigo_postal=" + codigo_postal + ", nombre_calle=" + nombre_calle + ", hotel=" + null + "]";			
+		}
+		return "Direccion [id_direccion=" + id_direccion + ", codigo_pais=" + codigo_pais + ", nombre_pais="
+					+ nombre_pais + ", codigo_ciudad=" + codigo_ciudad + ", nombre_ciudad=" + nombre_ciudad
+					+ ", codigo_postal=" + codigo_postal + ", nombre_calle=" + nombre_calle + ", hotel=" + hotel.getId_hotel() + "]";			
+
+	}
 	
 	
 }

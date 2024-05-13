@@ -1,13 +1,14 @@
+<%@page import="com.amadeus.referencedata.Locations"%>
 <%@page import="com.amadeus.exceptions.ClientException"%>
 <%@page import="com.amadeus.resources.HotelSentiment"%>
 <%@page import="com.amadeus.resources.HotelOfferSearch"%>
 <%@page import="com.amadeus.resources.HotelOfferSearch.Offer"%>
 <%@page import="com.amadeus.referencedata.locations.Cities"%>
 <%@page import="com.amadeus.referencedata.locations.Hotels"%>
+<%@page import="com.amadeus.resources.Location"%>
 <%@page import="com.amadeus.resources.Resource"%>
 <%@page import="com.amadeus.resources.City"%>
 <%@page import="com.amadeus.resources.Hotel"%>
-<%@page import="com.amadeus.resources.Location"%>
 <%@page import="com.amadeus.resources.Hotel.Address"%>
 <%@page import="com.amadeus.Amadeus"%>
 <%@page import="com.amadeus.Params"%>
@@ -17,6 +18,7 @@
 <%@page import="java.util.Arrays"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="controlador.LoginController"%>
+<%@page import="modelo.Usuario"%>
 
 <%@page import="com.mysql.cj.x.protobuf.MysqlxExpr.Array"%>
 
@@ -29,26 +31,38 @@
 //Get list of hotels by city code
 //Cada vez que el usuario refresque se actualizara			
 Amadeus amadeus = (Amadeus) request.getAttribute("sesionAmadeus");
-Hotel[] hotels;
+
+//Obtiene la sesión actual
+HttpSession b = request.getSession();
+//Obtiene los datos del usuario almacenados en la sesión
+Usuario usuario = (Usuario) b.getAttribute("usuario");
+System.out.println("Informacion usuario actual: "+usuario.toString());
+
 ArrayList<Hotel> listaHoteles = new ArrayList<Hotel>();
 String airportCode = (String) request.getAttribute("codIATA");
+
+Hotel[] hotels;
+Location[] locations= amadeus.referenceData.locations.get(Params.with("subType", "CITY")
+		.and("keyword", (String)request.getAttribute("nombreCiudad"))
+		.and("countryCode",(String)request.getAttribute("codigoIATAPaisDestino")));
 try {
+	 
 	hotels = amadeus.referenceData.locations.hotels.byCity.get(Params.with("cityCode", airportCode));
 	for (int a = 0; a < 50; a++) {
 		System.out.println(hotels[a].toString());
 		listaHoteles.add(hotels[a]);
 	}
-
 	/*
 	Hotel[] hotels = amadeus.referenceData.locations.hotels.byGeocode.get(Params
 	.with("longitude", 2.160873)
 	.and("latitude", 41.397158));
 	*/
+	
 } catch (ResponseException e) {
 	// TODO Auto-generated catch block
 	e.printStackTrace();
 }
-//Recojer VAloraciones de los hoteles que mostremos
+//Recojer Valoraciones de los hoteles que mostremos
 request.setAttribute("listaHoteles", listaHoteles);
 request.setAttribute("sesionAmadeus", amadeus);
 %>
@@ -69,6 +83,8 @@ request.setAttribute("sesionAmadeus", amadeus);
 	String fechaEntrada = (String) request.getAttribute("fechaEntrada");
 	String fechaSalida = (String) request.getAttribute("fechaSalida");
 	String numeroPersonas = (String) request.getAttribute("numeroPersonas");
+	String nombreCiudadDestino=(String) request.getAttribute("nombreCiudad");
+	Double precioNoche=0.0;
 	System.out.println("Fecha de Entrada: " + fechaEntrada + "\nFecha de Salida: " + fechaSalida + "\nNumero de personas: "
 			+ numeroPersonas);
 
@@ -168,20 +184,35 @@ request.setAttribute("sesionAmadeus", amadeus);
 				LocalDate salida = LocalDate.parse(fechaSalida);
 				LocalDate entrada = LocalDate.parse(fechaEntrada);
 				Long noches = salida.toEpochDay() - entrada.toEpochDay();
-				Double precioNoche =Math.ceil(Double.valueOf(infoOferta.getPrice().getBase()) / noches);
+				precioNoche =Math.ceil(Double.valueOf(infoOferta.getPrice().getBase()) / noches);
 				%> <%=precioNoche+"/"+infoOferta.getPrice().getCurrency() %>
 			</td>
 			<td style="border: 2px; border-style: solid; border-color: black;"><%=infoOferta.getPrice().getTotal()%>/<%=infoOferta.getPrice().getCurrency()%></td>
 			<td style="border: 2px; border-style: solid; border-color: black;">
 				<form name="guardarOfertaHotel"
 					action="LoginController?opcion=guardarOfertaHotel" method="post">
+					<!-- Datos Entidad Hotel -->
 					<input type="hidden" name="hotelId" value="<%=infoOferta.getId()%>">
+					<input type="hidden" name="nombreHotel" value="<%=hotel.getName()%>">
+					<!-- Datos Entidad Direccion 
+						Falta por obtener: Codigo_Postal y nombre_de_la_calle del Hotel -->
+					<input type="hidden" name="codigoIATAPaisDestino" value="<%=hotel.getAddress().getCountryCode()%>">
+					<input type="hidden" name="nombrePaisDestino" value="<%=locations[0].getAddress().getCountryName()%>">
+					<input type="hidden" name="codigoIATACiudadDestino" value="<%=request.getAttribute("codIATA") %>">
+					<input type="hidden" name="nombreCiudadDestino" value="<%=nombreCiudadDestino %>">
+					
+					<!-- Datos Entidad Habitacion -->
+					<input type="hidden" name="idHabitacion" value="<%=infoOferta.getId()%>">
 					<input type="hidden" name="fechaEntrada2" value="<%=fechaEntrada%>">
 					<input type="hidden" name="fechaSalida2" value="<%=fechaSalida%>">
+					<input type="hidden" name="habitacionDisponible" value="<%=ofertasHotel[0].isAvailable()==true? 1:0%>">
+					<input type="hidden" name="numeroCamas" value="<%=infoOferta.getRoom().getTypeEstimated().getBeds()%>">
+					<input type="hidden" name="tipoDeCama" value="<%=infoOferta.getRoom().getTypeEstimated().getBedType()%>">
+					<input type="hidden" name="precioNoche" value="<%=precioNoche%>">
+					<input type="hidden" name="precioTotal" value="<%=infoOferta.getPrice().getTotal()%>">
 					<input type="hidden" name="numeroPersonas2" value="<%=numeroPersonas%>">
 					<input type="hidden" name="codigoIATA2" value="<%=airportCode%>">
-					<input type="hidden" name="codigoIATAOrigen" value="ES"><!-- Se cambiara por la ubicacion del usuario con la API de googleMaps -->
-					<input type="hidden" name="codigoIATADestino" value="<%=hotel.getAddress().getCountryCode()%>">
+					<input type="hidden" name="codigoIATAPaisOrigen" value="ES"><!-- Se cambiara por la ubicacion del usuario con la API de googleMaps -->
 					<input type="submit" value="Reservar">
 				</form>
 			</td>
@@ -190,6 +221,11 @@ request.setAttribute("sesionAmadeus", amadeus);
 		<%
 		} catch (ClientException e) {
 			System.out.println("El hotel no dispone de habitaciones");
+		}catch(NullPointerException e){
+			System.out.println("Valor nulo en el hotel");
+			
+			break;
+			
 		}
 
 		}

@@ -1,4 +1,5 @@
 <%@page import="java.time.LocalDate"%>
+<%@page import="modelo.Usuario"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -6,6 +7,13 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<%
+// Obtiene la sesión actual
+HttpSession a = request.getSession();
+// Obtiene los datos del usuario almacenados en la sesión
+Usuario usuario = (Usuario) a.getAttribute("usuario");
+System.out.println("Informacion usuario actual: "+usuario.toString());
+%>
 </head>
 <body>
 

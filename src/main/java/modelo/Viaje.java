@@ -1,15 +1,15 @@
 package modelo;
 
 import java.io.Serializable;
-import java.util.List;
+
 import java.util.Objects;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.ManyToOne;
+
 import jakarta.persistence.Table;
 
 @Entity
@@ -22,22 +22,19 @@ public class Viaje implements Serializable{
 	@Column(name = "id_viaje")
 	private Integer id_viaje;
 	
-	//@OneToOne
-	//@JoinColumn(name = "id_usuario")
-	@Column(name="id_usuario")
-	private Integer id_usuario;
+	@ManyToOne
+	@JoinColumn(name = "id_usuario")
+	private Usuario usuario;
+		
+	@ManyToOne
+    @JoinColumn(name = "id_habitacion")
+    private Habitacion habitacion;
 	
-	@Column(name = "id_habitacion")
-	private String id_habitacion;
-	/*
-	@OneToMany(mappedBy = "viaje")
-	private List<Habitacion> habitaciones;
-	*/
-	public Viaje(Integer id_viaje, Integer id_usuario, String id_habitacion) {
+	public Viaje(Integer id_viaje, Usuario usuario, Habitacion habitacion) {
 		super();
 		this.id_viaje = id_viaje;
-		this.id_usuario = id_usuario;
-		this.id_habitacion = id_habitacion;
+		this.usuario = usuario;
+		this.habitacion = habitacion;
 	}
 
 	public Integer getId_viaje() {
@@ -48,25 +45,25 @@ public class Viaje implements Serializable{
 		this.id_viaje = id_viaje;
 	}
 
-	public Integer getId_usuario() {
-		return id_usuario;
+	public Usuario getUsuario() {
+		return usuario;
 	}
 
-	public void setId_usuario(Integer id_usuario) {
-		this.id_usuario = id_usuario;
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
 
-	public String getId_habitacion() {
-		return id_habitacion;
+	public Habitacion getHabitacion() {
+		return habitacion;
 	}
 
-	public void setId_habitacion(String id_habitacion) {
-		this.id_habitacion = id_habitacion;
+	public void setHabitacion(Habitacion habitacion) {
+		this.habitacion = habitacion;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id_habitacion, id_usuario, id_viaje);
+		return Objects.hash(habitacion, usuario, id_viaje);
 	}
 
 	@Override
@@ -78,9 +75,15 @@ public class Viaje implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		Viaje other = (Viaje) obj;
-		return Objects.equals(id_habitacion, other.id_habitacion) && Objects.equals(id_usuario, other.id_usuario)
+		return Objects.equals(habitacion, other.habitacion) && Objects.equals(usuario, other.usuario)
 				&& Objects.equals(id_viaje, other.id_viaje);
 	}
+
+	@Override
+	public String toString() {
+		return "Viaje [id_viaje=" + id_viaje + ", usuario=" + usuario + ", habitacion=" + habitacion + "]";
+	}
+	
 	
 	
 	

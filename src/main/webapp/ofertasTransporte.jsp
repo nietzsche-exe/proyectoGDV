@@ -9,6 +9,7 @@
 <%@page import="com.amadeus.Params"%>
 <%@page import="com.amadeus.Amadeus"%>
 <%@page import="com.amadeus.resources.FlightOfferSearch"%>
+<%@page import="modelo.Usuario"%>
 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -25,6 +26,12 @@
 	
 	System.out.println(codigoCiudadDestino+" "+fechaEntrada+" "+fechaSalida+" "+numeroPersonas);
 	
+	//Obtiene la sesión actual
+	HttpSession b = request.getSession();
+	//Obtiene los datos del usuario almacenados en la sesión
+	Usuario usuario = (Usuario) b.getAttribute("usuario");
+	System.out.println("Informacion usuario actual: "+usuario.toString());
+	
 	Location[] locations= amadeus.referenceData.locations.get(
 			Params.with("subType", "AIRPORT")
 				.and("keyword", "MAD")
@@ -33,10 +40,10 @@
 	    			//La API busca en ingles
 	   System.out.println(locations[0].toString());
 	    		
-	   Location[] locationsDestino = amadeus.referenceData.locations.get(
-				Params.with("subType", "AIRPORT")
-					.and("keyword", codigoCiudadDestino)
-					.and("countryCode", codigoPaisDestino));
+   Location[] locationsDestino = amadeus.referenceData.locations.get(
+			Params.with("subType", "AIRPORT")
+				.and("keyword", codigoCiudadDestino)
+				.and("countryCode", codigoPaisDestino));
 	   System.out.println(locationsDestino[0].toString());
    	FlightOfferSearch[] flightOffers = amadeus.shopping.flightOffersSearch.get(
             Params.with("originLocationCode", "MAD")
@@ -167,7 +174,7 @@
 				<td style="border: 2px; border-style: solid; border-color: black;">
 					<form name="guardarOfertaViaje"
 						action="" method="post">
-						<input type="button" value="Reservar(No funciona)">
+						<input type="button" value="Guardar">
 					</form>
 				</td>
 			</tr>

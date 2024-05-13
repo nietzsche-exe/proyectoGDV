@@ -1,13 +1,17 @@
 package modelo;
 
 import java.io.Serializable;
-
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
@@ -21,23 +25,25 @@ public class Hotel implements Serializable{
 	@Column(name = "id_hotel")
 	private String id_hotel;
 	
-	//@OneToOne
-	//@JoinColumn(name = "id_direccion")
-	//private Direccion direccion_hotel;
-	@Column(name = "id_direccion")
-	private Integer id_direccion;	
+	@OneToOne(cascade = CascadeType.ALL,fetch=FetchType.LAZY)
+	@JoinColumn(name = "id_direccion", referencedColumnName = "id_direccion")
+	private Direccion direccion;
+	
 	@Column(name = "nombre_hotel")
 	private String nombre_hotel;
+	
+	@OneToMany(mappedBy = "hotel", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+    private List<Habitacion> habitaciones;
 
 	
 	public Hotel() {
 		super();
 	}
 
-	public Hotel(String id_hotel, Integer id_direccion, String nombre_hotel) {
+	public Hotel(String id_hotel, Direccion direccion, String nombre_hotel) {
 		super();
 		this.id_hotel = id_hotel;
-		this.id_direccion = id_direccion;
+		this.direccion = direccion;
 		this.nombre_hotel = nombre_hotel;
 	}
 
@@ -49,12 +55,12 @@ public class Hotel implements Serializable{
 		this.id_hotel = id_hotel;
 	}
 
-	public Integer getid_direccion() {
-		return id_direccion;
+	public Direccion getDireccion() {
+		return direccion;
 	}
 
-	public void setid_direccion(Integer id_direccion) {
-		this.id_direccion = id_direccion;
+	public void setDireccion(Direccion direccion) {
+		this.direccion = direccion;
 	}
 
 	public String getNombre_hotel() {
@@ -64,10 +70,39 @@ public class Hotel implements Serializable{
 	public void setNombre_hotel(String nombre_hotel) {
 		this.nombre_hotel = nombre_hotel;
 	}
+	
+	public List<Habitacion> getHabitaciones() {
+		return habitaciones;
+	}
 
+	public void setHabitaciones(List<Habitacion> habitaciones) {
+		this.habitaciones=habitaciones;
+	}
+	
+	public void addHabitacion(Habitacion habitacion) {
+		if(this.habitaciones==null) {
+			this.habitaciones=new ArrayList<Habitacion>();
+		}
+		this.habitaciones.add(habitacion);
+		habitacion.setHotel(this);
+	}
+	
+	public void quitarHabitacion(Habitacion habitacion) {
+		if(this.habitaciones!=null) {
+			this.habitaciones.remove(habitacion);
+			habitacion.setHotel(null);
+		}
+	}
+	
 	@Override
 	public int hashCode() {
-		return Objects.hash(id_direccion, id_hotel, nombre_hotel);
+		return Objects.hash(direccion, id_hotel, nombre_hotel);
+	}
+
+	@Override
+	public String toString() {
+		return "Hotel [id_hotel=" + id_hotel + ", direccion=" + direccion + ", nombre_hotel=" + nombre_hotel
+				+ ", habitaciones=" + habitaciones + "]";
 	}
 
 	@Override
@@ -79,7 +114,7 @@ public class Hotel implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		Hotel other = (Hotel) obj;
-		return Objects.equals(id_direccion, other.id_direccion) && Objects.equals(id_hotel, other.id_hotel)
+		return Objects.equals(direccion, other.direccion) && Objects.equals(id_hotel, other.id_hotel)
 				&& Objects.equals(nombre_hotel, other.nombre_hotel);
 	}
 

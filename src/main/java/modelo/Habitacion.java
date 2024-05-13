@@ -1,6 +1,7 @@
 package modelo;
 
 import java.io.Serializable;
+
 import java.time.LocalDate;
 import java.util.Objects;
 
@@ -9,7 +10,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -21,12 +21,6 @@ public class Habitacion implements Serializable{
 	@Id
 	@Column(name = "id_habitacion")
 	private String id_habitacion;
-	/*@OneToOne
-	@JoinColumn(name = "id_hotel")
-	private Hotel id_hotel;
-	*/
-	@Column(name = "id_hotel")
-	private Integer id_hotel;
 	
 	@Column(name = "fecha_entrada")
 	private LocalDate fecha_entrada;
@@ -49,17 +43,16 @@ public class Habitacion implements Serializable{
 	@Column(name = "precio_total")
 	private Double precio_total;
 
-	//@ManyToOne
-	//@JoinColumn(name="id_habitacion")
-	//@Column(name="id_habitacion")
-	//private Viaje viaje;
+	@ManyToOne
+	@JoinColumn(name = "id_hotel")
+	private Hotel hotel;
 	
-	public Habitacion(String id_habitacion, Integer id_hotel, LocalDate fecha_entrada, LocalDate fecha_salida,
+	public Habitacion(String id_habitacion, Hotel hotel, LocalDate fecha_entrada, LocalDate fecha_salida,
 			Integer habitacion_disponible, Integer numero_camas, String tipo_cama, Double precio_noche,
 			Double precio_total) {
 		super();
 		this.id_habitacion = id_habitacion;
-		this.id_hotel = id_hotel;
+		this.hotel = hotel;
 		this.fecha_entrada = fecha_entrada;
 		this.fecha_salida = fecha_salida;
 		this.habitacion_disponible = habitacion_disponible;
@@ -77,12 +70,12 @@ public class Habitacion implements Serializable{
 		this.id_habitacion = id_habitacion;
 	}
 
-	public Integer getId_hotel() {
-		return id_hotel;
+	public Hotel getHotel() {
+		return hotel;
 	}
 
-	public void setId_hotel(Integer id_hotel) {
-		this.id_hotel = id_hotel;
+	public void setHotel(Hotel hotel) {
+		this.hotel = hotel;
 	}
 
 	public LocalDate getFecha_entrada() {
@@ -144,8 +137,23 @@ public class Habitacion implements Serializable{
 	
 
 	@Override
+	public String toString() {
+		
+		if(this.hotel==null) {
+			return "Habitacion [id_habitacion=" + id_habitacion + ", fecha_entrada=" + fecha_entrada + ", fecha_salida="
+					+ fecha_salida + ", habitacion_disponible=" + habitacion_disponible + ", numero_camas=" + numero_camas
+					+ ", tipo_cama=" + tipo_cama + ", precio_noche=" + precio_noche + ", precio_total=" + precio_total
+					+ ", hotel=" + null + "]";			
+		}else
+			return "Habitacion [id_habitacion=" + id_habitacion + ", fecha_entrada=" + fecha_entrada + ", fecha_salida="
+					+ fecha_salida + ", habitacion_disponible=" + habitacion_disponible + ", numero_camas=" + numero_camas
+					+ ", tipo_cama=" + tipo_cama + ", precio_noche=" + precio_noche + ", precio_total=" + precio_total
+					+ ", hotel=[id=" + this.getHotel().getId_hotel() + ", nombre="+this.getHotel().getNombre_hotel()+"]]";
+	}
+
+	@Override
 	public int hashCode() {
-		return Objects.hash(fecha_entrada, fecha_salida, habitacion_disponible, id_habitacion, id_hotel, numero_camas,
+		return Objects.hash(fecha_entrada, fecha_salida, habitacion_disponible, id_habitacion, hotel, numero_camas,
 				precio_noche, precio_total, tipo_cama);
 	}
 
@@ -160,7 +168,7 @@ public class Habitacion implements Serializable{
 		Habitacion other = (Habitacion) obj;
 		return Objects.equals(fecha_entrada, other.fecha_entrada) && Objects.equals(fecha_salida, other.fecha_salida)
 				&& Objects.equals(habitacion_disponible, other.habitacion_disponible)
-				&& Objects.equals(id_habitacion, other.id_habitacion) && Objects.equals(id_hotel, other.id_hotel)
+				&& Objects.equals(id_habitacion, other.id_habitacion) && Objects.equals(hotel, other.hotel)
 				&& Objects.equals(numero_camas, other.numero_camas) && Objects.equals(precio_noche, other.precio_noche)
 				&& Objects.equals(precio_total, other.precio_total) && Objects.equals(tipo_cama, other.tipo_cama);
 	}
