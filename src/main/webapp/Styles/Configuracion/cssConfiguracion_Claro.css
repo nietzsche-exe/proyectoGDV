@@ -131,6 +131,12 @@ body {
 .Confirmar:hover {
 	opacity: 0.8;
 }
+.Opciones {
+	width: 45%;
+    padding: 1%;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
 
 /*Informacion Principal*/
 
@@ -138,7 +144,8 @@ body {
 .Contenedor_Texto {
     background-color: #f8f9fa; /* Fondo gris claro */
     padding: 20px;
-    border-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Sombra suave */
 }
 
@@ -156,7 +163,6 @@ body {
     color: #555555; /* Texto gris */
     line-height: 1.6;
     margin-bottom: 15px;
-    display: none; /* Oculta el texto por defecto */
 }
 
 /* Estilos para los enlaces */
@@ -171,4 +177,6 @@ body {
     color: #0056b3; /* Cambio de color al pasar el ratón */
     text-decoration: underline;
 }
+
+
 

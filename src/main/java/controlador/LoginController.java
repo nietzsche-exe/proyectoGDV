@@ -749,6 +749,82 @@ public class LoginController extends HttpServlet {
 			
 			break;
 			
+		case "validar_sexo":
+			sexo = request.getParameter("sexoUsuario");
+			
+			HttpSession session8 = request.getSession();
+		    Usuario usuario8 = (Usuario) session8.getAttribute("usuario");
+		    int idUsuario9 = usuario8.getId_usuario();
+			
+		    EntityManagerFactory emf7 = HibernateUtils.getEmf();
+		    EntityManager em7 = emf7.createEntityManager();
+		    EntityTransaction transaction7 = null;
+			
+		    try {
+		    	transaction6 = em7.getTransaction();
+		    	transaction6.begin();
+		    	
+		        Usuario user = em7.find(Usuario.class, idUsuario9);
+
+		        if (user != null) {
+		            user.setSexo(sexo);
+		            
+		            em7.merge(user);
+		            transaction6.commit();
+		        }
+
+		        
+		    } catch (Exception e) {
+		        if (transaction7 != null && transaction7.isActive()) {
+		        	transaction7.rollback();
+		        }
+		        e.printStackTrace();
+		    } finally {
+		    	em7.close();
+		    	
+		    	response.sendRedirect("configuracion.jsp?datPer=true");
+		    }
+			
+			break;
+			
+		case "validar_fecha":
+			fecha_nacimiento = LocalDate.parse(request.getParameter("fechaUsuario"));
+			
+			HttpSession session9 = request.getSession();
+		    Usuario usuario9 = (Usuario) session9.getAttribute("usuario");
+		    int idUsuario10 = usuario9.getId_usuario();
+			
+		    EntityManagerFactory emf8 = HibernateUtils.getEmf();
+		    EntityManager em8 = emf8.createEntityManager();
+		    EntityTransaction transaction8 = null;
+			
+		    try {
+		    	transaction6 = em8.getTransaction();
+		    	transaction6.begin();
+		    	
+		        Usuario user = em8.find(Usuario.class, idUsuario10);
+
+		        if (user != null) {
+		            user.setFecha_nacimiento(fecha_nacimiento);
+		            
+		            em8.merge(user);
+		            transaction6.commit();
+		        }
+
+		        
+		    } catch (Exception e) {
+		        if (transaction8 != null && transaction8.isActive()) {
+		        	transaction8.rollback();
+		        }
+		        e.printStackTrace();
+		    } finally {
+		    	em8.close();
+		    	
+		    	response.sendRedirect("configuracion.jsp?datPer=true");
+		    }
+			
+			break;
+			
 		default:
 			// es el cliente quien deber� invocar a este recurso
 			response.sendRedirect("index.jsp");
