@@ -7,16 +7,14 @@
     
     
  <jsp:useBean id="usuario" scope="request" class="modelo.Usuario"/>
- <%
- 	//Usuario usuarioBean=(modelo.Usuario)request.getAttribute("usuario");
- 	
- %>
+
 <!DOCTYPE html>
 <html>
 
 <head>
 <meta charset="UTF-8">
 <title>Verificar correo</title>
+<link rel="stylesheet" href="Styles/Confirmar_Correo/cssConfirmar_Correo_Claro.css">
 </head>
 <body>
 	<c:if test="${not empty error}">
@@ -29,12 +27,8 @@
 
 	<label>Codigo de verificación</label><br>
 	<input id="cod_verificacion" name="cod_verificacion" type="text"><br>
-	<button id="btnVerificar" type="submit" >Verificar correo</button>     
-
-    <label id="correoUsuario">Correo Usuario: <%=	request.getAttribute("email") %></label>
+	<button id="btnVerificar" type="submit" >Verificar correo</button>
 </form>
-	<%
-	%>
 
 </body>
 </html>
