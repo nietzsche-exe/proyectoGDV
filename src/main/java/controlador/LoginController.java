@@ -287,6 +287,10 @@ public class LoginController extends HttpServlet {
 			System.out.println("Datos del Hotel elegido:\n"+hotel.toString());
 			System.out.println("Datos de la Habitacion del Hotel elegido:\n"+habitacion.toString());
 			
+			request.setAttribute("Direccion",direccionHotel );
+			request.setAttribute("Hotel", hotel);
+			request.setAttribute("Habitacion", habitacion);
+			
 			request.setAttribute("codigoIATA3", codigo);
 			request.setAttribute("fechaEntrada3", fechaEntrada);
 			request.setAttribute("fechaSalida3", fechaSalida);
@@ -296,6 +300,12 @@ public class LoginController extends HttpServlet {
 			request.setAttribute("sesionAmadeus",sesion );
 			
 			request.getRequestDispatcher("ofertasTransporte.jsp").forward(request, response);
+			break;
+		case "guardarOfertaViaje":
+//			Direccion direccion=request.getParameter("Direccion");
+//			Habitacion habitacion2= request.getParameter("Habitacion");
+//			Habitacion habitacion3= request.getParameter("Hotel");
+//			Usuario usuario= request.getParameter("Usuario");
 			break;
 		case "iniciarSesion":
 			// Obtén los valores de los campos de nombre de usuario y contraseña del

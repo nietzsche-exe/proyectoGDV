@@ -1,3 +1,6 @@
+<%@page import="modelo.Habitacion"%>
+<%@page import="modelo.Hotel"%>
+<%@page import="modelo.Direccion"%>
 <%@page import="com.amadeus.resources.FlightOfferSearch.FareDetailsBySegment"%>
 <%@page import="com.amadeus.resources.FlightOfferSearch.TravelerPricing"%>
 <%@page import="org.hibernate.internal.build.AllowSysOut"%>
@@ -24,6 +27,15 @@
 	String codigoPaisOrigen=(String)request.getAttribute("codigoIATAOrigen2");
 	String codigoPaisDestino=(String)request.getAttribute("codigoIATADestino2");
 	
+	Direccion direccion=(Direccion)request.getAttribute("Direccion");
+	Hotel hotel=(Hotel)request.getAttribute("Hotel");
+	Habitacion habitacion=(Habitacion)request.getAttribute("Habitacion");
+	
+	System.out.println("Pagina ofertasTransporte.jsp");
+	System.out.println("Direccion del Hotel elegido:\n"+direccion.toString());
+	System.out.println("Datos del Hotel elegido:\n"+hotel.toString());
+	System.out.println("Datos de la Habitacion del Hotel elegido:\n"+habitacion.toString());
+	
 	System.out.println(codigoCiudadDestino+" "+fechaEntrada+" "+fechaSalida+" "+numeroPersonas);
 	
 	//Obtiene la sesión actual
@@ -45,7 +57,8 @@
 				.and("keyword", codigoCiudadDestino)
 				.and("countryCode", codigoPaisDestino));
 	   System.out.println(locationsDestino[0].toString());
-   	FlightOfferSearch[] flightOffers = amadeus.shopping.flightOffersSearch.get(
+   	
+	   FlightOfferSearch[] flightOffers = amadeus.shopping.flightOffersSearch.get(
             Params.with("originLocationCode", "MAD")
                     .and("destinationLocationCode", codigoCiudadDestino)
                     .and("departureDate", fechaEntrada)
@@ -54,7 +67,7 @@
                     .and("nonStop", true));
    	System.out.println(flightOffers.length); 
    	for(int i=0;i<10;i++){
-   		System.out.println(flightOffers[i].toString());
+   		//System.out.println(flightOffers[i].toString());
    	}
    	//Data(general para todos)x->itinerarios->precio->airlineCode->Datos para el viajero(Detalles)
    	%>
@@ -125,8 +138,8 @@
 			<%for(int x=0;x<2;x++){
 				SearchSegment[]searchSegments=itineraries[x].getSegments();
 				
-				System.out.println("Itinerario "+x +": "+itineraries[x].toString());
-				System.out.println("segmento "+x +": "+searchSegments[0].toString());
+				//System.out.println("Itinerario "+x +": "+itineraries[x].toString());
+				//System.out.println("segmento "+x +": "+searchSegments[0].toString());
 				if(x==0){
 					%>
 			<td style="border: 2px; border-style: solid; border-color: black;"><%=locations[0].getName() %></td>
@@ -173,7 +186,11 @@
 				<td style="border: 2px; border-style: solid; border-color: black;"><%=bySegments[0].getCabin() %></td>
 				<td style="border: 2px; border-style: solid; border-color: black;">
 					<form name="guardarOfertaViaje"
-						action="" method="post">
+						action="LoginController?opcion=guardarOfertaViaje" method="post">
+						<input type="hidden" name="Direccion" value="<%=direccion%>">
+						<input type="hidden" name="Habitacion" value="<%=habitacion%>">
+						<input type="hidden" name="Hotel" value="<%=hotel%>">
+						<input type="hidden" name="Usuario" value="<%=usuario%>">
 						<input type="button" value="Guardar">
 					</form>
 				</td>
