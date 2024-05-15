@@ -59,7 +59,7 @@ if(usuario.getTema() == false) {
 			</div>
 			
 			<div id="menu-container">
-				<img src="Resources/perfil.jpg" alt="Menú" id="menu-icon">
+				<img src="Resources/perfil.png" alt="Menú" id="menu-icon">
 				    <ul id="menu">
 						<li id="nada">&nbsp;</li>
 			            <li id="usuario"><%= usuario.getNombre() %></li>

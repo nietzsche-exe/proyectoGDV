@@ -109,7 +109,7 @@ public class LoginController extends HttpServlet {
 							request.setAttribute("error", "El nombre de usuario ya esta en uso");
 							request.getRequestDispatcher("registro.jsp").forward(request, response);
 						}
-						else if (user.getNum_telefono().compareTo(telefono) == 0) {
+						else if (user.getNum_telefono() != null && user.getNum_telefono().compareTo(telefono) == 0) {
 							request.setAttribute("error", "El número de teléfono ya esta en uso");
 							request.getRequestDispatcher("registro.jsp").forward(request, response);
 						}

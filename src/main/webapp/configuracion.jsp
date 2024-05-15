@@ -47,37 +47,27 @@
 	usuario.setUltima_modificacion_contrasenna(ultima_modificacion_contrasenna);
 	
 	
-	boolean principal = true, datPer = false, seguridad = false, privacidad = false;
+	boolean principal = true, datPer = false, seguridad = false;
 	
 	
 	String principalParam = request.getParameter("principal");
 	String datPerParam = request.getParameter("datPer");
 	String seguridadParam = request.getParameter("seguridad");
-	String privacidadParam = request.getParameter("privacidad");
 	
 	if (principalParam != null && principalParam.equals("true")) {
 		principal = true;
 		datPer = false;
 		seguridad = false;
-		privacidad = false;
 	}
 	if (datPerParam != null && datPerParam.equals("true")) {
 		principal = false;
 		datPer = true;
 		seguridad = false;
-		privacidad = false;
 	}
 	if (seguridadParam != null && seguridadParam.equals("true")) {
 		principal = false;
 		datPer = false;
 		seguridad = true;
-		privacidad = false;
-	}
-	if (privacidadParam != null && privacidadParam.equals("true")) {
-		principal = false;
-		datPer = false;
-		seguridad = false;
-		privacidad = true;
 	}
 	if(usuario.getTema() == false) {
 %>
@@ -130,22 +120,12 @@
 						}
 						if (seguridad == true){
 %>
-							<a class="Enlaces" id="Boton_3" href="configuracion.jsp?seguridad=true">Seguridad</a>
+							<a class="Enlaces" id="Boton_3" href="configuracion.jsp?seguridad=true">Seguridad / Privacidad</a>
 <%	
 						}
 						else {
 %>
-							<a class="Enlaces" href="configuracion.jsp?seguridad=true">Seguridad</a>
-<%
-						}
-						if (privacidad == true){
-%>
-							<a class="Enlaces" id="Boton_4" href="configuracion.jsp?privacidad=true">Privacidad</a>
-<%	
-						}
-						else {
-%>
-							<a class="Enlaces" href="configuracion.jsp?privacidad=true">Privacidad</a>
+							<a class="Enlaces" href="configuracion.jsp?seguridad=true">Seguridad / Privacidad</a>
 <%
 						}
 %>
@@ -310,54 +290,83 @@
     		}
     		else if (seguridad == true){
 %>
-		
+				<div class="Contenedor_Texto_Seguridad">
+					<div class="Contenedor_Arriba">
+						<p>Aqui va el contenido de acceso</p>
+					</div>
+					<div class="Contenedor_Arriba">
+						<p>Aqui va el contenido de contrasenna</p>
+					</div>
+					<div class="Contenedor_Centro">
+						<p>Aqui va el contenido de seguridad del sistema</p>
+					</div>
+				</div>
 <%
     		}
-    		else if (privacidad == true){
-%>
-		
-<%
-		    }
 		    else {
 %>
-				<div class="Contenedor_Texto">
-					<p class="Titulo2">
-						Resumen del proyecto
-					</p>
-					<p class="Texto2">
-						El proyecto GDV, abreviatura de Gestión de Viajes, tiene como objetivo primordial simplificar la búsqueda en línea de 
-						ofertas de viajes y destinos turísticos. Esto será posible a través de una aplicación web diseñada para permitir 
-						a los usuarios registrarse, generar itinerarios personalizados y crear viajes según sus preferencias y datos suministrados.
-					</p>
-					<br>
-					<p class="Texto2">
-						Registro e Inicio de Sesión: Los usuarios pueden registrarse con un nombre de usuario único, correo electrónico y contraseña. 
-						Se establecen requisitos para cada campo, como longitud mínima y restricciones de caracteres. El correo electrónico debe ser 
-						único y del dominio "@gmail.com". Se confirma la dirección de correo electrónico mediante tokens. Se implementa un sistema 
-						de inicio de sesión que muestra la fecha de la última conexión del usuario.
-					</p>
-					<p class="Texto2">
-						Creación de Viajes: Los usuarios pueden crear viajes proporcionando información como destino, fechas, número de personas, 
-						rango de precios y origen del viaje. Tienen la opción de permitir que la aplicación acceda a su ubicación.
-					</p>
-					<p class="Texto2">
-						Búsqueda de Ofertas y Creación de Itinerarios: La aplicación utiliza APIs para buscar ofertas de vuelos y alojamientos en 
-						varias páginas web. Se genera un itinerario personalizado para cada usuario, que incluye lugares turísticos populares como museos, 
-						restaurantes y actividades.
-					</p>
-					<p class="Texto2">		
-						Notificaciones por Email: Se envían alertas por correo electrónico a los usuarios para recordar fechas importantes relacionadas 
-						con sus viajes.
-					</p>
-					<p class="Texto2">		
-						Gestión de Viajes: Los usuarios pueden eliminar los viajes que ya no deseen mantener.
-					</p>
-					<p class="Texto2">		
-						Configuración de Usuario: Se proporciona un apartado de ajustes donde los usuarios pueden cambiar su nombre de usuario, 
-						contraseña, correo electrónico, activar un modo oscuro y ver un historial de viajes realizados.
-					</p>
+				<div class="Contenedor_Informacion_Principal">
+					<div class="Titulo-Resumen">
+						<p class="Titulo2">
+							Resumen del proyecto
+						</p>
+						<p class="Texto1">
+							El proyecto GDV, abreviatura de Gestión de Viajes, tiene como objetivo primordial simplificar la búsqueda en línea de 
+							ofertas de viajes y destinos turísticos. Esto será posible a través de una aplicación web diseñada para permitir 
+							a los usuarios registrarse, generar itinerarios personalizados y crear viajes según sus preferencias y datos suministrados.
+						</p>
+					</div>
+					
+					<div class="Contenedor_Informacion_Arriba">
+						<p class="titulo3"><b>Registro e Inicio de Sesión: </b></p>
+						<p class="Texto2">
+							Los usuarios pueden registrarse con un nombre de usuario único, correo electrónico y contraseña. 
+							Se establecen requisitos para cada campo, como longitud mínima y restricciones de caracteres. El correo electrónico debe ser 
+							único y del dominio "@gmail.com". Se confirma la dirección de correo electrónico mediante tokens. Se implementa un sistema 
+							de inicio de sesión que muestra la fecha de la última conexión del usuario.
+						</p>
+					</div>
 					
 					
+					<div class="Contenedor_Informacion_Arriba">
+						<p class="titulo3"><b>Creación de Viajes: </b></p>
+						<p class="Texto2">
+							Los usuarios pueden crear viajes proporcionando información como destino, fechas, número de personas, 
+							rango de precios y origen del viaje. Tienen la opción de permitir que la aplicación acceda a su ubicación.
+						</p>
+					</div>
+					
+					<div class="Contenedor_Informacion_Arriba">
+						<p class="titulo3"><b>Búsqueda de Ofertas y Creación de Itinerarios: </b></p>
+						<p class="Texto2">
+							La aplicación utiliza APIs para buscar ofertas de vuelos y alojamientos en 
+							varias páginas web. Se genera un itinerario personalizado para cada usuario, que incluye lugares turísticos populares como museos, 
+							restaurantes y actividades.
+						</p>
+					</div>
+					
+					<div class="Contenedor_Informacion_Arriba">
+						<p class="titulo3"><b>Notificaciones por Email: </b></p>
+						<p class="Texto2">		
+							Se envían alertas por correo electrónico a los usuarios para recordar fechas importantes relacionadas 
+							con sus viajes.
+						</p>
+					</div>
+					
+					<div class="Contenedor_Informacion_Arriba">
+						<p class="titulo3"><b>Gestión de Viajes: </b></p>
+						<p class="Texto2">		
+							Los usuarios pueden eliminar los viajes que ya no deseen mantener.
+						</p>
+					</div>
+					
+					<div class="Contenedor_Informacion_Arriba">
+						<p class="titulo3"><b>Configuración de Usuario: </b></p>
+						<p class="Texto2">		
+							Se proporciona un apartado de ajustes donde los usuarios pueden cambiar su nombre de usuario, 
+							contraseña, correo electrónico, activar un modo oscuro y ver un historial de viajes realizados.
+						</p>
+					</div>
 				</div>
 <%
     		}

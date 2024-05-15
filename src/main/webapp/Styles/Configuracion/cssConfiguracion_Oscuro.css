@@ -81,6 +81,7 @@ body {
 	margin-bottom: 3%;
 	background-color: #333;
 	color: #FFF;
+	box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
 }
 
 .Contenedor_Titulo {
@@ -140,4 +141,66 @@ body {
     padding: 1%;
     border: 1px solid #ccc;
     border-radius: 5px;
+}
+
+
+/*Informacion Principal*/
+
+.Contenedor_Informacion_Principal {
+    margin: 10%;
+    margin-top: 4%;
+    background-color: #333;
+    padding: 5%;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.3);
+    text-align: justify; 
+    color: #fff;
+}
+
+.Titulo-Resumen {
+    background-color: #222;
+    width: 70%;
+    align-content: center;
+    margin-left: 15%;
+    padding: 2%;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.2);
+    color: #fff;
+}
+.Contenedor_Informacion_Arriba {
+    background-color: #444;
+    width: 40%;
+    padding: 2%;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.1);
+    display: inline-block;
+    margin-left: 5%;
+    margin-top: 5%;
+    color: #fff;
+}
+
+.Titulo2 {
+    font-size: x-large;
+    color: #eee;
+    margin-bottom: 15px;
+    font-weight: bold;
+    text-align: center;
+}
+.Texto1 {
+	font-size: medium;
+	color: #aaa;
+    line-height: 1.2;
+    margin-bottom: 15px;
+}
+
+.Titulo3 {
+    font-size: large;
+    color: #ccc;
+    margin-bottom: 5px;    
+}
+.Texto2 {
+    font-size: small;
+    color: #aaa;
+    line-height: 1.6;
+    margin-bottom: 15px;
 }

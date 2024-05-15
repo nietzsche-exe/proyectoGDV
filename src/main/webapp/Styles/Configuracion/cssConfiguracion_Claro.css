@@ -2,7 +2,7 @@ body {
 	padding: 0%;
 	margin: 0%;
 	font-family: arial;
-	background-color: #FFF1F1;
+	background-color: #BDFFBC;
 }
 .Encabezado {
   	background-color: #FF2300;
@@ -61,6 +61,7 @@ body {
 	font-family: arial;
 	font-size: small;
 	margin-left: 0.5%;
+	
 }
 .Enlaces:hover {
 	opacity: 0.8;
@@ -73,8 +74,10 @@ body {
   	width: 60%;
   	border-collapse: collapse;
   	border-radius: 10px;
+  	border-color: #888;
   	overflow: hidden;
   	margin-bottom: 3%;
+  	box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
 }
 
 
@@ -140,43 +143,104 @@ body {
 
 /*Informacion Principal*/
 
-/* Estilos para el contenedor principal */
-.Contenedor_Texto {
-    background-color: #f8f9fa; /* Fondo gris claro */
-    padding: 20px;
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Sombra suave */
+.Contenedor_Informacion_Principal {
+    margin: 10%;
+    margin-top: 4%;
+    background-color: #f7f7f7; /* Color de fondo claro */
+    padding: 5%;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Sombra con color negro */
+    text-align: justify; 
+    color: #333; /* Color del texto oscuro */
 }
 
-/* Estilos para los títulos */
+.Titulo-Resumen {
+    background-color: #e2e2e4; /* Color de fondo gris claro */
+    width: 70%;
+    align-content: center;
+    margin-left: 15%;
+    padding: 2%;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2); /* Sombra con color negro */
+    color: #333; /* Color del texto oscuro */
+}
+
+.Contenedor_Informacion_Arriba {
+    background-color: #f1f1f1; /* Color de fondo gris claro */
+    width: 40%;
+    padding: 2%;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Sombra con color negro */
+    display: inline-block;
+    margin-left: 5%;
+    margin-top: 5%;
+    color: #333; /* Color del texto oscuro */
+}
+
 .Titulo2 {
-    font-size: 24px;
-    color: #333333; /* Texto oscuro */
+    font-size: x-large;
+    color: #333; /* Color del texto oscuro */
     margin-bottom: 15px;
-    cursor: pointer; /* Cambia el cursor al hacer hover */
+    font-weight: bold;
+    text-align: center;
 }
 
-/* Estilos para el texto */
+.Texto1 {
+    font-size: medium;
+    color: #666; /* Color del texto gris oscuro */
+    line-height: 1.2;
+    margin-bottom: 15px;
+}
+
+.Titulo3 {
+    font-size: large;
+    color: #444; /* Color del texto gris oscuro */
+    margin-bottom: 5px;    
+}
+
 .Texto2 {
-    font-size: 16px;
-    color: #555555; /* Texto gris */
+    font-size: small;
+    color: #666; /* Color del texto gris oscuro */
     line-height: 1.6;
     margin-bottom: 15px;
 }
 
-/* Estilos para los enlaces */
-.Texto2 a {
-    color: #007bff; /* Enlace azul */
-    text-decoration: none;
-    transition: color 0.3s ease; /* Transición suave */
+
+
+/*Seguridad y Privacidad*/
+
+.Contenedor_Texto_Seguridad {
+	background-color: #fff;
+	padding: 5%;
+	margin: 10%;
+	margin-top: 4%;
+	border-radius: 10px;
+	box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+}
+.Contenedor_Arriba {
+	background-color: #e2e2e4;
+	width: 30%;
+	padding: 2%;
+	border-radius: 10px;
+	box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+	display: inline-block;
+	margin-left: 10%;
+}
+.Contenedor_Centro {
+	background-color: #e2e2e4;
+	width: 30%;
+	margin-top: 2%;
+	margin-left: 33%;
+	padding: 2%;
+	border-radius: 10px;
+	box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 }
 
-/* Cambia el color del enlace al pasar el ratón */
-.Texto2 a:hover {
-    color: #0056b3; /* Cambio de color al pasar el ratón */
-    text-decoration: underline;
-}
+
+
+
+
+
 
 
 

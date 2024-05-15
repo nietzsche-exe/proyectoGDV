@@ -1,0 +1,63 @@
+/* Estilos generales */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #222; /* Color de fondo general */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    color: #fff; /* Color de texto */
+}
+
+form {
+    background-color: #333; /* Color de fondo del formulario */
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);
+    text-align: center;
+}
+
+input[type="text"] {
+    width: calc(100% - 20px);
+    margin-bottom: 20px;
+    padding: 12px;
+    border: 1px solid #555; /* Color del borde */
+    border-radius: 4px;
+    font-size: 16px;
+    background-color: #444; /* Color de fondo del campo de texto */
+    color: #fff; /* Color del texto */
+}
+
+button[type="submit"] {
+    width: calc(100% - 20px);
+    padding: 12px;
+    border: none;
+    border-radius: 4px;
+    background-color: #4caf50; /* Color de fondo del botón */
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button[type="submit"]:hover {
+    background-color: #45a049; /* Color de fondo del botón al pasar el ratón */
+}
+
+label {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+p.error {
+    color: red;
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+/* Estilos específicos */
+#cod_verificacion {
+    width: calc(100% - 20px);
+}
