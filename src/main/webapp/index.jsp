@@ -11,7 +11,7 @@
 
 	<header class="Encabezado">
 		<div class="Contenedor_Logo">
-			<img id="logo" alt="Logo" src="Resources/logo.png">
+			<img id="logo" alt="Logo" src="Resources/logo_2.0.jpeg">
 		</div>
 		<div class="Contenedor_Botones">
 			<button id="btnQuienSomos" class="Botones"><b>Quienes Somos</b></button>

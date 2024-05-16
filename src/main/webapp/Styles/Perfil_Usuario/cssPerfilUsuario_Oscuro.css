@@ -38,8 +38,8 @@ body {
 }
 
 #logo {
-	width: 75%; 
-	border-radius: 5px;
+	width: 60%; 
+	border-radius: 50%;
 }
 
 #menu-container {
@@ -113,8 +113,7 @@ body {
 	max-width: 150px;
 	border-radius: 30px;
 	cursor: pointer;
-	height: 5%;
-	width: 25%; /* Ajusta el ancho automáticamente */
+	width: 25%;
 	padding-bottom: 0%;
 }
 
