@@ -1,3 +1,4 @@
+<%@page import="org.apache.tomcat.util.json.JSONParser"%>
 <%@page import="modelo.Habitacion"%>
 <%@page import="modelo.Hotel"%>
 <%@page import="modelo.Direccion"%>
@@ -18,7 +19,6 @@
     pageEncoding="UTF-8"%>
 <%
 	
-   	//Fulltime con el estilo de la tabla tener temrinado para viernes Noche Maximo Sabado noche
     Amadeus amadeus=(Amadeus)request.getAttribute("sesionAmadeus");
     String codigoCiudadDestino=(String)request.getAttribute("codigoIATA3");
 	String fechaEntrada=(String)request.getAttribute("fechaEntrada3");
@@ -27,9 +27,14 @@
 	String codigoPaisOrigen=(String)request.getAttribute("codigoIATAOrigen2");
 	String codigoPaisDestino=(String)request.getAttribute("codigoIATADestino2");
 	
-	Direccion direccion=(Direccion)request.getAttribute("Direccion");
-	Hotel hotel=(Hotel)request.getAttribute("Hotel");
-	Habitacion habitacion=(Habitacion)request.getAttribute("Habitacion");
+	
+	Direccion direccion=(Direccion)request.getAttribute("direccion");
+	Hotel hotel=(Hotel)request.getAttribute("hotel");
+	Habitacion habitacion=(Habitacion)request.getAttribute("habitacion");
+	
+	request.getSession().setAttribute("direccion1",direccion);
+	request.getSession().setAttribute("hotel1",hotel);
+	request.getSession().setAttribute("habitacion1",habitacion);
 	
 	System.out.println("Pagina ofertasTransporte.jsp");
 	System.out.println("Direccion del Hotel elegido:\n"+direccion.toString());
@@ -39,9 +44,8 @@
 	System.out.println(codigoCiudadDestino+" "+fechaEntrada+" "+fechaSalida+" "+numeroPersonas);
 	
 	//Obtiene la sesión actual
-	HttpSession b = request.getSession();
 	//Obtiene los datos del usuario almacenados en la sesión
-	Usuario usuario = (Usuario) b.getAttribute("usuario");
+	Usuario usuario = (Usuario) request.getSession().getAttribute("usuario");
 	System.out.println("Informacion usuario actual: "+usuario.toString());
 	
 	Location[] locations= amadeus.referenceData.locations.get(
@@ -66,9 +70,9 @@
                     .and("adults", numeroPersonas)
                     .and("nonStop", true));
    	System.out.println(flightOffers.length); 
-   	for(int i=0;i<10;i++){
+   	//for(int i=0;i<10;i++){
    		//System.out.println(flightOffers[i].toString());
-   	}
+   	//}
    	//Data(general para todos)x->itinerarios->precio->airlineCode->Datos para el viajero(Detalles)
    	%>
                    
@@ -187,11 +191,11 @@
 				<td style="border: 2px; border-style: solid; border-color: black;">
 					<form name="guardarOfertaViaje"
 						action="LoginController?opcion=guardarOfertaViaje" method="post">
-						<input type="hidden" name="Direccion" value="<%=direccion%>">
-						<input type="hidden" name="Habitacion" value="<%=habitacion%>">
-						<input type="hidden" name="Hotel" value="<%=hotel%>">
-						<input type="hidden" name="Usuario" value="<%=usuario%>">
-						<input type="button" value="Guardar">
+						<input type="hidden" name="Direccion1" value="<%=direccion%>">
+						<input type="hidden" name="Habitacion1" value="<%=habitacion%>">
+						<input type="hidden" name="Hotel1" value="<%=hotel%>">
+						<input type="hidden" name="Usuario1" value="<%=usuario%>">
+						<input type="submit" value="Guardar">
 					</form>
 				</td>
 			</tr>

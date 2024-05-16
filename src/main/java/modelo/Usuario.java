@@ -201,6 +201,4 @@ public class Usuario implements Serializable{
 				+ fecha_nacimiento + "]";
 	}
 	
-	
-	
 }

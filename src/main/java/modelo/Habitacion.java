@@ -172,7 +172,5 @@ public class Habitacion implements Serializable{
 				&& Objects.equals(numero_camas, other.numero_camas) && Objects.equals(precio_noche, other.precio_noche)
 				&& Objects.equals(precio_total, other.precio_total) && Objects.equals(tipo_cama, other.tipo_cama);
 	}
-	
-	
-	
+
 }

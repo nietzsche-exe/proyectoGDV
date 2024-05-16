@@ -17,6 +17,7 @@ import modelo.Habitacion;
 import modelo.HibernateUtils;
 import modelo.Hotel;
 import modelo.Usuario;
+import modelo.Viaje;
 import util.EmailValidator;
 import util.Genero;
 
@@ -278,8 +279,9 @@ public class LoginController extends HttpServlet {
 			System.out.println("case: guardarOfertaHotel ["+codigo+" "+fechaEntrada+" "+fechaSalida+" "+numeroPersonas);
 			LocalDate fEntrada=LocalDate.parse(fechaEntrada);
 			LocalDate fSalida=LocalDate.parse(fechaSalida);
+			
 			//Falta incluir codigoPostal y Calle en la Direccion		
-			Direccion direccionHotel=new Direccion(null,codigoPaisDestino,nombrePaisDestino,codigo,nombreCiudadDestino,null,null);
+			Direccion direccionHotel=new Direccion(1,codigoPaisDestino,nombrePaisDestino,codigo,nombreCiudadDestino,null,null);
 			Hotel hotel=new Hotel(idHotel, direccionHotel, nombreHotel);
 			Habitacion habitacion=new Habitacion(codigoHabitacion, hotel, fEntrada, fSalida, disponibilidadHabitacion, numeroCamas, tipoCama,precioHabitacionNoche, precioHabitacionTotal);
 			hotel.addHabitacion(habitacion);
@@ -287,9 +289,13 @@ public class LoginController extends HttpServlet {
 			System.out.println("Datos del Hotel elegido:\n"+hotel.toString());
 			System.out.println("Datos de la Habitacion del Hotel elegido:\n"+habitacion.toString());
 			
-			request.setAttribute("Direccion",direccionHotel );
-			request.setAttribute("Hotel", hotel);
-			request.setAttribute("Habitacion", habitacion);
+			//En este punto ya deberia tener todos los datos recojidos de 
+			//Direccion,Hotel,Usuario y Habitacion.
+			//Para poder transportar los datos de una mejor forma
+			//probare a utilizar el almacenamiento en json
+			request.setAttribute("direccion",direccionHotel);
+			request.setAttribute("hotel", hotel);
+			request.setAttribute("habitacion", habitacion);
 			
 			request.setAttribute("codigoIATA3", codigo);
 			request.setAttribute("fechaEntrada3", fechaEntrada);
@@ -302,11 +308,39 @@ public class LoginController extends HttpServlet {
 			request.getRequestDispatcher("ofertasTransporte.jsp").forward(request, response);
 			break;
 		case "guardarOfertaViaje":
-//			Direccion direccion=request.getParameter("Direccion");
-//			Habitacion habitacion2= request.getParameter("Habitacion");
-//			Habitacion habitacion3= request.getParameter("Hotel");
-//			Usuario usuario= request.getParameter("Usuario");
-			break;
+			Direccion direccionFinal=(Direccion) request.getSession().getAttribute("direccion1");
+			Hotel hotelFinal=(Hotel) request.getSession().getAttribute("hotel1");
+			Habitacion habitacionFinal=(Habitacion) request.getSession().getAttribute("habitacion1");
+			Usuario usuarioFinal = (Usuario) request.getSession().getAttribute("usuario");
+			System.out.println("------------------");
+			System.out.println(direccionFinal);
+			System.out.println(hotelFinal);
+			System.out.println(habitacionFinal);
+			System.out.println(usuarioFinal);
+			
+			Viaje viaje=new Viaje(usuarioFinal, habitacionFinal);
+			
+			
+			EntityManager em1 = modelo.HibernateUtils.getEmf().createEntityManager();
+			EntityTransaction transaction1= em1.getTransaction();
+			try {
+				transaction1.begin();
+				em1.persist(hotelFinal);
+				em1.persist(direccionFinal);
+				em1.persist(usuarioFinal);
+				em1.persist(habitacionFinal);
+				em1.persist(viaje);
+				transaction1.commit();
+			}catch(Exception e) {
+				System.out.println(e.getMessage());
+				transaction1.rollback();
+			}finally {
+				
+				em1.close();
+			}
+			 request.getSession().setAttribute("usuario", usuarioFinal);
+			 response.sendRedirect("perfilUsuario.jsp");
+	        break;
 		case "iniciarSesion":
 			// Obtén los valores de los campos de nombre de usuario y contraseña del
 			// formulario

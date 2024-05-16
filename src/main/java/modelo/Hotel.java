@@ -118,6 +118,4 @@ public class Hotel implements Serializable{
 				&& Objects.equals(nombre_hotel, other.nombre_hotel);
 	}
 
-	
-	
 }

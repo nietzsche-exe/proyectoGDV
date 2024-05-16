@@ -1,6 +1,7 @@
 package modelo;
 
 import java.io.Serializable;
+
 import java.util.Objects;
 
 import jakarta.persistence.Column;
@@ -156,6 +157,5 @@ public class Direccion implements Serializable{
 					+ ", codigo_postal=" + codigo_postal + ", nombre_calle=" + nombre_calle + ", hotel=" + hotel.getId_hotel() + "]";			
 
 	}
-	
 	
 }
