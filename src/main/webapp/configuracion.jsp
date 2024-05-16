@@ -291,14 +291,33 @@
     		else if (seguridad == true){
 %>
 				<div class="Contenedor_Texto_Seguridad">
-					<div class="Contenedor_Arriba">
-						<p>Aqui va el contenido de acceso</p>
+					<div class="Contenedor_Arriba_Izquierda">
+						<p><b>Acceso a la aplicación: </b></p>
+						<p class="Texto1">
+							Para poder acceder a la alicación web es necesario registrarsse si no estas registrado e iniciar sesión 
+							para poder tener acceso a todo el contenido como poder crear un viaje u optar por más ofertas. <br> 
+							Si no te quieres registrar no podras hacer viajes pero puedes ver algunas ofertas, publicidad y tener un 
+							apartado para saber quienes somos.
+						</p>
+						<img class="img_Seguridad" src="Resources/acceso.png">
 					</div>
-					<div class="Contenedor_Arriba">
-						<p>Aqui va el contenido de contrasenna</p>
+					<div class="Contenedor_Arriba_Derecha">
+						<p><b>Contraseña: </b></p>
+						<p class="Texto1">
+							El tema de contraseñas es muy segura. Estas se gestionan y no se muestran bajo ningún concepto. <br>
+							Puedes cambiar de contraeña las veces que quieras pero necesitas verificarlo por correo electrónico
+							para saber si eres tu el que de verdad está accediendo a la cuenta. Solo se puede cambiar en el apartado 
+							de Coniguración-Datos_personales.
+						</p>
+						<img class="img_Seguridad" src="Resources/contrasena.png">
 					</div>
 					<div class="Contenedor_Centro">
-						<p>Aqui va el contenido de seguridad del sistema</p>
+						<p><b>Contraseña: </b></p>
+						<p class="Texto1">
+							El sistema de de seguridad de la aplicacion es muy bueno, no se compartirán vuestros datos como la contraseña a 
+							otras personas, los datos como el correo electronico si para poder contactar con vosotros y mandar las reservas por coorreo.
+						</p>
+						<img class="img_Seguridad" src="Resources/seguridad.png">
 					</div>
 				</div>
 <%
