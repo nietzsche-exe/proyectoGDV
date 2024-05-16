@@ -26,7 +26,8 @@ body {
 #imgPerfil {
 	margin-top: 2%;
     margin-bottom: 1%;
-    border-radius: 10px;
+    width: 10%;
+    border-radius: 50%;
 }
 
 h1 {

@@ -11,7 +11,7 @@
 <body>
 	<div class="Contenedor_Registrarse">
 		<div id="Contenedor_Cabecero">
-			<img id="imgPerfil" alt="Logo_Empresa" src="Resources/logo.png">
+			<img id="imgPerfil" alt="Logo_Empresa" src="Resources/logo_2.0.jpeg">
 			<h1>Registro de Sesión</h1>
 			<br>
 		</div>

@@ -2,6 +2,7 @@ body {
 	padding: 0%;
 	margin: 0%;
 	font-family: arial;
+	text-align: justify;
 	background-color: #222;
 	color: #FFF;
 }
@@ -52,9 +53,8 @@ body {
 	margin-left: 47%;
 }
 #logo{
-	height: 6%;
-	width: 7%;
-	border-radius: 5px;
+	width: 10%;
+	border-radius: 50%;
 }
 
 .Enlaces {
@@ -149,7 +149,7 @@ body {
 .Contenedor_Informacion_Principal {
     margin: 10%;
     margin-top: 4%;
-    background-color: #333;
+    background-color: #555;
     padding: 5%;
     border-radius: 10px;
     box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.3);
@@ -158,25 +158,37 @@ body {
 }
 
 .Titulo-Resumen {
-    background-color: #222;
+    background-color: #333;
     width: 70%;
     align-content: center;
-    margin-left: 15%;
+    margin-left: 13%;
     padding: 2%;
     border-radius: 10px;
     box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.2);
     color: #fff;
+    display: inline-block;
 }
 .Contenedor_Informacion_Arriba {
     background-color: #444;
-    width: 40%;
     padding: 2%;
     border-radius: 10px;
     box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.1);
-    display: inline-block;
-    margin-left: 5%;
     margin-top: 5%;
     color: #fff;
+}
+.Contenedor_Con_Imagen {
+	margin-left: 8%;
+	width: 64%;
+	display: inline-block;
+}
+.Contenedor_Con_Imagen2 {
+	width: 20%;
+	display: inline-block;
+}
+.Contenedor_IMG {
+	margin-left: 35%;
+	width: 55%;
+	border-radius: 5px;
 }
 
 .Titulo2 {
@@ -204,3 +216,52 @@ body {
     line-height: 1.6;
     margin-bottom: 15px;
 }
+
+
+/*Seguridad y Privacidad*/
+
+.Contenedor_Texto_Seguridad {
+	background-color: #333;
+	padding: 5%;
+	margin: 10%;
+	margin-top: 4%;
+	border-radius: 10px;
+	box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.3);
+	color: #fff;
+}
+.Contenedor_Arriba_Izquierda {
+	background-color: #555;
+	width: 35%;
+	padding: 2%;
+	border-radius: 10px;
+	box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.1);
+	display: inline-block;
+	color: #fff;
+}
+.Contenedor_Arriba_Derecha {
+	float: right;
+	background-color: #555;
+	width: 35%;
+	padding: 2%;
+	border-radius: 10px;
+	box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.1);
+	display: inline-block;
+	color: #fff;
+}
+.Contenedor_Centro {
+	background-color: #555;
+	width: 35%;
+	margin-top: 2%;
+	margin-left: 30%;
+	padding: 2%;
+	border-radius: 10px;
+	box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.1);
+	color: #fff;
+}
+.img_Seguridad {
+	width: 50%;
+	margin-left: 25%;
+	
+}
+
+

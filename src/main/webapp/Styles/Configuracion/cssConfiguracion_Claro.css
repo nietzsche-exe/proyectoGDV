@@ -48,9 +48,8 @@ body {
 	margin-left: 47%;
 }
 #logo{
-	height: 6%;
-	width: 7%;
-	border-radius: 5px;
+	width: 10%;
+	border-radius: 50%;
 }
 .Enlaces {
 	background-color: #93FFBF;
@@ -163,18 +162,30 @@ body {
     border-radius: 10px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2); /* Sombra con color negro */
     color: #333; /* Color del texto oscuro */
+    display: inline-block;
 }
 
 .Contenedor_Informacion_Arriba {
-    background-color: #f1f1f1; /* Color de fondo gris claro */
-    width: 40%;
+    background-color: #f1f1f1;
     padding: 2%;
     border-radius: 10px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Sombra con color negro */
-    display: inline-block;
-    margin-left: 5%;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
     margin-top: 5%;
     color: #333; /* Color del texto oscuro */
+}
+.Contenedor_Con_Imagen {
+	margin-left: 8%;
+	width: 64%;
+	display: inline-block;
+}
+.Contenedor_Con_Imagen2 {
+	width: 20%;
+	display: inline-block;
+}
+.Contenedor_IMG {
+	margin-left: 35%;
+	width: 55%;
+	border-radius: 5px;
 }
 
 .Titulo2 {
@@ -216,31 +227,38 @@ body {
 	margin-top: 4%;
 	border-radius: 10px;
 	box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+	color: #333;
 }
-.Contenedor_Arriba {
-	background-color: #e2e2e4;
-	width: 30%;
+.Contenedor_Arriba_Izquierda {
+	background-color: #eee;
+	width: 35%;
 	padding: 2%;
 	border-radius: 10px;
 	box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 	display: inline-block;
-	margin-left: 10%;
+	color: #333;
 }
-.Contenedor_Centro {
-	background-color: #e2e2e4;
-	width: 30%;
-	margin-top: 2%;
-	margin-left: 33%;
+.Contenedor_Arriba_Derecha {
+	float: right;
+	background-color: #eee;
+	width: 35%;
 	padding: 2%;
 	border-radius: 10px;
 	box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+	display: inline-block;
+	color: #333;
 }
-
-
-
-
-
-
-
-
-
+.Contenedor_Centro {
+	background-color: #eee;
+	width: 35%;
+	margin-top: 2%;
+	margin-left: 30%;
+	padding: 2%;
+	border-radius: 10px;
+	box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+	color: #333;
+}
+.img_Seguridad {
+	width: 50%;
+	margin-left: 25%;
+}
