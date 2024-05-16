@@ -318,54 +318,92 @@
 					</div>
 					
 					<div class="Contenedor_Informacion_Arriba">
-						<p class="titulo3"><b>Registro e Inicio de Sesión: </b></p>
-						<p class="Texto2">
-							Los usuarios pueden registrarse con un nombre de usuario único, correo electrónico y contraseña. 
-							Se establecen requisitos para cada campo, como longitud mínima y restricciones de caracteres. El correo electrónico debe ser 
-							único y del dominio "@gmail.com". Se confirma la dirección de correo electrónico mediante tokens. Se implementa un sistema 
-							de inicio de sesión que muestra la fecha de la última conexión del usuario.
-						</p>
+						<div class="Contenedor_Con_Imagen">
+							<p class="titulo3"><b>Registro e Inicio de Sesión: </b></p>
+							<p class="Texto2">
+								Los usuarios pueden registrarse con un nombre de usuario único, correo electrónico y contraseña. 
+								Se establecen requisitos para cada campo, como longitud mínima y restricciones de caracteres. El correo electrónico debe ser 
+								único y del dominio "@gmail.com". Se confirma la dirección de correo electrónico mediante tokens. Se implementa un sistema 
+								de inicio de sesión que muestra la fecha de la última conexión del usuario.
+							</p>
+						</div>
+						<div class="Contenedor_Con_Imagen2">
+							<img class="Contenedor_IMG" src="Resources/inicioSesion_01.jpeg">
+						</div>
 					</div>
 					
 					
 					<div class="Contenedor_Informacion_Arriba">
-						<p class="titulo3"><b>Creación de Viajes: </b></p>
-						<p class="Texto2">
-							Los usuarios pueden crear viajes proporcionando información como destino, fechas, número de personas, 
-							rango de precios y origen del viaje. Tienen la opción de permitir que la aplicación acceda a su ubicación.
-						</p>
+						<div class="Contenedor_Con_Imagen2">
+							<img class="Contenedor_IMG" src="Resources/creacion_viaje.png">
+						</div>
+						<div class="Contenedor_Con_Imagen">
+							<p class="titulo3"><b>Creación de Viajes: </b></p>
+							<p class="Texto2">
+								Los usuarios pueden crear viajes proporcionando información como destino, fechas, número de personas, 
+								rango de precios y origen del viaje. <br>
+								En la aplicación sale un mapa de los hoteles que hay cerca de tu destino para 
+								que te resulte más sencillo saber que hay cerca de tu destino para que vayas planificando los planes del viaje.
+							</p>
+						</div>
 					</div>
 					
 					<div class="Contenedor_Informacion_Arriba">
-						<p class="titulo3"><b>Búsqueda de Ofertas y Creación de Itinerarios: </b></p>
-						<p class="Texto2">
-							La aplicación utiliza APIs para buscar ofertas de vuelos y alojamientos en 
-							varias páginas web. Se genera un itinerario personalizado para cada usuario, que incluye lugares turísticos populares como museos, 
-							restaurantes y actividades.
-						</p>
+						<div class="Contenedor_Con_Imagen">
+							<p class="titulo3"><b>Búsqueda de Ofertas y Creación de Itinerarios: </b></p>
+							<p class="Texto2">
+								La aplicación utiliza APIs para buscar ofertas de vuelos y alojamientos en 
+								varias páginas web. Se genera un itinerario personalizado para cada usuario, que incluye lugares turísticos populares como museos, 
+								restaurantes y actividades.
+							</p>
+						</div>
+						<div class="Contenedor_Con_Imagen2">
+							<img class="Contenedor_IMG" src="Resources/itinerarios.png">
+						</div>
 					</div>
 					
 					<div class="Contenedor_Informacion_Arriba">
-						<p class="titulo3"><b>Notificaciones por Email: </b></p>
-						<p class="Texto2">		
-							Se envían alertas por correo electrónico a los usuarios para recordar fechas importantes relacionadas 
-							con sus viajes.
-						</p>
+						<div class="Contenedor_Con_Imagen2">
+							<img class="Contenedor_IMG" src="Resources/email.png">
+						</div>
+						<div class="Contenedor_Con_Imagen">
+							<p class="titulo3"><b>Notificaciones por Email: </b></p>
+							<p class="Texto2">		
+								Se envían alertas por correo electrónico a los usuarios para recordar fechas importantes relacionadas 
+								con sus viajes. <br>
+								Tambien se utiliza el email para enviar verificaciones de cambio de correo o de contraseña, y para la creación de un nuevo usuario
+							</p>
+						</div>
 					</div>
 					
 					<div class="Contenedor_Informacion_Arriba">
-						<p class="titulo3"><b>Gestión de Viajes: </b></p>
-						<p class="Texto2">		
-							Los usuarios pueden eliminar los viajes que ya no deseen mantener.
-						</p>
+						<div class="Contenedor_Con_Imagen">
+							<p class="titulo3"><b>Gestión de Viajes: </b></p>
+							<p class="Texto2">		
+								Los usuarios pueden tanto crear los viajes al destino que quieran como eliminar los viajes que ya no deseen mantener. <br>
+								Los viajes que cojan con nuestra aplicacion web son experiencias inolvidables que los recordaras en tu vida, 
+								los viajes se pueden crear para una persona o para grupos grandes que hagas con amigos o familiares.
+							</p>
+						</div>
+						<div class="Contenedor_Con_Imagen2">
+							<img class="Contenedor_IMG" src="Resources/gestion_viaje.png">
+						</div>
 					</div>
 					
 					<div class="Contenedor_Informacion_Arriba">
-						<p class="titulo3"><b>Configuración de Usuario: </b></p>
-						<p class="Texto2">		
-							Se proporciona un apartado de ajustes donde los usuarios pueden cambiar su nombre de usuario, 
-							contraseña, correo electrónico, activar un modo oscuro y ver un historial de viajes realizados.
-						</p>
+						<div class="Contenedor_Con_Imagen2">
+							<img class="Contenedor_IMG" src="Resources/config_usuario.png">
+						</div>
+						<div class="Contenedor_Con_Imagen">
+							<p class="titulo3"><b>Configuración de Usuario: </b></p>
+							<p class="Texto2">		
+								Se proporciona un apartado de ajustes donde los usuarios pueden cambiar su nombre de usuario, 
+								contraseña, correo electrónico, activar un modo oscuro, etc... <br>
+								Este apartado de configuración es seguro para todo el mundo, para verificar si modificas tu contraseña
+								 o tu correo electronico, te llegará al email asociado que haya guardado en la base de datos o al nuevo 
+								 email que implementes para verificar si eres tu.
+							</p>
+						</div>
 					</div>
 				</div>
 <%

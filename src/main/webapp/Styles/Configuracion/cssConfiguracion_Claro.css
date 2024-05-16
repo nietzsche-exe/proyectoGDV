@@ -163,18 +163,30 @@ body {
     border-radius: 10px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2); /* Sombra con color negro */
     color: #333; /* Color del texto oscuro */
+    display: inline-block;
 }
 
 .Contenedor_Informacion_Arriba {
-    background-color: #f1f1f1; /* Color de fondo gris claro */
-    width: 40%;
+    background-color: #f1f1f1;
     padding: 2%;
     border-radius: 10px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Sombra con color negro */
-    display: inline-block;
-    margin-left: 5%;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
     margin-top: 5%;
     color: #333; /* Color del texto oscuro */
+}
+.Contenedor_Con_Imagen {
+	margin-left: 8%;
+	width: 64%;
+	display: inline-block;
+}
+.Contenedor_Con_Imagen2 {
+	width: 20%;
+	display: inline-block;
+}
+.Contenedor_IMG {
+	margin-left: 35%;
+	width: 55%;
+	border-radius: 5px;
 }
 
 .Titulo2 {
