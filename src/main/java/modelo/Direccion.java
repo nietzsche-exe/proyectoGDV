@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import java.util.Objects;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -45,7 +46,7 @@ public class Direccion implements Serializable{
 	@Column(name = "calle")
 	private String nombre_calle;
 	
-	@OneToOne(mappedBy = "direccion")
+	@OneToOne(mappedBy = "direccion", cascade = CascadeType.ALL)
 	private Hotel hotel;
 	
 	public Hotel getHotel() {
@@ -56,10 +57,9 @@ public class Direccion implements Serializable{
 	    this.hotel = hotel;
 	}
 	
-	public Direccion(Integer id_direccion, String codigo_pais, String nombre_pais, String codigo_ciudad,
+	public Direccion(String codigo_pais, String nombre_pais, String codigo_ciudad,
 			String nombre_ciudad, String codigo_postal, String nombre_calle) {
 		super();
-		this.id_direccion = id_direccion;
 		this.codigo_pais = codigo_pais;
 		this.nombre_pais = nombre_pais;
 		this.codigo_ciudad = codigo_ciudad;

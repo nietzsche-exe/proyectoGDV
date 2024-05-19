@@ -3,9 +3,11 @@ package modelo;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -59,7 +61,7 @@ public class Usuario implements Serializable{
 	@Column(name="fecha_nacimiento")
 	private LocalDate fecha_nacimiento;
 	
-	@OneToMany(mappedBy = "usuario")
+	@OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
 	private List<Viaje> viajes;
 	
 
@@ -70,7 +72,21 @@ public class Usuario implements Serializable{
 	public void setViajes(List<Viaje> viajes) {
 		this.viajes = viajes;
 	}
-
+	
+	public void addViaje(Viaje viaje) {
+		if(this.viajes==null) {
+			this.viajes=new ArrayList<Viaje>();
+		}
+		this.viajes.add(viaje);
+		viaje.setUsuario(this);
+	}
+	
+	public void quitarViaje(Viaje viaje) {
+		if(this.viajes!=null) {
+			this.viajes.remove(viaje);
+			viaje.setUsuario(null);
+		}
+	}
 
 	public Usuario(String nombre, String contrasenia, String email, Boolean tema, String sexo, String num_telefono, 
 			LocalDate fecha_nacimiento, LocalDate ultima_modificacion_contrasenna ) {

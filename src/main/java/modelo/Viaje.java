@@ -11,7 +11,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -29,11 +30,14 @@ public class Viaje implements Serializable{
 	@JoinColumn(name = "id_usuario")
 	private Usuario usuario;
 		
-	@ManyToOne
+	@OneToOne
     @JoinColumn(name = "id_habitacion")
     private Habitacion habitacion;
-	
-	public Viaje( Usuario usuario, Habitacion habitacion) {
+
+	public Viaje() {
+		
+	}
+	public Viaje(Habitacion habitacion, Usuario usuario) {
 		super();
 		this.usuario = usuario;
 		this.habitacion = habitacion;
@@ -83,7 +87,7 @@ public class Viaje implements Serializable{
 
 	@Override
 	public String toString() {
-		return "Viaje [id_viaje=" + id_viaje + ", usuario=" + usuario + ", habitacion=" + habitacion + "]";
+		return "Viaje [id_viaje=" + id_viaje + ", habitacion=" + habitacion + ", usuario=" + usuario + "]";
 	}
 	
 	

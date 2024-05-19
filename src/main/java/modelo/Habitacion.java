@@ -5,11 +5,14 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -28,8 +31,9 @@ public class Habitacion implements Serializable{
 	@Column(name = "fecha_salida")
 	private LocalDate fecha_salida;
 	
-	@Column(name = "habitacion_disponible")
-	private Integer habitacion_disponible;
+	@Column(name = "habitacion_disponible", insertable = false, updatable = false)
+    private Integer habitacion_disponible;
+
 	
 	@Column(name = "num_cama")
 	private Integer numero_camas;
@@ -47,20 +51,26 @@ public class Habitacion implements Serializable{
 	@JoinColumn(name = "id_hotel")
 	private Hotel hotel;
 	
-	public Habitacion(String id_habitacion, Hotel hotel, LocalDate fecha_entrada, LocalDate fecha_salida,
-			Integer habitacion_disponible, Integer numero_camas, String tipo_cama, Double precio_noche,
+	@OneToOne(mappedBy = "habitacion", cascade = CascadeType.ALL)
+	private Viaje viaje;
+	
+	public Habitacion() {
+		
+	}
+	
+	public Habitacion(String id_habitacion,  LocalDate fecha_entrada, LocalDate fecha_salida,
+			Integer numero_camas, String tipo_cama, Double precio_noche,
 			Double precio_total) {
 		super();
 		this.id_habitacion = id_habitacion;
-		this.hotel = hotel;
 		this.fecha_entrada = fecha_entrada;
 		this.fecha_salida = fecha_salida;
-		this.habitacion_disponible = habitacion_disponible;
 		this.numero_camas = numero_camas;
 		this.tipo_cama = tipo_cama;
 		this.precio_noche = precio_noche;
 		this.precio_total = precio_total;
 	}
+
 
 	public String getId_habitacion() {
 		return id_habitacion;

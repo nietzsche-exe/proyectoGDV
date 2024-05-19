@@ -29,8 +29,8 @@
 	
 	
 	Direccion direccion=(Direccion)request.getAttribute("direccion");
-	Hotel hotel=(Hotel)request.getAttribute("hotel");
-	Habitacion habitacion=(Habitacion)request.getAttribute("habitacion");
+	Hotel hotel=(Hotel)request.getAttribute("hotel2");
+	Habitacion habitacion=(Habitacion)request.getAttribute("habitacion01");
 	
 	request.getSession().setAttribute("direccion1",direccion);
 	request.getSession().setAttribute("hotel1",hotel);
@@ -86,7 +86,7 @@
 	<%if(flightOffers!=null){%>
 	
 		<% 
-		for(int j=0;j<20;j++){
+		for(int j=0;j<flightOffers.length;j++){
 			Itinerary[]itineraries=flightOffers[j].getItineraries();
 			TravelerPricing[]pricings=flightOffers[j].getTravelerPricings();
 			FareDetailsBySegment[]bySegments=pricings[0].getFareDetailsBySegment();

@@ -26,25 +26,23 @@ public class Hotel implements Serializable{
 	private String id_hotel;
 	
 	@OneToOne(cascade = CascadeType.ALL,fetch=FetchType.LAZY)
-	@JoinColumn(name = "id_direccion", referencedColumnName = "id_direccion")
+	@JoinColumn(name = "id_direccion")
 	private Direccion direccion;
 	
 	@Column(name = "nombre_hotel")
 	private String nombre_hotel;
 	
-	@OneToMany(mappedBy = "hotel", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL)
     private List<Habitacion> habitaciones;
 
 	
 	public Hotel() {
-		super();
 	}
 
-	public Hotel(String id_hotel, Direccion direccion, String nombre_hotel) {
+	public Hotel(String id_hotel, String nombreHotel) {
 		super();
 		this.id_hotel = id_hotel;
-		this.direccion = direccion;
-		this.nombre_hotel = nombre_hotel;
+		this.nombre_hotel=nombreHotel;
 	}
 
 	public String getId_hotel() {

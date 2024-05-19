@@ -266,7 +266,6 @@ public class LoginController extends HttpServlet {
 			tipoCama=(String)request.getParameter("tipoDeCama");
 			precioHabitacionNoche=(Double) Double.valueOf(request.getParameter("precioNoche"));
 			precioHabitacionTotal=(Double)Double.valueOf(request.getParameter("precioTotal"));
-		
 			
 			numeroPersonas=(String) request.getParameter("numeroPersonas2");
 			codigoPaisOrigen=(String) request.getParameter("codigoIATAPaisOrigen");
@@ -281,10 +280,16 @@ public class LoginController extends HttpServlet {
 			LocalDate fSalida=LocalDate.parse(fechaSalida);
 			
 			//Falta incluir codigoPostal y Calle en la Direccion		
-			Direccion direccionHotel=new Direccion(1,codigoPaisDestino,nombrePaisDestino,codigo,nombreCiudadDestino,null,null);
-			Hotel hotel=new Hotel(idHotel, direccionHotel, nombreHotel);
-			Habitacion habitacion=new Habitacion(codigoHabitacion, hotel, fEntrada, fSalida, disponibilidadHabitacion, numeroCamas, tipoCama,precioHabitacionNoche, precioHabitacionTotal);
+			Direccion direccionHotel=new Direccion(codigoPaisDestino,nombrePaisDestino,codigo,nombreCiudadDestino,null,null);
+			
+			Hotel hotel=new Hotel(idHotel,nombreHotel);
+			hotel.setDireccion(direccionHotel);
+			
+			Habitacion habitacion=new Habitacion(codigoHabitacion, fEntrada, fSalida, numeroCamas, tipoCama,precioHabitacionNoche, precioHabitacionTotal);
+			habitacion.setHotel(hotel);
+			direccionHotel.setHotel(hotel);
 			hotel.addHabitacion(habitacion);
+			
 			System.out.println("Direccion del Hotel elegido:\n"+direccionHotel.toString());
 			System.out.println("Datos del Hotel elegido:\n"+hotel.toString());
 			System.out.println("Datos de la Habitacion del Hotel elegido:\n"+habitacion.toString());
@@ -294,8 +299,8 @@ public class LoginController extends HttpServlet {
 			//Para poder transportar los datos de una mejor forma
 			//probare a utilizar el almacenamiento en json
 			request.setAttribute("direccion",direccionHotel);
-			request.setAttribute("hotel", hotel);
-			request.setAttribute("habitacion", habitacion);
+			request.setAttribute("hotel2", hotel);
+			request.setAttribute("habitacion01", habitacion);
 			
 			request.setAttribute("codigoIATA3", codigo);
 			request.setAttribute("fechaEntrada3", fechaEntrada);
@@ -318,25 +323,30 @@ public class LoginController extends HttpServlet {
 			System.out.println(habitacionFinal);
 			System.out.println(usuarioFinal);
 			
-			Viaje viaje=new Viaje(usuarioFinal, habitacionFinal);
 			
-			
+			Viaje viaje=new Viaje( habitacionFinal, usuarioFinal);
+			System.out.println(viaje.toString());
+			//usuarioFinal.addViaje(viaje);
 			EntityManager em1 = modelo.HibernateUtils.getEmf().createEntityManager();
-			EntityTransaction transaction1= em1.getTransaction();
+			EntityTransaction transaction1= null;
 			try {
+				transaction1=em1.getTransaction();
 				transaction1.begin();
-				em1.persist(hotelFinal);
-				em1.persist(direccionFinal);
-				em1.persist(usuarioFinal);
-				em1.persist(habitacionFinal);
-				em1.persist(viaje);
+				em1.merge(direccionFinal);
+				em1.merge(hotelFinal);
+				em1.merge(habitacionFinal);
+				em1.merge(viaje);
+				//em1.merge(usuarioFinal);
 				transaction1.commit();
 			}catch(Exception e) {
 				System.out.println(e.getMessage());
-				transaction1.rollback();
+				 if (transaction1 != null && transaction1.isActive()) {
+			            transaction1.rollback();
+			        }
 			}finally {
-				
-				em1.close();
+				 if (em1 != null && em1.isOpen()) {
+			            em1.close();
+			        }
 			}
 			 request.getSession().setAttribute("usuario", usuarioFinal);
 			 response.sendRedirect("perfilUsuario.jsp");
@@ -884,7 +894,8 @@ public class LoginController extends HttpServlet {
 	protected Amadeus iniciarApi() {
 		//Initialize using parameters
 		Amadeus amadeus = Amadeus
-		        .builder("ptncDDPN6h0AZL1kMKSrGquLu1yUPeGk", "RUZhm8NigqOrNrDw")
+		        //.builder("ptncDDPN6h0AZL1kMKSrGquLu1yUPeGk", "RUZhm8NigqOrNrDw")
+		        .builder("ogWe05A023xfPIxnde7GFlvDZtsot8V9","EhGKNIAHKSjwc5EL")
 		        .build();
 		return amadeus;
 	}

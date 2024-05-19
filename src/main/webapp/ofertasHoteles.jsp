@@ -48,7 +48,7 @@ Location[] locations= amadeus.referenceData.locations.get(Params.with("subType",
 try {
 	 
 	hotels = amadeus.referenceData.locations.hotels.byCity.get(Params.with("cityCode", airportCode));
-	for (int a = 0; a < 50; a++) {
+	for (int a = 0; a < hotels.length; a++) {
 		System.out.println(hotels[a].toString());
 		listaHoteles.add(hotels[a]);
 	}
@@ -167,8 +167,16 @@ request.setAttribute("sesionAmadeus", amadeus);
 			<td style="border: 2px; border-style: solid; border-color: black;"><%=ofertasHotel[0].isAvailable()%></td>
 			<td style="border: 2px; border-style: solid; border-color: black;"><%=infoOferta.getRoom().getType()%></td>
 			<td style="border: 2px; border-style: solid; border-color: black;"><%=infoOferta.getRoom().getTypeEstimated().getCategory()%></td>
-			<td style="border: 2px; border-style: solid; border-color: black;"><%=infoOferta.getRoom().getTypeEstimated().getBeds()%></td>
+			
+			<%if(infoOferta.getRoom().getTypeEstimated().getBeds()!=null && infoOferta.getRoom().getTypeEstimated().getBedType()!=null){
+			%>		
+			<td style="border: 2px; border-style: solid; border-color: black;"><%=infoOferta.getRoom().getTypeEstimated().getBeds() %></td>
 			<td style="border: 2px; border-style: solid; border-color: black;"><%=infoOferta.getRoom().getTypeEstimated().getBedType()%></td>
+			<%}else{ %>
+			<td style="border: 2px; border-style: solid; border-color: black;"><%=0%></td>
+			<td style="border: 2px; border-style: solid; border-color: black;">Desconocido</td>
+			<%} %>
+			
 			<td style="border: 2px; border-style: solid; border-color: black;"><%=infoOferta.getDescription()%></td>
 			<td style="border: 2px; border-style: solid; border-color: black;">Adultos: <%=infoOferta.getGuests().getAdults()%><br>Niño/as:
 				<%
@@ -192,7 +200,7 @@ request.setAttribute("sesionAmadeus", amadeus);
 				<form name="guardarOfertaHotel"
 					action="LoginController?opcion=guardarOfertaHotel" method="post">
 					<!-- Datos Entidad Hotel -->
-					<input type="hidden" name="hotelId" value="<%=infoOferta.getId()%>">
+					<input type="hidden" name="hotelId" value="<%=hotel.getHotelId()%>">
 					<input type="hidden" name="nombreHotel" value="<%=hotel.getName()%>">
 					<!-- Datos Entidad Direccion 
 						Falta por obtener: Codigo_Postal y nombre_de_la_calle del Hotel -->
@@ -206,8 +214,18 @@ request.setAttribute("sesionAmadeus", amadeus);
 					<input type="hidden" name="fechaEntrada2" value="<%=fechaEntrada%>">
 					<input type="hidden" name="fechaSalida2" value="<%=fechaSalida%>">
 					<input type="hidden" name="habitacionDisponible" value="<%=ofertasHotel[0].isAvailable()==true? 1:0%>">
+					
+					<%if((infoOferta.getRoom().getTypeEstimated().getBeds()!=null) && (infoOferta.getRoom().getTypeEstimated().getBedType()!=null)){
+					%>		
 					<input type="hidden" name="numeroCamas" value="<%=infoOferta.getRoom().getTypeEstimated().getBeds()%>">
 					<input type="hidden" name="tipoDeCama" value="<%=infoOferta.getRoom().getTypeEstimated().getBedType()%>">
+					
+					<%}else{ %>
+					<input type="hidden" name="numeroCamas" value="0">
+					<input type="hidden" name="tipoDeCama" value="Desconocido">
+					<%}%>
+					
+					
 					<input type="hidden" name="precioNoche" value="<%=precioNoche%>">
 					<input type="hidden" name="precioTotal" value="<%=infoOferta.getPrice().getTotal()%>">
 					<input type="hidden" name="numeroPersonas2" value="<%=numeroPersonas%>">
