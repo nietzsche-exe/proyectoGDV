@@ -8,6 +8,7 @@ import java.util.Objects;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
@@ -47,11 +48,11 @@ public class Habitacion implements Serializable{
 	@Column(name = "precio_total")
 	private Double precio_total;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "id_hotel")
 	private Hotel hotel;
 	
-	@OneToOne(mappedBy = "habitacion", cascade = CascadeType.ALL)
+	@OneToOne(mappedBy = "habitacion", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Viaje viaje;
 	
 	public Habitacion() {

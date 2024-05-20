@@ -1,5 +1,10 @@
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.List"%>
 <%@page import="jakarta.persistence.Query"%>
 <%@page import="modelo.Usuario"%>
+<%@page import="modelo.Viaje"%>
+<%@page import="modelo.Habitacion"%>
+<%@page import="modelo.Hotel"%>
 <%@page import="modelo.HibernateUtils"%>
 
 <%@page import="jakarta.persistence.EntityManager"%>
@@ -41,6 +46,16 @@ if(usuario.getTema() == false) {
     <link rel="stylesheet" href="Styles/Perfil_Usuario/cssPerfilUsuario_Oscuro.css">
 <%
 }
+%>
+<%
+Query queryViajes=em.createQuery("SELECT v FROM Viaje v "
+				        + "JOIN FETCH v.habitacion h "
+				        + "JOIN FETCH h.hotel "
+				        + "WHERE v.usuario.id_usuario = :idUsuario");
+queryViajes.setParameter("idUsuario", usuario.getId_usuario());
+List<Viaje> listaViajes=queryViajes.getResultList();
+
+
 %>
 </head>
 <body>
@@ -85,10 +100,41 @@ if(usuario.getTema() == false) {
 			</div>
 			
 		</header>
-    
-    <script src="JavaScript/script.js"></script>
-    
+	<%for (Viaje viaje : listaViajes) {
+	    Habitacion habitacion = viaje.getHabitacion();
+	    Hotel hotel = habitacion.getHotel();
+	%>
 	
+	<table>
+	
+		<thead>Viaje</thead>
+		<tr>
+			<td>Codigo Viaje</td>
+			<td>Nombre Hotel</td>
+			<td>Precio</td>
+			<td>Noche</td>
+			<td>Fecha Entrada</td>
+			<td>Fecha Salida</td>
+			<td>NºCamas</td>
+		</tr>
+		<tr>
+			<td><%=viaje.getId_viaje() %></td>
+			<td><%=hotel.getNombre_hotel() %></td>
+			<td><%=habitacion.getPrecio_total() %></td>
+			<td><%=habitacion.getPrecio_noche() %></td>
+			<td><%=habitacion.getFecha_entrada() %></td>
+			<td><%=habitacion.getFecha_salida() %></td>
+			<td><%=habitacion.getNumero_camas()%></td>
+		</tr>
+	</table>
+	
+	<%
+	    System.out.println("Viaje ID: " + viaje.getId_viaje());
+	    System.out.println("Habitacion ID: " + habitacion.getId_habitacion());
+	    System.out.println("Hotel Nombre: " + hotel.getNombre_hotel());
+	} %>
+    <script src="JavaScript/script.js"></script>
+
     </form>
 </body>
 </html>

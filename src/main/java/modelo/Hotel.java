@@ -32,7 +32,7 @@ public class Hotel implements Serializable{
 	@Column(name = "nombre_hotel")
 	private String nombre_hotel;
 	
-	@OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Habitacion> habitaciones;
 
 	
