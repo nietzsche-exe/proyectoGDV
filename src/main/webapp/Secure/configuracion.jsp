@@ -72,11 +72,11 @@
 	if(usuario.getTema() == false) {
 %>
 	
-		<link rel="stylesheet" href="Styles/Configuracion/cssConfiguracion_Claro.css">
+		<link rel="stylesheet" href="../Styles/Configuracion/cssConfiguracion_Claro.css">
 <%
 	} else {
 %>  
-		<link rel="stylesheet" href="Styles/Configuracion/cssConfiguracion_Oscuro.css">
+		<link rel="stylesheet" href="../Styles/Configuracion/cssConfiguracion_Oscuro.css">
 <%
 	}
 %>
@@ -84,7 +84,7 @@
 <title>Página Configuracion</title>
 </head>
 <body>
-	<form name="datos" action="LoginController" method="post" onsubmit="return validarInputs()">
+	<form name="datos" action="../LoginController" method="post" onsubmit="return validarInputs()">
 		<input type="hidden" name="opcion" value="validarUser">
 		
 		
@@ -93,7 +93,7 @@
 
 				<header class="Encabezado">
 					<div class="Contenedor_Logo">
-						<img id="logo" alt="Logo" src="Resources/logo_2.0.jpeg">
+						<img id="logo" alt="Logo" src="../Resources/logo_2.0.jpeg">
 					</div>
 					
 					<div class="biblioteca">
@@ -299,7 +299,7 @@
 							Si no te quieres registrar no podras hacer viajes pero puedes ver algunas ofertas, publicidad y tener un 
 							apartado para saber quienes somos.
 						</p>
-						<img class="img_Seguridad" src="Resources/acceso.png">
+						<img class="img_Seguridad" src="../Resources/acceso.png">
 					</div>
 					<div class="Contenedor_Arriba_Derecha">
 						<p><b>Contraseña: </b></p>
@@ -309,7 +309,7 @@
 							para saber si eres tu el que de verdad está accediendo a la cuenta. Solo se puede cambiar en el apartado 
 							de Coniguración-Datos_personales.
 						</p>
-						<img class="img_Seguridad" src="Resources/contrasena.png">
+						<img class="img_Seguridad" src="../Resources/contrasena.png">
 					</div>
 					<div class="Contenedor_Centro">
 						<p><b>Contraseña: </b></p>
@@ -317,7 +317,7 @@
 							El sistema de de seguridad de la aplicacion es muy bueno, no se compartirán vuestros datos como la contraseña a 
 							otras personas, los datos como el correo electronico si para poder contactar con vosotros y mandar las reservas por coorreo.
 						</p>
-						<img class="img_Seguridad" src="Resources/seguridad.png">
+						<img class="img_Seguridad" src="../Resources/seguridad.png">
 					</div>
 				</div>
 <%
@@ -347,14 +347,14 @@
 							</p>
 						</div>
 						<div class="Contenedor_Con_Imagen2">
-							<img class="Contenedor_IMG" src="Resources/inicioSesion_01.jpeg">
+							<img class="Contenedor_IMG" src="../Resources/inicioSesion_01.jpeg">
 						</div>
 					</div>
 					
 					
 					<div class="Contenedor_Informacion_Arriba">
 						<div class="Contenedor_Con_Imagen2">
-							<img class="Contenedor_IMG" src="Resources/creacion_viaje.png">
+							<img class="Contenedor_IMG" src="../Resources/creacion_viaje.png">
 						</div>
 						<div class="Contenedor_Con_Imagen">
 							<p class="titulo3"><b>Creación de Viajes: </b></p>
@@ -377,13 +377,13 @@
 							</p>
 						</div>
 						<div class="Contenedor_Con_Imagen2">
-							<img class="Contenedor_IMG" src="Resources/itinerarios.png">
+							<img class="Contenedor_IMG" src="../Resources/itinerarios.png">
 						</div>
 					</div>
 					
 					<div class="Contenedor_Informacion_Arriba">
 						<div class="Contenedor_Con_Imagen2">
-							<img class="Contenedor_IMG" src="Resources/email.png">
+							<img class="Contenedor_IMG" src="../Resources/email.png">
 						</div>
 						<div class="Contenedor_Con_Imagen">
 							<p class="titulo3"><b>Notificaciones por Email: </b></p>
@@ -405,13 +405,13 @@
 							</p>
 						</div>
 						<div class="Contenedor_Con_Imagen2">
-							<img class="Contenedor_IMG" src="Resources/gestion_viaje.png">
+							<img class="Contenedor_IMG" src="../Resources/gestion_viaje.png">
 						</div>
 					</div>
 					
 					<div class="Contenedor_Informacion_Arriba">
 						<div class="Contenedor_Con_Imagen2">
-							<img class="Contenedor_IMG" src="Resources/config_usuario.png">
+							<img class="Contenedor_IMG" src="../Resources/config_usuario.png">
 						</div>
 						<div class="Contenedor_Con_Imagen">
 							<p class="titulo3"><b>Configuración de Usuario: </b></p>

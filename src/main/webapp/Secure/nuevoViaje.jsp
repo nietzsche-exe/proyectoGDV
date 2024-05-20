@@ -21,7 +21,7 @@ System.out.println("Informacion usuario actual: "+usuario.toString());
 
 
 <h3>(El nombre de las ciudades deben ser en ingles)</h3>
-	<form name="buscar" action="LoginController" method="post">
+	<form name="buscar" action="../LoginController" method="post">
 		<input type="hidden" name="opcion" value="buscarHotel">
 		
 		<label>Buscar hoteles de un Ciudad</label><br>
