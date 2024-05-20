@@ -1,3 +1,4 @@
+<%@page import="util.Coordenada"%>
 <%@page import="com.amadeus.exceptions.ClientException"%>
 <%@page import="com.amadeus.resources.HotelSentiment"%>
 <%@page import="com.amadeus.resources.HotelOfferSearch"%>
@@ -30,6 +31,7 @@
 //Cada vez que el usuario refresque se actualizara			
 Amadeus amadeus = (Amadeus) request.getAttribute("sesionAmadeus");
 Hotel[] hotels;
+ArrayList<Coordenada> coords = new ArrayList<>();
 ArrayList<Hotel> listaHoteles = new ArrayList<Hotel>();
 String airportCode = (String) request.getAttribute("codIATA");
 try {
@@ -75,6 +77,10 @@ request.setAttribute("sesionAmadeus", amadeus);
 	if (!(listaHoteles.isEmpty())) {
 		
 		for (Hotel hotel : listaHoteles) {
+			
+			Coordenada coord = new Coordenada(hotel.getGeoCode().getLatitude(), hotel.getGeoCode().getLongitude());
+			coords.add(coord);
+			
 		%>
 	<table style="border: 2px; border-style: solid; border-color: black;">
 		<thead><%=request.getAttribute("codIATA")%></thead>
@@ -101,10 +107,10 @@ request.setAttribute("sesionAmadeus", amadeus);
 					<input type="hidden" name="numeroPersonas"
 						value="<%=numeroPersonas%>"> <input type="submit"
 						value="Ver detalles">
-					<!-- 
-					<input type="button" name="latitude" value="//hotel.getGeoCode().getLatitude() ">
-					<input type="button" name="longitude" value="//hotel.getGeoCode().getLongitude() ">
-					 -->
+					
+					<input type="hidden" name="latitude" value="<% hotel.getGeoCode().getLatitude(); %>">
+					<input type="hidden" name="longitude" value="<% hotel.getGeoCode().getLongitude(); %>">
+					
 				</form>
 			</td>
 		</tr>
@@ -195,6 +201,8 @@ request.setAttribute("sesionAmadeus", amadeus);
 		%>
 		</tr>
 	</table>
+	
+	
 	<%
 	} else {
 	%>
@@ -206,6 +214,8 @@ request.setAttribute("sesionAmadeus", amadeus);
 		<p>${errorMessage}</p>
 	</c:if>
 
+	<input type="hidden" name="arrayCoords" value="<%=10%>">
+	
 	<script src="JavaScript/map.js"></script>
 	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCmNYNcpFgAX0QLerv3_P3CJZoop9VnSSs&callback=iniciarMap"></script>
 
