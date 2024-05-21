@@ -7,8 +7,9 @@ body {
 
 .Encabezado {
 	background-color: darkblue; /* Cambiado a oscuro */
-	padding: 0.5%;
+	padding: 1%;
 	display: flex;
+	position: fixed;
 	align-items: center;
 	width: 99%;
 }
