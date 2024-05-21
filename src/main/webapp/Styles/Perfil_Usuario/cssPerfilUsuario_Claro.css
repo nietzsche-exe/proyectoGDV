@@ -4,8 +4,9 @@ body {
 }
 .Encabezado {
     background-color: #FF2300;
-    padding: 0.5%;
+    padding: 1%;
     display: flex;
+    position: fixed;
     align-items: center;
     width: 99%;
 }
@@ -27,6 +28,7 @@ body {
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    color: #444;
 }
 
 .Botones:hover {

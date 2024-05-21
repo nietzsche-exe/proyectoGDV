@@ -8,6 +8,7 @@ import jakarta.persistence.Query;
 import jakarta.servlet.RequestDispatcher;
 
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -260,8 +261,9 @@ public class LoginController extends HttpServlet {
 		case "Loger":
 			response.sendRedirect("login.jsp");
 			break;
-		
+			
 		case "iniciarSesion":
+			
 			// Obtén los valores de los campos de nombre de usuario y contraseña del
 			// formulario
 			email = request.getParameter("correoUsuario");
