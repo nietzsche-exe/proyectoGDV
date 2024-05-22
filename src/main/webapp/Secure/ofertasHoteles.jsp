@@ -1,5 +1,6 @@
 <%@page import="com.amadeus.referencedata.Locations"%>
 <%@page import="util.Coordenada"%>
+<%@ page import="org.json.JSONArray" %>
 <%@page import="com.amadeus.exceptions.ClientException"%>
 <%@page import="com.amadeus.resources.HotelSentiment"%>
 <%@page import="com.amadeus.resources.HotelOfferSearch"%>
@@ -42,9 +43,10 @@ System.out.println("Informacion usuario actual: "+usuario.toString());
 Hotel[] hotels;
 
 //Revisar Coordenada
-ArrayList<Coordenada> coords = new ArrayList<>();
-
 ArrayList<Hotel> listaHoteles = new ArrayList<Hotel>();
+ArrayList<String> latitudes = new ArrayList<String>();
+ArrayList<String> longitudes = new ArrayList<String>();
+
 String airportCode = (String) request.getAttribute("codIATA");
 
 
@@ -97,7 +99,8 @@ request.setAttribute("sesionAmadeus", amadeus);
 	if (!(listaHoteles.isEmpty())) {
 		
 		for (Hotel hotel : listaHoteles) {
-			
+			latitudes.add(String.valueOf(hotel.getGeoCode().getLatitude()));
+			longitudes.add(String.valueOf(hotel.getGeoCode().getLongitude()));
 			try {
 
 				HotelOfferSearch[] ofertasHotel = amadeus.shopping.hotelOffersSearch.get(Params
@@ -110,9 +113,6 @@ request.setAttribute("sesionAmadeus", amadeus);
 				System.out.println("Consulta " + 1 + ": " + ofertasHotel.toString());
 				System.out.println("Oferta " + 1 + ": " + ofertasHotel[0].toString());
 				System.out.println("Id Oferta " + 1 + ": " + ofertasHotel[0].getOffers()[0].getId());
-//Revisar Coordenadas
-			Coordenada coord = new Coordenada(hotel.getGeoCode().getLatitude(), hotel.getGeoCode().getLongitude());
-			coords.add(coord);
 			
 		%>
 	<table style="border: 2px; border-style: solid; border-color: black;">
@@ -141,9 +141,8 @@ request.setAttribute("sesionAmadeus", amadeus);
 						value="<%=numeroPersonas%>"> <input type="submit"
 						value="Ver detalles">
 					
-					<input type="hidden" name="latitude" value="<% hotel.getGeoCode().getLatitude(); %>">
-					<input type="hidden" name="longitude" value="<% hotel.getGeoCode().getLongitude(); %>">
-					
+					<input type="hidden" id="latitude" value="<%=latitudes%>">
+					<input type="hidden" id="longitude" value="<%=longitudes%>">
 				</form>
 			</td>
 		</tr>
@@ -257,7 +256,21 @@ request.setAttribute("sesionAmadeus", amadeus);
 		}
 
 		}
-		%>
+		
+		JSONArray latitudesJson = new JSONArray(latitudes);
+	    JSONArray longitudesJson = new JSONArray(longitudes);
+	    
+	    String latitudesJsonStr = latitudesJson.toString();
+	    String longitudesJsonStr = longitudesJson.toString();
+	    
+        
+	    %>
+
+		<td>
+			<input type="hidden" class="latitude" value='<%= latitudesJsonStr %>'>
+			<input type="hidden" class="longitude" value='<%= longitudesJsonStr %>'>
+		</td>
+		
 		</tr>
 	</table>
 	
@@ -273,7 +286,6 @@ request.setAttribute("sesionAmadeus", amadeus);
 		<p>${errorMessage}</p>
 	</c:if>
 
-	<input type="hidden" name="arrayCoords" value="<%=10%>">
 	
 	<script src="JavaScript/map.js"></script>
 	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCmNYNcpFgAX0QLerv3_P3CJZoop9VnSSs&callback=iniciarMap"></script>

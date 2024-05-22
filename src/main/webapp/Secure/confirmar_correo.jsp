@@ -12,9 +12,10 @@
 <html>
 
 <head>
+<link rel="stylesheet" href="../Styles/Confirmar_Correo/cssConfirmar_Correo_Claro.css">
 <meta charset="UTF-8">
 <title>Verificar correo</title>
-<link rel="stylesheet" href="../Styles/Confirmar_Correo/cssConfirmar_Correo_Claro.css">
+
 </head>
 <body>
 	<c:if test="${not empty error}">
