@@ -2,10 +2,10 @@ package util;
 
 public class Coordenada {
 
-	float latitude;
-	float longitude;
+	String latitude;
+	String longitude;
 	
-	public Coordenada(float latitude, float longitude) {
+	public Coordenada(String latitude, String longitude) {
 		this.latitude = latitude;
 		this.longitude = longitude;
 	}
