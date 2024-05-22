@@ -61,7 +61,7 @@ public class Usuario implements Serializable{
 	@Column(name="fecha_nacimiento")
 	private LocalDate fecha_nacimiento;
 	
-	@OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Viaje> viajes;
 	
 

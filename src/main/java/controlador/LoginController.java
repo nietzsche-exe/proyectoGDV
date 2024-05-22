@@ -13,6 +13,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import modelo.DatosVuelo;
 import modelo.Direccion;
 import modelo.Habitacion;
 import modelo.HibernateUtils;
@@ -309,18 +310,23 @@ public class LoginController extends HttpServlet {
 			break;
 
 		case "guardarOfertaViaje":
+			String aeropuerto_Origen =request.getParameter("aeropuertoOrigen");
+			String ciudad_Origen =request.getParameter("ciudadOrigen");
+			String compania_Area= request.getParameter("companiaAerea");
+			String ciudad_destino= request.getParameter("ciudadDestino");
+			String aeropuerto_Destino =request.getParameter("aeropuertoDestino");
+			String tipo_Viajero =request.getParameter("tipoViajero");
+			Double precio_Medio =Double.valueOf(request.getParameter("precioMedio"));
+			String clase_Cabina =request.getParameter("claseCabina");
+			
 			Direccion direccionFinal=(Direccion) request.getSession().getAttribute("direccion1");
 			Hotel hotelFinal=(Hotel) request.getSession().getAttribute("hotel1");
 			Habitacion habitacionFinal=(Habitacion) request.getSession().getAttribute("habitacion1");
 			Usuario usuarioFinal = (Usuario) request.getSession().getAttribute("usuario");
-			System.out.println("------------------");
-			System.out.println(direccionFinal);
-			System.out.println(hotelFinal);
-			System.out.println(habitacionFinal);
-			System.out.println(usuarioFinal);
 			
-			
-			Viaje viaje=new Viaje( habitacionFinal, usuarioFinal);
+			DatosVuelo datosVuelo = new DatosVuelo(aeropuerto_Origen,ciudad_Origen,compania_Area,ciudad_destino
+													,aeropuerto_Destino, tipo_Viajero, precio_Medio,clase_Cabina);
+			Viaje viaje= new Viaje(usuarioFinal, habitacionFinal, datosVuelo);
 			System.out.println(viaje.toString());
 			//usuarioFinal.addViaje(viaje);
 			EntityManager em1 = modelo.HibernateUtils.getEmf().createEntityManager();
@@ -331,6 +337,7 @@ public class LoginController extends HttpServlet {
 				em1.merge(direccionFinal);
 				em1.merge(hotelFinal);
 				em1.merge(habitacionFinal);
+				em1.merge(datosVuelo);
 				em1.merge(viaje);
 				//em1.merge(usuarioFinal);
 				transaction1.commit();
@@ -344,10 +351,49 @@ public class LoginController extends HttpServlet {
 			            em1.close();
 			        }
 			}
-			 request.getSession().setAttribute("usuario", usuarioFinal);
-			 response.sendRedirect("perfilUsuario.jsp");
+			request.getSession().setAttribute("usuario", usuarioFinal);
+			response.sendRedirect("Secure/perfilUsuario.jsp");
+
 	        break;
-			
+		case "eliminarViajeUsuario":
+			System.out.println("HOLAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+
+		    Usuario usuarioSeleccionado = (Usuario) request.getSession().getAttribute("UsuarioSeleccionado");
+		    Integer idViajeEliminar =Integer.parseInt(request.getParameter("idViajeEliminar"));
+		    String idUsuarioStr = request.getParameter("idUsuario");
+		    
+		    System.out.println(idViajeEliminar + idUsuarioStr);
+
+		    System.out.println("Datos"+idViajeEliminar+idUsuarioStr);
+		    EntityManager emBorrar = modelo.HibernateUtils.getEmf().createEntityManager();
+		    EntityTransaction transactionBorrar = null;
+		    try {
+		        transactionBorrar = emBorrar.getTransaction();
+		        transactionBorrar.begin();
+		        
+				 Viaje viajeABorrar = emBorrar.find(Viaje.class, idViajeEliminar);
+				 if (viajeABorrar != null) {
+			            // Eliminar el viaje y las entidades relacionadas con él
+			            emBorrar.remove(viajeABorrar);
+			        }
+				 System.out.println(viajeABorrar.toString());
+				 transactionBorrar.commit();
+
+		    } catch (Exception e) {
+		        System.out.println("Error: " + e.getMessage());
+		        e.printStackTrace();
+		        if (transactionBorrar != null && transactionBorrar.isActive()) {
+		            transactionBorrar.rollback();
+		        }
+		    } finally {
+		        if (emBorrar != null && emBorrar.isOpen()) {
+		            emBorrar.close();
+		        }
+		    }
+		    System.out.println("ADIOOOOOOOOOOOOOOOOOOOOOOOOOOOS");
+		    request.getSession().setAttribute("usuario", usuarioSeleccionado);
+		    response.sendRedirect("Secure/perfilUsuario.jsp");
+		    break;
 		case "Loger":
 			response.sendRedirect("login.jsp");
 			break;

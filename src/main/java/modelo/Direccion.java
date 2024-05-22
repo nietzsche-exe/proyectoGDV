@@ -24,30 +24,30 @@ public class Direccion implements Serializable{
 	}
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id_direccion")
-	private Integer id_direccion;
-	
-	@Column(name = "cod_pais")
-	private String codigo_pais;
-	
-	@Column(name = "pais")
-	private String nombre_pais;
-	
-	@Column(name = "cod_ciudad")
-	private String codigo_ciudad;
-	
-	@Column(name = "ciudad")
-	private String nombre_ciudad;
-	
-	@Column(name = "cod_postal")
-	private String codigo_postal;
-	
-	@Column(name = "calle")
-	private String nombre_calle;
-	
-	@OneToOne(mappedBy = "direccion", cascade = CascadeType.ALL)
-	private Hotel hotel;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_direccion")
+    private Integer id_direccion;
+
+    @Column(name = "cod_pais")
+    private String codigo_pais;
+
+    @Column(name = "pais")
+    private String nombre_pais;
+
+    @Column(name = "cod_ciudad")
+    private String codigo_ciudad;
+
+    @Column(name = "ciudad")
+    private String nombre_ciudad;
+
+    @Column(name = "cod_postal")
+    private String codigo_postal;
+
+    @Column(name = "calle")
+    private String nombre_calle;
+
+    @OneToOne(mappedBy = "direccion", cascade = CascadeType.ALL)
+    private Hotel hotel;
 	
 	public Hotel getHotel() {
 	    return hotel;

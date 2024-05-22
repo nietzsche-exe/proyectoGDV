@@ -148,7 +148,7 @@
 					%>
 			<td style="border: 2px; border-style: solid; border-color: black;"><%=locations[0].getName() %></td>
 			<td style="border: 2px; border-style: solid; border-color: black;"><%=itineraries[x].getDuration() %></td>
-			<td style="border: 2px; border-style: solid; border-color: black;">MAD</td>
+			<td style="border: 2px; border-style: solid; border-color: black;"><%=locations[0].getAddress().getCityName() %> </td>
 			<td style="border: 2px; border-style: solid; border-color: black;"><%=searchSegments[0].getDeparture().getTerminal() %></td>
 			<td style="border: 2px; border-style: solid; border-color: black;"><%=searchSegments[0].getDeparture().getAt() %></td>					
 			<td style="border: 2px; border-style: solid; border-color: black;"><%=searchSegments[0].getCarrierCode() %></td>
@@ -161,12 +161,12 @@
 				%>
 			<td style="border: 2px; border-style: solid; border-color: black;"><%=locationsDestino[0].getName() %></td>
 			<td style="border: 2px; border-style: solid; border-color: black;"><%=itineraries[x].getDuration() %></td>
-			<td style="border: 2px; border-style: solid; border-color: black;"><%=codigoCiudadDestino %></td>
+			<td style="border: 2px; border-style: solid; border-color: black;"><%=locationsDestino[0].getAddress().getCityName() %></td>
 			<td style="border: 2px; border-style: solid; border-color: black;"><%=searchSegments[0].getDeparture().getTerminal() %></td>
 			<td style="border: 2px; border-style: solid; border-color: black;"><%=searchSegments[0].getDeparture().getAt() %></td>		
 			<td style="border: 2px; border-style: solid; border-color: black;"><%=searchSegments[0].getCarrierCode() %></td>
 			<td style="border: 2px; border-style: solid; border-color: black;"><%=locations[0].getName() %></td>
-			<td style="border: 2px; border-style: solid; border-color: black;">MAD</td>
+			<td style="border: 2px; border-style: solid; border-color: black;"><%=locations[0].getAddress().getCityCode() %></td>
 			<td style="border: 2px; border-style: solid; border-color: black;"><%=searchSegments[0].getArrival().getTerminal() %></td>
 			<td style="border: 2px; border-style: solid; border-color: black;"><%=searchSegments[0].getArrival().getAt() %></td>
 			<%}
@@ -191,10 +191,15 @@
 				<td style="border: 2px; border-style: solid; border-color: black;">
 					<form name="guardarOfertaViaje"
 						action="LoginController?opcion=guardarOfertaViaje" method="post">
-						<input type="hidden" name="Direccion1" value="<%=direccion%>">
-						<input type="hidden" name="Habitacion1" value="<%=habitacion%>">
-						<input type="hidden" name="Hotel1" value="<%=hotel%>">
-						<input type="hidden" name="Usuario1" value="<%=usuario%>">
+						<input type="hidden" name="aeropuertoOrigen" value="<%=locations[0].getName()%>">
+						<input type="hidden" name="ciudadOrigen" value="<%=locations[0].getAddress().getCityName()%>">
+						<input type="hidden" name="companiaAerea" value="<%=locations[0].getName()%>">
+						<input type="hidden" name="ciudadDestino" value="<%=locationsDestino[0].getAddress().getCityName()%>">
+						<input type="hidden" name="aeropuertoDestino" value="<%=locationsDestino[0].getName()%>">
+						<input type="hidden" name="tipoViajero" value="<%=pricings[0].getTravelerType()%>">
+						<input type="hidden" name="precioMedio" value="<%=pricings[0].getPrice().getTotal()%>">
+						<input type="hidden" name="claseCabina" value="<%=bySegments[0].getCabin()%>">
+						
 						<input type="submit" value="Guardar">
 					</form>
 				</td>

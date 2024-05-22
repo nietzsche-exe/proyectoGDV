@@ -54,7 +54,7 @@ Location[] locations= amadeus.referenceData.locations.get(Params.with("subType",
 try {
 	 
 	hotels = amadeus.referenceData.locations.hotels.byCity.get(Params.with("cityCode", airportCode));
-	for (int a = 0; a < hotels.length; a++) {
+	for (int a = 0; a < 10; a++) {
 		System.out.println(hotels[a].toString());
 		listaHoteles.add(hotels[a]);
 	}

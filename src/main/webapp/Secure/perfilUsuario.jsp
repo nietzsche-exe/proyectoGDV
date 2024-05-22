@@ -30,7 +30,9 @@
 
     // Obtiene los datos del usuario almacenados en la sesión
     Usuario usuario = (Usuario) session2.getAttribute("usuario");
-
+	
+    //Enviar usuario
+    session2.setAttribute("UsuarioSeleccionado",usuario);
     List<Viaje> listaViajes= new ArrayList<Viaje>();
     // Manejo del EntityManager
     EntityManager em = HibernateUtils.getEmf().createEntityManager();
@@ -107,21 +109,31 @@
                 </ul>
             </div>
         </header>
-    <%for (Viaje viaje : listaViajes) {
+        <script src="../JavaScript/script.js"></script>
+    </form>
+    <%
+    if(listaViajes!=null){
+    	
+    
+    for (Viaje viaje : listaViajes) {
 	    Habitacion habitacion = viaje.getHabitacion();
 	    Hotel hotel = habitacion.getHotel();
 	%>
 	
 		<table>
 		
+			
 			<tr>
-				<td>Codigo Viaje</td>
-				<td>Nombre Hotel</td>
-				<td>Precio</td>
-				<td>Noche</td>
-				<td>Fecha Entrada</td>
-				<td>Fecha Salida</td>
-				<td>NºCamas</td>
+				<th>Codigo Viaje</th>
+				<th>Nombre Hotel</th>
+				<th>Precio</th>
+				<th>Noche</th>
+				<th>Fecha Entrada</th>
+				<th>Fecha Salida</th>
+				<th>NºCamas</th>
+				
+				<th>Origen</th>
+				<th>Destino</th>
 			</tr>
 			<tr>
 				<td><%=viaje.getId_viaje() %></td>
@@ -131,15 +143,22 @@
 				<td><%=habitacion.getFecha_entrada() %></td>
 				<td><%=habitacion.getFecha_salida() %></td>
 				<td><%=habitacion.getNumero_camas()%></td>
+				<td> 
+					<form name="eliminarViajeUsuario"
+					action="../LoginController?opcion=eliminarViajeUsuario" method="post">
+					<input type="hidden" name="idUsuario" value="<%=usuario.getId_usuario()%>">
+					<input type="hidden" name="idViajeEliminar" value="<%=viaje.getId_viaje()%>">
+					<input type="submit" value="Eliminar">
+					</form>
+				</td>
 			</tr>
 		</table>
 		<%
 	    System.out.println("Viaje ID: " + viaje.getId_viaje());
 	    System.out.println("Habitacion ID: " + habitacion.getId_habitacion());
 	    System.out.println("Hotel Nombre: " + hotel.getNombre_hotel());
-	} %>
-        <script src="../JavaScript/script.js"></script>
-    </form>
+		} 
+	}%>
 </body>
 </html>
 

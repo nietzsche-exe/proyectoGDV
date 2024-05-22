@@ -9,7 +9,6 @@ import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -23,37 +22,36 @@ public class Habitacion implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@Column(name = "id_habitacion")
-	private String id_habitacion;
-	
-	@Column(name = "fecha_entrada")
-	private LocalDate fecha_entrada;
-	
-	@Column(name = "fecha_salida")
-	private LocalDate fecha_salida;
-	
-	@Column(name = "habitacion_disponible", insertable = false, updatable = false)
+    @Column(name = "id_habitacion")
+    private String id_habitacion;
+
+    @Column(name = "fecha_entrada")
+    private LocalDate fecha_entrada;
+
+    @Column(name = "fecha_salida")
+    private LocalDate fecha_salida;
+
+    @Column(name = "habitacion_disponible", insertable = false, updatable = false)
     private Integer habitacion_disponible;
 
-	
-	@Column(name = "num_cama")
-	private Integer numero_camas;
-	
-	@Column(name = "tipo_cama")
-	private String tipo_cama;
-	
-	@Column(name = "precio_noche")
-	private Double precio_noche;
-	
-	@Column(name = "precio_total")
-	private Double precio_total;
+    @Column(name = "num_cama")
+    private Integer numero_camas;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_hotel")
-	private Hotel hotel;
-	
-	@OneToOne(mappedBy = "habitacion", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private Viaje viaje;
+    @Column(name = "tipo_cama")
+    private String tipo_cama;
+
+    @Column(name = "precio_noche")
+    private Double precio_noche;
+
+    @Column(name = "precio_total")
+    private Double precio_total;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_hotel")
+    private Hotel hotel;
+
+    @OneToOne(mappedBy = "habitacion")
+    private Viaje viaje;
 	
 	public Habitacion() {
 		

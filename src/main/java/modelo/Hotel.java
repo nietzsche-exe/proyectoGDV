@@ -22,20 +22,19 @@ public class Hotel implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@Column(name = "id_hotel")
-	private String id_hotel;
-	
-	@OneToOne(cascade = CascadeType.ALL,fetch=FetchType.LAZY)
-	@JoinColumn(name = "id_direccion")
-	private Direccion direccion;
-	
-	@Column(name = "nombre_hotel")
-	private String nombre_hotel;
-	
-	@OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Habitacion> habitaciones;
+    @Column(name = "id_hotel")
+    private String id_hotel;
 
-	
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_direccion")
+    private Direccion direccion;
+
+    @Column(name = "nombre_hotel")
+    private String nombre_hotel;
+
+    @OneToMany(mappedBy = "hotel", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Habitacion> habitaciones = new ArrayList<>();
+
 	public Hotel() {
 	}
 
