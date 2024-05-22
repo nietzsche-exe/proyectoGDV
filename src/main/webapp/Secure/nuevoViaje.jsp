@@ -12,6 +12,7 @@
 HttpSession a = request.getSession();
 // Obtiene los datos del usuario almacenados en la sesión
 Usuario usuario = (Usuario) a.getAttribute("usuario");
+
 System.out.println("Informacion usuario actual: "+usuario.toString());
 %>
 

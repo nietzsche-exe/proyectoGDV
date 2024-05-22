@@ -5,6 +5,7 @@
 <%@page import="modelo.Viaje"%>
 <%@page import="modelo.Habitacion"%>
 <%@page import="modelo.Hotel"%>
+<%@page import="modelo.DatosVuelo"%>
 <%@page import="modelo.HibernateUtils"%>
 <%@page import="jakarta.persistence.EntityManager"%>
 <%@page import="jakarta.persistence.EntityTransaction"%>
@@ -46,6 +47,7 @@
         Query queryViajes=em.createQuery("SELECT v FROM Viaje v "
 		        + "JOIN FETCH v.habitacion h "
 		        + "JOIN FETCH h.hotel "
+		        + "JOIN FETCH v.datos_vuelo dv "
 		        + "WHERE v.usuario.id_usuario = :idUsuario");
 			queryViajes.setParameter("idUsuario", usuario.getId_usuario());
 		listaViajes=queryViajes.getResultList();
@@ -109,15 +111,16 @@
                 </ul>
             </div>
         </header>
-        <script src="../JavaScript/script.js"></script>
+        
     </form>
+    
+    <div>
     <%
     if(listaViajes!=null){
-    	
-    
     for (Viaje viaje : listaViajes) {
 	    Habitacion habitacion = viaje.getHabitacion();
 	    Hotel hotel = habitacion.getHotel();
+	    DatosVuelo datosVuelo = viaje.getDatos_vuelo();
 	%>
 	
 		<table>
@@ -131,7 +134,6 @@
 				<th>Fecha Entrada</th>
 				<th>Fecha Salida</th>
 				<th>NºCamas</th>
-				
 				<th>Origen</th>
 				<th>Destino</th>
 			</tr>
@@ -143,6 +145,8 @@
 				<td><%=habitacion.getFecha_entrada() %></td>
 				<td><%=habitacion.getFecha_salida() %></td>
 				<td><%=habitacion.getNumero_camas()%></td>
+				<td><%=datosVuelo.getCiudadOrigen()%></td>
+				<td><%=datosVuelo.getCiudadDestino() %></td>
 				<td> 
 					<form name="eliminarViajeUsuario"
 					action="../LoginController?opcion=eliminarViajeUsuario" method="post">
@@ -158,7 +162,11 @@
 	    System.out.println("Habitacion ID: " + habitacion.getId_habitacion());
 	    System.out.println("Hotel Nombre: " + hotel.getNombre_hotel());
 		} 
-	}%>
+    }
+	%>
+    	
+	</div>
+	<script src="../JavaScript/script.js"></script>
 </body>
 </html>
 

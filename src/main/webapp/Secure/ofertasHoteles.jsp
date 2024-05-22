@@ -39,7 +39,7 @@ HttpSession b = request.getSession();
 //Obtiene los datos del usuario almacenados en la sesión
 Usuario usuario = (Usuario) b.getAttribute("usuario");
 System.out.println("Informacion usuario actual: "+usuario.toString());
-
+usuario.getTema();
 Hotel[] hotels;
 
 //Revisar Coordenada
@@ -56,7 +56,7 @@ Location[] locations= amadeus.referenceData.locations.get(Params.with("subType",
 try {
 	 
 	hotels = amadeus.referenceData.locations.hotels.byCity.get(Params.with("cityCode", airportCode));
-	for (int a = 0; a < 10; a++) {
+	for (int a = 0; a < hotels.length; a++) {
 		System.out.println(hotels[a].toString());
 		listaHoteles.add(hotels[a]);
 	}
@@ -99,8 +99,6 @@ request.setAttribute("sesionAmadeus", amadeus);
 	if (!(listaHoteles.isEmpty())) {
 		
 		for (Hotel hotel : listaHoteles) {
-			latitudes.add(String.valueOf(hotel.getGeoCode().getLatitude()));
-			longitudes.add(String.valueOf(hotel.getGeoCode().getLongitude()));
 			try {
 
 				HotelOfferSearch[] ofertasHotel = amadeus.shopping.hotelOffersSearch.get(Params
@@ -114,6 +112,8 @@ request.setAttribute("sesionAmadeus", amadeus);
 				System.out.println("Oferta " + 1 + ": " + ofertasHotel[0].toString());
 				System.out.println("Id Oferta " + 1 + ": " + ofertasHotel[0].getOffers()[0].getId());
 			
+			latitudes.add(String.valueOf(hotel.getGeoCode().getLatitude()));
+			longitudes.add(String.valueOf(hotel.getGeoCode().getLongitude()));
 		%>
 	<table style="border: 2px; border-style: solid; border-color: black;">
 		<thead><%=request.getAttribute("codIATA")%></thead>
