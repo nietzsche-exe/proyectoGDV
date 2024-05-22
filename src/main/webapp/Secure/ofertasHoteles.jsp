@@ -49,7 +49,6 @@ try {
 	.and("latitude", 41.397158));
 	*/
 } catch (ResponseException e) {
-	// TODO Auto-generated catch block
 	e.printStackTrace();
 }
 //Recojer VAloraciones de los hoteles que mostremos
