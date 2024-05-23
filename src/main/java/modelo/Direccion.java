@@ -40,9 +40,6 @@ public class Direccion implements Serializable{
     @Column(name = "ciudad")
     private String nombre_ciudad;
 
-    @Column(name = "cod_postal")
-    private String codigo_postal;
-
     @Column(name = "calle")
     private String nombre_calle;
 
@@ -58,13 +55,12 @@ public class Direccion implements Serializable{
 	}
 	
 	public Direccion(String codigo_pais, String nombre_pais, String codigo_ciudad,
-			String nombre_ciudad, String codigo_postal, String nombre_calle) {
+			String nombre_ciudad, String nombre_calle) {
 		super();
 		this.codigo_pais = codigo_pais;
 		this.nombre_pais = nombre_pais;
 		this.codigo_ciudad = codigo_ciudad;
 		this.nombre_ciudad = nombre_ciudad;
-		this.codigo_postal = codigo_postal;
 		this.nombre_calle = nombre_calle;
 	}
 
@@ -108,14 +104,6 @@ public class Direccion implements Serializable{
 		this.nombre_ciudad = nombre_ciudad;
 	}
 
-	public String getCodigo_postal() {
-		return codigo_postal;
-	}
-
-	public void setCodigo_postal(String codigo_postal) {
-		this.codigo_postal = codigo_postal;
-	}
-
 	public String getNombre_calle() {
 		return nombre_calle;
 	}
@@ -126,7 +114,7 @@ public class Direccion implements Serializable{
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(codigo_ciudad, codigo_pais, codigo_postal, id_direccion, nombre_calle, nombre_ciudad,
+		return Objects.hash(codigo_ciudad, codigo_pais, id_direccion, nombre_calle, nombre_ciudad,
 				nombre_pais);
 	}
 
@@ -140,7 +128,6 @@ public class Direccion implements Serializable{
 			return false;
 		Direccion other = (Direccion) obj;
 		return Objects.equals(codigo_ciudad, other.codigo_ciudad) && Objects.equals(codigo_pais, other.codigo_pais)
-				&& Objects.equals(codigo_postal, other.codigo_postal)
 				&& Objects.equals(id_direccion, other.id_direccion) && Objects.equals(nombre_calle, other.nombre_calle)
 				&& Objects.equals(nombre_ciudad, other.nombre_ciudad) && Objects.equals(nombre_pais, other.nombre_pais);
 	}
@@ -150,11 +137,11 @@ public class Direccion implements Serializable{
 		if(this.hotel==null) {
 			return "Direccion [id_direccion=" + id_direccion + ", codigo_pais=" + codigo_pais + ", nombre_pais="
 					+ nombre_pais + ", codigo_ciudad=" + codigo_ciudad + ", nombre_ciudad=" + nombre_ciudad
-					+ ", codigo_postal=" + codigo_postal + ", nombre_calle=" + nombre_calle + ", hotel=" + null + "]";			
+					+ ", nombre_calle=" + nombre_calle + ", hotel=" + null + "]";			
 		}
 		return "Direccion [id_direccion=" + id_direccion + ", codigo_pais=" + codigo_pais + ", nombre_pais="
 					+ nombre_pais + ", codigo_ciudad=" + codigo_ciudad + ", nombre_ciudad=" + nombre_ciudad
-					+ ", codigo_postal=" + codigo_postal + ", nombre_calle=" + nombre_calle + ", hotel=" + hotel.getId_hotel() + "]";			
+					+ ", nombre_calle=" + nombre_calle + ", hotel=" + hotel.getId_hotel() + "]";			
 
 	}
 	

@@ -24,21 +24,21 @@ public class Viaje implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id_viaje")
-	private Integer id_viaje;
-	
-	@ManyToOne(cascade = CascadeType.ALL ,fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_usuario")
-	private Usuario usuario;
-		
-	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_viaje")
+    private Integer id_viaje;
+    
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_usuario")
+    private Usuario usuario;
+        
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     @JoinColumn(name = "id_habitacion")
     private Habitacion habitacion;
-	
-	@OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_vuelo")
-	private DatosVuelo datos_vuelo;
+    
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    @JoinColumn(name = "id_vuelo")
+    private DatosVuelo datos_vuelo;
 	
 	public Viaje() {
 		

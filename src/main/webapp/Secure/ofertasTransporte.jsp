@@ -68,8 +68,10 @@
                     .and("departureDate", fechaEntrada)
                     .and("returnDate", fechaSalida)
                     .and("adults", numeroPersonas)
-                    .and("nonStop", true));
+                    .and("nonStop", true)
+                    .and("max", 10));
    	System.out.println(flightOffers.length); 
+   
    	//for(int i=0;i<10;i++){
    		//System.out.println(flightOffers[i].toString());
    	//}
@@ -83,8 +85,12 @@
 <title>Viajes: avion</title>
 </head>
 <body>
-	<%if(flightOffers!=null){%>
+	<%
+	try{
+		
 	
+	if(flightOffers[0].getId()!=null){%>
+		
 		<% 
 		for(int j=0;j<flightOffers.length;j++){
 			Itinerary[]itineraries=flightOffers[j].getItineraries();
@@ -205,7 +211,11 @@
 				</td>
 			</tr>
 		<% 
+		
 		}	
+		}
+	}catch( ArrayIndexOutOfBoundsException e){
+	System.out.println("NO HAY VUELOS DISPONIBLES");		
 	}
 		%>
 	</table>

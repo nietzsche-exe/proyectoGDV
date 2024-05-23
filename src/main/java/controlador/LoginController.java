@@ -3,6 +3,7 @@ package controlador;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
+import jakarta.persistence.LockModeType;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.Query;
 import jakarta.servlet.RequestDispatcher;
@@ -277,7 +278,7 @@ public class LoginController extends HttpServlet {
 			LocalDate fSalida=LocalDate.parse(fechaSalida);
 			
 			//Falta incluir codigoPostal y Calle en la Direccion		
-			Direccion direccionHotel=new Direccion(codigoPaisDestino,nombrePaisDestino,codigo,nombreCiudadDestino,null,null);
+			Direccion direccionHotel=new Direccion(codigoPaisDestino,nombrePaisDestino,codigo,nombreCiudadDestino,null);
 			
 			Hotel hotel=new Hotel(idHotel,nombreHotel);
 			hotel.setDireccion(direccionHotel);
@@ -372,12 +373,15 @@ public class LoginController extends HttpServlet {
 		        transactionBorrar = emBorrar.getTransaction();
 		        transactionBorrar.begin();
 		        
-				 Viaje viajeABorrar = emBorrar.find(Viaje.class, idViajeEliminar);
-				 if (viajeABorrar != null) {
-			            // Eliminar el viaje y las entidades relacionadas con él
-			            emBorrar.remove(viajeABorrar);
-			        }
-				 System.out.println(viajeABorrar.toString());
+		        Usuario usuarioActualizado = emBorrar.find(Usuario.class, usuarioSeleccionado.getId_usuario());
+		        emBorrar.lock(usuarioActualizado, LockModeType.NONE); // Forzar la inicialización de la colección
+
+		        Viaje viajeABorrar = emBorrar.find(Viaje.class, idViajeEliminar);
+		        if (viajeABorrar != null) {
+		            // Utilizar el método quitarViaje para eliminar la relación
+		            usuarioActualizado.quitarViaje(viajeABorrar);
+		            emBorrar.remove(viajeABorrar);
+		        }				 //System.out.println(viajeABorrar.toString());
 				 transactionBorrar.commit();
 
 		    } catch (Exception e) {
@@ -389,11 +393,15 @@ public class LoginController extends HttpServlet {
 		    } finally {
 		        if (emBorrar != null && emBorrar.isOpen()) {
 		            emBorrar.close();
+		            System.out.println("ADIOOOOOOOOOOOOOOOOOOOOOOOOOOOS");
+			        request.getSession().setAttribute("usuario", usuarioSeleccionado);
+			        response.sendRedirect("Secure/perfilUsuario.jsp");
+		        }else {
+			        System.out.println("ADIOOOOOOOOOOOOOOOOOOOOOOOOOOOS");
+			        request.getSession().setAttribute("usuario", usuarioSeleccionado);
+			        response.sendRedirect("Secure/perfilUsuario.jsp");
 		        }
 		    }
-		    System.out.println("ADIOOOOOOOOOOOOOOOOOOOOOOOOOOOS");
-		    request.getSession().setAttribute("usuario", usuarioSeleccionado);
-		    response.sendRedirect("Secure/perfilUsuario.jsp");
 		    break;
 		case "Loger":
 			response.sendRedirect("login.jsp");

@@ -243,7 +243,7 @@ request.setAttribute("sesionAmadeus", amadeus);
 					<input type="submit" value="Reservar">
 				</form>
 			</td>
-		
+
 
 		<%
 		} catch (ClientException e) {

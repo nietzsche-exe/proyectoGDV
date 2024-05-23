@@ -12,7 +12,7 @@
 HttpSession a = request.getSession();
 // Obtiene los datos del usuario almacenados en la sesión
 Usuario usuario = (Usuario) a.getAttribute("usuario");
-
+usuario.getTema();
 System.out.println("Informacion usuario actual: "+usuario.toString());
 %>
 
@@ -34,13 +34,12 @@ System.out.println("Informacion usuario actual: "+usuario.toString());
 	            <label for="fechaEntrada">Fecha de entrada</label>
 	            <input type="date" name="fechaEntrada" id="fechaEntrada" required="required" min="<%= LocalDate.now()%>">
 	            <label for="fechaSalida">Fecha de salida</label>
-	            <input type="date" name="fechaSalida" id="fechaSalida" required="required" min="<%= LocalDate.now()%>">
+	            <input type="date" name="fechaSalida" id="fechaSalida" required="required" min="<%= LocalDate.now()%>" >
 	            <label for="numeroPersonas">Número de personas</label>
 	            <input type="number" name="numeroPersonas" id="numeroPersonas" min="1" max="5" required="required" value="1">
 	            <input id="busca" type="submit" value="Buscar">
 	        </form>
 	    </div>
 	</div>
-
 </body>
 </html>
