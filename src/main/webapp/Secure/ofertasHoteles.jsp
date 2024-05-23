@@ -19,6 +19,9 @@
 <%@page import="java.time.LocalDate"%>
 <%@page import="java.util.Arrays"%>
 <%@page import="java.util.ArrayList"%>
+<%@ page import="java.io.BufferedReader" %>
+<%@ page import="java.io.InputStreamReader" %>
+<%@ page import="java.util.stream.Collectors" %>
 <%@page import="controlador.LoginController"%>
 <%@page import="modelo.Usuario"%>
 
@@ -79,6 +82,19 @@ request.setAttribute("sesionAmadeus", amadeus);
 <head>
 <meta charset="UTF-8">
 <title>Resultado Hoteles</title>
+<%
+if (usuario.getTema()==true) {
+%>
+	<link rel="stylesheet" href="../Styles/Ofertas_Hoteles/cssOfertasHoteles_Oscuro.css">
+<%
+}
+else {
+%>
+	<link rel="stylesheet" href="../Styles/Ofertas_Hoteles/cssOfertasHoteles_Claro.css">
+<%	
+}
+%>
+
 </head>
 <body>
 	<h1>Ciudad: ${param.destino}</h1>
@@ -114,22 +130,23 @@ request.setAttribute("sesionAmadeus", amadeus);
 			
 			latitudes.add(String.valueOf(hotel.getGeoCode().getLatitude()));
 			longitudes.add(String.valueOf(hotel.getGeoCode().getLongitude()));
+
 		%>
-	<table style="border: 2px; border-style: solid; border-color: black;">
+	<table>
 		<thead><%=request.getAttribute("codIATA")%></thead>
-		<tr style="border: 2px; border-style: solid; border-color: black;">
+		<tr>
 			<!--  <td>Media De Valoraciones</td>-->
 			<td>Nombre Hotel</td>
 			<td colspan="10">Direccion</td>
 			<td colspan="2">Codigo Hotel</td>
 		</tr>
-		<tr style="border: 2px; border-style: solid; border-color: black;">
+		<tr>
 			
-			<td style="border: 2px; border-style: solid; border-color: black;"><%=hotel.getName()%></td>
-			<td style="border: 2px; border-style: solid; border-color: black;" colspan="10"><%=hotel.getAddress()%> <br> Falta Implementar la
+			<td><%=hotel.getName()%></td>
+			<td colspan="10"><%=hotel.getAddress()%> <br> Falta Implementar la
 				Geolocalizacion inversa(Api de Google Maps,...?)</td>
-			<td colspan="2" style="border: 2px; border-style: solid; border-color: black;"><%=hotel.getHotelId()%></td>
-			<td style="border: 2px; border-style: solid; border-color: black;">
+			<td colspan="2"><%=hotel.getHotelId()%></td>
+			<td>
 				<form name="verOfertasHotel"
 					action="LoginController?opcion=verOfertasHotel" method="post">
 					<input type="hidden" name="hotelId" value="<%=hotel.getHotelId()%>">
@@ -146,48 +163,48 @@ request.setAttribute("sesionAmadeus", amadeus);
 				</form>
 			</td>
 		</tr>
-		<tr style="border: 2px; border-style: solid; border-color: black;">
+		<tr>
 		<%
 		
 		%>
-			<td style="border: 2px; border-style: solid; border-color: black;">Id Oferta</td>
-			<td style="border: 2px; border-style: solid; border-color: black;">Fecha de entrada</td>
-			<td style="border: 2px; border-style: solid; border-color: black;">Fecha de salida</td>
-			<td style="border: 2px; border-style: solid; border-color: black;">Valoracion</td>
-			<td style="border: 2px; border-style: solid; border-color: black;">Disponible</td>
-			<td style="border: 2px; border-style: solid; border-color: black;">Hab. Tipo</td>
-			<td style="border: 2px; border-style: solid; border-color: black;">Hab. Categoria</td>
-			<td style="border: 2px; border-style: solid; border-color: black;">Nº camas/Hab</td>
-			<td style="border: 2px; border-style: solid; border-color: black;">Tipo Camas</td>
-			<td style="border: 2px; border-style: solid; border-color: black;">Descripcion</td>
-			<td style="border: 2px; border-style: solid; border-color: black;">Acompañantes</td>
-			<td style="border: 2px; border-style: solid; border-color: black;">Precio por noche/</td>
-			<td style="border: 2px; border-style: solid; border-color: black;">Precio Total(+ añadidos)</td>
+			<td>Id Oferta</td>
+			<td>Fecha de entrada</td>
+			<td>Fecha de salida</td>
+			<td>Valoracion</td>
+			<td>Disponible</td>
+			<td>Hab. Tipo</td>
+			<td>Hab. Categoria</td>
+			<td>Nº camas/Hab</td>
+			<td>Tipo Camas</td>
+			<td>Descripcion</td>
+			<td>Acompañantes</td>
+			<td>Precio por noche/</td>
+			<td>Precio Total(+ añadidos)</td>
 			<%
 			Offer[] ofer = ofertasHotel[0].getOffers();
 			Offer infoOferta = ofer[0];
 			%>
 		
-		<tr style="border: 2px; border-style: solid; border-color: black;">
-			<td style="border: 2px; border-style: solid; border-color: black;"><%=infoOferta.getId()%></td>
-			<td style="border: 2px; border-style: solid; border-color: black;"><%=infoOferta.getCheckInDate()%></td>
-			<td style="border: 2px; border-style: solid; border-color: black;"><%=infoOferta.getCheckOutDate()%></td>
-			<td style="border: 2px; border-style: solid; border-color: black;"><%=infoOferta.getRateCode()%></td>
-			<td style="border: 2px; border-style: solid; border-color: black;"><%=ofertasHotel[0].isAvailable()%></td>
-			<td style="border: 2px; border-style: solid; border-color: black;"><%=infoOferta.getRoom().getType()%></td>
-			<td style="border: 2px; border-style: solid; border-color: black;"><%=infoOferta.getRoom().getTypeEstimated().getCategory()%></td>
+		<tr>
+			<td><%=infoOferta.getId()%></td>
+			<td><%=infoOferta.getCheckInDate()%></td>
+			<td><%=infoOferta.getCheckOutDate()%></td>
+			<td><%=infoOferta.getRateCode()%></td>
+			<td><%=ofertasHotel[0].isAvailable()%></td>
+			<td><%=infoOferta.getRoom().getType()%></td>
+			<td><%=infoOferta.getRoom().getTypeEstimated().getCategory()%></td>
 			
 			<%if(infoOferta.getRoom().getTypeEstimated().getBeds()!=null && infoOferta.getRoom().getTypeEstimated().getBedType()!=null){
 			%>		
-			<td style="border: 2px; border-style: solid; border-color: black;"><%=infoOferta.getRoom().getTypeEstimated().getBeds() %></td>
-			<td style="border: 2px; border-style: solid; border-color: black;"><%=infoOferta.getRoom().getTypeEstimated().getBedType()%></td>
+			<td><%=infoOferta.getRoom().getTypeEstimated().getBeds() %></td>
+			<td><%=infoOferta.getRoom().getTypeEstimated().getBedType()%></td>
 			<%}else{ %>
-			<td style="border: 2px; border-style: solid; border-color: black;"><%=0%></td>
-			<td style="border: 2px; border-style: solid; border-color: black;">Desconocido</td>
+			<td><%=0%></td>
+			<td>Desconocido</td>
 			<%} %>
 			
-			<td style="border: 2px; border-style: solid; border-color: black;"><%=infoOferta.getDescription()%></td>
-			<td style="border: 2px; border-style: solid; border-color: black;">Adultos: <%=infoOferta.getGuests().getAdults()%><br>Niño/as:
+			<td><%=infoOferta.getDescription()%></td>
+			<td>Adultos: <%=infoOferta.getGuests().getAdults()%><br>Niño/as:
 				<%
 			if (infoOferta.getGuests().getChildAges() == null) {
 			%>0<%
@@ -196,7 +213,7 @@ request.setAttribute("sesionAmadeus", amadeus);
  }
  %>
 			</td>
-			<td style="border: 2px; border-style: solid; border-color: black;">
+			<td>
 				<%
 				LocalDate salida = LocalDate.parse(fechaSalida);
 				LocalDate entrada = LocalDate.parse(fechaEntrada);
@@ -204,8 +221,8 @@ request.setAttribute("sesionAmadeus", amadeus);
 				precioNoche =Math.ceil(Double.valueOf(infoOferta.getPrice().getBase()) / noches);
 				%> <%=precioNoche+"/"+infoOferta.getPrice().getCurrency() %>
 			</td>
-			<td style="border: 2px; border-style: solid; border-color: black;"><%=infoOferta.getPrice().getTotal()%>/<%=infoOferta.getPrice().getCurrency()%></td>
-			<td style="border: 2px; border-style: solid; border-color: black;">
+			<td><%=infoOferta.getPrice().getTotal()%>/<%=infoOferta.getPrice().getCurrency()%></td>
+			<td>
 				<form name="guardarOfertaHotel"
 					action="LoginController?opcion=guardarOfertaHotel" method="post">
 					<!-- Datos Entidad Hotel -->
@@ -272,6 +289,7 @@ request.setAttribute("sesionAmadeus", amadeus);
 		</td>
 		
 		</tr>
+
 	</table>
 	
 	
@@ -288,7 +306,9 @@ request.setAttribute("sesionAmadeus", amadeus);
 
 	
 	<script src="JavaScript/map.js"></script>
-	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCmNYNcpFgAX0QLerv3_P3CJZoop9VnSSs&callback=iniciarMap"></script>
+	<script src="JavaScript/geolocalizacion.js"></script>
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBm0vNj92eB8yjWcFe8ieb9doiwDVf2jO0&callback=iniciarMap"></script>
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCZuB7bki3m-dvgWkWfcclEjfwSDxVAlXo&callback=obtenerTodasLasDirecciones"></script>
 
 </body>
 </html>

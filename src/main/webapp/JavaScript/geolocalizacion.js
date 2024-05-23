@@ -2,32 +2,42 @@
  * 
  */
 
- // Función para obtener la dirección a partir de las coordenadas
+var latitudes = JSON.parse(document.querySelector('.latitude').value);
+var longitudes = JSON.parse(document.querySelector('.longitude').value);
+
+// Función para obtener la dirección a partir de las coordenadas
 function obtenerDireccion(latitud, longitud) {
-  // Crear una instancia del objeto Geocoder
-  var geocoder = new google.maps.Geocoder();
+  return new Promise((resolve, reject) => {
+    var geocoder = new google.maps.Geocoder();
+    var latLng = new google.maps.LatLng(latitud, longitud);
 
-  // Crear un objeto LatLng con las coordenadas proporcionadas
-  var latLng = new google.maps.LatLng(latitud, longitud);
-
-  // Realizar la solicitud de geocodificación inversa
-  geocoder.geocode({'latLng': latLng}, function(results, status) {
-    if (status == google.maps.GeocoderStatus.OK) {
-      if (results[0]) {
-        // Obtener la dirección formateada desde los resultados
-        var direccion = results[0].formatted_address;
-        console.log("Dirección encontrada: " + direccion);
-        // Aquí puedes hacer lo que necesites con la dirección obtenida
+    geocoder.geocode({'latLng': latLng}, function(results, status) {
+      if (status == google.maps.GeocoderStatus.OK) {
+        if (results[0]) {
+          resolve(results[0].formatted_address);
+        } else {
+          reject("No se encontraron resultados para estas coordenadas.");
+        }
       } else {
-        console.log("No se encontraron resultados para estas coordenadas.");
+        reject("Error al obtener la dirección: " + status);
       }
-    } else {
-      console.log("Error al obtener la dirección: " + status);
-    }
+    });
   });
 }
 
-var latitud = 40.7128; // Latitud de ejemplo (Nueva York)
-var longitud = -74.0060; // Longitud de ejemplo (Nueva York)
+async function obtenerTodasLasDirecciones() {
+  var direcciones = [];
+  
+  for (var i = 0; i < latitudes.length; i++) {
+    try {
+      var direccion = await obtenerDireccion(latitudes[i], longitudes[i]);
+      direcciones.push(direccion);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  
+  console.log(direcciones)
+  
+}
 
-obtenerDireccion(latitud, longitud);

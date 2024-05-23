@@ -19,8 +19,6 @@
 	    	<button id="btnRegistro" class="Botones"><b>Registrarse</b></button>
 		</div>
 	</header>
- 
-    <a href="pruebas.jsp">Enlace a pruebas</a>
 
 
 	<script>

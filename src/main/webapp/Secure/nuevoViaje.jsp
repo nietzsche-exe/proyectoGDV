@@ -14,11 +14,26 @@ HttpSession a = request.getSession();
 Usuario usuario = (Usuario) a.getAttribute("usuario");
 usuario.getTema();
 System.out.println("Informacion usuario actual: "+usuario.toString());
-%>
 
-<link rel="stylesheet" href="../Styles/Busqueda_Viaje/cssBusquedaViaje_Oscuro.css">
+if (usuario.getTema()==true) {
+%>
+	<link rel="stylesheet" href="../Styles/Busqueda_Viaje/cssBusquedaViaje_Oscuro.css">
+<%
+}
+else {
+%>
+	<link rel="stylesheet" href="../Styles/Busqueda_Viaje/cssBusquedaViaje_Claro.css">
+<%	
+}
+%>
+	
 </head>
 <body>
+<%
+	
+	
+	
+%>
 	
 	<div id="Contenedor_Principal">
 	    <div class="Contenedor_Titulo">
