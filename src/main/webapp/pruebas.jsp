@@ -9,27 +9,25 @@
 <%@ page import="java.text.SimpleDateFormat" %>
 
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="jakarta.servlet.http.*" %>
 
 <!DOCTYPE html>
-<html>
-<head>
-<link rel="stylesheet" href="Styles/Configuracion/cssConfiguracion_Claro.css">
-<meta charset="UTF-8">
-<title>Página Configuracion</title>
-</head>
-<body>
-	<form name="datos" action="LoginController" method="post" onsubmit="return validarInputs()">
-		<input type="hidden" name="opcion" value="validarUser">
-		<%
-			LocalDate fechaMinima = java.time.LocalDate.now().minusYears(18);
-		%>
-		<label for="fecha">Fecha anterior a hoy:</label>
-        <!-- Campo de entrada de tipo 'date' con atributo 'max' -->
-        <input type="date" id="fecha" name="fecha" max="<%= fechaMinima %>">
-        <br><br>
-		
 
-	</form>
-</body>
+<%
+    Cookie userCookie = new Cookie("username", request.getParameter("username"));
+    userCookie.setMaxAge(3600); // expires in 1 hour
+    response.addCookie(userCookie);
+%>
+<html>
+    <head>
+        <title>Login</title>
+    </head>
+    <body>
+        <form action="pruebas.jsp" method="post">
+            Username: <input type="text" name="username"><br>
+            Password: <input type="password" name="password"><br>
+            <input type="submit" value="Login">
+        </form>
+    </body>
 </html>
 
