@@ -1,4 +1,5 @@
 <%@page import="java.time.LocalDate"%>
+<%@page import="modelo.Usuario"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -6,9 +7,33 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" href="../Styles/Busqueda_Viaje/cssBusquedaViaje_Oscuro.css">
+<%
+// Obtiene la sesión actual
+HttpSession a = request.getSession();
+// Obtiene los datos del usuario almacenados en la sesión
+Usuario usuario = (Usuario) a.getAttribute("usuario");
+
+System.out.println("Informacion usuario actual: "+usuario.toString());
+
+if (usuario.getTema()==true) {
+%>
+	<link rel="stylesheet" href="../Styles/Busqueda_Viaje/cssBusquedaViaje_Oscuro.css">
+<%
+}
+else {
+%>
+	<link rel="stylesheet" href="../Styles/Busqueda_Viaje/cssBusquedaViaje_Claro.css">
+<%	
+}
+%>
+	
 </head>
 <body>
+<%
+	
+	
+	
+%>
 	
 	<div id="Contenedor_Principal">
 	    <div class="Contenedor_Titulo">

@@ -26,6 +26,7 @@
 		<dependency>
 			<groupId>org.hibernate.orm</groupId>
 			<artifactId>hibernate-core</artifactId>
+			<version>6.4.1.Final</version>
 		</dependency>
 		<dependency>
 			<groupId>jakarta.transaction</groupId>
@@ -91,6 +92,7 @@
 	  		<version>8.1.0</version>
 		</dependency>
 	</dependencies>
+
   <build>
     <plugins>
       <plugin>

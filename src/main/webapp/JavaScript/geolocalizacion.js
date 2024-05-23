@@ -2,7 +2,6 @@
  * 
  */
 
-
 var latitudes = JSON.parse(document.querySelector('.latitude').value);
 var longitudes = JSON.parse(document.querySelector('.longitude').value);
 
@@ -37,19 +36,8 @@ async function obtenerTodasLasDirecciones() {
       console.log(error);
     }
   }
+  
   console.log(direcciones)
-  
-  const fs = require('fs');
-  
-  const jsonString = JSON.stringify(direcciones, null, 2);
-  
-  fs.writeFile('data.json', jsonString, (err) => {
-    if (err) {
-        console.log('Error escribiendo el fichero', err);
-    } else {
-        console.log('Fichero JSON escrito correctamente');
-    }
-});
   
 }
 

@@ -1,5 +1,11 @@
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.List"%>
 <%@page import="jakarta.persistence.Query"%>
 <%@page import="modelo.Usuario"%>
+<%@page import="modelo.Viaje"%>
+<%@page import="modelo.Habitacion"%>
+<%@page import="modelo.Hotel"%>
+<%@page import="modelo.DatosVuelo"%>
 <%@page import="modelo.HibernateUtils"%>
 <%@page import="jakarta.persistence.EntityManager"%>
 <%@page import="jakarta.persistence.EntityTransaction"%>
@@ -25,15 +31,28 @@
 
     // Obtiene los datos del usuario almacenados en la sesión
     Usuario usuario = (Usuario) session2.getAttribute("usuario");
-
+	
+    //Enviar usuario
+    session2.setAttribute("UsuarioSeleccionado",usuario);
+    List<Viaje> listaViajes= new ArrayList<Viaje>();
     // Manejo del EntityManager
     EntityManager em = HibernateUtils.getEmf().createEntityManager();
     try {
         Query query = em.createQuery("SELECT u.tema FROM Usuario u WHERE u.id = :id");
         query.setParameter("id", usuario.getId_usuario());
-
+		
         Boolean tema = (Boolean) query.getSingleResult();
         usuario.setTema(tema);
+    	
+        Query queryViajes=em.createQuery("SELECT v FROM Viaje v "
+		        + "JOIN FETCH v.habitacion h "
+		        + "JOIN FETCH h.hotel "
+		        + "JOIN FETCH v.datos_vuelo dv "
+		        + "WHERE v.usuario.id_usuario = :idUsuario");
+			queryViajes.setParameter("idUsuario", usuario.getId_usuario());
+		listaViajes=queryViajes.getResultList();
+
+    
     } catch (Exception e) {
         e.printStackTrace();
     } finally {
@@ -41,6 +60,7 @@
             em.close();
         }
     }
+    
 
     // Establecer el tema según la preferencia del usuario
     if (usuario.getTema() == false) {
@@ -91,9 +111,62 @@
                 </ul>
             </div>
         </header>
-    
-        <script src="../JavaScript/script.js"></script>
+        
     </form>
+    
+    <div>
+    <%
+    if(listaViajes!=null){
+    for (Viaje viaje : listaViajes) {
+	    Habitacion habitacion = viaje.getHabitacion();
+	    Hotel hotel = habitacion.getHotel();
+	    DatosVuelo datosVuelo = viaje.getDatos_vuelo();
+	%>
+	
+		<table>
+		
+			
+			<tr>
+				<th>Codigo Viaje</th>
+				<th>Nombre Hotel</th>
+				<th>Precio</th>
+				<th>Noche</th>
+				<th>Fecha Entrada</th>
+				<th>Fecha Salida</th>
+				<th>NºCamas</th>
+				<th>Origen</th>
+				<th>Destino</th>
+			</tr>
+			<tr>
+				<td><%=viaje.getId_viaje() %></td>
+				<td><%=hotel.getNombre_hotel() %></td>
+				<td><%=habitacion.getPrecio_total() %></td>
+				<td><%=habitacion.getPrecio_noche() %></td>
+				<td><%=habitacion.getFecha_entrada() %></td>
+				<td><%=habitacion.getFecha_salida() %></td>
+				<td><%=habitacion.getNumero_camas()%></td>
+				<td><%=datosVuelo.getCiudadOrigen()%></td>
+				<td><%=datosVuelo.getCiudadDestino() %></td>
+				<td> 
+					<form name="eliminarViajeUsuario"
+					action="../LoginController?opcion=eliminarViajeUsuario" method="post">
+					<input type="hidden" name="idUsuario" value="<%=usuario.getId_usuario()%>">
+					<input type="hidden" name="idViajeEliminar" value="<%=viaje.getId_viaje()%>">
+					<input type="submit" value="Eliminar">
+					</form>
+				</td>
+			</tr>
+		</table>
+		<%
+	    System.out.println("Viaje ID: " + viaje.getId_viaje());
+	    System.out.println("Habitacion ID: " + habitacion.getId_habitacion());
+	    System.out.println("Hotel Nombre: " + hotel.getNombre_hotel());
+		} 
+    }
+	%>
+    	
+	</div>
+	<script src="../JavaScript/script.js"></script>
 </body>
 </html>
 
