@@ -3,13 +3,17 @@ package modelo;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -56,6 +60,32 @@ public class Usuario implements Serializable{
 	@Column(name="fecha_nacimiento")
 	private LocalDate fecha_nacimiento;
 	
+	@OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Viaje> viajes;
+	
+
+	public List<Viaje> getViajes() {
+		return viajes;
+	}
+
+	public void setViajes(List<Viaje> viajes) {
+		this.viajes = viajes;
+	}
+	
+	public void addViaje(Viaje viaje) {
+		if(this.viajes==null) {
+			this.viajes=new ArrayList<Viaje>();
+		}
+		this.viajes.add(viaje);
+		viaje.setUsuario(this);
+	}
+	
+	public void quitarViaje(Viaje viaje) {
+		if(this.viajes!=null) {
+			this.viajes.remove(viaje);
+			viaje.setUsuario(null);
+		}
+	}
 
 	public Usuario(String nombre, String contrasenia, String email, Boolean tema, String sexo, String num_telefono, 
 			LocalDate fecha_nacimiento, LocalDate ultima_modificacion_contrasenna ) {
@@ -185,7 +215,5 @@ public class Usuario implements Serializable{
 				+ email + ", tema=" + tema + ", sexo=" + sexo + ", num_telefono=" + num_telefono + ", fecha_nacimiento="
 				+ fecha_nacimiento + "]";
 	}
-	
-	
 	
 }
