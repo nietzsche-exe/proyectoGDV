@@ -18,6 +18,9 @@
 <%@page import="java.time.LocalDate"%>
 <%@page import="java.util.Arrays"%>
 <%@page import="java.util.ArrayList"%>
+<%@ page import="java.io.BufferedReader" %>
+<%@ page import="java.io.InputStreamReader" %>
+<%@ page import="java.util.stream.Collectors" %>
 <%@page import="controlador.LoginController"%>
 
 <%@page import="com.mysql.cj.x.protobuf.MysqlxExpr.Array"%>
@@ -81,7 +84,6 @@ request.setAttribute("sesionAmadeus", amadeus);
 			
 			latitudes.add(String.valueOf(hotel.getGeoCode().getLatitude()));
 			longitudes.add(String.valueOf(hotel.getGeoCode().getLongitude()));
-
 
 		%>
 	<table style="border: 2px; border-style: solid; border-color: black;">
@@ -222,7 +224,7 @@ request.setAttribute("sesionAmadeus", amadeus);
 		
 		</tr>
 
-
+		
 
 	</table>
 	
@@ -241,7 +243,9 @@ request.setAttribute("sesionAmadeus", amadeus);
 	
 	
 	<script src="JavaScript/map.js"></script>
-	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCmNYNcpFgAX0QLerv3_P3CJZoop9VnSSs&callback=iniciarMap"></script>
+	<script src="JavaScript/geolocalizacion.js"></script>
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBm0vNj92eB8yjWcFe8ieb9doiwDVf2jO0&callback=iniciarMap"></script>
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCZuB7bki3m-dvgWkWfcclEjfwSDxVAlXo&callback=obtenerTodasLasDirecciones"></script>
 
 </body>
 </html>
