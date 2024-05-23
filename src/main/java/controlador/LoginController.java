@@ -358,7 +358,6 @@ public class LoginController extends HttpServlet {
 
 	        break;
 		case "eliminarViajeUsuario":
-			System.out.println("HOLAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
 
 		    Usuario usuarioSeleccionado = (Usuario) request.getSession().getAttribute("UsuarioSeleccionado");
 		    Integer idViajeEliminar =Integer.parseInt(request.getParameter("idViajeEliminar"));
