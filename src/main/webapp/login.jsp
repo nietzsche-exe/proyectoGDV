@@ -41,7 +41,7 @@
 		    	
 		    	<input type="hidden" name="opcion" value="iniciarSesion">
 		    	
-		        <label for="correoUsuario">Correo electronico:</label><br>
+		        <label for="correoUsuario">Correo electrónico:</label><br>
 		        <input class="Boton_Escribir" type="text" id="correoUsuario" name="correoUsuario"><br><br>
 		        <label for="contrasenia">Contraseña:</label><br>
 		        <input class="Boton_Escribir" type="password" id="contrasenia" name="contrasenia"><br><br>
@@ -66,7 +66,7 @@
 	    	</tr>
 	 			<%! @SuppressWarnings("unchecked") %>
 	 			<%
-	 			EntityManager em = modelo.HibernateUtils.getEmf().createEntityManager();
+	 			EntityManager em = HibernateUtils.getEmf().createEntityManager(); //modelo.HibernateUtils.getEmf().createEntityManager();
 				//LOGGER.info("EntityManager creado");
 				try{
 					Query consulta = em.createQuery("FROM Usuario");
