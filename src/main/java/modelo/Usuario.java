@@ -60,6 +60,9 @@ public class Usuario implements Serializable{
 	@Column(name="fecha_nacimiento")
 	private LocalDate fecha_nacimiento;
 	
+	@Column(name="sesion_activa")
+	private Boolean sesionActiva;
+	
 	@OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Viaje> viajes;
 	
