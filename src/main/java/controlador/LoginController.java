@@ -482,6 +482,48 @@ public class LoginController extends HttpServlet {
 				em.close();
 			}
 			break;
+			
+		case "cerrarSesion":
+			HttpSession session10 = request.getSession();
+		    Usuario usuario10 = (Usuario) session10.getAttribute("usuario");
+		    int idUsuario11 = usuario10.getId_usuario();
+
+		    // Crea un EntityManager a partir de la EntityManagerFactory
+		    EntityManagerFactory emf10 = HibernateUtils.getEmf();
+		    EntityManager em10 = emf10.createEntityManager();
+		    EntityTransaction transaction10 = null;
+
+		    try {
+		        // Inicia una transacción
+		        transaction10 = em10.getTransaction();
+		        transaction10.begin();
+
+		        // Busca al usuario en la base de datos por su id
+		        Usuario user = em10.find(Usuario.class, idUsuario11);
+
+		        // Verifica si el usuario existe
+		        if (user != null) {
+		            // Actualiza el tema del usuario
+		            user.setTema(!user.getTema()); // Cambia el tema
+
+		            // Guarda los cambios en la base de datos
+		            em10.merge(user);
+		            transaction10.commit();
+		        }
+
+		    } catch (Exception e) {
+		        // Maneja cualquier excepción
+		        if (transaction10 != null && transaction10.isActive()) {
+		            transaction10.rollback();
+		        }
+		        e.printStackTrace();
+		    } finally {
+
+		    	em10.close();
+		    	
+		    	response.sendRedirect("Secure/perfilUsuario.jsp");
+		    }
+			break;
 		
 		case "cambiar_tema":
 		    // Obtén el id del usuario de la sesión
