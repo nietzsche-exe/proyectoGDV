@@ -87,9 +87,9 @@
 
 		<!-- Amadesu API maven-->
 		<dependency>
-	  		<groupId>com.amadeus</groupId>
-			<artifactId>amadeus-java</artifactId>
-	  		<version>8.1.0</version>
+		  <groupId>com.amadeus</groupId>
+		  <artifactId>amadeus-java</artifactId>
+		  <version>9.0.0</version>
 		</dependency>
 	</dependencies>
 

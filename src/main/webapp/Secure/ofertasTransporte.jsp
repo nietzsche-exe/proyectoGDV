@@ -19,6 +19,7 @@
     pageEncoding="UTF-8"%>
 <%
 	
+//Sustituir Atributos por getters de objetos
     Amadeus amadeus=(Amadeus)request.getAttribute("sesionAmadeus");
     String codigoCiudadDestino=(String)request.getAttribute("codigoIATA3");
 	String fechaEntrada=(String)request.getAttribute("fechaEntrada3");
@@ -36,16 +37,11 @@
 	request.getSession().setAttribute("hotel1",hotel);
 	request.getSession().setAttribute("habitacion1",habitacion);
 	
-	System.out.println("Pagina ofertasTransporte.jsp");
-	System.out.println("Direccion del Hotel elegido:\n"+direccion.toString());
-	System.out.println("Datos del Hotel elegido:\n"+hotel.toString());
-	System.out.println("Datos de la Habitacion del Hotel elegido:\n"+habitacion.toString());
-	
-	System.out.println(codigoCiudadDestino+" "+fechaEntrada+" "+fechaSalida+" "+numeroPersonas);
 	
 	//Obtiene la sesión actual
+	HttpSession sessionA=request.getSession();
 	//Obtiene los datos del usuario almacenados en la sesión
-	Usuario usuario = (Usuario) request.getSession().getAttribute("usuario");
+	Usuario usuario = (Usuario) sessionA.getAttribute("usuario");
 	System.out.println("Informacion usuario actual: "+usuario.toString());
 	
 	Location[] locations= amadeus.referenceData.locations.get(
@@ -53,14 +49,14 @@
 				.and("keyword", "MAD")
 				.and("countryCode", codigoPaisOrigen));
 	    		//De momento trabajo con MAD=Aeropuert Adolfo Suarez Barajas,LHR=UK,TXL=BER(Berlin)
-	    			//La API busca en ingles
-	   System.out.println(locations[0].toString());
+	    		//La API busca en ingles
+	   //System.out.println(locations[0].toString());
 	    		
    Location[] locationsDestino = amadeus.referenceData.locations.get(
 			Params.with("subType", "AIRPORT")
 				.and("keyword", codigoCiudadDestino)
 				.and("countryCode", codigoPaisDestino));
-	   System.out.println(locationsDestino[0].toString());
+	   //System.out.println(locationsDestino[0].toString());
    	
 	   FlightOfferSearch[] flightOffers = amadeus.shopping.flightOffersSearch.get(
             Params.with("originLocationCode", "MAD")
@@ -70,13 +66,8 @@
                     .and("adults", numeroPersonas)
                     .and("nonStop", true)
                     .and("max", 10));
-   	System.out.println(flightOffers.length); 
-   
-   	//for(int i=0;i<10;i++){
-   		//System.out.println(flightOffers[i].toString());
-   	//}
-   	//Data(general para todos)x->itinerarios->precio->airlineCode->Datos para el viajero(Detalles)
-   	%>
+   		//System.out.println(flightOffers.length); 
+	%>
                    
 <!DOCTYPE html>
 <html>
@@ -84,6 +75,13 @@
 <meta charset="UTF-8">
 <title>Viajes: avion</title>
 </head>
+	<header>
+		<form action="LoginController?opcion=perfil" method="post">
+			<%sessionA.setAttribute("usuario", usuario); %>
+			<input type="submit" value="cancelar">
+		
+		</form>
+	</header>	
 <body>
 	<%
 	try{
@@ -210,14 +208,30 @@
 					</form>
 				</td>
 			</tr>
+		</table>
 		<% 
-		
 		}	
 		}
 	}catch( ArrayIndexOutOfBoundsException e){
-	System.out.println("NO HAY VUELOS DISPONIBLES");		
+	System.out.println("NO HAY VUELOS DISPONIBLES");
+	response.sendRedirect("Secure/nuevoViaje.jsp");
+	%>
+	
+	<h2>¿Quieres guardar el viaje sin vuelos?</h2>
+	<form action="LoginController?opcion=guardarOfertaViaje" method="post">
+		<input type="submit" value="Guardar Viaje">
+	</form>
+	<form action="LoginController?opcion=perfil" method="post">
+		<%
+		sessionA.setAttribute("usuario",usuario);
+		%>
+		<input type="submit" value="volver">
+	</form>
+	
+	<script>alert('NO HAY VUELOS DISPONIBLES PARA LA CIUDAD\n ${param.destino}')</script>
+	<%
 	}
 		%>
-	</table>
+	
 </body>
 </html>

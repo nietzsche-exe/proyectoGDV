@@ -4,6 +4,7 @@
 
 var latitudes = JSON.parse(document.querySelector('.latitude').value);
 var longitudes = JSON.parse(document.querySelector('.longitude').value);
+var arrayDirecciones=[];
 
 // Función para obtener la dirección a partir de las coordenadas
 function obtenerDireccion(latitud, longitud) {
@@ -37,7 +38,20 @@ async function obtenerTodasLasDirecciones() {
     }
   }
   
-  console.log(direcciones)
-  
+  console.log(direcciones);
+	
+	var tabla = document.querySelector("tbody");
+    direcciones.forEach((direccion, index) => {
+        var fila = tabla.rows[index];
+        var celdaDireccion = fila.cells[1];
+        celdaDireccion.textContent = direccion;
+        
+     // Encontrar el input hidden para la dirección y actualizar su valor
+        var inputDireccion = fila.querySelector("input[name='direccionHotel']");
+        inputDireccion.value = direccion;
+    });
 }
+
+window.onload = obtenerTodasLasDirecciones;
+
 

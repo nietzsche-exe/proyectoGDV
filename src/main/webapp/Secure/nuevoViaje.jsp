@@ -29,12 +29,14 @@ else {
 	
 </head>
 <body>
-<%
-	
-	
-	
-%>
-	
+
+	<header>
+		<form action="LoginController?opcion=perfil" method="post">
+			<%a.setAttribute("usuario", usuario); %>
+			<input type="submit" value="cancelar">
+		
+		</form>
+	</header>	
 	<div id="Contenedor_Principal">
 	    <div class="Contenedor_Titulo">
 	        <h1>Buscar un hotel</h1>
@@ -52,6 +54,7 @@ else {
 	            <input type="date" name="fechaSalida" id="fechaSalida" required="required" min="<%= LocalDate.now()%>" >
 	            <label for="numeroPersonas">Número de personas</label>
 	            <input type="number" name="numeroPersonas" id="numeroPersonas" min="1" max="5" required="required" value="1">
+	            <%a.setAttribute("usuario", usuario); %>
 	            <input id="busca" type="submit" value="Buscar">
 	        </form>
 	    </div>

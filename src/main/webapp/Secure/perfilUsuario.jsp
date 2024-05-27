@@ -121,6 +121,7 @@
 	    Habitacion habitacion = viaje.getHabitacion();
 	    Hotel hotel = habitacion.getHotel();
 	    DatosVuelo datosVuelo = viaje.getDatos_vuelo();
+	    
 	%>
 	
 		<table>
@@ -134,8 +135,14 @@
 				<th>Fecha Entrada</th>
 				<th>Fecha Salida</th>
 				<th>NºCamas</th>
+				<%
+				if(datosVuelo!=null){
+				%>
 				<th>Origen</th>
 				<th>Destino</th>
+				<% 	
+			    }
+				%>
 			</tr>
 			<tr>
 				<td><%=viaje.getId_viaje() %></td>
@@ -145,8 +152,14 @@
 				<td><%=habitacion.getFecha_entrada() %></td>
 				<td><%=habitacion.getFecha_salida() %></td>
 				<td><%=habitacion.getNumero_camas()%></td>
+				<%
+				if(datosVuelo!=null){
+				%>
 				<td><%=datosVuelo.getCiudadOrigen()%></td>
 				<td><%=datosVuelo.getCiudadDestino() %></td>
+				<% 	
+			    }
+			    %>
 				<td> 
 					<form name="eliminarViajeUsuario"
 					action="../LoginController?opcion=eliminarViajeUsuario" method="post">
@@ -158,9 +171,6 @@
 			</tr>
 		</table>
 		<%
-	    System.out.println("Viaje ID: " + viaje.getId_viaje());
-	    System.out.println("Habitacion ID: " + habitacion.getId_habitacion());
-	    System.out.println("Hotel Nombre: " + hotel.getNombre_hotel());
 		} 
     }
 	%>

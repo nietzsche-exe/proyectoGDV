@@ -44,11 +44,9 @@ public class Viaje implements Serializable{
 		
 	}
 
-	public Viaje(Usuario usuario, Habitacion habitacion, DatosVuelo datos_vuelo) {
+	public Viaje(Usuario usuario) {
 		super();
 		this.usuario = usuario;
-		this.habitacion = habitacion;
-		this.datos_vuelo = datos_vuelo;
 	}
 
 
