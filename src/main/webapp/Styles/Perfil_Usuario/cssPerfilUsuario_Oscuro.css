@@ -9,7 +9,6 @@ body {
 	background-color: darkblue; /* Cambiado a oscuro */
 	padding: 1%;
 	display: flex;
-	position: fixed;
 	align-items: center;
 	width: 99%;
 }

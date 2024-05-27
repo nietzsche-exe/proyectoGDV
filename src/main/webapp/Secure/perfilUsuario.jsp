@@ -95,7 +95,7 @@
                     <li id="usuario"><%= usuario.getNombre() %></li>
                     <li id="correo"><%= usuario.getEmail() %></li>
                     <li>&nbsp;</li>
-                    <li class="Botones_Despliegue"><a href="../index.jsp"><img id="imgSalir" src="../Resources/salir.png"> &nbsp; &nbsp; Cerrar Sesion</a></li>
+                    <li class="Botones_Despliegue"><a href="javascript:document.tema.opcion.value='cerrarSesion';document.tema.submit();"><img id="imgSalir" src="../Resources/salir.png"> &nbsp; &nbsp; Cerrar Sesion</a></li>
                     <li class="Botones_Despliegue"><a href="javascript:void(0)" onclick="javascript:document.tema.opcion.value='config';document.tema.submit();"><img id="imgConfig" src="../Resources/configuracion.png"> &nbsp; &nbsp; Configuracion</a></li>
 <% 
                         if (usuario.getTema() == false) { 

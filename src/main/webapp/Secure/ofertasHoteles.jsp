@@ -27,18 +27,153 @@
     String longitudesJsonStr = longitudesJson.toString();    
 %>
 
-
 <%
     if (usuario.getTema() == true) {
 %>
+	<style>
+	    body {
+	        background-color: #f5f5f5;
+	        color: #333333;
+	        font-family: Arial, sans-serif;
+	    }
+	
+	    h1, h2 {
+	        color: #333333;
+	    }
+	
+	    table {
+	        width: 100%;
+	        border-collapse: collapse;
+	        background-color: #ffffff;
+	    }
+	
+	    th, td {
+	        border: 2px solid #dddddd;
+	        padding: 8px;
+	        text-align: left;
+	    }
+	
+	    th {
+	        background-color: #f2f2f2;
+	        color: #333333;
+	    }
+	
+	    td {
+	        background-color: #ffffff;
+	        color: #333333;
+	    }
+	
+	    input[type="submit"] {
+	        background-color: #4CAF50;
+	        color: white;
+	        border: none;
+	        padding: 10px 20px;
+	        text-align: center;
+	        text-decoration: none;
+	        display: inline-block;
+	        font-size: 16px;
+	        margin: 4px 2px;
+	        cursor: pointer;
+	        border-radius: 4px;
+	    }
+	
+	    input[type="submit"]:hover {
+	        background-color: #45a049;
+	    }
+	
+	    #map {
+	        margin-top: 20px;
+	    }
+	
+	    p {
+	        color: #333333;
+	    }
+	
+	    form {
+	        margin: 0;
+	    }
+	
+	    input[type="hidden"] {
+	        display: none;
+	    }
+	</style>
     <link rel="stylesheet" href="../Styles/Ofertas_Hoteles/cssOfertasHoteles_Oscuro.css">
 <%
     } else {
 %>
+	<style>
+		body {
+		    background-color: #121212;
+		    color: #E0E0E0;
+		    font-family: Arial, sans-serif;
+		}
+		
+		h1 {
+		    color: #FFFFFF;
+		}
+		
+		table {
+		    width: 100%;
+		    border-collapse: collapse;
+		    background-color: #1E1E1E;
+		}
+		
+		th, td {
+		    border: 2px solid #333333;
+		    padding: 8px;
+		    text-align: left;
+		}
+		
+		th {
+		    background-color: #333333;
+		    color: #FFFFFF;
+		}
+		
+		td {
+		    background-color: #1E1E1E;
+		    color: #E0E0E0;
+		}
+		
+		input[type="submit"] {
+		    background-color: #4CAF50;
+		    color: white;
+		    border: none;
+		    padding: 10px 20px;
+		    text-align: center;
+		    text-decoration: none;
+		    display: inline-block;
+		    font-size: 16px;
+		    margin: 4px 2px;
+		    cursor: pointer;
+		    border-radius: 4px;
+		}
+		
+		input[type="submit"]:hover {
+		    background-color: #45a049;
+		}
+		
+		#map {
+		    margin-top: 20px;
+		}
+		
+		p {
+		    color: #E0E0E0;
+		}
+		
+		form {
+		    margin: 0;
+		}
+		
+		input[type="hidden"] {
+		    display: none;
+		}
+	</style>
     <link rel="stylesheet" href="../Styles/Ofertas_Hoteles/cssOfertasHoteles_Claro.css">
+
 <%
     }
 %>
+	
 </head>
 
 <body>
