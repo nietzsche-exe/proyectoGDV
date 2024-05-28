@@ -80,21 +80,27 @@
 %>
 </head>
 <body>
-    <form name="tema" action="../LoginController" method="POST">
-        <input type="hidden" name="opcion" value="cambiar_tema">
+    
       
 <%
       	if (usuario.getSesionActiva() == false) {
 %>
+		<form name="tema" action="../LoginController" method="POST">
+        	<input type="hidden" name="opcion" value="cambiar_tema">
+        	
 		    <div class="Contenedor_SesionCerrada">
 		    	<p id="Titulo">UPS</p>
 		    	<p id="Texto"><img id="imgAdvertencia" src="../Resources/advertencia.png"> Tu sesión está cerrada <img id="imgAdvertencia" src="../Resources/advertencia.png"></p>
 		    	<p id="Texto">Inicia esión otra vez.</p>
 		    	<a id="Boton_Loger" href="javascript:void(0)" onclick="javascript:document.tema.opcion.value='Loger';document.tema.submit();">Iniciar Sesion</a>
 		    </div>
+		</form>  
 <%
 		} else {
 %>
+		<form name="tema" action="../LoginController" method="POST">
+        	<input type="hidden" name="opcion" value="cambiar_tema">
+        	
 		    <header class="Encabezado">
 	            <div class="Contenedor_Logo">
 	                <img id="logo" alt="Logo" src="../Resources/logo_2.0.jpeg">
@@ -129,9 +135,9 @@
 	            </div>
 	        </header>
 	        
+	    </form>
 	    
-	    
-		    <div>
+		    <div class="Contenedor_Viajes">
 <%
 			    if(listaViajes!=null){
 			    
@@ -140,8 +146,8 @@
 				    Hotel hotel = habitacion.getHotel();
 				    DatosVuelo datosVuelo = viaje.getDatos_vuelo();    
 %>
-						<table>
-							<tr>
+						<table class="Tabla_Viajes">
+							<tr class="Contenedor_Titulo">
 								<th>Codigo Viaje</th>
 								<th>Nombre Hotel</th>
 								<th>Precio</th>
@@ -158,28 +164,28 @@
 							    }
 %>
 							</tr>
-							<tr>
-								<td><%=viaje.getId_viaje() %></td>
-								<td><%=hotel.getNombre_hotel() %></td>
-								<td><%=habitacion.getPrecio_total() %></td>
-								<td><%=habitacion.getPrecio_noche() %></td>
-								<td><%=habitacion.getFecha_entrada() %></td>
-								<td><%=habitacion.getFecha_salida() %></td>
-								<td><%=habitacion.getNumero_camas()%></td>
+							<tr class="Filas">
+								<td class="Columna_1"><%=viaje.getId_viaje() %></td>
+								<td class="Columna_2"><%=hotel.getNombre_hotel() %></td>
+								<td class="Columna_3"><%=habitacion.getPrecio_total() %></td>
+								<td class="Columna_4"><%=habitacion.getPrecio_noche() %></td>
+								<td class="Columna_5"><%=habitacion.getFecha_entrada() %></td>
+								<td class="Columna_6"><%=habitacion.getFecha_salida() %></td>
+								<td class="Columna_7"><%=habitacion.getNumero_camas()%></td>
 <%
 								if(datosVuelo!=null){
 %>
-									<td><%=datosVuelo.getCiudadOrigen()%></td>
-									<td><%=datosVuelo.getCiudadDestino() %></td>
+									<td class="Columna_8"><%=datosVuelo.getCiudadOrigen()%></td>
+									<td class="Columna_9"><%=datosVuelo.getCiudadDestino() %></td>
 <% 	
 							    }
 %>
-								<td> 
+								<td class="Columna_10"> 
 									<form name="eliminarViajeUsuario"
 									action="../LoginController?opcion=eliminarViajeUsuario" method="post">
 									<input type="hidden" name="idUsuario" value="<%=usuario.getId_usuario()%>">
 									<input type="hidden" name="idViajeEliminar" value="<%=viaje.getId_viaje()%>">
-									<input type="submit" value="Eliminar">
+									<input id="Boton_Eliminar" type="submit" value="Eliminar">
 									</form>
 								</td>
 							</tr>
@@ -195,9 +201,7 @@
 <%
 		}
 %>
-        
-	
-	</form>
+
 </body>
 </html>
 
