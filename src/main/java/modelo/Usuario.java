@@ -191,8 +191,16 @@ public class Usuario implements Serializable{
 	public void setFecha_nacimiento(LocalDate fecha_nacimiento) {
 		this.fecha_nacimiento = fecha_nacimiento;
 	}
+	
+	public Boolean getSesionActiva() {
+		return sesionActiva;
+	}
 
+	public void setSesionActiva(Boolean sesionActiva) {
+		this.sesionActiva = sesionActiva;
+	}
 
+	
 	@Override
 	public int hashCode() {
 		return Objects.hash(contrasenia, email, id_usuario, nombre);
