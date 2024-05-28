@@ -87,10 +87,11 @@
       	if (usuario.getSesionActiva() == false) {
 %>
 		    <div class="Contenedor_SesionCerrada">
-		    	<p>UPS</p>
-		    	<p>Tu sesión está cerrada.</p>
-		    	<p>Inicia esión otra vez.</p>
-		    	<a href="javascript:void(0)" onclick="javascript:document.tema.opcion.value='Loger';document.tema.submit();"><img id="imgSalir" src="../Resources/salir.png"> &nbsp; &nbsp; Iniciar Sesion</a>
+		    	<p id="Titulo">UPS</p>
+		    	<p id="Texto"><img id="imgConfig" src="../Resources/advertencia.png"> Tu sesión está cerrada <img id="imgConfig" src="../Resources/advertencia.png"></p>
+		    	<p id="Texto">Inicia esión otra vez.</p>
+		    	<a id="Boton_Loger" href="javascript:void(0)" onclick="javascript:document.tema.opcion.value='Loger';document.tema.submit();">Iniciar Sesion</a>
+		    </div>
 <%
 		} else {
 %>
@@ -131,7 +132,7 @@
 	    
 	    
 		    <div>
-		    <%
+<%
 			    if(listaViajes!=null){
 			    
 			    	for (Viaje viaje : listaViajes) {
