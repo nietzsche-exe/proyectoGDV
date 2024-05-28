@@ -88,7 +88,7 @@
 %>
 		    <div class="Contenedor_SesionCerrada">
 		    	<p id="Titulo">UPS</p>
-		    	<p id="Texto"><img id="imgConfig" src="../Resources/advertencia.png"> Tu sesión está cerrada <img id="imgConfig" src="../Resources/advertencia.png"></p>
+		    	<p id="Texto"><img id="imgAdvertencia" src="../Resources/advertencia.png"> Tu sesión está cerrada <img id="imgAdvertencia" src="../Resources/advertencia.png"></p>
 		    	<p id="Texto">Inicia esión otra vez.</p>
 		    	<a id="Boton_Loger" href="javascript:void(0)" onclick="javascript:document.tema.opcion.value='Loger';document.tema.submit();">Iniciar Sesion</a>
 		    </div>
