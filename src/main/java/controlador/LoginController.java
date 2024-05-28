@@ -569,6 +569,7 @@ public class LoginController extends HttpServlet {
 				        if (user != null) {
 				            user.setUltima_conexion(ultima_conexion_temporal);
 				            user.setUltima_conexion_temporal(LocalDateTime.now());
+				            user.setSesionActiva(true);
 				            
 				            em3.merge(user);
 				            transaction.commit();
@@ -630,10 +631,9 @@ public class LoginController extends HttpServlet {
 
 		        // Verifica si el usuario existe
 		        if (user != null) {
-		            // Actualiza el tema del usuario
-		            user.setTema(!user.getTema()); // Cambia el tema
+		        	
+		            user.setSesionActiva(false);
 
-		            // Guarda los cambios en la base de datos
 		            em10.merge(user);
 		            transaction10.commit();
 		        }
@@ -648,7 +648,7 @@ public class LoginController extends HttpServlet {
 
 		    	em10.close();
 		    	
-		    	response.sendRedirect("Secure/perfilUsuario.jsp");
+		    	response.sendRedirect("index.jsp");
 		    }
 			break;
 		
