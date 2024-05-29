@@ -262,9 +262,9 @@ public class LoginController extends HttpServlet {
 					
 					em2.close();
 					LOGGER.info("Se ha cerrado el Entity Manager");
+					LOGGER.info("Redirigiendo a pagina login");
+					response.sendRedirect("login.jsp");
 				}
-				LOGGER.info("Redirigiendo a pagina login");
-				response.sendRedirect("login.jsp");
 			}
 			break;
 
