@@ -44,13 +44,13 @@ public class Direccion implements Serializable{
     private String nombre_calle;
 
     @OneToOne(mappedBy = "direccion", cascade = CascadeType.ALL)
-    private Hotel hotel;
+    private HotelBD hotel;
 	
-	public Hotel getHotel() {
+	public HotelBD getHotel() {
 	    return hotel;
 	}
 
-	public void setHotel(Hotel hotel) {
+	public void setHotel(HotelBD hotel) {
 	    this.hotel = hotel;
 	}
 	

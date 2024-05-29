@@ -1,8 +1,7 @@
 package controlador;
 
 import java.io.IOException;
-
-
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -20,6 +19,7 @@ import com.amadeus.resources.HotelOfferSearch.Offer;
 import com.amadeus.resources.HotelOfferSearch.QualifiedFreeText;
 import com.amadeus.referencedata.locations.Cities;
 import com.amadeus.referencedata.locations.Hotels;
+import com.amadeus.resources.Hotel;
 import com.amadeus.resources.Location;
 import com.amadeus.resources.Resource;
 import com.amadeus.resources.City;
@@ -43,7 +43,7 @@ import modelo.DatosVuelo;
 import modelo.Direccion;
 import modelo.Habitacion;
 import modelo.HibernateUtils;
-import modelo.Hotel;
+import modelo.HotelBD;
 import modelo.HotelData;
 import modelo.Usuario;
 import modelo.Viaje;
@@ -64,11 +64,11 @@ public class LoginController extends HttpServlet {
 		
 		LocalDate fecha_nacimiento = null;
 		String token = "";
-		String nomCiudad="";
-		String codigo="";
+		String nomCiudadOrigen="",nomCiudadDestino="";
+		String codigoCiudadOrigen="",codigoCiudadDestino="";
 
 		String codVerificacion = "";
-		
+		BigDecimal latitud_hotel= new BigDecimal("0.0"),longitud_hotel=new BigDecimal("0.0");
 		String codigoPaisOrigen="",codigoPaisDestino="";
 		String nombreCiudadDestino="",nombrePaisDestino="";
 		
@@ -242,18 +242,21 @@ public class LoginController extends HttpServlet {
 			String fechaEntrada=request.getParameter("fechaEntrada");
 			String fechaSalida=request.getParameter("fechaSalida");
 			String numeroPersonas=request.getParameter("numeroPersonas");
-	    	System.out.println("Fecha de Entrada: "+fechaEntrada+"\nFecha de Salida: "+fechaSalida+"\nNumero de personas: "+numeroPersonas);	    	
 	    	
 	    	Usuario usuarioInfo2 = (Usuario) request.getAttribute("usuario");
-			nomCiudad= request.getParameter("destino");
-			System.out.println(nomCiudad);
+			nomCiudadOrigen=request.getParameter("origen");
+	    	nomCiudadDestino= request.getParameter("destino");
 			
 			Amadeus amadeus =iniciarApi();
 			try {
-				City[] ciudad=amadeus.referenceData.locations.cities.get(Params.with("keyword", nomCiudad));
-				codigo=ciudad[0].getIataCode();
-				codigoPaisDestino=ciudad[0].getAddress().getCountryCode();
+				City[] ciudadOrigen=amadeus.referenceData.locations.cities.get(Params.with("keyword", nomCiudadOrigen));
+				codigoCiudadOrigen=ciudadOrigen[0].getIataCode();
+				codigoPaisOrigen=ciudadOrigen[0].getAddress().getCountryCode();
 				
+				City[] ciudadDestino=amadeus.referenceData.locations.cities.get(Params.with("keyword", nomCiudadDestino));
+				codigoCiudadDestino=ciudadDestino[0].getIataCode();
+				codigoPaisDestino=ciudadDestino[0].getAddress().getCountryCode();
+				System.out.println(codigoPaisOrigen);
 			}catch(NullPointerException e) {
 				System.out.println(e.getMessage());
 				response.sendRedirect("Secure/nuevoViaje.jsp");
@@ -261,32 +264,35 @@ public class LoginController extends HttpServlet {
 				e.printStackTrace();
 			}
 			
-			
-//---------------------Fragmento Prueba-------------------------------
-//			// Obtén los hoteles
-		    ArrayList<com.amadeus.resources.Hotel> listaHoteles = new ArrayList<>();
+		    ArrayList<Hotel> listaHoteles = new ArrayList<>();
 		    ArrayList<HotelData> listaDatosHoteles= new ArrayList<HotelData>();
 		    try {
-		        com.amadeus.resources.Hotel[] hotels = amadeus.referenceData.locations.hotels.byCity.get(
-		                Params.with("cityCode", codigo));
+		        Hotel[] hotels = amadeus.referenceData.locations.hotels.byCity.get(
+		                Params.with("cityCode", codigoCiudadDestino));
 //		                .and("radius", 8)
 //		                .and("radiusUnit", "KM"));
-		        for (int a = 0; a < 20; a++) {
-		    		System.out.println(hotels[a].toString());
-		    		listaHoteles.add(hotels[a]);	
+		        for (int a = 0; a < 25; a++) {
+		    		try {		    			
+			        	System.out.println(hotels[a].toString());
+			    		listaHoteles.add(hotels[a]);
+		    		}catch(ArrayIndexOutOfBoundsException e) {
+		    			System.out.println("No hay más hoteles en la lista.");
+		    			break;
+		    		}
+		    		
 		    	}
+		        
 		        System.out.println(listaHoteles.size());
 		        int i=0;
 		        if(!listaHoteles.isEmpty()) {
 		        	
-		        	for (com.amadeus.resources.Hotel hotel : listaHoteles) {
+		        	for (Hotel hotel : listaHoteles) {
 		        		
 		        	System.out.println("Hotel :"+ i++);
 		        		try {
 		        			HotelOfferSearch[] ofertasHotel = amadeus.shopping.hotelOffersSearch.get(Params
 		                    .with("hotelIds", hotel.getHotelId())
 		                    .and("adults", Integer.valueOf(numeroPersonas))
-		                    .and("childs", 0)
 		                    .and("checkInDate", fechaEntrada)
 		                    .and("checkOutDate", fechaSalida)
 		                    .and("roomQuantity", 1)
@@ -332,6 +338,7 @@ public class LoginController extends HttpServlet {
 		        	}catch(NullPointerException e) {
 		        		System.out.println("Valor Nulo");
 		        	}
+		  
 		        }
 		       
 		        }
@@ -347,28 +354,20 @@ public class LoginController extends HttpServlet {
 		    request.setAttribute("usuario", usuarioInfo2);
 		    
 		    request.setAttribute("numeroPersonas", numeroPersonas);
-		    request.setAttribute("codIATA", codigo);
-		    request.setAttribute("nombreCiudad", nomCiudad);
-		    request.setAttribute("codigoIATAPaisDestino", codigoPaisDestino);
+		    
+		    request.setAttribute("nombreCiudadOrigen", nomCiudadOrigen);
+		    request.setAttribute("codCiudadOrigen", codigoCiudadOrigen);
+		    request.setAttribute("codigoPaisOrigen", codigoPaisOrigen);
+
+		    request.setAttribute("nombreCiudadDestino", nomCiudadDestino);
+		    request.setAttribute("codIATACiudadDestino", codigoCiudadDestino);
+		    request.setAttribute("codIATAPaisDestino", codigoPaisDestino);
 		    request.getRequestDispatcher("Secure/ofertasHoteles.jsp").forward(request, response);
 		    break;
-//---------------------Fragmento Prueba-------------------------------			
-		
-//		    
-//			request.setAttribute("fechaEntrada", fechaEntrada);
-//			request.setAttribute("fechaSalida", fechaSalida);
-//			request.setAttribute("numeroPersonas", numeroPersonas);
-//			
-//			request.setAttribute("codigoIATAPaisDestino", codigoPaisDestino);
-//			request.setAttribute("nombreCiudad", nomCiudad);
-//			request.setAttribute("sesionAmadeus", amadeus);
-//			request.setAttribute("codIATA", codigo);
-//			request.getRequestDispatcher("Secure/busquedaHoteles.jsp").forward(request, response);
-//			break;
+
 			
 		case "guardarOfertaHotel":
 			Amadeus sesion=iniciarApi();
-			codigo=(String)request.getParameter("codigoIATA2");
 			codigoHabitacion=(String) request.getParameter("idHabitacion");
 			fechaEntrada=(String) request.getParameter("fechaEntrada2");
 			fechaSalida=(String) request.getParameter("fechaSalida2");
@@ -380,12 +379,19 @@ public class LoginController extends HttpServlet {
 			precioHabitacionTotal=(Double)Double.valueOf(request.getParameter("precioTotal"));
 			
 			numeroPersonas=(String) request.getParameter("numeroPersonas2");
+			
 			codigoPaisOrigen=(String) request.getParameter("codigoIATAPaisOrigen");
+			codigoCiudadOrigen=(String) request.getParameter("codigoIATACiudadOrigen");
+			System.out.println(codigoPaisOrigen);
 			codigoPaisDestino=(String) request.getParameter("codigoIATAPaisDestino");
-			nombreCiudadDestino=(String)request.getParameter("nombreCiudadDestino");
-				
+			nombreCiudadDestino=(String)request.getParameter("nomCiudadDestino");
+			codigoCiudadDestino=(String)request.getParameter("codigoIATACiudadDestino");
+			
 			idHotel=request.getParameter("hotelId");
 			nombreHotel=request.getParameter("nombreHotel");
+			latitud_hotel=new BigDecimal((String) request.getParameter("latitudHotel"));
+			longitud_hotel=new BigDecimal((String) request.getParameter("longitudHotel"));
+			
 			nombrePaisDestino=(String)request.getParameter("nombrePaisDestino");
 
 			Usuario usuarioInfo=(Usuario) request.getAttribute("usuario");
@@ -394,13 +400,13 @@ public class LoginController extends HttpServlet {
 			LocalDate fSalida=LocalDate.parse(fechaSalida);
 			
 			//Falta incluir codigoPostal y Calle en la Direccion		
-			Direccion direccionHotel=new Direccion(codigoPaisDestino,nombrePaisDestino,codigo,nombreCiudadDestino,calleHotel);
+			Direccion direccionHotel=new Direccion(codigoPaisDestino,nombrePaisDestino,codigoCiudadDestino,nombreCiudadDestino,calleHotel);
 			
-			Hotel hotel=new Hotel(idHotel,nombreHotel);
+			HotelBD hotel=new HotelBD(idHotel,nombreHotel,latitud_hotel,longitud_hotel);
 			hotel.setDireccion(direccionHotel);
 			
 			Habitacion habitacion=new Habitacion(codigoHabitacion, fEntrada, fSalida, numeroCamas, tipoCama,precioHabitacionNoche, precioHabitacionTotal);
-			habitacion.setHotel(hotel);
+			habitacion.setHotelBD(hotel);
 			direccionHotel.setHotel(hotel);
 			hotel.addHabitacion(habitacion);
 			
@@ -412,16 +418,19 @@ public class LoginController extends HttpServlet {
 			//Direccion,Hotel,Usuario y Habitacion.
 			//Para poder transportar los datos de una mejor forma
 
-			request.setAttribute("direccion",direccionHotel);
-			request.setAttribute("hotel2", hotel);
-			request.setAttribute("habitacion01", habitacion);
+			request.setAttribute("direccion_Creada",direccionHotel);
+			request.setAttribute("hotel_Creada", hotel);
+			request.setAttribute("habitacion_Creada", habitacion);
 			
-			request.setAttribute("codigoIATA3", codigo);
 			request.setAttribute("fechaEntrada3", fechaEntrada);
 			request.setAttribute("fechaSalida3", fechaSalida);
 			request.setAttribute("numeroPersonas3", numeroPersonas);
-			request.setAttribute("codigoIATAOrigen2", codigoPaisOrigen);
-			request.setAttribute("codigoIATADestino2", codigoPaisDestino);
+			
+			request.setAttribute("codigoIATAPaisOrigen2", codigoPaisOrigen);
+			request.setAttribute("codigoIATACiudadOrigen2", codigoCiudadOrigen);
+			request.setAttribute("codigoIATAPaisDestino2", codigoPaisDestino);
+			request.setAttribute("codigoIATACiudadDestino2", codigoCiudadDestino);
+			
 			request.setAttribute("sesionAmadeus",sesion );
 			
 			request.setAttribute("usuario", usuarioInfo);
@@ -429,9 +438,9 @@ public class LoginController extends HttpServlet {
 			break;
 
 		case "guardarOfertaViaje":
-			Direccion direccionFinal=(Direccion) request.getSession().getAttribute("direccion1");
-			Hotel hotelFinal=(Hotel) request.getSession().getAttribute("hotel1");
-			Habitacion habitacionFinal=(Habitacion) request.getSession().getAttribute("habitacion1");
+			Direccion direccionFinal=(Direccion) request.getSession().getAttribute("direccion_Final");
+			HotelBD hotelFinal=(HotelBD) request.getSession().getAttribute("hotel_Final");
+			Habitacion habitacionFinal=(Habitacion) request.getSession().getAttribute("habitacion_Final");
 			Usuario usuarioFinal = (Usuario) request.getSession().getAttribute("usuario");
 			
 			EntityManager em1 = modelo.HibernateUtils.getEmf().createEntityManager();
@@ -469,7 +478,9 @@ public class LoginController extends HttpServlet {
 					em1.merge(datosVuelo);				
 					viaje.setDatos_vuelo(datosVuelo);
 				}
-				em1.merge(viaje);
+				if(viaje!=null) {
+					em1.merge(viaje);
+				}
 				//em1.merge(usuarioFinal);
 				transaction1.commit();
 			}catch(Exception e) {

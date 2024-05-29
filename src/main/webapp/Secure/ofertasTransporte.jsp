@@ -1,6 +1,6 @@
 
 <%@page import="modelo.Habitacion"%>
-<%@page import="modelo.Hotel"%>
+<%@page import="modelo.HotelBD"%>
 <%@page import="modelo.Direccion"%>
 <%@page import="com.amadeus.resources.FlightOfferSearch.FareDetailsBySegment"%>
 <%@page import="com.amadeus.resources.FlightOfferSearch.TravelerPricing"%>
@@ -21,21 +21,23 @@
 	
 //Sustituir Atributos por getters de objetos
     Amadeus amadeus=(Amadeus)request.getAttribute("sesionAmadeus");
-    String codigoCiudadDestino=(String)request.getAttribute("codigoIATA3");
 	String fechaEntrada=(String)request.getAttribute("fechaEntrada3");
 	String fechaSalida=(String)request.getAttribute("fechaSalida3");
 	String numeroPersonas=(String)request.getAttribute("numeroPersonas3");
-	String codigoPaisOrigen=(String)request.getAttribute("codigoIATAOrigen2");
-	String codigoPaisDestino=(String)request.getAttribute("codigoIATADestino2");
+	
+	String codigoPaisOrigen=(String)request.getAttribute("codigoIATAPaisOrigen2");
+	String codigoCiudadOrigen= (String) request.getAttribute("codigoIATACiudadOrigen2");
+	String codigoPaisDestino=(String)request.getAttribute("codigoIATAPaisDestino2");
+    String codigoCiudadDestino=(String)request.getAttribute("codigoIATACiudadDestino2");
 	
 	
-	Direccion direccion=(Direccion)request.getAttribute("direccion");
-	Hotel hotel=(Hotel)request.getAttribute("hotel2");
-	Habitacion habitacion=(Habitacion)request.getAttribute("habitacion01");
+	Direccion direccion=(Direccion)request.getAttribute("direccion_Creada");
+	HotelBD hotel=(HotelBD)request.getAttribute("hotel_Creada");
+	Habitacion habitacion=(Habitacion)request.getAttribute("habitacion_Creada");
 	
-	request.getSession().setAttribute("direccion1",direccion);
-	request.getSession().setAttribute("hotel1",hotel);
-	request.getSession().setAttribute("habitacion1",habitacion);
+	request.getSession().setAttribute("direccion_Final",direccion);
+	request.getSession().setAttribute("hotel_Final",hotel);
+	request.getSession().setAttribute("habitacion_Final",habitacion);
 	
 	
 	//Obtiene la sesión actual
@@ -46,20 +48,18 @@
 	
 	Location[] locations= amadeus.referenceData.locations.get(
 			Params.with("subType", "AIRPORT")
-				.and("keyword", "MAD")
+				.and("keyword", codigoCiudadOrigen)
 				.and("countryCode", codigoPaisOrigen));
 	    		//De momento trabajo con MAD=Aeropuert Adolfo Suarez Barajas,LHR=UK,TXL=BER(Berlin)
 	    		//La API busca en ingles
-	   //System.out.println(locations[0].toString());
 	    		
    Location[] locationsDestino = amadeus.referenceData.locations.get(
 			Params.with("subType", "AIRPORT")
 				.and("keyword", codigoCiudadDestino)
 				.and("countryCode", codigoPaisDestino));
-	   //System.out.println(locationsDestino[0].toString());
    	
 	   FlightOfferSearch[] flightOffers = amadeus.shopping.flightOffersSearch.get(
-            Params.with("originLocationCode", "MAD")
+            Params.with("originLocationCode", codigoCiudadOrigen)
                     .and("destinationLocationCode", codigoCiudadDestino)
                     .and("departureDate", fechaEntrada)
                     .and("returnDate", fechaSalida)
@@ -91,6 +91,9 @@
 		
 		<% 
 		for(int j=0;j<flightOffers.length;j++){
+		try{
+			
+		
 			Itinerary[]itineraries=flightOffers[j].getItineraries();
 			TravelerPricing[]pricings=flightOffers[j].getTravelerPricings();
 			FareDetailsBySegment[]bySegments=pricings[0].getFareDetailsBySegment();
@@ -210,11 +213,15 @@
 			</tr>
 		</table>
 		<% 
+		}catch(ArrayIndexOutOfBoundsException e){
+			System.out.println("No hay mas viajes");
+			break;
+		}
 		}	
 		}
 	}catch( ArrayIndexOutOfBoundsException e){
 	System.out.println("NO HAY VUELOS DISPONIBLES");
-	response.sendRedirect("Secure/nuevoViaje.jsp");
+	//response.sendRedirect("Secure/nuevoViaje.jsp");
 	%>
 	
 	<h2>¿Quieres guardar el viaje sin vuelos?</h2>

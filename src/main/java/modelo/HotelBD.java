@@ -1,6 +1,7 @@
 package modelo;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -17,7 +18,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "hotel", schema = "gestion_viajes")
-public class Hotel implements Serializable{
+public class HotelBD implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	
@@ -31,17 +32,26 @@ public class Hotel implements Serializable{
 
     @Column(name = "nombre_hotel")
     private String nombre_hotel;
+    
+    @Column(name = "latitud_hotel")
+    private BigDecimal latitud;
 
+    @Column(name = "longitud_hotel")
+    private BigDecimal longitud;  
+    
     @OneToMany(mappedBy = "hotel", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Habitacion> habitaciones = new ArrayList<>();
 
-	public Hotel() {
+	public HotelBD() {
 	}
 
-	public Hotel(String id_hotel, String nombreHotel) {
+	public HotelBD(String id_hotel, String nombreHotel, BigDecimal latitud
+			, BigDecimal longitud) {
 		super();
 		this.id_hotel = id_hotel;
 		this.nombre_hotel=nombreHotel;
+		this.latitud=latitud;
+		this.longitud=longitud;
 	}
 
 	public String getId_hotel() {
@@ -68,6 +78,22 @@ public class Hotel implements Serializable{
 		this.nombre_hotel = nombre_hotel;
 	}
 	
+	public BigDecimal getLatitud() {
+	    return latitud;
+	}
+
+	public void setLatitud(BigDecimal latitud) {
+	    this.latitud = latitud;
+	}
+
+	public BigDecimal getLongitud() {
+	    return longitud;
+	}
+
+	public void setLongitud(BigDecimal longitud) {
+	    this.longitud = longitud;
+	}
+	
 	public List<Habitacion> getHabitaciones() {
 		return habitaciones;
 	}
@@ -81,13 +107,13 @@ public class Hotel implements Serializable{
 			this.habitaciones=new ArrayList<Habitacion>();
 		}
 		this.habitaciones.add(habitacion);
-		habitacion.setHotel(this);
+		habitacion.setHotelBD(this);
 	}
 	
 	public void quitarHabitacion(Habitacion habitacion) {
 		if(this.habitaciones!=null) {
 			this.habitaciones.remove(habitacion);
-			habitacion.setHotel(null);
+			habitacion.setHotelBD(null);
 		}
 	}
 	
@@ -110,7 +136,7 @@ public class Hotel implements Serializable{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Hotel other = (Hotel) obj;
+		HotelBD other = (HotelBD) obj;
 		return Objects.equals(direccion, other.direccion) && Objects.equals(id_hotel, other.id_hotel)
 				&& Objects.equals(nombre_hotel, other.nombre_hotel);
 	}

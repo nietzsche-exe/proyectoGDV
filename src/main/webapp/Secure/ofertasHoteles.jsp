@@ -193,7 +193,6 @@
 <%if(!listaHoteles.isEmpty()){
 	%>
 <div id="map" style="height: 500px; width: 100%;"></div>
-
 <table>
     <thead>
         <tr>
@@ -218,10 +217,11 @@
     <tbody>
     <%
         for (HotelData hotel : listaHoteles) {
+        	System.out.println(hotel.toString());
     %>
         <tr>
             <td><%= hotel.getNombre() %></td>
-            <td ><%= hotel.getDireccion() %></td>
+            <td><%= hotel.getDireccion() %></td>
             <td><%= hotel.getCodigoHotel() %></td>
             <td><%= hotel.getIdOferta() %></td>
             <td><%= hotel.getFechaEntrada() %></td>
@@ -240,11 +240,13 @@
                     <input type="hidden" name="hotelId" value="<%= hotel.getCodigoHotel() %>">
                     <input type="hidden" name="nombreHotel" value="<%= hotel.getNombre() %>">
                     <input type="hidden" name="direccionHotel" value="">
+                    <input type="hidden" name="latitudHotel" value="<%=hotel.getLatitud() %>">
+                    <input type="hidden" name="longitudHotel" value="<%=hotel.getLongitud() %>">
                     
                     <input type="hidden" name="codigoIATAPaisDestino" value="<%= hotel.getCodPaisDestino()%>">
                     <input type="hidden" name="nombrePaisDestino" value="<%= hotel.getNomPaisDestino() %>">
-                    <input type="hidden" name="codigoIATACiudadDestino" value="<%= request.getAttribute("codIATA") %>">
-                    <input type="hidden" name="nombreCiudadDestino" value="<%= request.getAttribute("nombreCiudad") %>">
+                    <input type="hidden" name="codigoIATACiudadDestino" value="<%= request.getAttribute("codIATACiudadDestino") %>">
+                    <input type="hidden" name="nombreCiudadDestino" value="<%= request.getAttribute("nomCiudadDestino") %>">
                     
                     <input type="hidden" name="idHabitacion" value="<%= hotel.getIdOferta() %>">
                     <input type="hidden" name="fechaEntrada2" value="<%= hotel.getFechaEntrada() %>">
@@ -255,8 +257,8 @@
                     <input type="hidden" name="precioNoche" value="<%= hotel.getPrecioNoche() %>">
                     <input type="hidden" name="precioTotal" value="<%= hotel.getPrecioTotal() %>">
                     <input type="hidden" name="numeroPersonas2" value="<%= request.getAttribute("numeroPersonas") %>">
-                    <input type="hidden" name="codigoIATA2" value="<%= request.getAttribute("codIATA") %>">
-                    <input type="hidden" name="codigoIATAPaisOrigen" value="ES">
+                    <input type="hidden" name="codigoIATACiudadOrigen" value="<%= request.getAttribute("codCiudadOrigen") %>">
+                    <input type="hidden" name="codigoIATAPaisOrigen" value="<%= request.getAttribute("codigoPaisOrigen") %>">
                     <%sessionA.setAttribute("usuario", usuario); %>
                     <input type="submit" value="Reservar">
                 </form>

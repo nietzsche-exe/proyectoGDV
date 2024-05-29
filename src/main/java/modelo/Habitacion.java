@@ -48,7 +48,7 @@ public class Habitacion implements Serializable{
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_hotel")
-    private Hotel hotel;
+    private HotelBD hotel;
 
     @OneToOne(mappedBy = "habitacion")
     private Viaje viaje;
@@ -79,11 +79,11 @@ public class Habitacion implements Serializable{
 		this.id_habitacion = id_habitacion;
 	}
 
-	public Hotel getHotel() {
+	public HotelBD getHotelBD() {
 		return hotel;
 	}
 
-	public void setHotel(Hotel hotel) {
+	public void setHotelBD(HotelBD hotel) {
 		this.hotel = hotel;
 	}
 
@@ -157,7 +157,7 @@ public class Habitacion implements Serializable{
 			return "Habitacion [id_habitacion=" + id_habitacion + ", fecha_entrada=" + fecha_entrada + ", fecha_salida="
 					+ fecha_salida + ", habitacion_disponible=" + habitacion_disponible + ", numero_camas=" + numero_camas
 					+ ", tipo_cama=" + tipo_cama + ", precio_noche=" + precio_noche + ", precio_total=" + precio_total
-					+ ", hotel=[id=" + this.getHotel().getId_hotel() + ", nombre="+this.getHotel().getNombre_hotel()+"]]";
+					+ ", hotel=[id=" + this.getHotelBD().getId_hotel() + ", nombre="+this.getHotelBD().getNombre_hotel()+"]]";
 	}
 
 	@Override

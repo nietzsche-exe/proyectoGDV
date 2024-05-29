@@ -45,14 +45,16 @@ else {
 	    <div class="Contenedor_Busqueda">
 	        <form name="buscar" action="../LoginController" method="post">
 	            <input type="hidden" name="opcion" value="buscarHotel">
-	            <label for="destino">Buscar hoteles de un Ciudad</label>
+	            <label for="origen">Origen</label>
+	            <input type="text" name="origen" id="origen" required="required">
+	            <label for="destino">¿A dónde quieres viajar?</label>
 	            <input type="text" name="destino" id="destino" required="required">
 	            <label>Filtros de búsqueda:</label>
 	            <label for="fechaEntrada">Fecha de entrada</label>
 	            <input type="date" name="fechaEntrada" id="fechaEntrada" required="required" min="<%= LocalDate.now()%>">
 	            <label for="fechaSalida">Fecha de salida</label>
 	            <input type="date" name="fechaSalida" id="fechaSalida" required="required" min="<%= LocalDate.now()%>" >
-	            <label for="numeroPersonas">Número de personas</label>
+	            <label for="numeroPersonas">Número de personas(1 Habitacion)</label>
 	            <input type="number" name="numeroPersonas" id="numeroPersonas" min="1" max="5" required="required" value="1">
 	            <%a.setAttribute("usuario", usuario); %>
 	            <input id="busca" type="submit" value="Buscar">

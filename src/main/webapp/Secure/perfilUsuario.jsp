@@ -1,10 +1,14 @@
+<%@page import="com.amadeus.resources.Activity"%>
+<%@page import="com.amadeus.Params"%>
+<%@page import="com.amadeus.Amadeus"%>
+<%@page import="modelo.HotelBD"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>
 <%@page import="jakarta.persistence.Query"%>
 <%@page import="modelo.Usuario"%>
 <%@page import="modelo.Viaje"%>
 <%@page import="modelo.Habitacion"%>
-<%@page import="modelo.Hotel"%>
+<%@page import="modelo.HotelBD"%>
 <%@page import="modelo.DatosVuelo"%>
 <%@page import="modelo.HibernateUtils"%>
 <%@page import="jakarta.persistence.EntityManager"%>
@@ -28,6 +32,8 @@
         response.sendRedirect("login.jsp");
         return;
     }
+    //Sesion Amadeus
+	Amadeus amadeus = Amadeus.builder("boLFp1JaJ9WSPbhcQbA4hWnsrG1Dw95L", "SrAG4zk33lL7TbTi").build();
     
     // Obtiene los datos del usuario almacenados en la sesión
     Usuario usuario = (Usuario) session2.getAttribute("usuario");
@@ -143,7 +149,7 @@
 			    
 			    	for (Viaje viaje : listaViajes) {
 				    Habitacion habitacion = viaje.getHabitacion();
-				    Hotel hotel = habitacion.getHotel();
+				    HotelBD hotel = habitacion.getHotelBD();
 				    DatosVuelo datosVuelo = viaje.getDatos_vuelo();    
 %>
 						<table class="Tabla_Viajes">
@@ -189,9 +195,25 @@
 									</form>
 								</td>
 							</tr>
-						</table>
+						</table>						
 <%
-					}
+if(hotel.getLatitud()!=null){
+	
+	Activity[] activities=amadeus.shopping.activities.get(Params.with("latitude", hotel.getLatitud()).and("longitude", hotel.getLongitud())); 
+	for(int i=0;i<5;i++){
+	%>
+	<h4><%=activities[i].getName() %></h4>
+	<%String[] stringsimagen = activities[i].getPictures(); %>
+	<img src="<%= stringsimagen[0]%>">	
+	<p><%=activities[i].getShortDescription() %>
+		<%=activities[i].getDescription() %>
+		</p>
+	<a><%=activities[i].getBookingLink() %></a>
+	<%
+}
+	}
+			    	}
+	
 			    }
 %>
 		    	

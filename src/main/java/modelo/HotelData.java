@@ -195,6 +195,18 @@ public class HotelData {
 	public void setPrecioTotal(double precioTotal) {
 		this.precioTotal = precioTotal;
 	}
+
+	@Override
+	public String toString() {
+		return "HotelData [nombre=" + nombre + ", direccion=" + direccion + ", codPaisDestino=" + codPaisDestino
+				+ ", nomPaisDestino=" + nomPaisDestino + ", codigoHotel=" + codigoHotel + ", latitud=" + latitud
+				+ ", longitud=" + longitud + ", idOferta=" + idOferta + ", fechaEntrada=" + fechaEntrada
+				+ ", fechaSalida=" + fechaSalida + ", valoracion=" + valoracion + ", disponible=" + disponible
+				+ ", tipoHabitacion=" + tipoHabitacion + ", categoriaHabitacion=" + categoriaHabitacion
+				+ ", numeroCamas=" + numeroCamas + ", tipoCama=" + tipoCama + ", descripcion=" + descripcion
+				+ ", numeroAdultos=" + numeroAdultos + ", numeroNinos=" + numeroNinos + ", precioNoche=" + precioNoche
+				+ ", precioTotal=" + precioTotal + "]";
+	}
     
     
     
