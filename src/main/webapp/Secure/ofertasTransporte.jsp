@@ -74,6 +74,74 @@
 <head>
 <meta charset="UTF-8">
 <title>Viajes: avion</title>
+	
+	<style>
+		/* Estilos generales */
+		body {
+		    background-color: #f9f9f9; /* Fondo claro */
+		    color: #333; /* Texto oscuro */
+		    font-family: Arial, sans-serif;
+		    margin: 0;
+		    padding: 0;
+		}
+		
+		header {
+		    background-color: #fff; /* Fondo claro para el encabezado */
+		    padding: 20px;
+		    border-bottom: 1px solid #ddd; /* Línea sutil debajo del encabezado */
+		}
+		
+		header form {
+		    display: inline-block;
+		}
+		
+		header input[type="submit"] {
+		    background-color: #4CAF50; /* Color verde */
+		    color: white;
+		    border: none;
+		    padding: 10px 20px;
+		    cursor: pointer;
+		    font-size: 16px;
+		    border-radius: 5px;
+		}
+		
+		header input[type="submit"]:hover {
+		    background-color: #45a049; /* Verde más oscuro al pasar el ratón */
+		}
+		
+		table {
+		    width: 100%;
+		    border-collapse: collapse;
+		    margin: 20px 0;
+		}
+		
+		table, th, td {
+		    border: 1px solid #ddd; /* Borde claro */
+		    padding: 10px;
+		    text-align: left;
+		}
+		
+		th {
+		    background-color: #f2f2f2; /* Fondo claro para encabezados de tabla */
+		}
+		
+		form input[type="submit"] {
+		    background-color: #4CAF50; /* Color verde */
+		    color: white;
+		    border: none;
+		    padding: 10px 20px;
+		    cursor: pointer;
+		    font-size: 16px;
+		    border-radius: 5px;
+		}
+		
+		form input[type="submit"]:hover {
+		    background-color: #45a049; /* Verde más oscuro al pasar el ratón */
+		}
+				
+	</style>
+	
+	
 </head>
 	<header>
 		<form action="LoginController?opcion=perfil" method="post">
@@ -100,52 +168,52 @@
 
 		%>
 		<table>
-		<tr style="border: 2px; border-style: solid; border-color: black;">
-			<th rowspan="3" style="border: 2px; border-style: solid; border-color: black;">Id vuelo</th>				<!-- No incluir en bd -->
-			<th rowspan="3" style="border: 2px; border-style: solid; border-color: black;">Ultima fecha para comprar</th>	<!-- No incluir en bd -->
-			<th rowspan="3" style="border: 2px; border-style: solid; border-color: black;">NºAsientos disponibles</th>	<!-- No incluir en bd -->					
-			<th rowspan="1" colspan="10" style="border: 2px; border-style: solid; border-color: black;">Ida</th>
-			<th rowspan="1" colspan="10" style="border: 2px; border-style: solid; border-color: black;">Vuelta</th>					<!-- Puede no haber vuelta-->
-			<th rowspan="3" style="border: 2px; border-style: solid; border-color: black;">Precio</th>
+		<tr>
+			<th rowspan="3">Id vuelo</th>				<!-- No incluir en bd -->
+			<th rowspan="3">Ultima fecha para comprar</th>	<!-- No incluir en bd -->
+			<th rowspan="3">NºAsientos disponibles</th>	<!-- No incluir en bd -->					
+			<th rowspan="1" colspan="10">Ida</th>
+			<th rowspan="1" colspan="10">Vuelta</th>					<!-- Puede no haber vuelta-->
+			<th rowspan="3">Precio</th>
 			<!-- incluir Datos del asiento por cada viajero o unico viajero(pensarlo) -->
 		</tr>
-		<tr style="border: 2px; border-style: solid; border-color: black;">
+		<tr>
 
-			<th colspan="6" style="border: 2px; border-style: solid; border-color: black;">Salida</th>
-			<th colspan="4" style="border: 2px; border-style: solid; border-color: black;">Llegada</th>
-			<th colspan="6" style="border: 2px; border-style: solid; border-color: black;">Salida</th>
-			<th colspan="4" style="border: 2px; border-style: solid; border-color: black;">Llegada</th>
+			<th colspan="6">Salida</th>
+			<th colspan="4">Llegada</th>
+			<th colspan="6">Salida</th>
+			<th colspan="4">Llegada</th>
 		</tr>
-		<tr style="border: 2px; border-style: solid; border-color: black;">
+		<tr>
 
-			<th style="border: 2px; border-style: solid; border-color: black;">Aeropuerto</th>
-			<th style="border: 2px; border-style: solid; border-color: black;">Duracion</th>
-			<th style="border: 2px; border-style: solid; border-color: black;">Ciudad Origen</th>
-			<th style="border: 2px; border-style: solid; border-color: black;">Terminal</th>
-			<th style="border: 2px; border-style: solid; border-color: black;">Hora Salida</th>
-			<th style="border: 2px; border-style: solid; border-color: black;">Compañia Aerea</th>
+			<th>Aeropuerto</th>
+			<th>Duracion</th>
+			<th>Ciudad Origen</th>
+			<th>Terminal</th>
+			<th>Hora Salida</th>
+			<th>Compañia Aerea</th>
 			
-			<th style="border: 2px; border-style: solid; border-color: black;">Aeropuerto</th>
-			<th style="border: 2px; border-style: solid; border-color: black;">Ciudad Destino</th>
-			<th style="border: 2px; border-style: solid; border-color: black;">Terminal</th>
-			<th style="border: 2px; border-style: solid; border-color: black;">Hora Llegada</th>
+			<th>Aeropuerto</th>
+			<th>Ciudad Destino</th>
+			<th>Terminal</th>
+			<th>Hora Llegada</th>
 			
-			<th style="border: 2px; border-style: solid; border-color: black;">Aeropuerto</th>
-			<th style="border: 2px; border-style: solid; border-color: black;">Duracion</th>
-			<th style="border: 2px; border-style: solid; border-color: black;">Ciudad Origen</th>
-			<th style="border: 2px; border-style: solid; border-color: black;">Terminal</th>
-			<th style="border: 2px; border-style: solid; border-color: black;">Hora Salida</th>
-			<th style="border: 2px; border-style: solid; border-color: black;">Compañia Aerea</th>
+			<th>Aeropuerto</th>
+			<th>Duracion</th>
+			<th>Ciudad Origen</th>
+			<th>Terminal</th>
+			<th>Hora Salida</th>
+			<th>Compañia Aerea</th>
 			
-			<th style="border: 2px; border-style: solid; border-color: black;">Aeropuerto</th>
-			<th style="border: 2px; border-style: solid; border-color: black;">Ciudad Destino</th>
-			<th style="border: 2px; border-style: solid; border-color: black;">Terminal</th>
-			<th style="border: 2px; border-style: solid; border-color: black;">Hora Llegada</th>
+			<th>Aeropuerto</th>
+			<th>Ciudad Destino</th>
+			<th>Terminal</th>
+			<th>Hora Llegada</th>
 		</tr>
-		<tr style="border: 2px; border-style: solid; border-color: black;">
-			<td style="border: 2px; border-style: solid; border-color: black;"><%=flightOffers[j].getId() %></td>
-			<td style="border: 2px; border-style: solid; border-color: black;"><%=flightOffers[j].getLastTicketingDate() %></td>
-			<td style="border: 2px; border-style: solid; border-color: black;"><%=flightOffers[j].getNumberOfBookableSeats() %></td>
+		<tr>
+			<td><%=flightOffers[j].getId() %></td>
+			<td><%=flightOffers[j].getLastTicketingDate() %></td>
+			<td><%=flightOffers[j].getNumberOfBookableSeats() %></td>
 			<%for(int x=0;x<2;x++){
 				SearchSegment[]searchSegments=itineraries[x].getSegments();
 				
@@ -153,49 +221,49 @@
 				//System.out.println("segmento "+x +": "+searchSegments[0].toString());
 				if(x==0){
 					%>
-			<td style="border: 2px; border-style: solid; border-color: black;"><%=locations[0].getName() %></td>
-			<td style="border: 2px; border-style: solid; border-color: black;"><%=itineraries[x].getDuration() %></td>
-			<td style="border: 2px; border-style: solid; border-color: black;"><%=locations[0].getAddress().getCityName() %> </td>
-			<td style="border: 2px; border-style: solid; border-color: black;"><%=searchSegments[0].getDeparture().getTerminal() %></td>
-			<td style="border: 2px; border-style: solid; border-color: black;"><%=searchSegments[0].getDeparture().getAt() %></td>					
-			<td style="border: 2px; border-style: solid; border-color: black;"><%=searchSegments[0].getCarrierCode() %></td>
-			<td style="border: 2px; border-style: solid; border-color: black;"><%=locationsDestino[0].getName() %></td>
-			<td style="border: 2px; border-style: solid; border-color: black;"><%=codigoCiudadDestino %></td>
-			<td style="border: 2px; border-style: solid; border-color: black;"><%=searchSegments[0].getArrival().getTerminal() %></td>
-			<td style="border: 2px; border-style: solid; border-color: black;"><%=searchSegments[0].getArrival().getAt() %></td>
+			<td><%=locations[0].getName() %></td>
+			<td><%=itineraries[x].getDuration() %></td>
+			<td><%=locations[0].getAddress().getCityName() %> </td>
+			<td><%=searchSegments[0].getDeparture().getTerminal() %></td>
+			<td><%=searchSegments[0].getDeparture().getAt() %></td>					
+			<td><%=searchSegments[0].getCarrierCode() %></td>
+			<td><%=locationsDestino[0].getName() %></td>
+			<td><%=codigoCiudadDestino %></td>
+			<td><%=searchSegments[0].getArrival().getTerminal() %></td>
+			<td><%=searchSegments[0].getArrival().getAt() %></td>
 					<% 
 				}else if(x>0){
 				%>
-			<td style="border: 2px; border-style: solid; border-color: black;"><%=locationsDestino[0].getName() %></td>
-			<td style="border: 2px; border-style: solid; border-color: black;"><%=itineraries[x].getDuration() %></td>
-			<td style="border: 2px; border-style: solid; border-color: black;"><%=locationsDestino[0].getAddress().getCityName() %></td>
-			<td style="border: 2px; border-style: solid; border-color: black;"><%=searchSegments[0].getDeparture().getTerminal() %></td>
-			<td style="border: 2px; border-style: solid; border-color: black;"><%=searchSegments[0].getDeparture().getAt() %></td>		
-			<td style="border: 2px; border-style: solid; border-color: black;"><%=searchSegments[0].getCarrierCode() %></td>
-			<td style="border: 2px; border-style: solid; border-color: black;"><%=locations[0].getName() %></td>
-			<td style="border: 2px; border-style: solid; border-color: black;"><%=locations[0].getAddress().getCityCode() %></td>
-			<td style="border: 2px; border-style: solid; border-color: black;"><%=searchSegments[0].getArrival().getTerminal() %></td>
-			<td style="border: 2px; border-style: solid; border-color: black;"><%=searchSegments[0].getArrival().getAt() %></td>
+			<td><%=locationsDestino[0].getName() %></td>
+			<td><%=itineraries[x].getDuration() %></td>
+			<td><%=locationsDestino[0].getAddress().getCityName() %></td>
+			<td><%=searchSegments[0].getDeparture().getTerminal() %></td>
+			<td><%=searchSegments[0].getDeparture().getAt() %></td>		
+			<td><%=searchSegments[0].getCarrierCode() %></td>
+			<td><%=locations[0].getName() %></td>
+			<td><%=locations[0].getAddress().getCityCode() %></td>
+			<td><%=searchSegments[0].getArrival().getTerminal() %></td>
+			<td><%=searchSegments[0].getArrival().getAt() %></td>
 			<%}
 			} %>
-			<td style="border: 2px; border-style: solid; border-color: black;"><%=flightOffers[0].getPrice().getTotal()+"/"+flightOffers[0].getPrice().getCurrency()%></td>
+			<td><%=flightOffers[0].getPrice().getTotal()+"/"+flightOffers[0].getPrice().getCurrency()%></td>
 		</tr>
 		<tr>
-			<th rowspan="3" colspan="4" style="border: 2px; border-style: solid; border-color: black;">Info Asiento</th>
+			<th rowspan="3" colspan="4">Info Asiento</th>
 		</tr>
 		
 			<tr>
-				<th style="border: 2px; border-style: solid; border-color: black;">id viajero</th>
-				<th style="border: 2px; border-style: solid; border-color: black;">tipo Viajero</th>
-				<th style="border: 2px; border-style: solid; border-color: black;">Precio billete</th>
-				<th style="border: 2px; border-style: solid; border-color: black;">Clase</th>
+				<th>id viajero</th>
+				<th>tipo Viajero</th>
+				<th>Precio billete</th>
+				<th>Clase</th>
 			</tr>
 			<tr>
-				<td style="border: 2px; border-style: solid; border-color: black;"><%=pricings[0].getTravelerId() %></td>
-				<td style="border: 2px; border-style: solid; border-color: black;"><%=pricings[0].getTravelerType() %></td>
-				<td style="border: 2px; border-style: solid; border-color: black;"><%=pricings[0].getPrice().getTotal()+"/ "+pricings[0].getPrice().getCurrency() %></td>
-				<td style="border: 2px; border-style: solid; border-color: black;"><%=bySegments[0].getCabin() %></td>
-				<td style="border: 2px; border-style: solid; border-color: black;">
+				<td><%=pricings[0].getTravelerId() %></td>
+				<td><%=pricings[0].getTravelerType() %></td>
+				<td><%=pricings[0].getPrice().getTotal()+"/ "+pricings[0].getPrice().getCurrency() %></td>
+				<td><%=bySegments[0].getCabin() %></td>
+				<td>
 					<form name="guardarOfertaViaje"
 						action="LoginController?opcion=guardarOfertaViaje" method="post">
 						<input type="hidden" name="aeropuertoOrigen" value="<%=locations[0].getName()%>">

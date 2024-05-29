@@ -28,13 +28,14 @@
 %>
 
 <%
-    if (usuario.getTema() == true) {
+    if (usuario.getTema() == false) {
 %>
 	<style>
 	    body {
 	        background-color: #f5f5f5;
 	        color: #333333;
 	        font-family: Arial, sans-serif;
+	        
 	    }
 	
 	    h1, h2 {
@@ -42,12 +43,15 @@
 	    }
 	
 	    table {
+	    	margin-top: 1%;
+			margin-bottom: 1%;
 	        width: 100%;
 	        border-collapse: collapse;
 	        background-color: #ffffff;
 	    }
 	
 	    th, td {
+	        font-size: 80%;
 	        border: 2px solid #dddddd;
 	        padding: 8px;
 	        text-align: left;
@@ -75,6 +79,7 @@
 	        margin: 4px 2px;
 	        cursor: pointer;
 	        border-radius: 4px;
+		    font-size: 80%;
 	    }
 	
 	    input[type="submit"]:hover {
@@ -97,7 +102,6 @@
 	        display: none;
 	    }
 	</style>
-    <link rel="stylesheet" href="../Styles/Ofertas_Hoteles/cssOfertasHoteles_Oscuro.css">
 <%
     } else {
 %>
@@ -113,12 +117,15 @@
 		}
 		
 		table {
+			margin-top: 1%;
+			margin-bottom: 1%;
 		    width: 100%;
 		    border-collapse: collapse;
 		    background-color: #1E1E1E;
 		}
 		
 		th, td {
+	        font-size: 30%;
 		    border: 2px solid #333333;
 		    padding: 8px;
 		    text-align: left;
@@ -146,6 +153,7 @@
 		    margin: 4px 2px;
 		    cursor: pointer;
 		    border-radius: 4px;
+		    font-size: 30%;
 		}
 		
 		input[type="submit"]:hover {
@@ -168,7 +176,6 @@
 		    display: none;
 		}
 	</style>
-    <link rel="stylesheet" href="../Styles/Ofertas_Hoteles/cssOfertasHoteles_Claro.css">
 
 <%
     }

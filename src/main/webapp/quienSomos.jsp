@@ -109,18 +109,22 @@
 		<div id="Contenedor_Texto1" class="Contenedor_Texto">
 			<h2 class="titulo" >Inicio de Sesión y Registro</h2>
 			<p>
-				Nuestro sistema de inicio de sesión y registro proporciona a los usuarios una plataforma segura y personalizada para acceder a todas las funciones disponibles en nuestro sitio. Al crear una cuenta personal, los usuarios pueden disfrutar de una experiencia completa y adaptada a sus necesidades individuales.
+				Nuestro sistema de inicio de sesión y registro proporciona a los usuarios una plataforma segura y personalizada para acceder a todas las funciones disponibles en nuestra aplicacion web. Al crear una cuenta personal, los usuarios pueden disfrutar de todas las ofertas que se pueden hacer.
 			</p>
 			<p>	
-				El proceso de inicio de sesión no solo garantiza la seguridad de la información del usuario, sino que también facilita la gestión de reservas y viajes anteriores. Al iniciar sesión, los usuarios tienen acceso instantáneo a su historial de reservas, itinerarios pasados y preferencias de viaje. Esto les permite realizar fácilmente cambios, cancelaciones o nuevas reservas sin tener que volver a ingresar toda su información cada vez.
+				El proceso de Inicio de sesión no solo garantiza la seguridad de la información del usuario, sino que también facilita la gestión de reservas de hoteles y del transporte hacia el sitio que quieras ir. Al iniciar sesión, los usuarios tienen acceso instantáneo a su historial de reservas. Esto les permite realizar fácilmente cancelaciones.
 			</p>
 			<br>
-			<p>		
-				Además, el registro en nuestro sitio brinda a los usuarios la oportunidad de personalizar su experiencia aún más. Pueden guardar destinos favoritos, establecer notificaciones para ofertas especiales o eventos relevantes, y recibir recomendaciones personalizadas basadas en sus intereses y actividades anteriores.
-			</p>
+			<img id="inicioSesion-Registro_01" alt="inicioSesion-Registro_01" src="Resources/inicioSesion_03.png"> <img id="inicioSesion-Registro_02" alt="inicioSesion-Registro_02" src="Resources/inicioSesion_02.png">
 			<br>
 			<p>		
-				En resumen, nuestro sistema de inicio de sesión y registro no solo garantiza la seguridad de la información del usuario, sino que también mejora significativamente su experiencia general en nuestro sitio, ofreciendo comodidad, personalización y acceso rápido a todas las funciones disponibles.
+				Además, el registro en nuestra aplicación web asegura la seguridad de tu cuenta y guarda los datos en nuestra base de datos para poder gestionarlos. Si el usuario se equivoca, este puede cabiarse la informacion que quiera en la configuración del usuario.
+			</p>
+			<br>
+			<img id="inicioSesion-Registro_03" alt="inicioSesion-Registro_03" src="Resources/inicioSesion_04.png">
+			<br>
+			<p>		
+				Un breve resumen del <b>Inicio de sesion</b> y <b>Registro</b> es que nuestro sistema de inicio de sesión y registro ofrece una plataforma segura y personalizada para acceder a todas las funciones de nuestra aplicación web. Facilita la gestión de reservas de hoteles y transporte, y permite a los usuarios acceder a su historial de reservas y realizar cancelaciones fácilmente. Además, asegura la seguridad de las cuentas y permite la actualización de la información personal.
 			</p>
 		</div>
 	
@@ -132,22 +136,22 @@
 		<div id="Contenedor_Texto2" class="Contenedor_Texto">
 			<h2 class="titulo">Búsqueda de Destinos y Ofertas</h2>
 			<p>	
-				En nuestro sitio, nos enorgullece ofrecer una amplia gama de destinos y paquetes turísticos diseñados para satisfacer las preferencias de todos los viajeros, desde aquellos que buscan aventuras emocionantes hasta quienes prefieren escapadas relajantes. Con una selección diversa y cuidadosamente curada, garantizamos que cada usuario encuentre la experiencia de viaje perfecta que se ajuste a sus deseos y necesidades individuales.
+				En nuestra aplicación web, nos enorgullece ofrecer una amplia gama de destinos y hoteles diseñados para satisfacer las preferencias de todos los viajeros, desde aquellos que buscan aventuras emocionantes en hoteles en la montaña hasta quienes prefieren escapadas relajantes en hoteles al lado de la playa. Con una selección diversa garantizamos que cada usuario encuentre la experiencia de viaje perfecta que se ajuste a sus deseos y necesidades individuales.
 			</p>
+			<br>
+			<img id="destinosOfertas_01" alt="destinosOfertas_01" src="Resources/destinosOfertas_01.png"> <img id="destinosOfertas_02" alt="destinosOfertas_02" src="Resources/destinosOfertas_02.png">
 			<br>
 			<p>	
 				Los usuarios tienen la libertad de explorar nuestro extenso catálogo de destinos, desde los icónicos puntos de interés hasta los rincones menos conocidos pero igualmente fascinantes del mundo. Ya sea que estén buscando un destino específico o estén abiertos a nuevas aventuras, nuestra plataforma les ofrece herramientas intuitivas para encontrar la escapada perfecta.
 			</p>
 			<p>		
-				Además de la variedad de destinos, también proporcionamos una amplia gama de paquetes turísticos y ofertas especiales que permiten a los usuarios aprovechar al máximo su experiencia de viaje al obtener descuentos exclusivos y beneficios adicionales. Desde paquetes todo incluido hasta ofertas de última hora, nuestro objetivo es brindar a nuestros usuarios opciones flexibles y atractivas que se adapten a su presupuesto y preferencias.
+				Nuestra plataforma también facilita la comparación de precios de vuelos y alojamientos, lo que permite a los usuarios tomar decisiones informadas y obtener el mejor valor por su dinero.
 			</p>
 			<br>
-			<p>		
-				Nuestra plataforma también facilita la comparación de precios de vuelos, alojamientos y actividades, lo que permite a los usuarios tomar decisiones informadas y obtener el mejor valor por su dinero. Con herramientas de búsqueda avanzadas y filtros personalizados, pueden encontrar las mejores ofertas y planificar su viaje de manera eficiente y sin complicaciones.
-			</p>
+			<img id="destinosOfertas_03" alt="destinosOfertas_03" src="Resources/destinosOfertas_03.png">
 			<br>
 			<p>		
-				En resumen, en nuestro sitio, nos esforzamos por ofrecer a nuestros usuarios una experiencia de viaje completa y sin preocupaciones, desde la planificación hasta la ejecución. Con una amplia selección de destinos, paquetes turísticos y herramientas de comparación de precios, estamos aquí para hacer que cada viaje sea inolvidable y satisfacer las necesidades de todos los viajeros.
+				Un breve resumen del <b>Búsqueda de destinos</b> y <b>Ofertas</b> es que ofrecemos una amplia gama de destinos y hoteles para satisfacer las preferencias de todos los viajeros, desde aventuras emocionantes en la montaña hasta escapadas relajantes en la playa. Nuestra plataforma permite explorar un extenso catálogo de destinos, incluyendo puntos de interés icónicos y rincones fascinantes menos conocidos. Además, facilita la comparación de precios de vuelos y alojamientos, ayudando a los usuarios a tomar decisiones informadas y obtener el mejor valor por su dinero.
 			</p>
 		</div>
 	
@@ -159,22 +163,28 @@
 		<div id="Contenedor_Texto3" class="Contenedor_Texto">
 			<h2 class="titulo">Reservas y Pagos</h2>
 			<p>
-				En nuestra plataforma, ofrecemos a los usuarios la conveniencia de reservar una amplia gama de servicios relacionados con sus viajes, todo en un solo lugar. Desde vuelos hasta alojamientos, alquiler de vehículos y actividades turísticas, nuestra plataforma integra todas estas opciones para facilitar la planificación y reserva de viajes de manera eficiente y sin problemas.
+				En nuestra aplicacioón web, ofrecemos a los usuarios la conveniencia de reservar una amplia gama de servicios relacionados con sus viajes, todo en un solo lugar. Desde vuelos hasta alojamientos, nuestra aplicación web integra estas opciones para facilitar la planificación y reserva de viajes de manera eficiente y sin problemas.
 			</p>
 			<br>
-			<p>		
-				Al ofrecer una variedad de servicios de viaje, nuestra plataforma permite a los usuarios personalizar completamente su experiencia de viaje de acuerdo con sus preferencias y necesidades individuales. Ya sea que estén buscando vuelos económicos, alojamientos de lujo, vehículos de alquiler cómodos o emocionantes actividades turísticas, nuestros usuarios pueden encontrar y reservar todo lo que necesitan con solo unos pocos clics.
-			</p>
+			<img id="reservasPagos_01" alt="reservasPagos_01" src="Resources/reservasPagos_01.png"> <img id="reservasPagos_02" alt="reservasPagos_04" src="Resources/reservasPagos_04.png">
 			<br>
 			<p>		
-				Una de nuestras principales prioridades es garantizar la seguridad y la protección de la información financiera de nuestros usuarios. Es por eso que integramos opciones de pago seguro en nuestra plataforma para todas las transacciones. Utilizamos tecnologías de encriptación avanzadas y colaboramos con proveedores de servicios de pago confiables para garantizar que todas las transacciones se realicen de manera segura y sin problemas. De esta manera, nuestros usuarios pueden tener la tranquilidad de saber que su información financiera está protegida en todo momento.
-			</p>
-			<p>		
-				Además de ofrecer opciones de pago seguro, también nos esforzamos por brindar un proceso de reserva intuitivo y sin complicaciones. Nuestra plataforma está diseñada para ser fácil de usar, con interfaces claras y navegación sencilla que permiten a los usuarios completar sus reservas rápidamente y sin estrés.
+				Al ofrecer una variedad de servicios de viaje, nuestra plataforma permite a los usuarios personalizar completamente su experiencia de viaje de acuerdo con sus preferencias y necesidades individuales. Ya sea que estén buscando vuelos económicos o alojamientos de lujo, nuestros usuarios pueden encontrar y reservar todo lo que necesitan con solo unos pocos clics.
 			</p>
 			<br>
+			<img id="reservasPagos_03" alt="reservasPagos_05" src="Resources/reservasPagos_05.png">
+			<br>
 			<p>		
-				En resumen, nuestra plataforma no solo ofrece una amplia gama de servicios de viaje para satisfacer todas las necesidades de nuestros usuarios, sino que también se compromete a garantizar la seguridad y la protección de su información financiera durante todo el proceso de reserva. Con opciones de pago seguro y una experiencia de reserva intuitiva, estamos aquí para hacer que la planificación y reserva de viajes sean lo más convenientes y sin problemas posible para nuestros usuarios.			
+				Una de nuestras principales prioridades es garantizar la seguridad y la protección de la información financiera de nuestros usuarios, al ser un proyecto no hemos implementado ningun metodo de pago.
+			</p>
+			<p>		
+				Nos esforzamos por brindar un proceso de reserva intuitivo y sin complicaciones. Nuestra plataforma está diseñada para ser fácil de usar, con interfaces claras y navegación sencilla que permiten a los usuarios completar sus reservas rápidamente y sin estrés.
+			</p>
+			<br>
+			<img id="reservasPagos_04" alt="reservasPagos_02" src="Resources/reservasPagos_02.png"> <img id="reservasPagos_05" alt="reservasPagos_03" src="Resources/reservasPagos_03.png">
+			<br>
+			<p>		
+				En nuestra aplicación web, los usuarios pueden reservar una amplia gama de servicios de viaje, desde vuelos hasta alojamientos, en un solo lugar. Ofrecemos una experiencia de planificación eficiente y personalizada, con opciones que van desde vuelos económicos hasta alojamientos de lujo. Aunque aún no hemos implementado métodos de pago, garantizamos la seguridad de la información de los usuarios y proporcionamos una plataforma intuitiva y fácil de usar para completar reservas sin complicaciones.
 			</p>
 		</div>
 <%
@@ -214,19 +224,19 @@
 				En nuestro sitio, valoramos enormemente la interacción entre los usuarios y fomentamos una comunidad activa de viajeros que comparten sus experiencias, recomendaciones y opiniones. Creemos que cada viaje es único y que al compartir nuestras vivencias, podemos enriquecer la experiencia de viaje de otros y ayudarles a tomar decisiones informadas.
 			</p>
 			<br>
+			<img id="reseñas_01" alt="reseñas_01" src="Resources/reseñas_01.png"> <img id="reseñas_02" alt="reseñas_02" src="Resources/reseñas_02.png">
+			<br>
 			<p>		
 				Para facilitar esta interacción, ofrecemos a los usuarios la capacidad de compartir sus experiencias de viaje, recomendar destinos y dar opiniones sobre los servicios que han utilizado. Ya sea una reseña detallada sobre un hotel, una recomendación sobre una actividad turística imperdible o simplemente un consejo útil para otros viajeros, animamos a nuestros usuarios a contribuir con su conocimiento y experiencias.
 			</p>
+			<br>
+			<img id="reseñas_03" alt="reseñas_03" src="Resources/reseñas_03.png"> <img id="reseñas_04" alt="reseñas_04" src="Resources/reseñas_04.png">
 			<br>
 			<p>		
 				Las reseñas y calificaciones son una parte integral de nuestra plataforma y desempeñan un papel crucial en ayudar a otros viajeros a tomar decisiones informadas. Al leer las experiencias y opiniones de otros usuarios, los viajeros pueden obtener una visión más completa de lo que pueden esperar de un destino, un alojamiento o una actividad turística específica. Esto les permite tomar decisiones que se ajusten mejor a sus necesidades y preferencias individuales.
 			</p>
 			<p>		
 				Además de ayudar a otros viajeros, las reseñas y calificaciones también nos brindan información valiosa que utilizamos para mejorar continuamente la calidad de nuestros servicios. Tomamos en serio los comentarios de nuestros usuarios y los utilizamos para identificar áreas de mejora, corregir problemas y adaptar nuestras ofertas para satisfacer mejor las necesidades de nuestra comunidad de viajeros.
-			</p>
-			<br>
-			<p>		
-				En resumen, en nuestro sitio, creemos en la importancia de la comunidad y en el poder de compartir experiencias. Al permitir a los usuarios compartir sus experiencias de viaje, recomendar destinos y dar opiniones sobre servicios, creamos una comunidad vibrante de viajeros que se apoyan mutuamente, comparten conocimientos y enriquecen la experiencia de viaje de todos.
 			</p>
 		</div>
 <%
@@ -244,7 +254,7 @@
 				Nuestro equipo de atención al cliente está preparado para abordar una amplia gama de consultas, desde preguntas generales sobre destinos y servicios hasta asistencia con reservas específicas y solución de problemas técnicos. Ya sea que un usuario necesite ayuda para encontrar el alojamiento perfecto, asesoramiento sobre actividades locales, o resolver un problema con su reserva, nuestro equipo está listo para brindar orientación personalizada y soluciones eficientes.
 			</p>
 			<br>
-			<img id="soporte_02" alt="soporte_02" src="Resources/soporte_02.png"> <img id="soporte_01" alt="soporte_01" src="Resources/soporte_01.png">
+			<img id="soporte_02" alt="soporte_02" src="Resources/soporte_05.png"> <img id="soporte_01" alt="soporte_01" src="Resources/soporte_04.png">
 			<br>
 			<p>		
 				Nos enorgullece ofrecer un servicio al cliente excepcional, caracterizado por una respuesta rápida y una resolución efectiva de problemas. Nuestro objetivo es asegurarnos de que cada usuario se sienta apoyado y atendido en todo momento, y hacemos todo lo posible para garantizar una experiencia sin preocupaciones y satisfactoria para todos nuestros clientes.
@@ -268,6 +278,8 @@
 		    <p>
 				Nuestro sitio web de gestión de viajes es una plataforma integral diseñada para facilitar la planificación, reserva y gestión de viajes para usuarios individual o grupos. Con una interfaz intuitiva y diversas funcionalidades, proporcionamos una experiencia completa para satisfacer las necesidades de nuestros usuarios.
 			</p>
+			<img id="gestion_viaje_01" alt="gestion_viaje_01" src="Resources/gestion_viaje_01.png"> <img id="gestion_viaje_02" alt="gestion_viaje_02" src="Resources/gestion_viaje_02.png">
+			<br>
 			<p>
 				En resumen, nuestro sitio web de gestión de viajes es una herramienta integral que ofrece una experiencia personalizada y sin complicaciones para planificar, reservar y gestionar viajes de manera eficiente y segura. Con una amplia gama de destinos y servicios, así como un sólido soporte al cliente, estamos comprometidos a hacer que cada viaje sea una experiencia inolvidable para nuestros usuarios.    	
 	    	</p>
