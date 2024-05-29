@@ -91,7 +91,7 @@ public class Usuario implements Serializable{
 	}
 
 	public Usuario(String nombre, String contrasenia, String email, Boolean tema, String sexo, String num_telefono, 
-			LocalDate fecha_nacimiento, LocalDate ultima_modificacion_contrasenna ) {
+			LocalDate fecha_nacimiento, LocalDate ultima_modificacion_contrasenna, Boolean sesionActiva) {
 		
 		this.nombre = nombre;
 		this.contrasenia = contrasenia;
@@ -101,6 +101,7 @@ public class Usuario implements Serializable{
 		this.num_telefono = num_telefono;
 		this.fecha_nacimiento = fecha_nacimiento;
 		this.ultima_modificacion_contrasenna = ultima_modificacion_contrasenna;
+		this.sesionActiva=sesionActiva;
 	}
 
 

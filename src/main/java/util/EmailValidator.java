@@ -3,8 +3,13 @@ import java.util.Properties;
 import javax.mail.*;
 import javax.mail.internet.*;
 
-public class EmailValidator {
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import controlador.LoginController;
+
+public class EmailValidator {
+	private static final Logger LOGGER = LoggerFactory.getLogger(EmailValidator.class);
     public static void enviarCorreo(String destinatario, String token) {
         final String remitente = "me.llamo.jjulian@gmail.com"; // Cambia esto por tu dirección de correo electrónico
         final String clave = "dvol ntwn qixu dxwn"; // Cambia esto por tu contraseña de correo electrónico

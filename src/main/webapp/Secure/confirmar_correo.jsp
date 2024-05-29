@@ -100,7 +100,7 @@
 		
 			<form name="register" action="LoginController" method="post">
 			
-				<input type="hidden" name="opcion" value="verificarCorreo2">
+				<input type="hidden" name="opcion" value="verificarCorreo">
 			
 				<label id="Texto_Encavecado">Código de verificación</label>
 				

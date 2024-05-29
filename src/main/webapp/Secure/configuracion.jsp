@@ -303,8 +303,6 @@
 %>
 						</tr>
 					</table>
-			
-	
 <%
 	    		}
 	    		else if (seguridad == true){
@@ -542,6 +540,13 @@
 				</script>
 				
 				</form>
+				<footer>
+					<form action="../LoginController?opcion=borrarUsuario" method="POST">
+						<input type="hidden" name="usuarioABorrar" value=<%= usuario.getId_usuario()%>>
+						<%request.setAttribute("usuario", usuario); %>
+						<input type="submit" value="Borrar Usuario">
+					</form>
+				</footer>
 <%
 			}
 %>

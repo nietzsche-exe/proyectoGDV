@@ -1,12 +1,18 @@
 package controlador;
 
 import java.io.IOException;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+
+import org.slf4j.LoggerFactory;
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.slf4j.Logger;
 
 import com.amadeus.Amadeus;
 import com.amadeus.Params;
@@ -22,6 +28,8 @@ import com.amadeus.referencedata.locations.Hotels;
 import com.amadeus.resources.Hotel;
 import com.amadeus.resources.Location;
 import com.amadeus.resources.Resource;
+
+
 import com.amadeus.resources.City;
 import com.amadeus.resources.Hotel.Address;
 
@@ -55,6 +63,7 @@ import util.EmailValidator;
  */
 public class LoginController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private static final Logger LOGGER = LoggerFactory.getLogger(LoginController.class);
 
 	@SuppressWarnings("unchecked")
 	protected void procesarPeticion(HttpServletRequest request, HttpServletResponse response)
@@ -86,13 +95,15 @@ public class LoginController extends HttpServlet {
 		switch (operacion) {
 
 		case "registrarse": // es el servidor quien redirije internamente hacia la vista registrarse
-
+			LOGGER.info("Accediendo a pagina de registro");
 		    rd = request.getRequestDispatcher("registro.jsp");
 		    rd.forward(request, response);
 		    
 			break;
-		case "registrarNuevoUsuario":// Se realiza el insert de un nuevo usuario en la base de datos
-
+			
+			// Se realiza el insert de un nuevo usuario en la base de datos
+		case "registrarNuevoUsuario":
+			
 			nombreUsuario = request.getParameter("nombreUsuario");
 			password = request.getParameter("contrasenia");
 			passwordRe = request.getParameter("contraseniaRe");
@@ -104,6 +115,7 @@ public class LoginController extends HttpServlet {
 			
 			if (email.length()<=10) {
 				request.setAttribute("error", "Formato de correo no valido");
+				LOGGER.error("Error: Correo invalido es muy corto");
 				request.getRequestDispatcher("registro.jsp").forward(request, response);
 			}
 			else {
@@ -112,60 +124,75 @@ public class LoginController extends HttpServlet {
 				try {
 					Query q1 = em1.createQuery("FROM Usuario");
 					List<Usuario> usuarios = q1.getResultList();
+					LOGGER.info("Comprobacion de que los datos introducidos no son coincidentes con los de otros usuarios ya existentes");
 					for (Usuario user : usuarios) {
 	
 						if (user.getEmail().compareTo(email) == 0) {
 							request.setAttribute("error", "El correo electronico ya esta en uso");
+							LOGGER.error("Error: El correo electronico ya esta en uso");
 							request.getRequestDispatcher("registro.jsp").forward(request, response);
 						} 
 						else if (user.getNombre().compareTo(nombreUsuario) == 0) {
 							request.setAttribute("error", "El nombre de usuario ya esta en uso");
+							LOGGER.error("Error: nombre de usuario ya esta en uso");
 							request.getRequestDispatcher("registro.jsp").forward(request, response);
 						}
 						else if (user.getNum_telefono() != null && user.getNum_telefono().compareTo(telefono) == 0) {
 							request.setAttribute("error", "El número de teléfono ya esta en uso");
+							LOGGER.error("Error: el número de telefono ya esta en uso");
 							request.getRequestDispatcher("registro.jsp").forward(request, response);
 						}
 	
 					}
 					if ((password.compareTo(passwordRe) != 0)) {
 						request.setAttribute("error", "Las contraseñas debe coincidir");
+						LOGGER.error("Error: Las contraseñas debe coincidir");
 						request.getRequestDispatcher("registro.jsp").forward(request, response);
 					} else if (extensionCorreo.compareTo("@gmail.com") != 0) {
 						System.out.println(email.substring(email.length() - 10, email.length()));
 						request.setAttribute("error", "Correo no valido");
+						LOGGER.error("Error: Correo no valido");
 						request.getRequestDispatcher("registro.jsp").forward(request, response);
 					} else if (!(password.matches(".*[A-Z].*"))) {
 						request.setAttribute("error", "La contraseña debe contener como mínimo una mayuscula");
+						LOGGER.error("Error: Las contraseña debe contener como minimo una mayuscula");
 						request.getRequestDispatcher("registro.jsp").forward(request, response);
 					} else if (!(password.matches(".*[0-9].*"))) {
 						request.setAttribute("error", "La contraseña debe contener un numero");
+						LOGGER.error("Error: Las contraseñas debe contener un numero");
 						request.getRequestDispatcher("registro.jsp").forward(request, response);
 					} else if (nombreUsuario.matches(".*[!¡@#$%^&*()¿?¬~].*")) {
 						request.setAttribute("error", "El nombre de usuario no debe contener un caracter especial");
+						LOGGER.error("Error: El nombre de usuario no debe contener un caracter especial");
 						request.getRequestDispatcher("registro.jsp").forward(request, response);
 					} else if (nombreUsuario.length() < 3) {
 						request.setAttribute("error", "El nombre de usuario debe ser superior a 3 caracteres");
+						LOGGER.error("Error: El nombre de usuario ser superior a 3 caracteres");
 						request.getRequestDispatcher("registro.jsp").forward(request, response);
 					} else if (!(password.matches(".*[!¡@#$%^&*()¿?¬~].*"))) {
 						request.setAttribute("error", "La contraseña debe contener como mínimo un caracter especial");
+						LOGGER.error("Error: La contraseña debe contener como mínimo un caracter especial");
 						request.getRequestDispatcher("registro.jsp").forward(request, response);
 					} else if ((password.length() < 8) || (password.length() > 20)) {
 						request.setAttribute("error",
 								"La contraseña no puede ser inferior a los 8 caracteres ni superior a los 20");
+						LOGGER.error("Error: La contraseña introducida es inferior a 8 caracteres o superior a 20 caracteres");
 						request.getRequestDispatcher("registro.jsp").forward(request, response);
 					} else if (telefono.length() < 9 || telefono.length() > 9) {
 						request.setAttribute("error",
 								"El numero de telefono tienen que tener 9 dígitos");
+						LOGGER.error("Error: el numeor de telefono introducido es inferior o superior a 9 digitos");
 						request.getRequestDispatcher("registro.jsp").forward(request, response);
 					} else if ('6' != telefono.charAt(0) && '7' != telefono.charAt(0)) {
 						request.setAttribute("error",
 								"El numero de telefono tiene que empezar por 6 o 7");
+						LOGGER.error("Error: el numero de telefono no empieza por 6 o 7");
 						request.getRequestDispatcher("registro.jsp").forward(request, response);
 					}
 	
-					// Try catch exceptiones java.lang.IllegalStateException
+					
 					else {
+						LOGGER.info("Los datos del usuario son validos");
 						// Guardar los datos del usuario y el token de confirmación en la sesión del
 						// usuario
 						request.getSession().setAttribute("nombreUsuario", nombreUsuario);
@@ -174,19 +201,21 @@ public class LoginController extends HttpServlet {
 						request.getSession().setAttribute("genero", sexo);
 						request.getSession().setAttribute("num_telefono", telefono);
 						request.getSession().setAttribute("fecha_nacimiento", fecha_nacimiento);
-						System.out.println(nombreUsuario + " " + password + " " + email + " " + telefono + " " + sexo + " " + fecha_nacimiento);
+						
+						LOGGER.info("Datos: "+nombreUsuario + ", " + password + ", " + email + ", " + telefono + ", " + sexo + ", " + fecha_nacimiento);
+					
 						token = generarToken();
-						System.out.println("Token creado: " + token);
+						LOGGER.info("Token creado: " + token);
 						EmailValidator.enviarCorreo(email, token);
 						request.getSession().setAttribute("token", token);
-						System.out.println("Correo enviado");
+						LOGGER.info("Correo enviado");
+						
 						// Redirigir a una página para que el usuario confirme su correo electrónico
-						// request.setAttribute("token", token);
 						request.getRequestDispatcher("Secure/confirmar_correo.jsp").forward(request, response);
 	
 					}
 				} catch (IllegalStateException e) {
-					System.out.println(e.getMessage());
+					LOGGER.error(e.getMessage());
 				}
 
 			}
@@ -201,44 +230,54 @@ public class LoginController extends HttpServlet {
 			telefono = (String) request.getSession().getAttribute("num_telefono");
 			fecha_nacimiento = (LocalDate) request.getSession().getAttribute("fecha_nacimiento");
 			token = (String) request.getSession().getAttribute("token");
-			System.out.println(nombreUsuario + " " + password + " " + email);
-			System.out.println("TokenDef: " + token);
-			System.out.println("codVeri: " + codVerificacion);
+			
+			LOGGER.info("Token recibido: " + token);
+			LOGGER.error("Codigo de verificaion introducido por el usuario: " + codVerificacion);
 			if (token.compareTo(codVerificacion) != 0) {
 				request.setAttribute("token", token);
 				request.setAttribute("email", email);
 				request.setAttribute("error", "Codigo de verificacion incorrecto");
+				LOGGER.error("El codigo de verificacion es incorrecto, redirigiendo a confirmar correo");
+				
 				request.getRequestDispatcher("Secure/confirmar_correo.jsp").forward(request, response);
 			} else {
-				Usuario nuevoUsuario = new Usuario(nombreUsuario, password, email, false, sexo, telefono, fecha_nacimiento, LocalDate.now());
-				System.out.println(nuevoUsuario.toString());
+				LOGGER.info("El codigo de verificacion introducido es CORRECTO");
+				Usuario nuevoUsuario = new Usuario(nombreUsuario, password, email, false, sexo, telefono, fecha_nacimiento, LocalDate.now(),false);
+				LOGGER.info("Usuario creado: "+ nuevoUsuario.toString());
+				
 				EntityManager em2 = HibernateUtils.getEmf().createEntityManager();
+				LOGGER.trace("Creando Entity Manager");
 				EntityTransaction transacion = em2.getTransaction();
+				LOGGER.trace("Transacion creada y obtenida");
 				try {
 					transacion.begin();
 					em2.persist(nuevoUsuario);
 					transacion.commit();
-					System.out.println("Usuario Subido");
+					LOGGER.info("El usuario ha sido persistido");
 				} catch (Exception e) {
-					System.out.println(nuevoUsuario.toString());
-					System.err.println(e.getMessage());
+					LOGGER.error("Error: "+e.getMessage());
 					transacion.rollback();
+					LOGGER.info("Se ha realizado rollback");
 				} finally {
+					
 					em2.close();
+					LOGGER.info("Se ha cerrado el Entity Manager");
 				}
+				LOGGER.info("Redirigiendo a pagina login");
 				response.sendRedirect("login.jsp");
 			}
 			break;
 
-		case "perfil": // es el cliente quien deber� invocar a este recurso
+		case "perfil": 
+			LOGGER.info("Redirigiendo al perfil del usuario");
 			response.sendRedirect("Secure/perfilUsuario.jsp");
 			break;
 		case "NuevoViaje": // es el cliente quien invoca este recurso al presionar el oton de Crear Viaje
-
+			LOGGER.info("Redirigiendo a la pagina para la creacion de un nuevo viaje");
 			response.sendRedirect("Secure/nuevoViaje.jsp");
 			break;
 		case "buscarHotel":
-		
+			
 			String fechaEntrada=request.getParameter("fechaEntrada");
 			String fechaSalida=request.getParameter("fechaSalida");
 			String numeroPersonas=request.getParameter("numeroPersonas");
@@ -246,23 +285,45 @@ public class LoginController extends HttpServlet {
 	    	Usuario usuarioInfo2 = (Usuario) request.getAttribute("usuario");
 			nomCiudadOrigen=request.getParameter("origen");
 	    	nomCiudadDestino= request.getParameter("destino");
+			LOGGER.info("Parametros recibidos: "+ 
+					"Ciudad origen: "+nomCiudadOrigen+
+					"Ciudad destino: "+nomCiudadDestino+
+					"Fecha de Entrada: "+fechaEntrada+
+					"Fecha de Salida: "+fechaSalida+
+					"Numero de Personas: "+numeroPersonas
+					);
 			
+			LOGGER.trace("Iniciando sesion en Amadeus");
 			Amadeus amadeus =iniciarApi();
+			LOGGER.trace("Sesion obtenida");
+			
+			//Falta por definir
 			try {
+				LOGGER.trace("Realizando consulta a la API obtener datos de la Ciudad Origen");
 				City[] ciudadOrigen=amadeus.referenceData.locations.cities.get(Params.with("keyword", nomCiudadOrigen));
 				codigoCiudadOrigen=ciudadOrigen[0].getIataCode();
 				codigoPaisOrigen=ciudadOrigen[0].getAddress().getCountryCode();
+				LOGGER.info("Datos obtenidos: "+
+							"Codigo Ciudad Origen: "+codigoCiudadOrigen+
+							"Codigo Pais Origen: "+codigoPaisOrigen
+							);
 				
+				LOGGER.trace("Realizando consulta a la API obtener datos de la Ciudad Destino");
 				City[] ciudadDestino=amadeus.referenceData.locations.cities.get(Params.with("keyword", nomCiudadDestino));
 				codigoCiudadDestino=ciudadDestino[0].getIataCode();
 				codigoPaisDestino=ciudadDestino[0].getAddress().getCountryCode();
-				System.out.println(codigoPaisOrigen);
+				LOGGER.info("Datos obtenidos: "+
+							"Codigo Ciudad Destino: "+codigoCiudadDestino+
+							"Codigo Pais Destino: "+codigoPaisDestino);
 			}catch(NullPointerException e) {
-				System.out.println(e.getMessage());
-				response.sendRedirect("Secure/nuevoViaje.jsp");
-			}catch (ResponseException e) {
-				e.printStackTrace();
-			}
+					LOGGER.error("EL nombre de la ciudad Destino NO EXISTE");
+					LOGGER.error("Redirigiendo al formulario de creacion de viaje");
+					response.sendRedirect("Secure/nuevoViaje");
+				}catch(ResponseException e) {
+					LOGGER.error("Se ha superado");
+					response.sendRedirect("Secure/nuevoViaje.jsp");
+				}
+			
 			
 		    ArrayList<Hotel> listaHoteles = new ArrayList<>();
 		    ArrayList<HotelData> listaDatosHoteles= new ArrayList<HotelData>();
@@ -524,7 +585,7 @@ public class LoginController extends HttpServlet {
 				 transactionBorrar.commit();
 
 		    } catch (Exception e) {
-		        System.out.println("Error: " + e.getMessage());
+		        LOGGER.error("Error: " + e.getMessage());
 		        e.printStackTrace();
 		        if (transactionBorrar != null && transactionBorrar.isActive()) {
 		            transactionBorrar.rollback();
@@ -540,6 +601,43 @@ public class LoginController extends HttpServlet {
 		        }
 		    }
 		    break;
+		case "borrarUsuario":
+				String idUsuarioABorrar=request.getParameter("usuarioABorrar");
+				Usuario usuarioA=(Usuario) request.getAttribute("usuario");
+				LOGGER.info("Iniciando proceso de Borrado del Usuario");
+				EntityManager emBorrarUsuario = modelo.HibernateUtils.getEmf().createEntityManager();
+				EntityTransaction transactionBorrarUsuario = null;
+				try {
+					transactionBorrarUsuario=emBorrarUsuario.getTransaction();
+					transactionBorrarUsuario.begin();
+					LOGGER.trace("Iniciando transaccion");
+					
+					LOGGER.info("Recuperando usuario con id: "+idUsuarioABorrar);
+					Usuario usuarioABorrar= emBorrarUsuario.find(Usuario.class, idUsuarioABorrar);							
+					if(usuarioABorrar != null) {
+						emBorrarUsuario.remove(usuarioABorrar);
+					}
+					transactionBorrarUsuario.commit();
+					LOGGER.info("Usuario eliminado junto a sus viajes");
+				}catch(Exception e) {
+					LOGGER.error("Error: "+e.getMessage());
+					if (transactionBorrarUsuario != null && transactionBorrarUsuario.isActive()) {
+			            transactionBorrarUsuario.rollback();
+			            request.getSession().setAttribute("usuario",usuarioA );
+			            LOGGER.error("Error en el borrado del usuario, redirigiendo a la configuracion");
+			            response.sendRedirect("Secure/configuracion.js");
+			        }
+			    } finally {
+			        if (emBorrarUsuario != null && emBorrarUsuario.isOpen()) {
+			            emBorrarUsuario.close();
+			            LOGGER.info("Operacion Exitosa redirigiendo a la pagina de inicio de sesion");
+				        response.sendRedirect("login.jsp");
+			        }else {
+			        	request.getSession().setAttribute("usuario",usuarioA );
+				        response.sendRedirect("Secure/perfilUsuario.jsp");
+			        }
+			    }
+		   break;
 		case "Loger":
 			response.sendRedirect("login.jsp");
 			break;
@@ -1055,8 +1153,8 @@ public class LoginController extends HttpServlet {
 		    EntityTransaction transaction7 = null;
 			
 		    try {
-		    	transaction6 = em7.getTransaction();
-		    	transaction6.begin();
+		    	transaction7 = em7.getTransaction();
+		    	transaction7.begin();
 		    	
 		        Usuario user = em7.find(Usuario.class, idUsuario9);
 
@@ -1064,7 +1162,7 @@ public class LoginController extends HttpServlet {
 		            user.setSexo(sexo);
 		            
 		            em7.merge(user);
-		            transaction6.commit();
+		            transaction7.commit();
 		        }
 
 		        
@@ -1093,8 +1191,8 @@ public class LoginController extends HttpServlet {
 		    EntityTransaction transaction8 = null;
 			
 		    try {
-		    	transaction6 = em8.getTransaction();
-		    	transaction6.begin();
+		    	transaction8 = em8.getTransaction();
+		    	transaction8.begin();
 		    	
 		        Usuario user = em8.find(Usuario.class, idUsuario10);
 
@@ -1102,9 +1200,8 @@ public class LoginController extends HttpServlet {
 		            user.setFecha_nacimiento(fecha_nacimiento);
 		            
 		            em8.merge(user);
-		            transaction6.commit();
+		            transaction8.commit();
 		        }
-
 		        
 		    } catch (Exception e) {
 		        if (transaction8 != null && transaction8.isActive()) {
@@ -1113,13 +1210,12 @@ public class LoginController extends HttpServlet {
 		        e.printStackTrace();
 		    } finally {
 		    	em8.close();
-		    	
 		    	response.sendRedirect("Secure/configuracion.jsp?datPer=true");
 		    }
 			
 			break;
 		default:
-			// es el cliente quien deber� invocar a este recurso
+			//Se inicia siempre al ejecutarse la aplicacion
 			response.sendRedirect("index.jsp");
 		}
 

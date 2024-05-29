@@ -1,3 +1,4 @@
+<%@page import="java.util.Arrays"%>
 <%@page import="com.amadeus.exceptions.ClientException"%>
 <%@page import="com.amadeus.resources.Activity"%>
 <%@page import="com.amadeus.Params"%>
@@ -223,31 +224,50 @@ if (usuario.getTema() == false) {
 			</tr>
 
 		</table>
+		
 		<%
+		System.out.println(hotel.getLatitud()+ " "+hotel.getLongitud());
 		if (hotel.getLatitud() != null&&hotel.getLongitud()!=null) {
 
 			try {
 				Activity[] activities = amadeus.shopping.activities
 				.get(Params.with("latitude", hotel.getLatitud()).and("longitude", hotel.getLongitud()));
-				for (int i = 0; i < 5; i++) {
-					try{
-						
+				try{
+					int posicionActividad = (int) (Math.random() * activities.length);
+					System.out.println(posicionActividad);
 		%>
-		<h4><%=activities[i].getName()%></h4>
+		<h4><%=activities[posicionActividad].getName()%></h4>
 		<%
-		String[] stringsimagen = activities[i].getPictures();
+			String[] stringsimagen = activities[posicionActividad].getPictures();
 		%>
 		<img src="<%=stringsimagen[0]%>">
-		<p><%=activities[i].getShortDescription()%>
-			<%=activities[i].getDescription()%>
+		<p>	
+			<%if(activities[posicionActividad].getShortDescription()!=null){
+			%>
+				<%= activities[posicionActividad].getShortDescription()%>
+			<% 
+			}
+			%>
+			<br>
+			<%if(activities[posicionActividad].getDescription()!=null){
+			%>
+				<%= activities[posicionActividad].getDescription()%>
+			<% 
+			}
+			%>
 		</p>
-		<a><%=activities[i].getBookingLink()%></a>
+		<a><%if(activities[posicionActividad].getBookingLink()!=null){
+			%>
+				<%= activities[posicionActividad].getBookingLink()%>
+			<% 
+			}
+			%></a>
 		<%
 					}catch(ArrayIndexOutOfBoundsException e) {
 						System.out.println("No hay mas puntos de interes en la lista.");
-						break;
+						
 					}
-			}
+			
 			} catch (ClientException e) {
 	    		System.out.println("Ubicacion no dispone de puntos de interes");
 			}catch(NullPointerException e) {
@@ -255,6 +275,9 @@ if (usuario.getTema() == false) {
 	    	}
 	
 			}
+		%>
+		</div>
+		<%
 		}
 		}
 
