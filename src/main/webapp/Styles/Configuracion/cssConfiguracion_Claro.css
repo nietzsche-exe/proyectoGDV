@@ -171,7 +171,7 @@ body {
     border-radius: 10px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
     margin-top: 5%;
-    color: #333; /* Color del texto oscuro */
+    color: #333;
 }
 .Contenedor_Con_Imagen {
 	margin-left: 8%;
@@ -190,7 +190,7 @@ body {
 
 .Titulo2 {
     font-size: x-large;
-    color: #333; /* Color del texto oscuro */
+    color: #333;
     margin-bottom: 15px;
     font-weight: bold;
     text-align: center;
@@ -198,20 +198,20 @@ body {
 
 .Texto1 {
     font-size: medium;
-    color: #666; /* Color del texto gris oscuro */
+    color: #666;
     line-height: 1.2;
     margin-bottom: 15px;
 }
 
 .Titulo3 {
     font-size: large;
-    color: #444; /* Color del texto gris oscuro */
+    color: #444;
     margin-bottom: 5px;    
 }
 
 .Texto2 {
     font-size: small;
-    color: #666; /* Color del texto gris oscuro */
+    color: #666;
     line-height: 1.6;
     margin-bottom: 15px;
 }
@@ -282,7 +282,7 @@ body {
     font-size: 24px;
     font-weight: bold;
     margin-bottom: 10px;
-    color: #ff0000; /* Color de advertencia */
+    color: #ff0000;
 }
 
 #Texto {

@@ -136,16 +136,17 @@
 	        </header>
 	        
 	    </form>
-	    
-		    <div class="Contenedor_Viajes">
 <%
-			    if(listaViajes!=null){
+			if(listaViajes!=null){
+
 			    
-			    	for (Viaje viaje : listaViajes) {
-				    Habitacion habitacion = viaje.getHabitacion();
+			    for (Viaje viaje : listaViajes) {
+					Habitacion habitacion = viaje.getHabitacion();
 				    Hotel hotel = habitacion.getHotel();
 				    DatosVuelo datosVuelo = viaje.getDatos_vuelo();    
-%>
+%>		    	
+					<div class="Contenedor_Viajes">
+
 						<table class="Tabla_Viajes">
 							<tr class="Contenedor_Titulo">
 								<th>Codigo Viaje</th>
@@ -190,12 +191,13 @@
 								</td>
 							</tr>
 						</table>
+					</div>
 <%
-					}
-			    }
+				}
+			}
 %>
 		    	
-			</div>
+			
 		
 			<script src="../JavaScript/script.js"></script>
 <%
