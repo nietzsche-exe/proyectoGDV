@@ -133,6 +133,22 @@ body {
 .Confirmar:hover {
 	opacity: 0.8;
 }
+.Confirmar_Borrar {
+	background-color: red;
+	border: none;
+	color: white;
+	padding: 2%;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: small;
+	margin: 1.5%;
+	cursor: pointer;
+	border-radius: 5px;
+}
+.Confirmar_Borrar:hover {
+	opacity: 0.8;
+}
 .Opciones {
 	width: 45%;
     padding: 1%;
