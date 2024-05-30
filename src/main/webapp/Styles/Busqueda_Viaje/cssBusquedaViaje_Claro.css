@@ -8,18 +8,18 @@ body {
     padding: 0;
 }
 
-header {
+#Cabecero {
     background-color: #ffffff;
     padding: 10px;
     text-align: right;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-header form {
+#form_cabecero {
     display: inline;
 }
 
-header input[type="submit"] {
+#Cancelar {
     background-color: #4CAF50;
     color: white;
     border: none;
@@ -31,7 +31,7 @@ header input[type="submit"] {
     border-radius: 4px;
 }
 
-header input[type="submit"]:hover {
+#Cancelar:hover {
     background-color: #45a049;
 }
 
@@ -50,7 +50,7 @@ header input[type="submit"]:hover {
     margin-bottom: 20px;
 }
 
-.Contenedor_Titulo h1, .Contenedor_Titulo h3 {
+.Titulo {
     color: #333;
 }
 
@@ -61,15 +61,13 @@ header input[type="submit"]:hover {
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-.Contenedor_Busqueda label {
+.Textos {
     display: block;
     margin: 10px 0 5px;
     color: #333;
 }
 
-.Contenedor_Busqueda input[type="text"],
-.Contenedor_Busqueda input[type="date"],
-.Contenedor_Busqueda input[type="number"] {
+.Botones {
     width: calc(100% - 22px);
     padding: 10px;
     margin: 5px 0 20px;
@@ -77,12 +75,6 @@ header input[type="submit"]:hover {
     border-radius: 4px;
     background-color: #ffffff;
     color: #333;
-}
-
-.Contenedor_Busqueda input[type="text"]::placeholder,
-.Contenedor_Busqueda input[type="date"]::placeholder,
-.Contenedor_Busqueda input[type="number"]::placeholder {
-    color: #999;
 }
 
 #busca {
