@@ -239,7 +239,18 @@
 <%
 				    		}
 %>
-							<td class="Columna_3"><input class="Confirmar" id="confirmarTemaOscuro" onclick="javascript:document.datos.opcion.value='cerrarSesion';document.datos.submit();" value="Cerrar Sesion" type="submit"></td>
+							<td class="Columna_3"><input class="Confirmar" onclick="javascript:document.datos.opcion.value='cerrarSesion';document.datos.submit();" value="Cerrar Sesion" type="submit"></td>
+						</tr>
+						<tr class="Filas">
+						    <td class="Columna_1">Borrar cuenta</td>
+						    <td class="Columna_2"><small>Borrar la cuenta eliminará todos sus viajes guardados</small></td>
+						    <form action="../LoginController?opcion=borrarUsuario" method="POST">
+								<input type="hidden" name="usuarioABorrar" value=<%= usuario.getId_usuario()%>>
+<%
+								request.setAttribute("usuario", usuario); 
+%>
+								<td class="Columna_3"><input class="Confirmar_Borrar" onclick="javascript:document.datos.opcion.value='borrarUsuario';document.datos.submit();" value="Borrar Usuario" type="submit"></td>
+							</form>
 						</tr>
 					</table>
 					
@@ -538,15 +549,6 @@
 			        });
 		
 				</script>
-				
-				</form>
-				<footer>
-					<form action="../LoginController?opcion=borrarUsuario" method="POST">
-						<input type="hidden" name="usuarioABorrar" value=<%= usuario.getId_usuario()%>>
-						<%request.setAttribute("usuario", usuario); %>
-						<input type="submit" value="Borrar Usuario">
-					</form>
-				</footer>
 <%
 			}
 %>

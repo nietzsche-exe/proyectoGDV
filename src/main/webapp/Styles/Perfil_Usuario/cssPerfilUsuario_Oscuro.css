@@ -259,11 +259,3 @@ body {
 #Boton_Eliminar:hover {
     background-color: #ff3333;
 }
-
-form {
-    margin: 0;
-}
-
-input[type="hidden"] {
-    display: none;
-}

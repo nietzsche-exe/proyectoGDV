@@ -228,7 +228,7 @@
 			<td><%=itineraries[x].getDuration() %></td>
 			<td><%=locations[0].getAddress().getCityName() %> </td>
 			<td><%=searchSegments[0].getDeparture().getTerminal() %></td>
-			<td><%=searchSegments[0].getDeparture().getAt().split("T") %></td>					
+			<td><%=searchSegments[0].getDeparture().getAt() %></td>					
 			<td><%=searchSegments[0].getCarrierCode() %></td>
 			<td><%=locationsDestino[0].getName() %></td>
 			<td><%=codigoCiudadDestino %></td>

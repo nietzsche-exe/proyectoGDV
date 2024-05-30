@@ -83,8 +83,11 @@ public class LoginController extends HttpServlet {
 		
 		String idHotel="",nombreHotel="",calleHotel="";
 		String codigoHabitacion="",tipoCama="";
-		Integer disponibilidadHabitacion=0,numeroCamas;
+		Integer disponibilidadHabitacion=0,numeroCamas=0, numeroViajeros;
+		String numeroPersonasViajeStr="";
+		
 		Double precioHabitacionNoche,precioHabitacionTotal;
+		
 		String operacion = request.getParameter("opcion");
 		if (operacion == null) {
 			operacion = "";
@@ -285,10 +288,10 @@ public class LoginController extends HttpServlet {
 			nomCiudadOrigen=request.getParameter("origen");
 	    	nomCiudadDestino= request.getParameter("destino");
 			LOGGER.info("Parametros recibidos: "+ 
-					"\nCiudad origen: "+nomCiudadOrigen+
-					"\nCiudad destino: "+nomCiudadDestino+
-					"\nFecha de Entrada: "+fechaEntrada+
-					"\nFecha de Salida: "+fechaSalida+
+					"\nCiudad origen= "+nomCiudadOrigen+
+					"\nCiudad destino= "+nomCiudadDestino+
+					"\nFecha de Entrada= "+fechaEntrada+
+					"\nFecha de Salida= "+fechaSalida+
 					"\nNumero de Personas: "+numeroPersonas
 					);
 			
@@ -303,8 +306,8 @@ public class LoginController extends HttpServlet {
 				codigoCiudadOrigen=ciudadOrigen[0].getIataCode();
 				codigoPaisOrigen=ciudadOrigen[0].getAddress().getCountryCode();
 				LOGGER.info("Datos obtenidos: "+
-							"\nCodigo Ciudad Origen: "+codigoCiudadOrigen+
-							"\nCodigo Pais Origen: "+codigoPaisOrigen
+							"\nCodigo Ciudad Origen= "+codigoCiudadOrigen+
+							"\nCodigo Pais Origen= "+codigoPaisOrigen
 							);
 			}catch(NullPointerException e) {
 				LOGGER.error("EL nombre de la ciudad Origen NO EXISTE");
@@ -324,8 +327,8 @@ public class LoginController extends HttpServlet {
 				codigoCiudadDestino=ciudadDestino[0].getIataCode();
 				codigoPaisDestino=ciudadDestino[0].getAddress().getCountryCode();
 				LOGGER.info("Datos obtenidos: "+
-							"\nCodigo Ciudad Destino: "+codigoCiudadDestino+
-							"\nCodigo Pais Destino: "+codigoPaisDestino);
+							"\nCodigo Ciudad Destino= "+codigoCiudadDestino+
+							"\nCodigo Pais Destino= "+codigoPaisDestino);
 				}catch(NullPointerException e) {
 					LOGGER.error("EL nombre de la ciudad Destino NO EXISTE");
 					LOGGER.error(e.getMessage());
@@ -347,7 +350,7 @@ public class LoginController extends HttpServlet {
 		                Params.with("cityCode", codigoCiudadDestino));
 //		                .and("radius", 8)
 //		                .and("radiusUnit", "KM"));
-		        for (int a = 0; a < 5; a++) {
+		        for (int a = 0; a < 10; a++) {
 		    		try {		    			
 			        	System.out.println(hotels[a].toString());
 			    		listaHoteles.add(hotels[a]);
@@ -360,9 +363,9 @@ public class LoginController extends HttpServlet {
 		        
 		        int i=0;
 		        if(!listaHoteles.isEmpty()) {
+		        	LOGGER.info("Hoteles encontrados:"+listaHoteles.size());
 		        	
 		        	for (Hotel hotel : listaHoteles) {
-				        LOGGER.info("Hoteles encontrados:"+listaHoteles.size());
 
 		        		try {
 		        			HotelOfferSearch[] ofertasHotel = amadeus.shopping.hotelOffersSearch.get(Params
@@ -427,7 +430,12 @@ public class LoginController extends HttpServlet {
 		        }
 		       
 		        }
-		    }catch(ClientException e) {
+		    }catch(IllegalStateException e) {
+		    	LOGGER.error(e.getMessage());
+		    	request.setAttribute("usuario", usuarioInfo2);
+		    	response.sendRedirect("Secure/nuevoViaje.jsp");
+		    }
+		    catch(ClientException e) {
 		    	LOGGER.error(e.getMessage());
 		    	request.setAttribute("usuario", usuarioInfo2);
 		    	response.sendRedirect("Secure/nuevoViaje.jsp");
@@ -450,7 +458,11 @@ public class LoginController extends HttpServlet {
 		    request.setAttribute("nombreCiudadDestino", nomCiudadDestino);
 		    request.setAttribute("codIATACiudadDestino", codigoCiudadDestino);
 		    request.setAttribute("codIATAPaisDestino", codigoPaisDestino);
-		    request.getRequestDispatcher("Secure/ofertasHoteles.jsp").forward(request, response);
+		    if(listaDatosHoteles.size()!=0) {
+		    	request.getRequestDispatcher("Secure/ofertasHoteles.jsp").forward(request, response);		    	
+		    }else {
+		    	response.sendRedirect("Secure/perfilUsuario.jsp");
+		    }
 		    break;
 
 		case "guardarOfertaHotel":
@@ -562,8 +574,9 @@ public class LoginController extends HttpServlet {
 			HotelBD hotelFinal=(HotelBD) request.getSession().getAttribute("hotel_Final");
 			Habitacion habitacionFinal=(Habitacion) request.getSession().getAttribute("habitacion_Final");
 			Usuario usuarioFinal = (Usuario) request.getSession().getAttribute("usuario");
-			String numeroPersonasViajeStr= (String)request.getSession().getAttribute("numeroPersonasViaje");
-			Integer numeroPersonasViaje= Integer.valueOf(numeroPersonasViajeStr);
+			numeroPersonasViajeStr= (String) request.getParameter("numeroPersonasViaje");
+			System.out.println(numeroPersonasViajeStr);
+			Integer numeroPersonasViaje= (Integer) Integer.valueOf(numeroPersonasViajeStr);
 			LOGGER.info("Recuperando datos de ofertasTransporte.jsp: " +
 	                "\nDireccion Hotel= " + direccionFinal +
 	                "\nHotel= " + hotelFinal +

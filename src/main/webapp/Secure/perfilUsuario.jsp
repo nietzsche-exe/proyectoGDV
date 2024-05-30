@@ -57,7 +57,7 @@ try {
 
 	usuario.setTema(tema);
 	usuario.setSesionActiva(sesion_Activa);
-
+	
 	Query queryViajes = em.createQuery("SELECT v FROM Viaje v " + "JOIN FETCH v.habitacion h " + "JOIN FETCH h.hotel "
 	+ "JOIN FETCH v.datos_vuelo dv " + "WHERE v.usuario.id_usuario = :idUsuario");
 	queryViajes.setParameter("idUsuario", usuario.getId_usuario());
@@ -71,26 +71,21 @@ try {
 	}
 }
 
-// Establecer el tema según la preferencia del usuario
 if (usuario.getTema() == false) {
 %>
-<link rel="stylesheet"
-	href="../Styles/Perfil_Usuario/cssPerfilUsuario_Claro.css">
+	<link rel="stylesheet" href="../Styles/Perfil_Usuario/cssPerfilUsuario_Claro.css">
 <%
 } else {
 %>
-<link rel="stylesheet"
-	href="../Styles/Perfil_Usuario/cssPerfilUsuario_Oscuro.css">
+	<link rel="stylesheet" href="../Styles/Perfil_Usuario/cssPerfilUsuario_Oscuro.css">
 <%
 }
 %>
 </head>
 <body>
-
-
-	<%
+<%
 	if (usuario.getSesionActiva() == false) {
-	%>
+%>
 	<form name="tema" action="../LoginController" method="POST">
 		<input type="hidden" name="opcion" value="cambiar_tema">
 
@@ -107,196 +102,186 @@ if (usuario.getTema() == false) {
 				Sesion</a>
 		</div>
 	</form>
-	<%
+<%
 	} else {
-	%>
-	<form name="tema" action="../LoginController" method="POST">
-		<input type="hidden" name="opcion" value="cambiar_tema">
 
-		<header class="Encabezado">
-			<div class="Contenedor_Logo">
-				<img id="logo" alt="Logo" src="../Resources/logo_2.0.jpeg">
-			</div>
-
-			<div class="Contenedor_Botones">
-				<button id="btnCreacionViaje"
-					onclick="javascript:document.tema.opcion.value='NuevoViaje';document.tema.submit();"
-					class="Botones">Creación de viaje</button>
-				<button id="btnEliminacionViaje" class="Botones">Eliminación
-					de Viaje</button>
-			</div>
-
-			<div id="menu-container">
-				<img src="../Resources/perfil.png" alt="Menú" id="menu-icon">
-				<ul id="menu">
-					<li id="nada">&nbsp;</li>
-					<li id="usuario"><%=usuario.getNombre()%></li>
-					<li id="correo"><%=usuario.getEmail()%></li>
-					<li>&nbsp;</li>
-					<li class="Botones_Despliegue"><a href="javascript:void(0)"
-						onclick="javascript:document.tema.opcion.value='cerrarSesion';document.tema.submit();"><img
-							id="imgSalir" src="../Resources/salir.png"> &nbsp; &nbsp;
-							Cerrar Sesion</a></li>
-					<li class="Botones_Despliegue"><a href="javascript:void(0)"
-						onclick="javascript:document.tema.opcion.value='config';document.tema.submit();"><img
-							id="imgConfig" src="../Resources/configuracion.png"> &nbsp;
-							&nbsp; Configuracion</a></li>
-					<%
-					if (usuario.getTema() == false) {
-					%>
-					<li id="btnCambiarTema" class="Botones_Despliegue"><a
-						href="javascript:void(0)"
-						onclick="javascript:document.tema.opcion.value='cambiar_tema';document.tema.submit();"><img
-							id="imgConfig" src="../Resources/oscuro.png"> &nbsp; &nbsp;
-							Cambiar tema a oscuro</a></li>
-					<%
-					} else {
-					%>
-					<li id="btnCambiarTema" class="Botones_Despliegue"><a
-						href="javascript:void(0)"
-						onclick="javascript:document.tema.opcion.value='cambiar_tema';document.tema.submit();"><img
-							id="imgConfig" src="../Resources/claro.png"> &nbsp; &nbsp;
-							Cambiar tema a claro</a></li>
-					<%
-					}
-					%>
-				</ul>
-			</div>
-		</header>
-
-	</form>
-	<%
-	if (listaViajes != null) {
-
-		for (Viaje viaje : listaViajes) {
-			Habitacion habitacion = viaje.getHabitacion();
-			HotelBD hotel = habitacion.getHotelBD();
-
-			DatosVuelo datosVuelo = viaje.getDatos_vuelo();
-	%>
-	<div class="Contenedor_Viajes">
-		<div> 
-			<h2>Viaje <%=viaje.getId_viaje() %></h2>
-			<div>
-				<p>Hotel: <%=hotel.getNombre_hotel() %></p>
-				<p>Direccion: <%=hotel.getDireccion() !=null?hotel.getNombre_hotel():"No cuenta con una direccion" %></p>
-				<p>Fecha Entrada: <%=habitacion.getFecha_entrada() %>- Fecha Salida: <%=habitacion.getFecha_salida() %></p>
-				<p>Numero de camas: <%=habitacion.getNumero_camas() %></p>
-				<p>Precio: <%=habitacion.getPrecio_noche()%> por Noche</p>
-				<p>Precio Total(hotel+vuelo): <%=habitacion.getPrecio_total()+datosVuelo.getPrecioMedio() %></p>
-				
-			</div>
-		</div>
-		<table class="Tabla_Viajes">
-			<tr class="Contenedor_Titulo">
-				<th>Codigo Viaje</th>
-				<th>Nombre Hotel</th>
-				<th>Precio Total</th>
-				<th>Noche</th>
-				<th>Fecha Entrada</th>
-				<th>Fecha Salida</th>
-				<th>NºCamas</th>
-				<%
-				if (datosVuelo != null) {
-				%>
-				<th>Origen</th>
-				<th>Destino</th>
-				<th>Precio Total</th>
-				<%
-				}
-				%>
-			</tr>
-			<tr class="Filas">
-				<td class="Columna_1"><%=viaje.getId_viaje()%></td>
-				<td class="Columna_2"><%=hotel.getNombre_hotel()%></td>
-				<td class="Columna_3"><%=habitacion.getPrecio_total()%></td>
-				<td class="Columna_4"><%=habitacion.getPrecio_noche()%></td>
-				<td class="Columna_5"><%=habitacion.getFecha_entrada()%></td>
-				<td class="Columna_6"><%=habitacion.getFecha_salida()%></td>
-				<td class="Columna_7"><%=habitacion.getNumero_camas()%></td>
-				<%
-				if (datosVuelo != null) {
-				%>
-				<td class="Columna_8"><%=datosVuelo.getCiudadOrigen()%></td>
-				<td class="Columna_9"><%=datosVuelo.getCiudadDestino()%></td>
-				<%
-				}
-				%>
-				<td class="Columna_10">
-					<form name="eliminarViajeUsuario"
-						action="../LoginController?opcion=eliminarViajeUsuario"
-						method="post">
-						<input type="hidden" name="idUsuario"
-							value="<%=usuario.getId_usuario()%>"> <input
-							type="hidden" name="idViajeEliminar"
-							value="<%=viaje.getId_viaje()%>"> <input
-							id="Boton_Eliminar" type="submit" value="Eliminar">
-					</form>
-				</td>
-			</tr>
-
-		</table>
-		
-		<%
-		System.out.println(hotel.getLatitud()+ " "+hotel.getLongitud());
-		if (hotel.getLatitud() != null&&hotel.getLongitud()!=null) {
-
-			try {
-				Activity[] activities = amadeus.shopping.activities
-				.get(Params.with("latitude", hotel.getLatitud()).and("longitude", hotel.getLongitud()));
-				try{
-					int posicionActividad = (int) (Math.random() * activities.length);
-					System.out.println(posicionActividad);
-		%>
-		<h4><%=activities[posicionActividad].getName()%></h4>
-		<%
-			String[] stringsimagen = activities[posicionActividad].getPictures();
-		%>
-		<img src="<%=stringsimagen[0]%>">
-		<p>	
-			<%if(activities[posicionActividad].getShortDescription()!=null){
-			%>
-				<%= activities[posicionActividad].getShortDescription()%>
-			<% 
-			}
-			%>
-			<br>
-			<%if(activities[posicionActividad].getDescription()!=null){
-			%>
-				<%= activities[posicionActividad].getDescription()%>
-			<% 
-			}
-			%>
-		</p>
-		<a><%if(activities[posicionActividad].getBookingLink()!=null){
-			%>
-				<%= activities[posicionActividad].getBookingLink()%>
-			<% 
-			}
-			%></a>
-		<%
-					}catch(ArrayIndexOutOfBoundsException e) {
-						System.out.println("No hay mas puntos de interes en la lista.");
-						
-					}
-			
-			} catch (ClientException e) {
-	    		System.out.println("Ubicacion no dispone de puntos de interes");
-			}catch(NullPointerException e) {
-	    		System.out.println("Error :"+e.getMessage());
-	    	}
+%>
+		<form name="tema" action="../LoginController" method="POST">
+			<input type="hidden" name="opcion" value="cambiar_tema">
 	
+			<header class="Encabezado">
+				<div class="Contenedor_Logo">
+					<img id="logo" alt="Logo" src="../Resources/logo_2.0.jpeg">
+				</div>
+	
+				<div class="Contenedor_Botones">
+					<button id="btnCreacionViaje" onclick="javascript:document.tema.opcion.value='NuevoViaje';document.tema.submit();" 
+						class="Botones"> Creación de viaje </button>
+				</div>
+	
+				<div id="menu-container">
+					<img src="../Resources/perfil.png" alt="Menú" id="menu-icon">
+					<ul id="menu">
+						<li id="nada">&nbsp;</li>
+						<li id="usuario"><%=usuario.getNombre()%></li>
+						<li id="correo"><%=usuario.getEmail()%></li>
+						<li>&nbsp;</li>
+						<li class="Botones_Despliegue">
+							<a href="javascript:void(0)" onclick="javascript:document.tema.opcion.value='cerrarSesion';document.tema.submit();">
+								<img id="imgSalir" src="../Resources/salir.png"> &nbsp; &nbsp; Cerrar Sesion</a>
+						</li>
+						<li class="Botones_Despliegue">
+							<a href="javascript:void(0)" onclick="javascript:document.tema.opcion.value='config';document.tema.submit();">
+								<img id="imgConfig" src="../Resources/configuracion.png"> &nbsp; &nbsp; Configuracion</a>
+						</li>
+<%
+						if (usuario.getTema() == false) {
+%>
+							<li id="btnCambiarTema" class="Botones_Despliegue">
+								<a href="javascript:void(0)" onclick="javascript:document.tema.opcion.value='cambiar_tema';document.tema.submit();">
+									<img id="imgConfig" src="../Resources/oscuro.png"> &nbsp; &nbsp; Cambiar tema a oscuro</a>
+							</li>
+<%
+						} else {
+%>
+							<li id="btnCambiarTema" class="Botones_Despliegue">
+								<a href="javascript:void(0)" onclick="javascript:document.tema.opcion.value='cambiar_tema';document.tema.submit();">
+									<img id="imgConfig" src="../Resources/claro.png"> &nbsp; &nbsp; Cambiar tema a claro</a>
+							</li>
+<%
+						}
+%>
+					</ul>
+				</div>
+			</header>
+	
+		</form>
+<%
+		if (listaViajes != null) {
+	
+			for (Viaje viaje : listaViajes) {
+				Habitacion habitacion = viaje.getHabitacion();
+				HotelBD hotel = habitacion.getHotelBD();
+	
+				DatosVuelo datosVuelo = viaje.getDatos_vuelo();
+%>
+				<div class="Contenedor_Viajes">
+		
+					<table class="Tabla_Viajes">
+						<tr class="Contenedor_Titulo">
+							<th>Codigo Viaje</th>
+							<th>Nombre Hotel</th>
+							<th>Precio</th>
+							<th>Noche</th>
+							<th>Fecha Entrada</th>
+							<th>Fecha Salida</th>
+							<th>NºCamas</th>
+<%
+							if (datosVuelo != null) {
+%>
+								<th>Origen</th>
+								<th>Destino</th>
+<%
+							}
+%>
+						</tr>
+						<tr class="Filas">
+							<td class="Columna_1"><%=viaje.getId_viaje()%></td>
+							<td class="Columna_2"><%=hotel.getNombre_hotel()%></td>
+							<td class="Columna_3"><%=habitacion.getPrecio_total()%></td>
+							<td class="Columna_4"><%=habitacion.getPrecio_noche()%></td>
+							<td class="Columna_5"><%=habitacion.getFecha_entrada()%></td>
+							<td class="Columna_6"><%=habitacion.getFecha_salida()%></td>
+							<td class="Columna_7"><%=habitacion.getNumero_camas()%></td>
+<%
+							if (datosVuelo != null) {
+%>
+								<td class="Columna_8"><%=datosVuelo.getCiudadOrigen()%></td>
+								<td class="Columna_9"><%=datosVuelo.getCiudadDestino()%></td>
+<%
+							}
+%>
+							<td class="Columna_10">
+								<form name="eliminarViajeUsuario" action="../LoginController?opcion=eliminarViajeUsuario" method="post">
+								
+									<input type="hidden" name="idUsuario" value="<%=usuario.getId_usuario()%>"> 
+									<input type="hidden" name="idViajeEliminar" value="<%=viaje.getId_viaje()%>"> 
+									<input id="Boton_Eliminar" type="submit" value="Eliminar">
+									
+								</form>
+							</td>
+						</tr>
+		
+					</table>
+				
+<%
+					System.out.println(hotel.getLatitud()+ " "+hotel.getLongitud());
+					if (hotel.getLatitud() != null&&hotel.getLongitud()!=null) {
+		
+						try {
+							Activity[] activities = amadeus.shopping.activities.
+									get(Params.with("latitude", hotel.getLatitud()).and("longitude", hotel.getLongitud()));
+							
+							try{
+								int posicionActividad = (int) (Math.random() * activities.length);
+								System.out.println(posicionActividad);
+%>
+								<h3 id="Titulo_Turismo"><%=activities[posicionActividad].getName()%></h3>
+<%
+								String[] stringsimagen = activities[posicionActividad].getPictures();
+%>
+								<img id="imgTurismo" src="<%=stringsimagen[0]%>">
+								<p id="Texto_Turismo">	
+<%
+									if(activities[posicionActividad].getShortDescription()!=null){
+%>
+										<%= activities[posicionActividad].getShortDescription()%>
+<% 
+									}
+%>
+									<br>
+<%
+									if(activities[posicionActividad].getDescription()!=null){
+%>
+										<%= activities[posicionActividad].getDescription()%>
+<% 
+									}
+%>
+								</p>
+<%
+								if(activities[posicionActividad].getBookingLink()!=null){
+%>									
+									<p id="enlace_Texto_Turismo">
+										Pulsa<a id="enlace_Turismo" href="<%= activities[posicionActividad].getBookingLink()%>"> aquí </a>para mas información.
+									</p>
+<%
+									}
+
+							}catch(ArrayIndexOutOfBoundsException e) {
+								System.out.println("No hay mas puntos de interes en la lista.");	
+							}
+					
+						} 
+						catch (ClientException e) {
+			    		
+							System.out.println("Ubicacion no dispone de puntos de interes");
+						}
+						catch(NullPointerException e) {
+			    			System.out.println("Error :"+e.getMessage());
+			    		}
+			
+					}
+%>
+				</div>
+<%
 			}
-		%>
-		</div>
-		<%
 		}
-		}
+	}
+%>
 
-		}
-		%>
-
-		<script src="../JavaScript/script.js"></script>
+	<script src="../JavaScript/script.js"></script>
+	
 </body>
+
 </html>
 

@@ -1,5 +1,3 @@
-/* Estilos para cssBusquedaViaje_Oscuro.css */
-
 body {
     background-color: #121212;
     color: #E0E0E0;
@@ -8,17 +6,17 @@ body {
     padding: 0;
 }
 
-header {
+#Cabecero {
     background-color: #1E1E1E;
     padding: 10px;
     text-align: right;
 }
 
-header form {
+#form_cabecero {
     display: inline;
 }
 
-header input[type="submit"] {
+#Cancelar {
     background-color: #4CAF50;
     color: white;
     border: none;
@@ -30,7 +28,7 @@ header input[type="submit"] {
     border-radius: 4px;
 }
 
-header input[type="submit"]:hover {
+#Cancelar:hover {
     background-color: #45a049;
 }
 
@@ -49,7 +47,7 @@ header input[type="submit"]:hover {
     margin-bottom: 20px;
 }
 
-.Contenedor_Titulo h1, .Contenedor_Titulo h3 {
+.Titulo {
     color: #FFFFFF;
 }
 
@@ -59,15 +57,13 @@ header input[type="submit"]:hover {
     border-radius: 5px;
 }
 
-.Contenedor_Busqueda label {
+.Textos {
     display: block;
     margin: 10px 0 5px;
     color: #E0E0E0;
 }
 
-.Contenedor_Busqueda input[type="text"],
-.Contenedor_Busqueda input[type="date"],
-.Contenedor_Busqueda input[type="number"] {
+.Botones {
     width: calc(100% - 22px);
     padding: 10px;
     margin: 5px 0 20px;
@@ -75,12 +71,6 @@ header input[type="submit"]:hover {
     border-radius: 4px;
     background-color: #1E1E1E;
     color: #E0E0E0;
-}
-
-.Contenedor_Busqueda input[type="text"]::placeholder,
-.Contenedor_Busqueda input[type="date"]::placeholder,
-.Contenedor_Busqueda input[type="number"]::placeholder {
-    color: #AAAAAA;
 }
 
 #busca {
