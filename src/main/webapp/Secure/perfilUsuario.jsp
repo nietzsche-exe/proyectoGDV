@@ -175,12 +175,23 @@ if (usuario.getTema() == false) {
 			DatosVuelo datosVuelo = viaje.getDatos_vuelo();
 	%>
 	<div class="Contenedor_Viajes">
-
+		<div> 
+			<h2>Viaje <%=viaje.getId_viaje() %></h2>
+			<div>
+				<p>Hotel: <%=hotel.getNombre_hotel() %></p>
+				<p>Direccion: <%=hotel.getDireccion() !=null?hotel.getNombre_hotel():"No cuenta con una direccion" %></p>
+				<p>Fecha Entrada: <%=habitacion.getFecha_entrada() %>- Fecha Salida: <%=habitacion.getFecha_salida() %></p>
+				<p>Numero de camas: <%=habitacion.getNumero_camas() %></p>
+				<p>Precio: <%=habitacion.getPrecio_noche()%> por Noche</p>
+				<p>Precio Total(hotel+vuelo): <%=habitacion.getPrecio_total()+datosVuelo.getPrecioMedio() %></p>
+				
+			</div>
+		</div>
 		<table class="Tabla_Viajes">
 			<tr class="Contenedor_Titulo">
 				<th>Codigo Viaje</th>
 				<th>Nombre Hotel</th>
-				<th>Precio</th>
+				<th>Precio Total</th>
 				<th>Noche</th>
 				<th>Fecha Entrada</th>
 				<th>Fecha Salida</th>
@@ -190,6 +201,7 @@ if (usuario.getTema() == false) {
 				%>
 				<th>Origen</th>
 				<th>Destino</th>
+				<th>Precio Total</th>
 				<%
 				}
 				%>

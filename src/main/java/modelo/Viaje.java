@@ -40,16 +40,29 @@ public class Viaje implements Serializable{
     @JoinColumn(name = "id_vuelo")
     private DatosVuelo datos_vuelo;
 	
+    @Column(name = "numero_viajeros")
+    private Integer numeroViajeros;
+    
 	public Viaje() {
 		
 	}
 
-	public Viaje(Usuario usuario) {
+	public Viaje(Usuario usuario, Integer numeroViajeros) {
 		super();
 		this.usuario = usuario;
+		this.numeroViajeros=numeroViajeros;
+	}
+	
+	
+
+
+	public Integer getNumeroViajeros() {
+		return numeroViajeros;
 	}
 
-
+	public void setNumeroViajeros(Integer numeroViajeros) {
+		this.numeroViajeros = numeroViajeros;
+	}
 
 	public Integer getId_viaje() {
 		return id_viaje;
@@ -85,7 +98,7 @@ public class Viaje implements Serializable{
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(datos_vuelo, habitacion, id_viaje, usuario);
+		return Objects.hash(datos_vuelo, habitacion, id_viaje, numeroViajeros, usuario);
 	}
 
 	@Override
@@ -98,14 +111,16 @@ public class Viaje implements Serializable{
 			return false;
 		Viaje other = (Viaje) obj;
 		return Objects.equals(datos_vuelo, other.datos_vuelo) && Objects.equals(habitacion, other.habitacion)
-				&& Objects.equals(id_viaje, other.id_viaje) && Objects.equals(usuario, other.usuario);
+				&& Objects.equals(id_viaje, other.id_viaje) && Objects.equals(numeroViajeros, other.numeroViajeros)
+				&& Objects.equals(usuario, other.usuario);
 	}
 
 	@Override
 	public String toString() {
 		return "Viaje [id_viaje=" + id_viaje + ", usuario=" + usuario + ", habitacion=" + habitacion + ", datos_vuelo="
-				+ datos_vuelo + "]";
+				+ datos_vuelo + ", numeroViajeros=" + numeroViajeros + "]";
 	}
+
 
 	
 	

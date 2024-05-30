@@ -50,8 +50,6 @@
 			Params.with("subType", "AIRPORT")
 				.and("keyword", codigoCiudadOrigen)
 				.and("countryCode", codigoPaisOrigen));
-	    		//De momento trabajo con MAD=Aeropuert Adolfo Suarez Barajas,LHR=UK,TXL=BER(Berlin)
-	    		//La API busca en ingles
 	    		
    Location[] locationsDestino = amadeus.referenceData.locations.get(
 			Params.with("subType", "AIRPORT")
@@ -65,8 +63,8 @@
                     .and("returnDate", fechaSalida)
                     .and("adults", numeroPersonas)
                     .and("nonStop", true)
+                    .and("currencyCode", "EUR")
                     .and("max", 10));
-   		//System.out.println(flightOffers.length); 
 	%>
                    
 <!DOCTYPE html>
@@ -214,9 +212,14 @@
 			<td><%=flightOffers[j].getId() %></td>
 			<td><%=flightOffers[j].getLastTicketingDate() %></td>
 			<td><%=flightOffers[j].getNumberOfBookableSeats() %></td>
-			<%for(int x=0;x<2;x++){
+			<%
+			//Si el vuelo es directo itineraries length es 0 tiene solo 1 itinerario el de ida
+			//Si el vuelo es de ida y vuelta tendra itiineraries length es 1 tendra 2 itinerarios el de ida y el de vuelta
+			//Segmentos si
+			
+			//itineraries[0].getSegments();
+			for(int x=0;x<2;x++){
 				SearchSegment[]searchSegments=itineraries[x].getSegments();
-				
 				//System.out.println("Itinerario "+x +": "+itineraries[x].toString());
 				//System.out.println("segmento "+x +": "+searchSegments[0].toString());
 				if(x==0){
@@ -225,7 +228,7 @@
 			<td><%=itineraries[x].getDuration() %></td>
 			<td><%=locations[0].getAddress().getCityName() %> </td>
 			<td><%=searchSegments[0].getDeparture().getTerminal() %></td>
-			<td><%=searchSegments[0].getDeparture().getAt() %></td>					
+			<td><%=searchSegments[0].getDeparture().getAt().split("T") %></td>					
 			<td><%=searchSegments[0].getCarrierCode() %></td>
 			<td><%=locationsDestino[0].getName() %></td>
 			<td><%=codigoCiudadDestino %></td>
@@ -274,7 +277,7 @@
 						<input type="hidden" name="tipoViajero" value="<%=pricings[0].getTravelerType()%>">
 						<input type="hidden" name="precioMedio" value="<%=pricings[0].getPrice().getTotal()%>">
 						<input type="hidden" name="claseCabina" value="<%=bySegments[0].getCabin()%>">
-						
+						<input type="hidden" name="numeroPersonasViaje" value="<%=numeroPersonas %>">
 						<input type="submit" value="Guardar">
 					</form>
 				</td>
@@ -292,19 +295,21 @@
 	//response.sendRedirect("Secure/nuevoViaje.jsp");
 	%>
 	
-	<h2>¿Quieres guardar el viaje sin vuelos?</h2>
-	<form action="LoginController?opcion=guardarOfertaViaje" method="post">
-		<input type="submit" value="Guardar Viaje">
-	</form>
-	<form action="LoginController?opcion=perfil" method="post">
-		<%
-		sessionA.setAttribute("usuario",usuario);
-		%>
-		<input type="submit" value="volver">
-	</form>
+<!-- 	<h2>¿Quieres guardar el viaje sin vuelos?</h2> -->
+<!-- 	<form action="LoginController?opcion=guardarOfertaViaje" method="post"> -->
+<!-- 		<input type="submit" value="Guardar Viaje"> -->
+<!-- 	</form> -->
+<!-- 	<form action="LoginController?opcion=perfil" method="post"> -->
+<%-- 		<% 
+// 		sessionA.setAttribute("usuario",usuario);
+ 		%> --%>
+<!-- 		<input type="submit" value="volver"> -->
+<!-- 	</form> -->
 	
-	<script>alert('NO HAY VUELOS DISPONIBLES PARA LA CIUDAD\n ${param.destino}')</script>
-	<%
+	<script>alert("NO HAY VUELOS DISPONIBLES PARA LA CIUDAD\n "<%=direccion.getNombre_ciudad()%>", "<%= direccion.getCodigo_pais()%>)</script>
+	
+	<%sessionA.setAttribute("usuario",usuario);
+		response.sendRedirect("Secure/nuevoViaje.jsp");
 	}
 		%>
 	

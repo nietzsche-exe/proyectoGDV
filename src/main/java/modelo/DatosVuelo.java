@@ -3,6 +3,7 @@ package modelo;
 import java.io.Serializable;
 import java.util.Objects;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -46,7 +47,7 @@ public class DatosVuelo implements Serializable{
     @Column(name = "clase")
     private String clase;
     
-    @OneToOne(mappedBy = "datos_vuelo")
+    @OneToOne(mappedBy = "datos_vuelo", cascade = CascadeType.ALL, orphanRemoval = true)
     private Viaje viaje;
     
 	public DatosVuelo() {
