@@ -88,6 +88,8 @@
 	
 	    #map {
 	        margin-top: 20px;
+	        height: 500px; 
+	        width: 100%;
 	    }
 	
 	    p {
@@ -108,24 +110,24 @@
 	<style>
 		body {
 		    background-color: #121212;
-		    color: #E0E0E0;
+		    color: #e0e0e0;
 		    font-family: Arial, sans-serif;
 		}
 		
-		h1 {
-		    color: #FFFFFF;
+		h1, h2 {
+		    color: #e0e0e0;
 		}
 		
 		table {
-			margin-top: 1%;
-			margin-bottom: 1%;
+		    margin-top: 1%;
+		    margin-bottom: 1%;
 		    width: 100%;
 		    border-collapse: collapse;
-		    background-color: #1E1E1E;
+		    background-color: #1e1e1e;
 		}
 		
 		th, td {
-	        font-size: 30%;
+		    font-size: 80%;
 		    border: 2px solid #333333;
 		    padding: 8px;
 		    text-align: left;
@@ -133,12 +135,12 @@
 		
 		th {
 		    background-color: #333333;
-		    color: #FFFFFF;
+		    color: #e0e0e0;
 		}
 		
 		td {
-		    background-color: #1E1E1E;
-		    color: #E0E0E0;
+		    background-color: #1e1e1e;
+		    color: #e0e0e0;
 		}
 		
 		input[type="submit"] {
@@ -153,7 +155,7 @@
 		    margin: 4px 2px;
 		    cursor: pointer;
 		    border-radius: 4px;
-		    font-size: 30%;
+		    font-size: 80%;
 		}
 		
 		input[type="submit"]:hover {
@@ -165,7 +167,7 @@
 		}
 		
 		p {
-		    color: #E0E0E0;
+		    color: #e0e0e0;
 		}
 		
 		form {
@@ -188,100 +190,108 @@
 	<header>
 		<form action="LoginController?opcion=perfil" method="post">
 			<%sessionA.setAttribute("usuario", usuario); %>
-			<input type="submit" value="cancelar">
+			<input class="Botones" type="submit" value="cancelar">
 		
 		</form>
 	</header>
 
-<input type="hidden" class="latitude" value='<%= latitudesJsonStr %>'>
-<input type="hidden" class="longitude" value='<%= longitudesJsonStr %>'>
-<h1>Ciudad: ${param.destino}</h1>
-
-<%if(!listaHoteles.isEmpty()){
-	%>
-<div id="map" style="height: 500px; width: 100%;"></div>
-<table>
-    <thead>
-        <tr>
-            <th>Nombre Hotel</th>
-            <th>Direccion</th>
-            <th>Codigo Hotel</th>
-            <th>Id Oferta</th>
-            <th>Fecha de entrada</th>
-            <th>Fecha de salida</th>
-            <th>Valoracion</th>
-            <th>Disponible</th>
-            <th>Hab. Tipo</th>
-            <th>Hab. Categoria</th>
-            <th>Nº camas/Hab</th>
-            <th>Tipo Camas</th>
-            <th>Descripcion</th>
-            <th>Acompañantes</th>
-            <th>Precio por noche/Total</th>
-            <th>Accion</th>
-        </tr>
-    </thead>
-    <tbody>
-    <%
-        for (HotelData hotel : listaHoteles) {
-        	System.out.println(hotel.toString());
-    %>
-        <tr>
-            <td><%= hotel.getNombre() %></td>
-            <td><%= hotel.getDireccion() %></td>
-            <td><%= hotel.getCodigoHotel() %></td>
-            <td><%= hotel.getIdOferta() %></td>
-            <td><%= hotel.getFechaEntrada() %></td>
-            <td><%= hotel.getFechaSalida() %></td>
-            <td><%= hotel.getValoracion() %></td>
-            <td><%= hotel.isDisponible() ? "Sí" : "No" %></td>
-            <td><%= hotel.getTipoHabitacion() %></td>
-            <td><%= hotel.getCategoriaHabitacion() %></td>
-            <td><%= hotel.getNumeroCamas() %></td>
-            <td><%= hotel.getTipoCama() %></td>
-            <td><%= hotel.getDescripcion() %></td>
-            <td>Adultos: <%= hotel.getNumeroAdultos() %> <br> Niños: <%= hotel.getNumeroNinos() %></td>
-            <td><%= hotel.getPrecioNoche() %> / <%= hotel.getPrecioTotal() %></td>
-            <td>
-                <form name="guardarOfertaHotel" action="LoginController?opcion=guardarOfertaHotel" method="post">
-                    <input type="hidden" name="hotelId" value="<%= hotel.getCodigoHotel() %>">
-                    <input type="hidden" name="nombreHotel" value="<%= hotel.getNombre() %>">
-                    <input type="hidden" name="direccionHotel" value="">
-                    <input type="hidden" name="latitudHotel" value="<%=hotel.getLatitud() %>">
-                    <input type="hidden" name="longitudHotel" value="<%=hotel.getLongitud() %>">
-                    
-                    <input type="hidden" name="codigoIATAPaisDestino" value="<%= hotel.getCodPaisDestino()%>">
-                    <input type="hidden" name="nombrePaisDestino" value="<%= hotel.getNomPaisDestino() %>">
-                    <input type="hidden" name="codigoIATACiudadDestino" value="<%= request.getAttribute("codIATACiudadDestino") %>">
-                    <input type="hidden" name="nombreCiudadDestino" value="<%= request.getAttribute("nomCiudadDestino") %>">
-                    
-                    <input type="hidden" name="idHabitacion" value="<%= hotel.getIdOferta() %>">
-                    <input type="hidden" name="fechaEntrada2" value="<%= hotel.getFechaEntrada() %>">
-                    <input type="hidden" name="fechaSalida2" value="<%= hotel.getFechaSalida() %>">
-                    <input type="hidden" name="habitacionDisponible" value="<%= hotel.isDisponible() ? 1 : 0 %>">
-                    <input type="hidden" name="numeroCamas" value="<%= hotel.getNumeroCamas() %>">
-                    <input type="hidden" name="tipoDeCama" value="<%= hotel.getTipoCama() %>">
-                    <input type="hidden" name="precioNoche" value="<%= hotel.getPrecioNoche() %>">
-                    <input type="hidden" name="precioTotal" value="<%= hotel.getPrecioTotal() %>">
-                    <input type="hidden" name="numeroPersonas2" value="<%= request.getAttribute("numeroPersonas") %>">
-                    <input type="hidden" name="codigoIATACiudadOrigen" value="<%= request.getAttribute("codCiudadOrigen") %>">
-                    <input type="hidden" name="codigoIATAPaisOrigen" value="<%= request.getAttribute("codigoPaisOrigen") %>">
-                    <%sessionA.setAttribute("usuario", usuario); %>
-                    <input type="submit" value="Reservar">
-                </form>
-            </td>
-        </tr>
-    <%
-        }
-    %>
-    </tbody>
-</table>
-	<%
-}else{
-	request.getSession().setAttribute("usuario", usuario);
-	response.sendRedirect("perfilUsuario.jsp");
-}
-	%>
+	<input type="hidden" class="latitude" value='<%= latitudesJsonStr %>'>
+	<input type="hidden" class="longitude" value='<%= longitudesJsonStr %>'>
+	<h1 class="Titulo">Ciudad: ${param.destino}</h1>
+	
+<%
+	if(!listaHoteles.isEmpty()){
+%>
+		<div id="map"></div>
+		
+		<div id="Ofertas">
+<%
+			for (HotelData hotel : listaHoteles) {
+				System.out.println(hotel.toString());
+%>
+			<table id="Tabla">
+			<!--  -->
+			
+				<tr>
+				    <th colspan="2" class="Contenedor_Titulo">
+				    	<p class="Titulo"><%=hotel.getNombre() %><p>
+				    </th>	
+				</tr>
+				
+				<tr class="Filas">
+					<td class="Columna_1">Dirección</td>
+					<td class="Columna_2"><%= hotel.getDireccion() %></td>
+				</tr>
+				<tr class="Filas">
+					<td class="Columna_1">Fecha de entrada</td>
+					<td class="Columna_2"><%= hotel.getFechaEntrada() %></td>
+				</tr>
+				<tr class="Filas">
+					<td class="Columna_1">Fecha de salida</td>
+					<td class="Columna_2"><%= hotel.getFechaSalida() %></td>
+				</tr>
+				<tr class="Filas">
+					<td class="Columna_1">Nº camas/Habitaciones</td>
+					<td class="Columna_2"><%= hotel.getNumeroCamas() %></td>
+				</tr>
+				<tr class="Filas">
+					<td class="Columna_1">Descripcion</td>
+					<td class="Columna_2"><%= hotel.getDescripcion() %></td>
+				</tr>
+				<tr class="Filas">
+					<td class="Columna_1">Precio por noche</td>
+					<td class="Columna_2"><%= hotel.getPrecioNoche() %></td>
+				</tr>
+				<tr class="Filas">
+					<td class="Columna_1">Precio Total</td>
+					<td class="Columna_2"><%= hotel.getPrecioTotal() %></td>
+				</tr>
+				<tr class="Filas">
+					
+					<form name="guardarOfertaHotel" action="LoginController?opcion=guardarOfertaHotel" method="post">
+						<input type="hidden" name="hotelId" value="<%= hotel.getCodigoHotel() %>">
+						<input type="hidden" name="nombreHotel" value="<%= hotel.getNombre() %>">
+						<input type="hidden" name="direccionHotel" value="">
+						<input type="hidden" name="latitudHotel" value="<=hotel.getLatitud() %>">
+						<input type="hidden" name="longitudHotel" value="<%=hotel.getLongitud() %>">
+			                    
+						<input type="hidden" name="codigoIATAPaisDestino" value="<%= hotel.getCodPaisDestino()%>">
+						<input type="hidden" name="nombrePaisDestino" value="<%= hotel.getNomPaisDestino() %>">
+						<input type="hidden" name="codigoIATACiudadDestino" value="<%= request.getAttribute("codIATACiudadDestino") %>">
+						<input type="hidden" name="nombreCiudadDestino" value="<%= request.getAttribute("nomCiudadDestino") %>">
+			                    
+						<input type="hidden" name="idHabitacion" value="<%= hotel.getIdOferta() %>">
+			            <input type="hidden" name="fechaEntrada2" value="<%= hotel.getFechaEntrada() %>">
+			            <input type="hidden" name="fechaSalida2" value="<%= hotel.getFechaSalida() %>">
+			            <input type="hidden" name="habitacionDisponible" value="<%= hotel.isDisponible() ? 1 : 0 %>">
+			            <input type="hidden" name="numeroCamas" value="<%= hotel.getNumeroCamas() %>">
+			            <input type="hidden" name="tipoDeCama" value="<%= hotel.getTipoCama() %>">
+			            <input type="hidden" name="precioNoche" value="<%= hotel.getPrecioNoche() %>">
+			           	<input type="hidden" name="precioTotal" value="<%= hotel.getPrecioTotal() %>">
+			            <input type="hidden" name="numeroPersonas2" value="<%= request.getAttribute("numeroPersonas") %>">
+			            <input type="hidden" name="codigoIATACiudadOrigen" value="<%= request.getAttribute("codCiudadOrigen") %>">
+			            <input type="hidden" name="codigoIATAPaisOrigen" value="<%= request.getAttribute("codigoPaisOrigen") %>">
+			            
+			            <%sessionA.setAttribute("usuario", usuario); %>
+					
+						<td colspan="2" class="Columna_1"> <input class="" type="submit" value="Reservar"> </td>
+					</form>
+			
+				</tr>
+				
+			
+			</table>
+<%
+			}
+%>
+		</div>
+		
+<%
+	}else{
+		request.getSession().setAttribute("usuario", usuario);
+		response.sendRedirect("perfilUsuario.jsp");
+	}
+%>
 
 <div id="direcciones"></div>
 <script src="JavaScript/map.js"></script>

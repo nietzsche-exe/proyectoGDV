@@ -110,15 +110,15 @@ if (usuario.getTema() == false) {
 			<input type="hidden" name="opcion" value="cambiar_tema">
 	
 			<header class="Encabezado">
-				<div class="Contenedor_Logo">
-					<img id="logo" alt="Logo" src="../Resources/logo_2.0.jpeg">
-				</div>
-	
 				<div class="Contenedor_Botones">
 					<button id="btnCreacionViaje" onclick="javascript:document.tema.opcion.value='NuevoViaje';document.tema.submit();" 
 						class="Botones"> Creación de viaje </button>
 				</div>
-	
+				
+				<div class="Contenedor_Logo">
+					<img id="logo" alt="Logo" src="../Resources/logo_2.0.jpeg">
+				</div>
+				
 				<div id="menu-container">
 					<img src="../Resources/perfil.png" alt="Menú" id="menu-icon">
 					<ul id="menu">
@@ -251,11 +251,9 @@ if (usuario.getTema() == false) {
 <%
 								if(activities[posicionActividad].getBookingLink()!=null){
 %>									
-									<p id="enlace_Texto_Turismo">
-										Pulsa<a id="enlace_Turismo" href="<%= activities[posicionActividad].getBookingLink()%>"> aquí </a>para mas información.
-									</p>
+									<a id="enlace_Turismo" target="_blank" rel="noopener noreferrer" href="<%= activities[posicionActividad].getBookingLink()%>">Pulsa aquí para mas información.</a>
 <%
-									}
+								}
 
 							}catch(ArrayIndexOutOfBoundsException e) {
 								System.out.println("No hay mas puntos de interes en la lista.");	
