@@ -220,7 +220,7 @@
 				
 				<tr class="Filas">
 					<td class="Columna_1">Dirección</td>
-					<td class="Columna_2"><%= hotel.getDireccion() %></td>
+					<td class="Columna_2" ><%= hotel.getDireccion() %></td>
 				</tr>
 				<tr class="Filas">
 					<td class="Columna_1">Fecha de entrada</td>
@@ -252,7 +252,7 @@
 						<input type="hidden" name="hotelId" value="<%= hotel.getCodigoHotel() %>">
 						<input type="hidden" name="nombreHotel" value="<%= hotel.getNombre() %>">
 						<input type="hidden" name="direccionHotel" value="">
-						<input type="hidden" name="latitudHotel" value="<=hotel.getLatitud() %>">
+						<input type="hidden" name="latitudHotel" value="<%= hotel.getLatitud() %>">
 						<input type="hidden" name="longitudHotel" value="<%=hotel.getLongitud() %>">
 			                    
 						<input type="hidden" name="codigoIATAPaisDestino" value="<%= hotel.getCodPaisDestino()%>">
