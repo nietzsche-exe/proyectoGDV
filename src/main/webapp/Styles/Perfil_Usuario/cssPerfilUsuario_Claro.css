@@ -13,13 +13,17 @@ body {
 .Contenedor_Logo {
     max-width: 150px;
 	display: inline-block;
+	margin-left: 20%;
 }
 
 .Contenedor_Botones {
-    margin-right: 40%;
     padding-bottom: 1%;
-    margin-left: 5%;
+    margin-left: 15%;
 	display: inline-block;
+}
+
+#menu-container {
+	margin-left: 20%;
 }
 
 .Botones {
@@ -242,5 +246,32 @@ body {
 
 #Boton_Eliminar:hover {
     background-color: #ff3333;
+}
+
+#imgTurismo {
+    display: block;
+    max-width: 80%;
+    height: auto;
+    margin: 20px auto;
+    border: 1px solid #333;
+    border-radius: 8px;
+}
+
+#Texto_Turismo {
+    margin: 20px;
+    padding: 15px;
+    color: #e0e0e0;
+    line-height: 1.6;
+}
+
+#enlace_Turismo {
+    color: #03dac6;
+    text-decoration: none;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+#enlace_Turismo:hover {
+    color: #bb86fc;
 }
 
