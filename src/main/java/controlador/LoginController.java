@@ -1325,7 +1325,7 @@ public class LoginController extends HttpServlet {
 	protected Amadeus iniciarApi() {
 		//Initialize using parameters
 		Amadeus amadeus = Amadeus
-				.builder("boLFp1JaJ9WSPbhcQbA4hWnsrG1Dw95L", "SrAG4zk33lL7TbTi")
+				.builder("gsgMIsAnhxeixMDVFffGxzQzBLu47sV7", "uAAS4sUwGoGwWCVY")
 				//.builder("GjuqaJS0FoPfBd8BmaFIyhlV0os03g8A","ae0BLVGki48WV1DD")
 		        .build();
 		return amadeus;

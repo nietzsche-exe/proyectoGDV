@@ -32,76 +32,126 @@
 %>
 	<style>
 	    body {
-	        background-color: #f5f5f5;
+	        background-color: #BDFFBC;
 	        color: #333333;
 	        font-family: Arial, sans-serif;
-	        
+	        margin: 0%;
+	        background-image: url("");
 	    }
-	
-	    h1, h2 {
-	        color: #333333;
-	    }
-	
-	    table {
-	    	margin-top: 1%;
+		
+		#Cabecero {
+		    background-color: #ffffff;
+		    padding: 10px;
+		    text-align: right;
+		    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+		}
+		
+		#form_cabecero {
+		    display: inline;
+		}
+		
+		#Cancelar {
+		    background-color: #4CAF50;
+		    color: white;
+		    border: none;
+		    padding: 10px 20px;
+		    text-align: center;
+		    text-decoration: none;
+		    font-size: 16px;
+		    cursor: pointer;
+		    border-radius: 4px;
+		}
+		
+		#Cancelar:hover {
+		    background-color: #45a049;
+		}
+		
+		#Ofertas {
+			margin-top: 2%;
+			margin-left: 5%;
 			margin-bottom: 1%;
-	        width: 100%;
-	        border-collapse: collapse;
-	        background-color: #ffffff;
-	    }
-	
-	    th, td {
-	        font-size: 80%;
-	        border: 2px solid #dddddd;
-	        padding: 8px;
-	        text-align: left;
-	    }
-	
-	    th {
-	        background-color: #f2f2f2;
-	        color: #333333;
-	    }
-	
-	    td {
-	        background-color: #ffffff;
-	        color: #333333;
-	    }
-	
-	    input[type="submit"] {
-	        background-color: #4CAF50;
-	        color: white;
-	        border: none;
-	        padding: 10px 20px;
-	        text-align: center;
-	        text-decoration: none;
-	        display: inline-block;
-	        font-size: 16px;
-	        margin: 4px 2px;
-	        cursor: pointer;
-	        border-radius: 4px;
-		    font-size: 80%;
-	    }
-	
-	    input[type="submit"]:hover {
-	        background-color: #45a049;
-	    }
+			width: 90%;
+			background-color: #f7f7f7;
+			border-radius: 10px;
+		}
+			
+		#Tabla {
+		  	display: inline-block;
+			margin-top: 3%;
+		  	width: 25%;
+		  	margin-left: 6%;
+		  	border-collapse: collapse;
+			border-top-right-radius: 10px;
+			border-top-left-radius: 10px;
+		  	border-color: #888;
+		  	margin-bottom: 3%;
+		  	box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+		}
+		
+		.Contenedor_Titulo {
+			background-color: #f2f2f2;
+			text-align: left;
+			padding: 1.5%;
+			border-top-right-radius: 10px;
+			border-top-left-radius: 10px;
+		}
+		
+		.Titulo {
+			font-size: large;
+			color: #353535;
+		}
+		
+		.Texto {
+			font-size: x-small;
+			color: #444746;
+		}
+		
+		.Filas:nth-child(even) {
+		  	background-color: #ffffff;
+		}
+		
+		.Filas:nth-child(odd) {
+		  	background-color: #f9f9f9;
+		}
+		
+		.Columna_1, .Columna_2 {
+		  	padding: 2%;
+			color: #444746;
+		}
+		.Columna_1 {
+			font-size: small;
+		}
+		.Columna_2 {
+			font-size: medium;
+			padding-left: 2%;
+		}
+		
+		.Botones {
+		  	background-color: #4CAF50;
+		  	border: none;
+		  	color: white;
+		  	text-align: center;
+		  	text-decoration: none;
+		  	display: inline-block;
+		  	font-size: small;
+		  	margin: 1.5%;
+		  	cursor: pointer;
+		  	border-radius: 5px;
+		  	padding: 2%;
+		}
+		
+		.Botones:disabled {
+		  	background-color: #CCCCCC;
+		  	cursor: not-allowed;
+		}
+		.Botones:hover {
+			opacity: 0.8;
+		}
 	
 	    #map {
 	        margin-top: 20px;
 	        height: 500px; 
 	        width: 100%;
-	    }
-	
-	    p {
-	        color: #333333;
-	    }
-	
-	    form {
-	        margin: 0;
-	    }
-	
-	    input[type="hidden"] {
-	        display: none;
 	    }
 	</style>
 <%
@@ -109,74 +159,131 @@
 %>
 	<style>
 		body {
-		    background-color: #121212;
+			background-color: #1e1e1e;
 		    color: #e0e0e0;
 		    font-family: Arial, sans-serif;
+		    margin: 0;
+		    background-image: url("");
 		}
 		
-		h1, h2 {
-		    color: #e0e0e0;
+		#Cabecero {
+		    background-color: #2c2c2c;
+		    padding: 10px;
+		    text-align: right;
+		    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
 		}
 		
-		table {
-		    margin-top: 1%;
-		    margin-bottom: 1%;
-		    width: 100%;
-		    border-collapse: collapse;
-		    background-color: #1e1e1e;
+		#form_cabecero {
+		    display: inline;
 		}
 		
-		th, td {
-		    font-size: 80%;
-		    border: 2px solid #333333;
-		    padding: 8px;
-		    text-align: left;
-		}
-		
-		th {
-		    background-color: #333333;
-		    color: #e0e0e0;
-		}
-		
-		td {
-		    background-color: #1e1e1e;
-		    color: #e0e0e0;
-		}
-		
-		input[type="submit"] {
+		#Cancelar {
 		    background-color: #4CAF50;
 		    color: white;
 		    border: none;
 		    padding: 10px 20px;
 		    text-align: center;
 		    text-decoration: none;
-		    display: inline-block;
 		    font-size: 16px;
-		    margin: 4px 2px;
 		    cursor: pointer;
 		    border-radius: 4px;
-		    font-size: 80%;
 		}
 		
-		input[type="submit"]:hover {
+		#Cancelar:hover {
 		    background-color: #45a049;
+		}
+		
+		#Ofertas {
+		    margin-top: 2%;
+		    margin-left: 5%;
+		    margin-bottom: 1%;
+		    width: 90%;
+		    background-color: #2c2c2c;
+		    border-radius: 10px;
+		}
+		
+		#Tabla {
+		    display: inline-block;
+		    margin-top: 3%;
+		    width: 25%;
+		    margin-left: 6%;
+		    border-collapse: collapse;
+		    border-top-right-radius: 10px;
+		    border-top-left-radius: 10px;
+		    border-color: #444;
+		    margin-bottom: 3%;
+		    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.7);
+		}
+		
+		.Contenedor_Titulo {
+		    background-color: #3c3c3c;
+		    text-align: left;
+		    padding: 1.5%;
+		    border-top-right-radius: 10px;
+		    border-top-left-radius: 10px;
+		}
+		
+		.Titulo {
+		    font-size: large;
+		    color: #e0e0e0;
+		}
+		
+		.Texto {
+		    font-size: x-small;
+		    color: #c0c0c0;
+		}
+		
+		.Filas:nth-child(even) {
+		    background-color: #2c2c2c;
+		}
+		
+		.Filas:nth-child(odd) {
+		    background-color: #3c3c3c;
+		}
+		
+		.Columna_1, .Columna_2 {
+		    padding: 2%;
+		    color: #c0c0c0;
+		}
+		
+		.Columna_1 {
+		    font-size: small;
+		}
+		
+		.Columna_2 {
+		    font-size: medium;
+		    padding-left: 2%;
+		}
+		
+		.Botones {
+		    background-color: #4CAF50;
+		    border: none;
+		    color: white;
+		    text-align: center;
+		    text-decoration: none;
+		    display: inline-block;
+		    font-size: small;
+		    margin: 1.5%;
+		    cursor: pointer;
+		    border-radius: 5px;
+		    padding: 2%;
+		}
+		
+		.Botones:disabled {
+		    background-color: #555;
+		    cursor: not-allowed;
+		}
+		
+		.Botones:hover {
+		    opacity: 0.8;
 		}
 		
 		#map {
 		    margin-top: 20px;
+		    height: 500px; 
+		    width: 100%;
 		}
-		
-		p {
-		    color: #e0e0e0;
-		}
-		
-		form {
-		    margin: 0;
-		}
-		
-		input[type="hidden"] {
-		    display: none;
-		}
+
 	</style>
 
 <%
@@ -187,10 +294,10 @@
 
 <body>
 
-	<header>
-		<form action="LoginController?opcion=perfil" method="post">
+	<header id="Cabecero">
+		<form id="form_cabecero" action="LoginController?opcion=perfil" method="post">
 			<%sessionA.setAttribute("usuario", usuario); %>
-			<input class="Botones" type="submit" value="cancelar">
+			<input id="Cancelar" type="submit" value="cancelar">
 		
 		</form>
 	</header>
@@ -274,7 +381,7 @@
 			            
 			            <%sessionA.setAttribute("usuario", usuario); %>
 					
-						<td colspan="2" class="Columna_1"> <input class="" type="submit" value="Reservar"> </td>
+						<td colspan="2" class="Columna_1"> <input class="Botones" type="submit" value="Reservar"> </td>
 					</form>
 			
 				</tr>

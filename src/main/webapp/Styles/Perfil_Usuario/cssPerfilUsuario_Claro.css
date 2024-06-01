@@ -260,12 +260,12 @@ body {
 #Texto_Turismo {
     margin: 20px;
     padding: 15px;
-    color: #e0e0e0;
+    color: #444;
     line-height: 1.6;
 }
 
 #enlace_Turismo {
-    color: #03dac6;
+    color: blue;
     text-decoration: none;
     font-weight: bold;
     cursor: pointer;
