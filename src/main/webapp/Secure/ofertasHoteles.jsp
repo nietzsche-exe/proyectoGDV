@@ -101,6 +101,7 @@
 		.Titulo {
 			font-size: large;
 			color: #353535;
+			text-align: left;
 		}
 		
 		.Texto {
@@ -228,6 +229,7 @@
 		.Titulo {
 		    font-size: large;
 		    color: #e0e0e0;
+			text-align: left;
 		}
 		
 		.Texto {
@@ -283,7 +285,9 @@
 		#map {
 		    margin-top: 20px;
 		    height: 500px; 
-		    width: 100%;
+		    width: 90%;
+		    margin-left: 5%;
+		    border-radius: 10px;
 		}
 
 	</style>
@@ -302,11 +306,13 @@
 			<input id="Cancelar" type="submit" value="cancelar">
 		
 		</form>
+		
+		<input type="hidden" class="latitude" value='<%= latitudesJsonStr %>'>
+		<input type="hidden" class="longitude" value='<%= longitudesJsonStr %>'>
+		<h1 class="Titulo">Ciudad: ${param.destino}</h1>
 	</header>
 
-	<input type="hidden" class="latitude" value='<%= latitudesJsonStr %>'>
-	<input type="hidden" class="longitude" value='<%= longitudesJsonStr %>'>
-	<h1 class="Titulo">Ciudad: ${param.destino}</h1>
+	
 	
 <%
 	if(!listaHoteles.isEmpty()){
