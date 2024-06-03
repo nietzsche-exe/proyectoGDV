@@ -220,8 +220,6 @@
 			//itineraries[0].getSegments();
 			for(int x=0;x<2;x++){
 				SearchSegment[]searchSegments=itineraries[x].getSegments();
-				//System.out.println("Itinerario "+x +": "+itineraries[x].toString());
-				//System.out.println("segmento "+x +": "+searchSegments[0].toString());
 				if(x==0){
 					%>
 			<td><%=locations[0].getName() %></td>
@@ -249,6 +247,8 @@
 			<td><%=searchSegments[0].getArrival().getAt() %></td>
 			<%}
 			} %>
+			<%SearchSegment[] segmento=itineraries[0].getSegments(); %>
+			
 			<td><%=flightOffers[0].getPrice().getTotal()+"/"+flightOffers[0].getPrice().getCurrency()%></td>
 		</tr>
 		<tr>
@@ -271,7 +271,7 @@
 						action="LoginController?opcion=guardarOfertaViaje" method="post">
 						<input type="hidden" name="aeropuertoOrigen" value="<%=locations[0].getName()%>">
 						<input type="hidden" name="ciudadOrigen" value="<%=locations[0].getAddress().getCityName()%>">
-						<input type="hidden" name="companiaAerea" value="<%=locations[0].getName()%>">
+						<input type="hidden" name="companiaAerea" value="<%=segmento[0].getCarrierCode() %>">
 						<input type="hidden" name="ciudadDestino" value="<%=locationsDestino[0].getAddress().getCityName()%>">
 						<input type="hidden" name="aeropuertoDestino" value="<%=locationsDestino[0].getName()%>">
 						<input type="hidden" name="tipoViajero" value="<%=pricings[0].getTravelerType()%>">
@@ -295,18 +295,8 @@
 	//response.sendRedirect("Secure/nuevoViaje.jsp");
 	%>
 	
-<!-- 	<h2>¿Quieres guardar el viaje sin vuelos?</h2> -->
-<!-- 	<form action="LoginController?opcion=guardarOfertaViaje" method="post"> -->
-<!-- 		<input type="submit" value="Guardar Viaje"> -->
-<!-- 	</form> -->
-<!-- 	<form action="LoginController?opcion=perfil" method="post"> -->
-<%-- 		<% 
-// 		sessionA.setAttribute("usuario",usuario);
- 		%> --%>
-<!-- 		<input type="submit" value="volver"> -->
-<!-- 	</form> -->
-	
-	<script>alert("NO HAY VUELOS DISPONIBLES PARA LA CIUDAD\n "<%=direccion.getNombre_ciudad()%>", "<%= direccion.getCodigo_pais()%>)</script>
+	<script>alert("Redirigiendo a la busqueda destinos \n"+
+			"NO HAY VUELOS DISPONIBLES PARA LA CIUDAD\n "<%=direccion.getNombre_ciudad()%>", "<%= direccion.getCodigo_pais()%>)</script>
 	
 	<%sessionA.setAttribute("usuario",usuario);
 		response.sendRedirect("Secure/nuevoViaje.jsp");

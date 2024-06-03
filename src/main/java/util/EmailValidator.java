@@ -8,9 +8,19 @@ import org.slf4j.LoggerFactory;
 
 import controlador.LoginController;
 
+/**
+ * Clase encargada de validar/verficar la existencia de un correo electronico introducido por el usuario durante su registro
+ * mediante la creacion de un token de verificacion
+ */
 public class EmailValidator {
 	private static final Logger LOGGER = LoggerFactory.getLogger(EmailValidator.class);
-    public static void enviarCorreo(String destinatario, String token) {
+	
+    /**
+     * Metodo encargado de enviar un correo al correo introducido por el usuario
+     * @param destinatario	String Correo introducido por el usuario
+     * @param token	String Token de verificacion
+     */
+	public static void enviarCorreo(String destinatario, String token) {
         final String remitente = "me.llamo.jjulian@gmail.com"; // Cambia esto por tu dirección de correo electrónico
         final String clave = "dvol ntwn qixu dxwn"; // Cambia esto por tu contraseña de correo electrónico
 
@@ -50,6 +60,11 @@ public class EmailValidator {
          }
      }
     
+	/**
+	 * Metodo encargado de enviar un correo de verificacion al nuevo correo electronico introducido por el usuario
+	 * @param destinatario String nuevo correo electronico del usuario
+	 * @param token String Token de verificacion
+	 */
     public static void cambio_correo(String destinatario, String token) {
     	final String remitente = "me.llamo.jjulian@gmail.com"; // Cambia esto por tu dirección de correo electrónico
         final String clave = "dvol ntwn qixu dxwn"; // Cambia esto por tu contraseña de correo electrónico
@@ -90,6 +105,12 @@ public class EmailValidator {
          }
 	}
     
+    /**
+     * Metodo encargado de enviar un correo electronico de verificacion al correo electronico del usuario
+     * al querer cambiarse este de contraseña
+     * @param destinatario	String correo electronico del usuario
+     * @param token	String Token de verificacion
+     */
     public static void cambio_password(String destinatario, String token) {
     	final String remitente = "me.llamo.jjulian@gmail.com"; // Cambia esto por tu dirección de correo electrónico
         final String clave = "dvol ntwn qixu dxwn"; // Cambia esto por tu contraseña de correo electrónico

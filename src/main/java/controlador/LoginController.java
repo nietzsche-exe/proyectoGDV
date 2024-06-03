@@ -52,19 +52,28 @@ import modelo.Direccion;
 import modelo.Habitacion;
 import modelo.HibernateUtils;
 import modelo.HotelBD;
-import modelo.HotelData;
 import modelo.Usuario;
 import modelo.Viaje;
 import util.EmailValidator;
+import util.HotelData;
 
 
 /**
- * Servlet implementation class LoginController
+ * La clase LoginController se encarga de actuar como un servlet con la extension HtttpServlet, respondiendo a las peticiones del usuario.
  */
 public class LoginController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static final Logger LOGGER = LoggerFactory.getLogger(LoginController.class);
 
+	/**
+	 * El metodo procesar peticon se encarga de ejecutar una accion que desencadena el usuario, como puede ser 
+	 * redirigirlo a otra pagina, crear un Viaje y guardarlo en la base de datos, buscar ofertas de hoteles, eliminar un usuario
+	 * eliminar un viaje, registrar un nuevo usuario en base de datos.
+	 * @param request
+	 * @param response
+	 * @throws IOException
+	 * @throws ServletException
+	 */
 	@SuppressWarnings("unchecked")
 	protected void procesarPeticion(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
@@ -280,190 +289,161 @@ public class LoginController extends HttpServlet {
 			response.sendRedirect("Secure/nuevoViaje.jsp");
 			break;
 		case "buscarHotel":
-			
-			String fechaEntrada=request.getParameter("fechaEntrada");
-			String fechaSalida=request.getParameter("fechaSalida");
-			String numeroPersonas=request.getParameter("numeroPersonas");
-	    	Usuario usuarioInfo2 = (Usuario) request.getAttribute("usuario");
-			nomCiudadOrigen=request.getParameter("origen");
-	    	nomCiudadDestino= request.getParameter("destino");
-			LOGGER.info("Parametros recibidos: "+ 
-					"\nCiudad origen= "+nomCiudadOrigen+
-					"\nCiudad destino= "+nomCiudadDestino+
-					"\nFecha de Entrada= "+fechaEntrada+
-					"\nFecha de Salida= "+fechaSalida+
-					"\nNumero de Personas: "+numeroPersonas
-					);
-			
-			LOGGER.trace("Iniciando sesion en Amadeus");
-			Amadeus amadeus =iniciarApi();
-			LOGGER.trace("Sesion obtenida");
-			
-			//Falta por definir
-			try {
-				LOGGER.trace("Realizando consulta a la API obtener datos de la Ciudad Origen");
-				City[] ciudadOrigen=amadeus.referenceData.locations.cities.get(Params.with("keyword", nomCiudadOrigen));
-				codigoCiudadOrigen=ciudadOrigen[0].getIataCode();
-				codigoPaisOrigen=ciudadOrigen[0].getAddress().getCountryCode();
-				LOGGER.info("Datos obtenidos: "+
-							"\nCodigo Ciudad Origen= "+codigoCiudadOrigen+
-							"\nCodigo Pais Origen= "+codigoPaisOrigen
-							);
-			}catch(NullPointerException e) {
-				LOGGER.error("EL nombre de la ciudad Origen NO EXISTE");
-				LOGGER.error(e.getMessage());
-				LOGGER.error("Redirigiendo al formulario de creacion de viaje");
-				request.setAttribute("usuario", usuarioInfo2);
-				response.sendRedirect("Secure/nuevoViaje");
-			}catch(ResponseException e) {
-				LOGGER.error(e.getMessage());
-				LOGGER.error("Redirigiendo al formulario de creacion de viaje");
-				request.setAttribute("usuario", usuarioInfo2);
-				response.sendRedirect("Secure/nuevoViaje.jsp");
-			}
-				try {
-				LOGGER.trace("Realizando consulta a la API obtener datos de la Ciudad Destino");
-				City[] ciudadDestino=amadeus.referenceData.locations.cities.get(Params.with("keyword", nomCiudadDestino));
-				codigoCiudadDestino=ciudadDestino[0].getIataCode();
-				codigoPaisDestino=ciudadDestino[0].getAddress().getCountryCode();
-				LOGGER.info("Datos obtenidos: "+
-							"\nCodigo Ciudad Destino= "+codigoCiudadDestino+
-							"\nCodigo Pais Destino= "+codigoPaisDestino);
-				}catch(NullPointerException e) {
-					LOGGER.error("EL nombre de la ciudad Destino NO EXISTE");
-					LOGGER.error(e.getMessage());
-					LOGGER.error("Redirigiendo al formulario de creacion de viaje");
-					request.setAttribute("usuario", usuarioInfo2);
-					response.sendRedirect("Secure/nuevoViaje");
-				}catch(ResponseException e) {
-					LOGGER.error(e.getMessage());
-					LOGGER.error("Redirigiendo al formulario de creacion de viaje");
-					request.setAttribute("usuario", usuarioInfo2);
-					response.sendRedirect("Secure/nuevoViaje.jsp");
-				}
-			
-			
+
+		    String fechaEntrada = request.getParameter("fechaEntrada");
+		    String fechaSalida = request.getParameter("fechaSalida");
+		    String numeroPersonas = request.getParameter("numeroPersonas");
+		    Usuario usuarioInfo2 = (Usuario) request.getAttribute("usuario");
+		    nomCiudadOrigen = request.getParameter("origen");
+		    nomCiudadDestino = request.getParameter("destino");
+		    LOGGER.info("Parametros recibidos: " + 
+		        "\nCiudad origen= " + nomCiudadOrigen +
+		        "\nCiudad destino= " + nomCiudadDestino +
+		        "\nFecha de Entrada= " + fechaEntrada +
+		        "\nFecha de Salida= " + fechaSalida +
+		        "\nNumero de Personas: " + numeroPersonas
+		    );
+
+		    LOGGER.trace("Iniciando sesion en Amadeus");
+		    Amadeus amadeus = iniciarApi();
+		    LOGGER.trace("Sesion obtenida");
+
+		    boolean errorOccurred = false;
+
+		    try {
+		        LOGGER.trace("Realizando consulta a la API obtener datos de la Ciudad Origen");
+		        City[] ciudadOrigen = amadeus.referenceData.locations.cities.get(Params.with("keyword", nomCiudadOrigen));
+		        codigoCiudadOrigen = ciudadOrigen[0].getIataCode();
+		        codigoPaisOrigen = ciudadOrigen[0].getAddress().getCountryCode();
+		        LOGGER.info("Datos obtenidos: " +
+		            "\nCodigo Ciudad Origen= " + codigoCiudadOrigen +
+		            "\nCodigo Pais Origen= " + codigoPaisOrigen
+		        );
+		    } catch (NullPointerException | ResponseException e) {
+		        LOGGER.error("Error obteniendo datos de la ciudad origen: " + e.getMessage());
+		        errorOccurred = true;
+		    }
+
+		    try {
+		        LOGGER.trace("Realizando consulta a la API obtener datos de la Ciudad Destino");
+		        City[] ciudadDestino = amadeus.referenceData.locations.cities.get(Params.with("keyword", nomCiudadDestino));
+		        codigoCiudadDestino = ciudadDestino[0].getIataCode();
+		        codigoPaisDestino = ciudadDestino[0].getAddress().getCountryCode();
+		        LOGGER.info("Datos obtenidos: " +
+		            "\nCodigo Ciudad Destino= " + codigoCiudadDestino +
+		            "\nCodigo Pais Destino= " + codigoPaisDestino
+		        );
+		    } catch (NullPointerException | ResponseException e) {
+		        LOGGER.error("Error obteniendo datos de la ciudad destino: " + e.getMessage());
+		        errorOccurred = true;
+		    }
+
+		    if (errorOccurred) {
+		        request.setAttribute("usuario", usuarioInfo2);
+		        response.sendRedirect("Secure/nuevoViaje.jsp");
+		        break;
+		    }
+
 		    ArrayList<Hotel> listaHoteles = new ArrayList<>();
-		    ArrayList<HotelData> listaDatosHoteles= new ArrayList<HotelData>();
+		    ArrayList<HotelData> listaDatosHoteles = new ArrayList<>();
 		    try {
 		        Hotel[] hotels = amadeus.referenceData.locations.hotels.byCity.get(
-		                Params.with("cityCode", codigoCiudadDestino));
-//		                .and("radius", 8)
-//		                .and("radiusUnit", "KM"));
+		            Params.with("cityCode", codigoCiudadDestino));
 		        for (int a = 0; a < 10; a++) {
-		    		try {		    			
-			        	System.out.println(hotels[a].toString());
-			    		listaHoteles.add(hotels[a]);
-		    		}catch(ArrayIndexOutOfBoundsException e) {
-		    			System.out.println("No hay más hoteles en la lista.");
-		    			break;
-		    		}
-		    		
-		    	}
-		        
-		        int i=0;
-		        if(!listaHoteles.isEmpty()) {
-		        	LOGGER.info("Hoteles encontrados:"+listaHoteles.size());
-		        	
-		        	for (Hotel hotel : listaHoteles) {
-
-		        		try {
-		        			HotelOfferSearch[] ofertasHotel = amadeus.shopping.hotelOffersSearch.get(Params
-		                    .with("hotelIds", hotel.getHotelId())
-		                    .and("adults", Integer.valueOf(numeroPersonas))
-		                    .and("checkInDate", fechaEntrada)
-		                    .and("checkOutDate", fechaSalida)
-		                    .and("currency", "EUR")
-		                    .and("bestRateOnly", false));
-		            	
-		            Offer[] ofer = ofertasHotel[0].getOffers();
-		            for(int j=0;j<2;j++) {
-		            	try {
-		            	
-		            	Offer infoOferta = ofer[j];
-
-		            if (
-		                infoOferta.getRoom().getTypeEstimated().getBeds() != null &&
-		                infoOferta.getRoom().getTypeEstimated().getBedType() != null) {
-		            	
-		            	HotelData hotelData = new HotelData();
-		                hotelData.setNombre(hotel.getName());
-		                hotelData.setDireccion("Aqui va la direccion del hotel...");  
-		                hotelData.setCodPaisDestino(hotel.getAddress().getCountryCode());
-		                hotelData.setNomPaisDestino(hotel.getAddress().getCityName());
-		                hotelData.setCodigoHotel(hotel.getHotelId());
-		                hotelData.setLatitud(String.valueOf(hotel.getGeoCode().getLatitude()));
-		                hotelData.setLongitud(String.valueOf(hotel.getGeoCode().getLongitude()));
-		                hotelData.setIdOferta(infoOferta.getId());
-		                hotelData.setFechaEntrada(infoOferta.getCheckInDate());
-		                hotelData.setFechaSalida(infoOferta.getCheckOutDate());
-		                hotelData.setValoracion(infoOferta.getRateCode());
-		                hotelData.setDisponible(ofertasHotel[j].isAvailable());
-		                hotelData.setTipoHabitacion(infoOferta.getRoom().getType());
-		                hotelData.setCategoriaHabitacion(infoOferta.getRoom().getTypeEstimated().getCategory());
-		                hotelData.setNumeroCamas(infoOferta.getRoom().getTypeEstimated().getBeds());
-		                hotelData.setTipoCama(infoOferta.getRoom().getTypeEstimated().getBedType());
-		                hotelData.setDescripcion(infoOferta.getRoom().getDescription().getText().toString());
-		                hotelData.setNumeroAdultos(infoOferta.getGuests().getAdults());
-		                hotelData.setNumeroNinos(0);
-		                hotelData.setPrecioNoche(Math.ceil(Double.valueOf(infoOferta.getPrice().getBase()) / (LocalDate.parse(fechaSalida).toEpochDay() - LocalDate.parse(fechaEntrada).toEpochDay())));
-		                hotelData.setPrecioTotal(Double.valueOf(infoOferta.getPrice().getTotal()));
-		                listaDatosHoteles.add(hotelData);
-		                i=i+1;
-		                LOGGER.info("Oferta encontrada, total de ofertas encontradas: "+i);
-		                System.out.println(hotelData);
-		            	}
-		            	}catch(ArrayIndexOutOfBoundsException e) {
-		            		LOGGER.error("No quedan mas ofertas en el hotel pasamos al siguiente");
-		            		break;
-		            	}
+		            try {
+		                System.out.println(hotels[a].toString());
+		                listaHoteles.add(hotels[a]);
+		            } catch (ArrayIndexOutOfBoundsException e) {
+		                System.out.println("No hay más hoteles en la lista.");
+		                break;
 		            }
-		            
-		        	}catch(ClientException e) {
-		        		LOGGER.error(e.getMessage());
-		        		LOGGER.error("Hotel no dispone de habitaciones");
-		        		
-		        	}catch(NullPointerException e) {
-		        		LOGGER.error("Uno de los valores de la oferta del hotel es nulo no se guardara en la lista");
-		        	}
-		  
 		        }
-		       
+
+		        int i = 0;
+		        if (!listaHoteles.isEmpty()) {
+		            LOGGER.info("Hoteles encontrados:" + listaHoteles.size());
+
+		            for (Hotel hotel : listaHoteles) {
+		                try {
+		                    HotelOfferSearch[] ofertasHotel = amadeus.shopping.hotelOffersSearch.get(Params
+		                        .with("hotelIds", hotel.getHotelId())
+		                        .and("adults", Integer.valueOf(numeroPersonas))
+		                        .and("checkInDate", fechaEntrada)
+		                        .and("checkOutDate", fechaSalida)
+		                        .and("currency", "EUR")
+		                        .and("bestRateOnly", false));
+
+		                    Offer[] ofer = ofertasHotel[0].getOffers();
+		                    for (int j = 0; j < 2; j++) {
+		                        try {
+		                            Offer infoOferta = ofer[j];
+
+		                            if (infoOferta.getRoom().getTypeEstimated().getBeds() != null &&
+		                                infoOferta.getRoom().getTypeEstimated().getBedType() != null) {
+
+		                                HotelData hotelData = new HotelData();
+		                                hotelData.setNombre(hotel.getName());
+		                                hotelData.setDireccion("Aqui va la direccion del hotel...");
+		                                hotelData.setCodPaisDestino(hotel.getAddress().getCountryCode());
+		                                hotelData.setNomPaisDestino(hotel.getAddress().getCityName());
+		                                hotelData.setCodigoHotel(hotel.getHotelId());
+		                                hotelData.setLatitud(String.valueOf(hotel.getGeoCode().getLatitude()));
+		                                hotelData.setLongitud(String.valueOf(hotel.getGeoCode().getLongitude()));
+		                                hotelData.setIdOferta(infoOferta.getId());
+		                                hotelData.setFechaEntrada(infoOferta.getCheckInDate());
+		                                hotelData.setFechaSalida(infoOferta.getCheckOutDate());
+		                                hotelData.setValoracion(infoOferta.getRateCode());
+		                                hotelData.setDisponible(ofertasHotel[j].isAvailable());
+		                                hotelData.setTipoHabitacion(infoOferta.getRoom().getType());
+		                                hotelData.setCategoriaHabitacion(infoOferta.getRoom().getTypeEstimated().getCategory());
+		                                hotelData.setNumeroCamas(infoOferta.getRoom().getTypeEstimated().getBeds());
+		                                hotelData.setTipoCama(infoOferta.getRoom().getTypeEstimated().getBedType());
+		                                hotelData.setDescripcion(infoOferta.getRoom().getDescription().getText().toString());
+		                                hotelData.setNumeroAdultos(infoOferta.getGuests().getAdults());
+		                                hotelData.setNumeroNinos(0);
+		                                hotelData.setPrecioNoche(Math.ceil(Double.valueOf(infoOferta.getPrice().getBase()) / (LocalDate.parse(fechaSalida).toEpochDay() - LocalDate.parse(fechaEntrada).toEpochDay())));
+		                                hotelData.setPrecioTotal(Double.valueOf(infoOferta.getPrice().getTotal()));
+		                                listaDatosHoteles.add(hotelData);
+		                                i = i + 1;
+		                                LOGGER.info("Oferta encontrada, total de ofertas encontradas: " + i);
+		                                System.out.println(hotelData);
+		                            }
+		                        } catch (ArrayIndexOutOfBoundsException e) {
+		                            LOGGER.error("No quedan mas ofertas en el hotel pasamos al siguiente");
+		                            break;
+		                        }
+		                    }
+
+		                } catch (ClientException | NullPointerException e) {
+		                    LOGGER.error("Error en el hotel " + hotel.getName() + ": " + e.getMessage());
+		                }
+		            }
 		        }
-		    }catch(IllegalStateException e) {
-		    	LOGGER.error(e.getMessage());
-		    	request.setAttribute("usuario", usuarioInfo2);
-		    	response.sendRedirect("Secure/nuevoViaje.jsp");
-		    }
-		    catch(ClientException e) {
-		    	LOGGER.error(e.getMessage());
-		    	request.setAttribute("usuario", usuarioInfo2);
-		    	response.sendRedirect("Secure/nuevoViaje.jsp");
-		    }
-		    catch (ResponseException e) {
+		    } catch (IllegalStateException | ResponseException e) {
 		        LOGGER.error(e.getMessage());
 		        request.setAttribute("usuario", usuarioInfo2);
 		        response.sendRedirect("Secure/nuevoViaje.jsp");
+		        break;
 		    }
+
 		    request.setAttribute("listaHoteles", listaDatosHoteles);
 		    request.setAttribute("sesionAmadeus", amadeus);
 		    request.setAttribute("usuario", usuarioInfo2);
-		    
 		    request.setAttribute("numeroPersonas", numeroPersonas);
-		    
 		    request.setAttribute("nombreCiudadOrigen", nomCiudadOrigen);
 		    request.setAttribute("codCiudadOrigen", codigoCiudadOrigen);
 		    request.setAttribute("codigoPaisOrigen", codigoPaisOrigen);
-
 		    request.setAttribute("nombreCiudadDestino", nomCiudadDestino);
 		    request.setAttribute("codIATACiudadDestino", codigoCiudadDestino);
 		    request.setAttribute("codIATAPaisDestino", codigoPaisDestino);
-		    if(listaDatosHoteles.size()!=0) {
-		    	request.getRequestDispatcher("Secure/ofertasHoteles.jsp").forward(request, response);		    	
-		    }else {
-		    	response.sendRedirect("Secure/perfilUsuario.jsp");
+
+		    if (!listaDatosHoteles.isEmpty()) {
+		        request.getRequestDispatcher("Secure/ofertasHoteles.jsp").forward(request, response);
+		    } else {
+		        response.sendRedirect("Secure/nuevoViaje.jsp");
 		    }
 		    break;
+
 
 		case "guardarOfertaHotel":
 			Amadeus sesion=iniciarApi();
@@ -491,7 +471,7 @@ public class LoginController extends HttpServlet {
 			codigoPaisOrigen=(String) request.getParameter("codigoIATAPaisOrigen");
 			codigoCiudadOrigen=(String) request.getParameter("codigoIATACiudadOrigen");
 			codigoPaisDestino=(String) request.getParameter("codigoIATAPaisDestino");
-			nombreCiudadDestino=(String)request.getParameter("nomCiudadDestino");
+			nombreCiudadDestino=(String)request.getParameter("nombreCiudadDestino");
 			codigoCiudadDestino=(String)request.getParameter("codigoIATACiudadDestino");
 			LOGGER.info("Datos obtenidos de ofertasHoteles.jsp para crear una instancia de Direccion: " +
 	                "\nNumero de Personas= " + numeroPersonas +
@@ -1316,12 +1296,20 @@ public class LoginController extends HttpServlet {
 		}
 
 	}
-
+	
+	/**
+	 * Llama al metedo encargado de generar el token de verificacion de correo electronico 
+	 * @return String Token de verificacion.
+	 */
 	private String generarToken() {
 		// Implementa la lógica para generar un token de confirmación único
 		return UUID.randomUUID().toString();
 	}
 	
+	/**
+	 * Inicia sesion mediante 2 tokens en la Api de amedeus
+	 * @return Instancia de Amadeus.
+	 */
 	protected Amadeus iniciarApi() {
 		//Initialize using parameters
 		Amadeus amadeus = Amadeus
