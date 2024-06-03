@@ -152,10 +152,12 @@
 		}
 	
 	    #map {
-	        margin-top: 20px;
-	        height: 500px; 
-	        width: 100%;
-	    }
+		    margin-top: 20px;
+		    height: 500px; 
+		    width: 90%;
+		    margin-left: 5%;
+		    border-radius: 10px;
+		}
 	</style>
 <%
     } else {
