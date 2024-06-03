@@ -275,7 +275,7 @@
 						<input type="hidden" name="ciudadDestino" value="<%=locationsDestino[0].getAddress().getCityName()%>">
 						<input type="hidden" name="aeropuertoDestino" value="<%=locationsDestino[0].getName()%>">
 						<input type="hidden" name="tipoViajero" value="<%=pricings[0].getTravelerType()%>">
-						<input type="hidden" name="precioMedio" value="<%=pricings[0].getPrice().getTotal()%>">
+						<input type="hidden" name="precioMedio" value="<%=flightOffers[0].getPrice().getTotal()%>">
 						<input type="hidden" name="claseCabina" value="<%=bySegments[0].getCabin()%>">
 						<input type="hidden" name="numeroPersonasViaje" value="<%=numeroPersonas %>">
 						<input type="submit" value="Guardar">

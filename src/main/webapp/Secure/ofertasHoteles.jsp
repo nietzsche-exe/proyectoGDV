@@ -2,14 +2,16 @@
 <%@page import="java.util.List"%>
 <%@page import="org.json.JSONArray"%>
 <%@page import="modelo.Usuario" %>
-<%@ page import="java.util.stream.Collectors" %>
+<%@page import="java.util.stream.Collectors" %>
 <%@page import="controlador.LoginController"%>
+<%@page import="util.ConfigLoader"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Resultado Hoteles</title>
 <%
+    ConfigLoader configLoader = new ConfigLoader();
     HttpSession sessionA = request.getSession();
     Usuario usuario = (Usuario) sessionA.getAttribute("usuario");
 
@@ -99,6 +101,7 @@
 		.Titulo {
 			font-size: large;
 			color: #353535;
+			text-align: left;
 		}
 		
 		.Texto {
@@ -226,6 +229,7 @@
 		.Titulo {
 		    font-size: large;
 		    color: #e0e0e0;
+			text-align: left;
 		}
 		
 		.Texto {
@@ -281,7 +285,9 @@
 		#map {
 		    margin-top: 20px;
 		    height: 500px; 
-		    width: 100%;
+		    width: 90%;
+		    margin-left: 5%;
+		    border-radius: 10px;
 		}
 
 	</style>
@@ -300,11 +306,13 @@
 			<input id="Cancelar" type="submit" value="cancelar">
 		
 		</form>
+		
+		<input type="hidden" class="latitude" value='<%= latitudesJsonStr %>'>
+		<input type="hidden" class="longitude" value='<%= longitudesJsonStr %>'>
+		<h1 class="Titulo">Ciudad: ${param.destino}</h1>
 	</header>
 
-	<input type="hidden" class="latitude" value='<%= latitudesJsonStr %>'>
-	<input type="hidden" class="longitude" value='<%= longitudesJsonStr %>'>
-	<h1 class="Titulo">Ciudad: ${param.destino}</h1>
+	
 	
 <%
 	if(!listaHoteles.isEmpty()){
@@ -396,7 +404,7 @@
 		</div>
 		<div id="direcciones"></div>
 		<script src="JavaScript/map.js"></script>
-		<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBm0vNj92eB8yjWcFe8ieb9doiwDVf2jO0&callback=iniciarMap&loading=async" ></script>
+		<script async defer src="https://maps.googleapis.com/maps/api/js?key=<%=configLoader.getProperty("util.apiKeyMap")%>&callback=iniciarMap&loading=async"></script>
 		<!--  
 		<script src="JavaScript/geolocalizacion.js"></script>
 		-->
@@ -407,6 +415,7 @@
 		request.getSession().setAttribute("usuario", usuario);
 		response.sendRedirect("perfilUsuario.jsp");
 	}
+
 %>
 
 </body>

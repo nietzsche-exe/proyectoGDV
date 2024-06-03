@@ -1,3 +1,5 @@
+<%@page import="com.amadeus.exceptions.ResponseException"%>
+<%@page import="java.lang.module.ResolutionException"%>
 <%@page import="java.util.Arrays"%>
 <%@page import="com.amadeus.exceptions.ClientException"%>
 <%@page import="com.amadeus.resources.Activity"%>
@@ -19,6 +21,7 @@
 <%@page import="java.sql.PreparedStatement"%>
 <%@page import="org.hibernate.Session"%>
 <%@page import="org.hibernate.Transaction"%>
+<%@page import="util.ConfigLoader" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -29,14 +32,15 @@
 <%
 // Obtiene la sesión actual
 HttpSession session2 = request.getSession(false);
-
+ConfigLoader configLoader = new ConfigLoader();
 // Verifica si la sesión existe y si el usuario está autenticado
 if (session2 == null || session2.getAttribute("usuario") == null) {
 	response.sendRedirect("login.jsp");
 	return;
 }
 //Sesion Amadeus
-Amadeus amadeus = Amadeus.builder("boLFp1JaJ9WSPbhcQbA4hWnsrG1Dw95L", "SrAG4zk33lL7TbTi").build();
+
+Amadeus amadeus = Amadeus.builder(configLoader.getProperty("util.apiKeyAmadeus1"), configLoader.getProperty("util.apiKeyAmadeus2")).build();
 
 // Obtiene los datos del usuario almacenados en la sesión
 Usuario usuario = (Usuario) session2.getAttribute("usuario");
@@ -54,7 +58,7 @@ try {
 
 	Boolean tema = (Boolean) resultado[0];
 	Boolean sesion_Activa = (Boolean) resultado[1];
-
+	
 	usuario.setTema(tema);
 	usuario.setSesionActiva(sesion_Activa);
 	
@@ -62,6 +66,7 @@ try {
 	+ "JOIN FETCH v.datos_vuelo dv " + "WHERE v.usuario.id_usuario = :idUsuario");
 	queryViajes.setParameter("idUsuario", usuario.getId_usuario());
 	listaViajes = queryViajes.getResultList();
+	
 
 } catch (Exception e) {
 	e.printStackTrace();
@@ -71,6 +76,7 @@ try {
 	}
 }
 
+	
 if (usuario.getTema() == false) {
 %>
 	<link rel="stylesheet" href="../Styles/Perfil_Usuario/cssPerfilUsuario_Claro.css">
@@ -162,8 +168,10 @@ if (usuario.getTema() == false) {
 			for (Viaje viaje : listaViajes) {
 				Habitacion habitacion = viaje.getHabitacion();
 				HotelBD hotel = habitacion.getHotelBD();
-	
 				DatosVuelo datosVuelo = viaje.getDatos_vuelo();
+	
+				Double resultadoTotal=datosVuelo.getPrecioMedio()+habitacion.getPrecio_total();;
+				resultadoTotal=Math.ceil(resultadoTotal);
 %>
 				<div class="Contenedor_Viajes">
 		
@@ -176,14 +184,11 @@ if (usuario.getTema() == false) {
 							<th>Fecha Entrada</th>
 							<th>Fecha Salida</th>
 							<th>NºCamas</th>
-<%
-							if (datosVuelo != null) {
-%>
-								<th>Origen</th>
-								<th>Destino</th>
-<%
-							}
-%>
+							<th>Origen</th>
+							<th>Destino</th>
+							<th>Precio Vuelo Total</th>
+							<th>Numero Viajero</th>
+							<th>Total Viaje</th>
 						</tr>
 						<tr class="Filas">
 							<td class="Columna_1"><%=viaje.getId_viaje()%></td>
@@ -193,14 +198,11 @@ if (usuario.getTema() == false) {
 							<td class="Columna_5"><%=habitacion.getFecha_entrada()%></td>
 							<td class="Columna_6"><%=habitacion.getFecha_salida()%></td>
 							<td class="Columna_7"><%=habitacion.getNumero_camas()%></td>
-<%
-							if (datosVuelo != null) {
-%>
-								<td class="Columna_8"><%=datosVuelo.getCiudadOrigen()%></td>
-								<td class="Columna_9"><%=datosVuelo.getCiudadDestino()%></td>
-<%
-							}
-%>
+							<td class="Columna_8"><%=datosVuelo.getCiudadOrigen()%></td>
+							<td class="Columna_9"><%=datosVuelo.getCiudadDestino()%></td>
+							<td><%=datosVuelo.getPrecioMedio() %></td>
+							<td><%=viaje.getNumeroViajeros() %></td>
+							<td><%=resultadoTotal%></td>
 							<td class="Columna_10">
 								<form name="eliminarViajeUsuario" action="../LoginController?opcion=eliminarViajeUsuario" method="post">
 								
@@ -261,8 +263,9 @@ if (usuario.getTema() == false) {
 					
 						} 
 						catch (ClientException e) {
-			    		
 							System.out.println("Ubicacion no dispone de puntos de interes");
+						}catch(ResponseException e){
+							System.out.println("Error de verificacion de clave de acceso a la api"+e.getMessage());							
 						}
 						catch(NullPointerException e) {
 			    			System.out.println("Error :"+e.getMessage());
@@ -275,6 +278,7 @@ if (usuario.getTema() == false) {
 			}
 		}
 	}
+
 %>
 
 	<script src="../JavaScript/script.js"></script>

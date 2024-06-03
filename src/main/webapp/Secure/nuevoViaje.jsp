@@ -31,9 +31,7 @@ if (usuario.getTema()==true) {
 
 	<header id="Cabecero">
 		<form id="form_cabecero" action="LoginController?opcion=perfil" method="post">
-<%
-			a.setAttribute("usuario", usuario); 
-%>
+			<%a.setAttribute("usuario", usuario);%>
 			<input id="Cancelar" type="submit" value="cancelar">
 		</form>
 	</header>
@@ -73,5 +71,8 @@ if (usuario.getTema()==true) {
 	        </form>
 	    </div>
 	</div>
+
+	<%
+%>
 </body>
 </html>
