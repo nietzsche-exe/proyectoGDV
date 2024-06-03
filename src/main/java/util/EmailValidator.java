@@ -8,8 +8,18 @@ import org.slf4j.LoggerFactory;
 
 import controlador.LoginController;
 
+/**
+ * Clase encargada de validar/verficar la existencia de un correo electronico introducido por el usuario durante su registro
+ * mediante la creacion de un token de verificacion
+ */
 public class EmailValidator {
 	private static final Logger LOGGER = LoggerFactory.getLogger(EmailValidator.class);
+	
+    /**
+     * Metodo encargado de enviar un correo al correo introducido por el usuario
+     * @param destinatario	String Correo introducido por el usuario
+     * @param token	String Token de verificacion
+     */
 	static ConfigLoader configLoader = new ConfigLoader();
     public static void enviarCorreo(String destinatario, String token) {
         final String remitente = configLoader.getProperty("util.email"); 
@@ -41,12 +51,17 @@ public class EmailValidator {
 
             Transport.send(mensaje);
 
-            System.out.println("¡Correo enviado exitosamente!");
+            LOGGER.info("¡Correo enviado exitosamente!");
          } catch (MessagingException e) {
             throw new RuntimeException("Error al enviar el correo electrónico: " + e);
          }
      }
     
+	/**
+	 * Metodo encargado de enviar un correo de verificacion al nuevo correo electronico introducido por el usuario
+	 * @param destinatario String nuevo correo electronico del usuario
+	 * @param token String Token de verificacion
+	 */
     public static void cambio_correo(String destinatario, String token) {
     	final String remitente = configLoader.getProperty("util.email");
         final String clave = configLoader.getProperty("util.emailKey"); 
@@ -80,12 +95,18 @@ public class EmailValidator {
        
             Transport.send(mensaje);
 
-            System.out.println("¡Correo enviado exitosamente!");
+            LOGGER.info("¡Correo enviado exitosamente!");
          } catch (MessagingException e) {
             throw new RuntimeException("Error al enviar el correo electrónico: " + e);
          }
 	}
     
+    /**
+     * Metodo encargado de enviar un correo electronico de verificacion al correo electronico del usuario
+     * al querer cambiarse este de contraseña
+     * @param destinatario	String correo electronico del usuario
+     * @param token	String Token de verificacion
+     */
     public static void cambio_password(String destinatario, String token) {
     	final String remitente = configLoader.getProperty("util.email"); 
         final String clave = configLoader.getProperty("util.emailKey"); 
@@ -119,7 +140,7 @@ public class EmailValidator {
 
             Transport.send(mensaje);
 
-            System.out.println("¡Correo enviado exitosamente!");
+            LOGGER.info("¡Correo enviado exitosamente!");
          } catch (MessagingException e) {
             throw new RuntimeException("Error al enviar el correo electrónico: " + e);
          }

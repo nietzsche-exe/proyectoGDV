@@ -377,6 +377,7 @@
 	try{
 		
 	
+
 		if(flightOffers[0].getId()!=null){%>
 			<div id="Ofertas">
 <% 
@@ -564,24 +565,15 @@
 %>
 			</div>
 <%
+
 		}
 	}catch( ArrayIndexOutOfBoundsException e){
 		System.out.println("NO HAY VUELOS DISPONIBLES");
 		//response.sendRedirect("Secure/nuevoViaje.jsp");
 %>
-	
-<!-- 	<h2>¿Quieres guardar el viaje sin vuelos?</h2> -->
-<!-- 	<form action="LoginController?opcion=guardarOfertaViaje" method="post"> -->
-<!-- 		<input type="submit" value="Guardar Viaje"> -->
-<!-- 	</form> -->
-<!-- 	<form action="LoginController?opcion=perfil" method="post"> -->
-<%-- 		<% 
-// 		sessionA.setAttribute("usuario",usuario);
- 		%> --%>
-<!-- 		<input type="submit" value="volver"> -->
-<!-- 	</form> -->
-	
-		<script>alert("NO HAY VUELOS DISPONIBLES PARA LA CIUDAD\n "<%=direccion.getNombre_ciudad()%>", "<%= direccion.getCodigo_pais()%>)</script>
+
+	<script>alert("Redirigiendo a la busqueda destinos \n"+
+			"NO HAY VUELOS DISPONIBLES PARA LA CIUDAD\n "<%=direccion.getNombre_ciudad()%>", "<%= direccion.getCodigo_pais()%>)</script>
 	
 <%
 		sessionA.setAttribute("usuario",usuario);

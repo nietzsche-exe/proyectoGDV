@@ -1,4 +1,4 @@
-<%@page import="modelo.HotelData"%>
+<%@page import="util.HotelData"%>
 <%@page import="java.util.List"%>
 <%@page import="org.json.JSONArray"%>
 <%@page import="modelo.Usuario" %>
@@ -323,8 +323,9 @@
 		
 		<div id="Ofertas">
 <%
-			for (HotelData hotel : listaHoteles) {
-				System.out.println(hotel.toString());
+	for (int i = 0; i < listaHoteles.size(); i++) {
+		HotelData hotel = listaHoteles.get(i);
+		System.out.println(hotel.toString());
 %>
 			<table id="Tabla">
 			<!--  -->
@@ -337,7 +338,8 @@
 				
 				<tr class="Filas">
 					<td class="Columna_1">Dirección</td>
-					<td class="Columna_2" ><%= hotel.getDireccion() %></td>
+					<td class="Columna_2" id="direccion_<%=i%>" data-index="<%=i%>"><%= hotel.getDireccion() %></td>
+
 				</tr>
 				<tr class="Filas">
 					<td class="Columna_1">Fecha de entrada</td>
@@ -375,7 +377,7 @@
 						<input type="hidden" name="codigoIATAPaisDestino" value="<%= hotel.getCodPaisDestino()%>">
 						<input type="hidden" name="nombrePaisDestino" value="<%= hotel.getNomPaisDestino() %>">
 						<input type="hidden" name="codigoIATACiudadDestino" value="<%= request.getAttribute("codIATACiudadDestino") %>">
-						<input type="hidden" name="nombreCiudadDestino" value="<%= request.getAttribute("nomCiudadDestino") %>">
+						<input type="hidden" name="nombreCiudadDestino" value="<%= request.getAttribute("nombreCiudadDestino") %>">
 			                    
 						<input type="hidden" name="idHabitacion" value="<%= hotel.getIdOferta() %>">
 			            <input type="hidden" name="fechaEntrada2" value="<%= hotel.getFechaEntrada() %>">
@@ -402,18 +404,21 @@
 			}
 %>
 		</div>
-		
+		<div id="direcciones"></div>
+		<script src="JavaScript/map.js"></script>
+		<script async defer src="https://maps.googleapis.com/maps/api/js?key=<%=configLoader.getProperty("util.apiKeyMap")%>&callback=iniciarMap&loading=async"></script>
+		<!--  
+		<script src="JavaScript/geolocalizacion.js"></script>
+		-->
+		<!--  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCZuB7bki3m-dvgWkWfcclEjfwSDxVAlXo&callback=obtenerTodasLasDirecciones"></script>
+		-->
 <%
 	}else{
 		request.getSession().setAttribute("usuario", usuario);
 		response.sendRedirect("perfilUsuario.jsp");
 	}
+
 %>
 
-<div id="direcciones"></div>
-<script src="JavaScript/map.js"></script>
-<script src="JavaScript/geolocalizacion.js"></script>
-<script src="https://maps.googleapis.com/maps/api/js?key=<%=configLoader.getProperty("util.apiKeyMap")%>&callback=iniciarMap"></script>
-<script src="https://maps.googleapis.com/maps/api/js?key=<%=configLoader.getProperty("util.apiKeyGeo")%>&callback=obtenerTodasLasDirecciones"></script>
 </body>
 </html>

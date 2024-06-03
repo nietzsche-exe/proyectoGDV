@@ -52,21 +52,30 @@ import modelo.Direccion;
 import modelo.Habitacion;
 import modelo.HibernateUtils;
 import modelo.HotelBD;
-import modelo.HotelData;
 import modelo.Usuario;
 import modelo.Viaje;
 import util.ConfigLoader;
 import util.EmailValidator;
+import util.HotelData;
 
 
 /**
- * Servlet implementation class LoginController
+ * La clase LoginController se encarga de actuar como un servlet con la extension HtttpServlet, respondiendo a las peticiones del usuario.
  */
 public class LoginController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static final Logger LOGGER = LoggerFactory.getLogger(LoginController.class);
 	ConfigLoader configLoader = new ConfigLoader();
 
+	/**
+	 * El metodo procesar peticon se encarga de ejecutar una accion que desencadena el usuario, como puede ser 
+	 * redirigirlo a otra pagina, crear un Viaje y guardarlo en la base de datos, buscar ofertas de hoteles, eliminar un usuario
+	 * eliminar un viaje, registrar un nuevo usuario en base de datos.
+	 * @param request
+	 * @param response
+	 * @throws IOException
+	 * @throws ServletException
+	 */
 	@SuppressWarnings("unchecked")
 	protected void procesarPeticion(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
@@ -282,77 +291,67 @@ public class LoginController extends HttpServlet {
 			response.sendRedirect("Secure/nuevoViaje.jsp");
 			break;
 		case "buscarHotel":
-			
-			String fechaEntrada=request.getParameter("fechaEntrada");
-			String fechaSalida=request.getParameter("fechaSalida");
-			String numeroPersonas=request.getParameter("numeroPersonas");
-	    	Usuario usuarioInfo2 = (Usuario) request.getAttribute("usuario");
-			nomCiudadOrigen=request.getParameter("origen");
-	    	nomCiudadDestino= request.getParameter("destino");
-			LOGGER.info("Parametros recibidos: "+ 
-					"\nCiudad origen= "+nomCiudadOrigen+
-					"\nCiudad destino= "+nomCiudadDestino+
-					"\nFecha de Entrada= "+fechaEntrada+
-					"\nFecha de Salida= "+fechaSalida+
-					"\nNumero de Personas: "+numeroPersonas
-					);
-			
-			LOGGER.trace("Iniciando sesion en Amadeus");
-			Amadeus amadeus =iniciarApi();
-			LOGGER.trace("Sesion obtenida");
-			
-			//Falta por definir
-			try {
-				LOGGER.trace("Realizando consulta a la API obtener datos de la Ciudad Origen");
-				City[] ciudadOrigen=amadeus.referenceData.locations.cities.get(Params.with("keyword", nomCiudadOrigen));
-				codigoCiudadOrigen=ciudadOrigen[0].getIataCode();
-				codigoPaisOrigen=ciudadOrigen[0].getAddress().getCountryCode();
-				LOGGER.info("Datos obtenidos: "+
-							"\nCodigo Ciudad Origen= "+codigoCiudadOrigen+
-							"\nCodigo Pais Origen= "+codigoPaisOrigen
-							);
-			}catch(NullPointerException e) {
-				LOGGER.error("EL nombre de la ciudad Origen NO EXISTE");
-				LOGGER.error(e.getMessage());
-				LOGGER.error("Redirigiendo al formulario de creacion de viaje");
-				request.setAttribute("usuario", usuarioInfo2);
-				response.sendRedirect("Secure/nuevoViaje");
-			}catch(ResponseException e) {
-				LOGGER.error(e.getMessage());
-				LOGGER.error("Redirigiendo al formulario de creacion de viaje");
-				request.setAttribute("usuario", usuarioInfo2);
-				response.sendRedirect("Secure/nuevoViaje.jsp");
-			}
-				try {
-				LOGGER.trace("Realizando consulta a la API obtener datos de la Ciudad Destino");
-				City[] ciudadDestino=amadeus.referenceData.locations.cities.get(Params.with("keyword", nomCiudadDestino));
-				codigoCiudadDestino=ciudadDestino[0].getIataCode();
-				codigoPaisDestino=ciudadDestino[0].getAddress().getCountryCode();
-				LOGGER.info("Datos obtenidos: "+
-							"\nCodigo Ciudad Destino= "+codigoCiudadDestino+
-							"\nCodigo Pais Destino= "+codigoPaisDestino);
-				}catch(NullPointerException e) {
-					LOGGER.error("EL nombre de la ciudad Destino NO EXISTE");
-					LOGGER.error(e.getMessage());
-					LOGGER.error("Redirigiendo al formulario de creacion de viaje");
-					request.setAttribute("usuario", usuarioInfo2);
-					response.sendRedirect("Secure/nuevoViaje");
-				}catch(ResponseException e) {
-					LOGGER.error(e.getMessage());
-					LOGGER.error("Redirigiendo al formulario de creacion de viaje");
-					request.setAttribute("usuario", usuarioInfo2);
-					response.sendRedirect("Secure/nuevoViaje.jsp");
-				}
-			
-			
+
+		    String fechaEntrada = request.getParameter("fechaEntrada");
+		    String fechaSalida = request.getParameter("fechaSalida");
+		    String numeroPersonas = request.getParameter("numeroPersonas");
+		    Usuario usuarioInfo2 = (Usuario) request.getAttribute("usuario");
+		    nomCiudadOrigen = request.getParameter("origen");
+		    nomCiudadDestino = request.getParameter("destino");
+		    LOGGER.info("Parametros recibidos: " + 
+		        "\nCiudad origen= " + nomCiudadOrigen +
+		        "\nCiudad destino= " + nomCiudadDestino +
+		        "\nFecha de Entrada= " + fechaEntrada +
+		        "\nFecha de Salida= " + fechaSalida +
+		        "\nNumero de Personas: " + numeroPersonas
+		    );
+
+		    LOGGER.trace("Iniciando sesion en Amadeus");
+		    Amadeus amadeus = iniciarApi();
+		    LOGGER.trace("Sesion obtenida");
+
+		    boolean errorOccurred = false;
+
+		    try {
+		        LOGGER.trace("Realizando consulta a la API obtener datos de la Ciudad Origen");
+		        City[] ciudadOrigen = amadeus.referenceData.locations.cities.get(Params.with("keyword", nomCiudadOrigen));
+		        codigoCiudadOrigen = ciudadOrigen[0].getIataCode();
+		        codigoPaisOrigen = ciudadOrigen[0].getAddress().getCountryCode();
+		        LOGGER.info("Datos obtenidos: " +
+		            "\nCodigo Ciudad Origen= " + codigoCiudadOrigen +
+		            "\nCodigo Pais Origen= " + codigoPaisOrigen
+		        );
+		    } catch (NullPointerException | ResponseException e) {
+		        LOGGER.error("Error obteniendo datos de la ciudad origen: " + e.getMessage());
+		        errorOccurred = true;
+		    }
+
+		    try {
+		        LOGGER.trace("Realizando consulta a la API obtener datos de la Ciudad Destino");
+		        City[] ciudadDestino = amadeus.referenceData.locations.cities.get(Params.with("keyword", nomCiudadDestino));
+		        codigoCiudadDestino = ciudadDestino[0].getIataCode();
+		        codigoPaisDestino = ciudadDestino[0].getAddress().getCountryCode();
+		        LOGGER.info("Datos obtenidos: " +
+		            "\nCodigo Ciudad Destino= " + codigoCiudadDestino +
+		            "\nCodigo Pais Destino= " + codigoPaisDestino
+		        );
+		    } catch (NullPointerException | ResponseException e) {
+		        LOGGER.error("Error obteniendo datos de la ciudad destino: " + e.getMessage());
+		        errorOccurred = true;
+		    }
+
+		    if (errorOccurred) {
+		        request.setAttribute("usuario", usuarioInfo2);
+		        response.sendRedirect("Secure/nuevoViaje.jsp");
+		        break;
+		    }
+
 		    ArrayList<Hotel> listaHoteles = new ArrayList<>();
-		    ArrayList<HotelData> listaDatosHoteles= new ArrayList<HotelData>();
+		    ArrayList<HotelData> listaDatosHoteles = new ArrayList<>();
 		    try {
 		    	LOGGER.info("Buscando hoteles en Amadeus");
 		        Hotel[] hotels = amadeus.referenceData.locations.hotels.byCity.get(
-		                Params.with("cityCode", codigoCiudadDestino));
-//		                .and("radius", 8)
-//		                .and("radiusUnit", "KM"));
+		            Params.with("cityCode", codigoCiudadDestino));
 		        for (int a = 0; a < 10; a++) {
 		    		try {		    			
 			        	System.out.println(hotels[a].toString());
@@ -364,109 +363,92 @@ public class LoginController extends HttpServlet {
 		    		
 		    	}
 		        
-		        int i=0;
-		        if(!listaHoteles.isEmpty()) {
-		        	LOGGER.info("Hoteles encontrados:"+listaHoteles.size());
-		        	
-		        	for (Hotel hotel : listaHoteles) {
-
-		        		try {
-		        			HotelOfferSearch[] ofertasHotel = amadeus.shopping.hotelOffersSearch.get(Params
-		                    .with("hotelIds", hotel.getHotelId())
-		                    .and("adults", Integer.valueOf(numeroPersonas))
-		                    .and("checkInDate", fechaEntrada)
-		                    .and("checkOutDate", fechaSalida)
-		                    .and("currency", "EUR")
-		                    .and("bestRateOnly", false));
-		            	
-		            Offer[] ofer = ofertasHotel[0].getOffers();
-		            for(int j=0;j<2;j++) {
-		            	try {
-		            	
-		            	Offer infoOferta = ofer[j];
-
-		            if (
-		                infoOferta.getRoom().getTypeEstimated().getBeds() != null &&
-		                infoOferta.getRoom().getTypeEstimated().getBedType() != null) {
-		            	
-		            	HotelData hotelData = new HotelData();
-		                hotelData.setNombre(hotel.getName());
-		                hotelData.setDireccion("Aqui va la direccion del hotel...");  
-		                hotelData.setCodPaisDestino(hotel.getAddress().getCountryCode());
-		                hotelData.setNomPaisDestino(hotel.getAddress().getCityName());
-		                hotelData.setCodigoHotel(hotel.getHotelId());
-		                hotelData.setLatitud(String.valueOf(hotel.getGeoCode().getLatitude()));
-		                hotelData.setLongitud(String.valueOf(hotel.getGeoCode().getLongitude()));
-		                hotelData.setIdOferta(infoOferta.getId());
-		                hotelData.setFechaEntrada(infoOferta.getCheckInDate());
-		                hotelData.setFechaSalida(infoOferta.getCheckOutDate());
-		                hotelData.setValoracion(infoOferta.getRateCode());
-		                hotelData.setDisponible(ofertasHotel[j].isAvailable());
-		                hotelData.setTipoHabitacion(infoOferta.getRoom().getType());
-		                hotelData.setCategoriaHabitacion(infoOferta.getRoom().getTypeEstimated().getCategory());
-		                hotelData.setNumeroCamas(infoOferta.getRoom().getTypeEstimated().getBeds());
-		                hotelData.setTipoCama(infoOferta.getRoom().getTypeEstimated().getBedType());
-		                hotelData.setDescripcion(infoOferta.getRoom().getDescription().getText().toString());
-		                hotelData.setNumeroAdultos(infoOferta.getGuests().getAdults());
-		                hotelData.setNumeroNinos(0);
-		                hotelData.setPrecioNoche(Math.ceil(Double.valueOf(infoOferta.getPrice().getBase()) / (LocalDate.parse(fechaSalida).toEpochDay() - LocalDate.parse(fechaEntrada).toEpochDay())));
-		                hotelData.setPrecioTotal(Double.valueOf(infoOferta.getPrice().getTotal()));
-		                listaDatosHoteles.add(hotelData);
-		                i=i+1;
-		                LOGGER.info("Oferta encontrada, total de ofertas encontradas: "+i);
-		                System.out.println(hotelData);
-		            	}
-		            	}catch(ArrayIndexOutOfBoundsException e) {
-		            		LOGGER.error("No quedan mas ofertas en el hotel pasamos al siguiente");
-		            		break;
-		            	}
-		            }
-		            
-		        	}catch(ClientException e) {
-		        		LOGGER.error(e.getMessage());
-		        		LOGGER.error("Hotel no dispone de habitaciones");
-		        		
-		        	}catch(NullPointerException e) {
-		        		LOGGER.error("Uno de los valores de la oferta del hotel es nulo no se guardara en la lista");
-		        	}
-		  
-		        }
 		       
+
+		        int i = 0;
+		        if (!listaHoteles.isEmpty()) {
+		            LOGGER.info("Hoteles encontrados:" + listaHoteles.size());
+
+		            for (Hotel hotel : listaHoteles) {
+		                try {
+		                    HotelOfferSearch[] ofertasHotel = amadeus.shopping.hotelOffersSearch.get(Params
+		                        .with("hotelIds", hotel.getHotelId())
+		                        .and("adults", Integer.valueOf(numeroPersonas))
+		                        .and("checkInDate", fechaEntrada)
+		                        .and("checkOutDate", fechaSalida)
+		                        .and("currency", "EUR")
+		                        .and("bestRateOnly", false));
+
+		                    Offer[] ofer = ofertasHotel[0].getOffers();
+		                    for (int j = 0; j < 2; j++) {
+		                        try {
+		                            Offer infoOferta = ofer[j];
+
+		                            if (infoOferta.getRoom().getTypeEstimated().getBeds() != null &&
+		                                infoOferta.getRoom().getTypeEstimated().getBedType() != null) {
+
+		                                HotelData hotelData = new HotelData();
+		                                hotelData.setNombre(hotel.getName());
+		                                hotelData.setDireccion("Aqui va la direccion del hotel...");
+		                                hotelData.setCodPaisDestino(hotel.getAddress().getCountryCode());
+		                                hotelData.setNomPaisDestino(hotel.getAddress().getCityName());
+		                                hotelData.setCodigoHotel(hotel.getHotelId());
+		                                hotelData.setLatitud(String.valueOf(hotel.getGeoCode().getLatitude()));
+		                                hotelData.setLongitud(String.valueOf(hotel.getGeoCode().getLongitude()));
+		                                hotelData.setIdOferta(infoOferta.getId());
+		                                hotelData.setFechaEntrada(infoOferta.getCheckInDate());
+		                                hotelData.setFechaSalida(infoOferta.getCheckOutDate());
+		                                hotelData.setValoracion(infoOferta.getRateCode());
+		                                hotelData.setDisponible(ofertasHotel[j].isAvailable());
+		                                hotelData.setTipoHabitacion(infoOferta.getRoom().getType());
+		                                hotelData.setCategoriaHabitacion(infoOferta.getRoom().getTypeEstimated().getCategory());
+		                                hotelData.setNumeroCamas(infoOferta.getRoom().getTypeEstimated().getBeds());
+		                                hotelData.setTipoCama(infoOferta.getRoom().getTypeEstimated().getBedType());
+		                                hotelData.setDescripcion(infoOferta.getRoom().getDescription().getText().toString());
+		                                hotelData.setNumeroAdultos(infoOferta.getGuests().getAdults());
+		                                hotelData.setNumeroNinos(0);
+		                                hotelData.setPrecioNoche(Math.ceil(Double.valueOf(infoOferta.getPrice().getBase()) / (LocalDate.parse(fechaSalida).toEpochDay() - LocalDate.parse(fechaEntrada).toEpochDay())));
+		                                hotelData.setPrecioTotal(Double.valueOf(infoOferta.getPrice().getTotal()));
+		                                listaDatosHoteles.add(hotelData);
+		                                i = i + 1;
+		                                LOGGER.info("Oferta encontrada, total de ofertas encontradas: " + i);
+		                            }
+		                        } catch (ArrayIndexOutOfBoundsException e) {
+		                            LOGGER.error("No quedan mas ofertas en el hotel pasamos al siguiente");
+		                            break;
+		                        }
+		                    }
+
+		                } catch (ClientException | NullPointerException e) {
+		                    LOGGER.error("Error en el hotel " + hotel.getName() + ": " + e.getMessage());
+		                }
+		            }
 		        }
-		    }catch(IllegalStateException e) {
-		    	LOGGER.error(e.getMessage());
-		    	request.setAttribute("usuario", usuarioInfo2);
-		    	response.sendRedirect("Secure/nuevoViaje.jsp");
-		    }
-		    catch(ClientException e) {
-		    	LOGGER.error(e.getMessage());
-		    	request.setAttribute("usuario", usuarioInfo2);
-		    	response.sendRedirect("Secure/nuevoViaje.jsp");
-		    }
-		    catch (ResponseException e) {
+		    } catch (IllegalStateException | ResponseException e) {
 		        LOGGER.error(e.getMessage());
 		        request.setAttribute("usuario", usuarioInfo2);
 		        response.sendRedirect("Secure/nuevoViaje.jsp");
+		        break;
 		    }
+
 		    request.setAttribute("listaHoteles", listaDatosHoteles);
 		    request.setAttribute("sesionAmadeus", amadeus);
 		    request.setAttribute("usuario", usuarioInfo2);
-		    
 		    request.setAttribute("numeroPersonas", numeroPersonas);
-		    
 		    request.setAttribute("nombreCiudadOrigen", nomCiudadOrigen);
 		    request.setAttribute("codCiudadOrigen", codigoCiudadOrigen);
 		    request.setAttribute("codigoPaisOrigen", codigoPaisOrigen);
-
 		    request.setAttribute("nombreCiudadDestino", nomCiudadDestino);
 		    request.setAttribute("codIATACiudadDestino", codigoCiudadDestino);
 		    request.setAttribute("codIATAPaisDestino", codigoPaisDestino);
-		    if(listaDatosHoteles.size()!=0) {
-		    	request.getRequestDispatcher("Secure/ofertasHoteles.jsp").forward(request, response);		    	
-		    }else {
-		    	response.sendRedirect("Secure/perfilUsuario.jsp");
+
+		    if (!listaDatosHoteles.isEmpty()) {
+		        request.getRequestDispatcher("Secure/ofertasHoteles.jsp").forward(request, response);
+		    } else {
+		        response.sendRedirect("Secure/nuevoViaje.jsp");
 		    }
 		    break;
+
 
 		case "guardarOfertaHotel":
 			Amadeus sesion=iniciarApi();
@@ -494,7 +476,7 @@ public class LoginController extends HttpServlet {
 			codigoPaisOrigen=(String) request.getParameter("codigoIATAPaisOrigen");
 			codigoCiudadOrigen=(String) request.getParameter("codigoIATACiudadOrigen");
 			codigoPaisDestino=(String) request.getParameter("codigoIATAPaisDestino");
-			nombreCiudadDestino=(String)request.getParameter("nomCiudadDestino");
+			nombreCiudadDestino=(String)request.getParameter("nombreCiudadDestino");
 			codigoCiudadDestino=(String)request.getParameter("codigoIATACiudadDestino");
 			LOGGER.info("Datos obtenidos de ofertasHoteles.jsp para crear una instancia de Direccion: " +
 	                "\nNumero de Personas= " + numeroPersonas +
@@ -615,39 +597,50 @@ public class LoginController extends HttpServlet {
 			Viaje viaje= new Viaje(usuarioFinal,numeroPersonasViaje);
 			if (habitacionFinal != null) {
 	            viaje.setHabitacion(habitacionFinal);
+					LOGGER.info("Habitacion añadida al viaje");
 	        }
 	        if (datosVuelo != null) {
 	            viaje.setDatos_vuelo(datosVuelo);
+					LOGGER.info("Datos de vuelo añadidos al Viaje");
 	        }
 	        try {
-			//usuarioFinal.addViaje(viaje);
 				transaction1=em1.getTransaction();
+				LOGGER.trace("Transaccion Iniciada");
 				transaction1.begin();
 				if(direccionFinal!=null) {
-					em1.merge(direccionFinal);					
+					em1.merge(direccionFinal);		
+					LOGGER.debug("Direccion subida a Base de datos");
 				}
 				if(hotelFinal!=null) {
-					em1.merge(hotelFinal);					
+					
+					em1.merge(hotelFinal);			
+					LOGGER.debug("Hotel subido a Base de datos");
 				}
 				if(habitacionFinal !=null) {
 					em1.merge(habitacionFinal);
+					LOGGER.debug("Habitacion subida a Base de datos");
 				}
 				if(datosVuelo!=null) {
+					
 					em1.merge(datosVuelo);				
+					LOGGER.debug("Datos de vuelo subidos a Base de datos");
 				}
 				if(viaje!=null) {
 					em1.merge(viaje);
+					LOGGER.debug("Viaje subido a Base de datos");
 				}
-				//em1.merge(usuarioFinal);
 				transaction1.commit();
+				LOGGER.trace("Commit relizado");
 			}catch(Exception e) {
 				LOGGER.error(e.getMessage());
 				 if (transaction1 != null && transaction1.isActive()) {
 			            transaction1.rollback();
+			            LOGGER.trace("Se ha realizado Rollback");
 			        }
 			}finally {
 				 if (em1 != null && em1.isOpen()) {
 			            em1.close();
+			            LOGGER.trace("Entity Manager Cerrado");
 			            request.getSession().setAttribute("usuario", usuarioFinal);
 			            response.sendRedirect("Secure/perfilUsuario.jsp");
 			        }else {
@@ -667,31 +660,38 @@ public class LoginController extends HttpServlet {
 
 		    LOGGER.info("Datos " + idViajeEliminar + " " + idUsuarioStr);
 		    EntityManager emBorrar = modelo.HibernateUtils.getEmf().createEntityManager();
+		    LOGGER.debug("Entity Manager creado");
 		    EntityTransaction transactionBorrar = null;
 		    try {
 		        transactionBorrar = emBorrar.getTransaction();
 		        transactionBorrar.begin();
+		        LOGGER.trace("Transaccion Iniciada");
 		        
 		        Usuario usuarioActualizado = emBorrar.find(Usuario.class, usuarioSeleccionado.getId_usuario());
+		        LOGGER.trace("Buscando usuario con ID= "+usuarioSeleccionado.getId_usuario());
 		        emBorrar.lock(usuarioActualizado, LockModeType.NONE); // Forzar la inicialización de la colección
 
 		        Viaje viajeABorrar = emBorrar.find(Viaje.class, idViajeEliminar);
 		        if (viajeABorrar != null) {
 		            // Utilizar el método quitarViaje para eliminar la relación
 		            usuarioActualizado.quitarViaje(viajeABorrar);
+		            LOGGER.info("Quitando viaje de la lista de viajes del usuario");
 		            emBorrar.remove(viajeABorrar);
-		        }				 //System.out.println(viajeABorrar.toString());
+		            LOGGER.info("Eliminando el viaje de la Base de datos");
+		        }				 
 				 transactionBorrar.commit();
-
+				 LOGGER.trace("Realizando Commit");
 		    } catch (Exception e) {
 		        LOGGER.error("Error: " + e.getMessage());
 		        e.printStackTrace();
 		        if (transactionBorrar != null && transactionBorrar.isActive()) {
 		            transactionBorrar.rollback();
+		            LOGGER.trace("Se ha realizado Rollback");
 		        }
 		    } finally {
 		        if (emBorrar != null && emBorrar.isOpen()) {
 		            emBorrar.close();
+		            LOGGER.trace("Entity Manager cerrado");
 			        request.getSession().setAttribute("usuario", usuarioSeleccionado);
 			        response.sendRedirect("Secure/perfilUsuario.jsp");
 		        }else {
@@ -705,30 +705,33 @@ public class LoginController extends HttpServlet {
 				Usuario usuarioA=(Usuario) request.getAttribute("usuario");
 				LOGGER.info("Iniciando proceso de Borrado del Usuario");
 				EntityManager emBorrarUsuario = modelo.HibernateUtils.getEmf().createEntityManager();
+				LOGGER.debug("Entity Manager creado");
 				EntityTransaction transactionBorrarUsuario = null;
 				try {
 					transactionBorrarUsuario=emBorrarUsuario.getTransaction();
 					transactionBorrarUsuario.begin();
-					LOGGER.trace("Iniciando transaccion");
+					LOGGER.trace("Transaccion  iniciada");
 					
 					LOGGER.info("Recuperando usuario con id: "+idUsuarioABorrar);
 					Usuario usuarioABorrar= emBorrarUsuario.find(Usuario.class, idUsuarioABorrar);							
 					if(usuarioABorrar != null) {
 						emBorrarUsuario.remove(usuarioABorrar);
+						LOGGER.info("Usuario eliminado junto a sus viajes de la base de datos");						
 					}
 					transactionBorrarUsuario.commit();
-					LOGGER.info("Usuario eliminado junto a sus viajes");
+					LOGGER.info("Commit realizado");
 				}catch(Exception e) {
 					LOGGER.error("Error: "+e.getMessage());
 					if (transactionBorrarUsuario != null && transactionBorrarUsuario.isActive()) {
 			            transactionBorrarUsuario.rollback();
 			            request.getSession().setAttribute("usuario",usuarioA );
-			            LOGGER.error("Error en el borrado del usuario, redirigiendo a la configuracion");
+			            LOGGER.error("Error durante el borrado del usuario, redirigiendo a la configuracion");
 			            response.sendRedirect("Secure/configuracion.js");
 			        }
 			    } finally {
 			        if (emBorrarUsuario != null && emBorrarUsuario.isOpen()) {
 			            emBorrarUsuario.close();
+			            LOGGER.trace("Entity Manager Cerrado");
 			            LOGGER.info("Operacion Exitosa redirigiendo a la pagina de inicio de sesion");
 				        response.sendRedirect("login.jsp");
 			        }else {
@@ -738,6 +741,7 @@ public class LoginController extends HttpServlet {
 			    }
 		   break;
 		case "Loger":
+			LOGGER.info("Redirigiendo a pagina login.jsp");
 			response.sendRedirect("login.jsp");
 			break;
 
@@ -747,12 +751,16 @@ public class LoginController extends HttpServlet {
 			// formulario
 			email = request.getParameter("correoUsuario");
 			password = request.getParameter("contrasenia");
-
+			LOGGER.info("Valores obtenidos de login.jsp: "+
+			"\n Correo electronico del usuario= "+email+
+			"\n Contraseña del usuario= "+password);
+			
 			// Realiza la verificación con la base de datos
 			EntityManager em = HibernateUtils.getEmf().createEntityManager();
+			LOGGER.trace("Entity Manager creado");
 			Query consulta = em.createQuery("SELECT u FROM Usuario u WHERE u.email = :correo");
 			consulta.setParameter("correo", email);	
-			
+			LOGGER.debug("Buscando usuario con email= "+email);
 			
 			try {
 				Usuario usuario = (Usuario) consulta.getSingleResult();
@@ -766,29 +774,34 @@ public class LoginController extends HttpServlet {
 					
 				    EntityManagerFactory emf = HibernateUtils.getEmf();
 				    EntityManager em3 = emf.createEntityManager();
+				    LOGGER.debug("Entity Manager creado");
 				    EntityTransaction transaction = null;
 
 				    try {
 				        transaction = em3.getTransaction();
 				        transaction.begin();
+				        LOGGER.trace("Iniciando transaccion");
 
 				        Usuario user = em3.find(Usuario.class, usuario.getId_usuario());
-
+				        LOGGER.trace("Buscando usuario con id= "+usuario.getId_usuario());
 				        if (user != null) {
 				            user.setUltima_conexion(ultima_conexion_temporal);
 				            user.setUltima_conexion_temporal(LocalDateTime.now());
 				            user.setSesionActiva(true);
 				            
 				            em3.merge(user);
+				            LOGGER.trace("Guardando cambio de sesion del usuario en base de datos");
 				            transaction.commit();
+				            LOGGER.info("Realizando commit");
 				        }
 
 				    } catch (Exception e) {
 				        // Maneja cualquier excepción
 				        if (transaction != null && transaction.isActive()) {
 				            transaction.rollback();
+				            LOGGER.info("Rollback realizado");
 				        }
-				        e.printStackTrace();
+				        LOGGER.error("Error"+ e.getMessage());
 				    }
 				    
 				    HttpSession session = request.getSession();
@@ -796,26 +809,31 @@ public class LoginController extends HttpServlet {
 					
 					// Crear una cookie con el nombre del usuario
 		            Cookie userCookie = new Cookie("userEmail", email);
+		            LOGGER.trace("Cookie creada con el nombre del usuario");
 		            // Configurar la cookie para que expire en 7 días
 		            userCookie.setMaxAge(7 * 24 * 60 * 60);
+		            LOGGER.trace("Cookie configurada para que expire en 7 dias");
 		            // Añadir la cookie a la respuesta
 		            response.addCookie(userCookie);
-					
+					LOGGER.info("Redirigiendo a perfilUsuario.jsp");
 					response.sendRedirect("Secure/perfilUsuario.jsp");
 					
 					
 				} else {
 					// Si las credenciales no son válidas, redirige de nuevo al formulario de inicio
 					// de sesión con un mensaje de error
+					LOGGER.error("Nombre de usuario o contraseña incorrectos");
 					request.setAttribute("error", "Nombre de usuario o contraseña incorrectos");
 					request.getRequestDispatcher("login.jsp").forward(request, response);
 				}
 
 			} catch (NoResultException e) {
+				LOGGER.error("Nombre de usuario o contraseña incorrectos");
 				request.setAttribute("error", "Nombre de usuario o contraseña incorrectas");
 				request.getRequestDispatcher("login.jsp").forward(request, response);
 			} finally {
 				em.close();
+				LOGGER.debug("Entity Manager cerrado");
 			}
 			break;
 			
@@ -828,23 +846,25 @@ public class LoginController extends HttpServlet {
 		    // Crea un EntityManager a partir de la EntityManagerFactory
 		    EntityManagerFactory emf10 = HibernateUtils.getEmf();
 		    EntityManager em10 = emf10.createEntityManager();
+		    LOGGER.debug("Entity Manager creado");
 		    EntityTransaction transaction10 = null;
 
 		    try {
 		        // Inicia una transacción
 		        transaction10 = em10.getTransaction();
 		        transaction10.begin();
+		        LOGGER.trace("Transaccion iniciada");
 
 		        // Busca al usuario en la base de datos por su id
 		        Usuario user = em10.find(Usuario.class, idUsuario11);
-
+		        LOGGER.trace("Buscando usuario con id= "+idUsuario11);
 		        // Verifica si el usuario existe
 		        if (user != null) {
-		        	
 		            user.setSesionActiva(false);
-
 		            em10.merge(user);
+		            LOGGER.trace("Guardando cambio de estado de la sesion del usuario a false en la base de datos");
 		            transaction10.commit();
+		            LOGGER.info("Realizando Commit");
 		        }
 
 		    } catch (Exception e) {
@@ -874,16 +894,18 @@ public class LoginController extends HttpServlet {
 		    // Crea un EntityManager a partir de la EntityManagerFactory
 		    EntityManagerFactory emf = HibernateUtils.getEmf();
 		    EntityManager em2 = emf.createEntityManager();
+		    LOGGER.debug("Entity Manager creado");
 		    EntityTransaction transaction = null;
 
 		    try {
 		        // Inicia una transacción
 		        transaction = em2.getTransaction();
 		        transaction.begin();
+		        LOGGER.info("Transaccion iniciada");
 
 		        // Busca al usuario en la base de datos por su id
 		        Usuario user = em2.find(Usuario.class, idUsuario);
-
+		        LOGGER.trace("Buscando usuario con id= "+idUsuario);
 		        // Verifica si el usuario existe
 		        if (user != null) {
 		            // Actualiza el tema del usuario
@@ -891,7 +913,9 @@ public class LoginController extends HttpServlet {
 
 		            // Guarda los cambios en la base de datos
 		            em2.merge(user);
+		            LOGGER.trace("Guardando cambio de tema en la base de datos");
 		            transaction.commit();
+		            LOGGER.info("Realizando commit");
 		        }
 
 		    } catch (Exception e) {
@@ -926,16 +950,18 @@ public class LoginController extends HttpServlet {
 		    HttpSession session2 = request.getSession();
 		    Usuario usuario2 = (Usuario) session2.getAttribute("usuario");
 		    int idUsuario2 = usuario2.getId_usuario();
-
 		    // Crea un EntityManager a partir de la EntityManagerFactory
 		    EntityManagerFactory emf2 = HibernateUtils.getEmf();
 		    EntityManager em3 = emf2.createEntityManager();
+		    LOGGER.debug("Entity Manager creado");
 		    EntityTransaction transaction2 = null;
 
 		    if (nombreUsuario.matches(".*[!¡@#$%^&*()¿?¬~].*")) {
+		    	LOGGER.error("El nombre de usuario no debe contener un caracter especial");
 				request.setAttribute("error", "El nombre de usuario no debe contener un caracter especial");
 				request.getRequestDispatcher("Secure/configuracion.jsp?datPer=true").forward(request, response);
 			} else if (nombreUsuario.length() < 3) {
+				LOGGER.error("El nombre de usuario debe ser superior a 3 caracteres");
 				request.setAttribute("error", "El nombre de usuario debe ser superior a 3 caracteres");
 				request.getRequestDispatcher("Secure/configuracion.jsp?datPer=true").forward(request, response);
 			}
@@ -946,6 +972,7 @@ public class LoginController extends HttpServlet {
 			    for (Usuario user : usuarios) {
 	
 					if (user.getNombre().compareTo(nombreUsuario) == 0) {
+						LOGGER.error("El nombre de usuario ya esta en uso");
 						request.setAttribute("error", "El nombre de usuario ya esta en uso");
 						request.getRequestDispatcher("Secure/configuracion.jsp?datPer=true").forward(request, response);
 					}
@@ -955,15 +982,15 @@ public class LoginController extends HttpServlet {
 			    try {
 			    	transaction2 = em3.getTransaction();
 			    	transaction2.begin();
-	
+			    	LOGGER.info("Transaccion iniciada");
 			        Usuario user = em3.find(Usuario.class, idUsuario2);
-	
+			        LOGGER.trace("Buscando usuario con id= "+idUsuario2);
 			        if (user != null) {
 			            user.setNombre(nombreUsuario); 
-			            
 			            em3.merge(user);
-			            
+			            LOGGER.trace("Guardando cambio de nombre de usuario en Base de datos");
 			            transaction2.commit();
+			            LOGGER.info("Realizando commit");
 			        }
 	
 			        
@@ -990,27 +1017,29 @@ public class LoginController extends HttpServlet {
 		    HttpSession session3 = request.getSession();
 		    Usuario usuario3 = (Usuario) session3.getAttribute("usuario");
 		    int idUsuario3 = usuario3.getId_usuario();
-
+		    
 		    // Crea un EntityManager a partir de la EntityManagerFactory
 		    EntityManagerFactory emf3 = HibernateUtils.getEmf();
 		    EntityManager em4 = emf3.createEntityManager();
+		    LOGGER.debug("Entity Manager creado");
 		    EntityTransaction transaction3 = null;
 
 		    try {
 		        // Inicia una transacción
 		        transaction3 = em4.getTransaction();
 		        transaction3.begin();
+		        LOGGER.info("Transaccion iniciada");
 
 		        // Busca al usuario en la base de datos por su id
 		        Usuario user = em4.find(Usuario.class, idUsuario3);
-
+		        LOGGER.trace("Buscando usuario con id= "+idUsuario3);
 		        // Verifica si el usuario existe
 		        if (user != null) {
 		            // Actualiza el tema del usuario
 		            user.setTema(!user.getTema()); // Cambia el tema
-
 		            // Guarda los cambios en la base de datos
 		            em4.merge(user);
+		            LOGGER.trace("Guardando cambio del tema en base de datos");
 		            transaction3.commit();
 		        }
 
@@ -1038,6 +1067,7 @@ public class LoginController extends HttpServlet {
 			LOGGER.info("Validacion del correo de usuario al registrarse");
 			email = request.getParameter("emailUsuario");
 			if (email.length()<=10) {
+				LOGGER.error("Formato de correo no valido");
 				request.setAttribute("error", "Formato de correo no valido");
 				request.getRequestDispatcher("Secure/configuracion.jsp?datPer=true").forward(request, response);
 			}
@@ -1045,19 +1075,21 @@ public class LoginController extends HttpServlet {
 				String extensionCorreo2 = email.substring(email.length() - 10, email.length());
 				EntityManagerFactory emf4 = HibernateUtils.getEmf();
 			    EntityManager em5 = emf4.createEntityManager();
+				LOGGER.debug("Entity Manager Creado");
 				
 			    Query q2 = em5.createQuery("FROM Usuario");
 				List<Usuario> usuarios2 = q2.getResultList();
 				for (Usuario user : usuarios2) {
 	
 					if (user.getEmail().compareTo(email) == 0) {
+						LOGGER.error("El correo electronico ya esta en uso");
 						request.setAttribute("error", "El correo electronico ya esta en uso");
 						request.getRequestDispatcher("Secure/configuracion.jsp?datPer=true").forward(request, response);
 					}
 	
 				}
 				if (extensionCorreo2.compareTo("@gmail.com") != 0) {
-					
+					LOGGER.error("Correo no valido");
 					request.setAttribute("error", "Correo no valido");
 					request.getRequestDispatcher("Secure/configuracion.jsp?datPer=true").forward(request, response);
 					LOGGER.info("Redirigiendo a la pagina de configuracion de usuario");
@@ -1066,11 +1098,11 @@ public class LoginController extends HttpServlet {
 					request.getSession().setAttribute("email", email);
 					
 					token = generarToken();
-					System.out.println("Token creado: " + token);
+					LOGGER.info("Token creado: " + token);
 					
 					EmailValidator.cambio_correo(email, token);
 					request.getSession().setAttribute("token", token);
-					System.out.println("Correo enviado");
+					LOGGER.info("Correo enviado");
 					
 					request.getRequestDispatcher("Secure/confirmar_correo2.jsp").forward(request, response);
 					LOGGER.info("Redirigiendo a la pagina de validacion de correo al cambiarlo desde configuracion");
@@ -1095,6 +1127,7 @@ public class LoginController extends HttpServlet {
 			if (token.compareTo(codVerificacion) != 0) {
 				request.setAttribute("token", token);
 				request.setAttribute("email", email);
+				LOGGER.error("Codigo de verificaicon incorrecto");
 				request.setAttribute("error", "Codigo de verificacion incorrecto");
 				request.getRequestDispatcher("Secure/confirmar_correo.jsp").forward(request, response);
 			} else {
@@ -1104,14 +1137,16 @@ public class LoginController extends HttpServlet {
 				
 				try {
 					transaction4.begin();
+					LOGGER.info("Transaccion iniciada");
 					
 					Usuario user = em6.find(Usuario.class, idUsuario4);
-
+					LOGGER.trace("Buscando usuario con id= "+idUsuario4);
 			        if (user != null) {
 			            user.setEmail(email); 
-
 			            em6.merge(user);
+			            LOGGER.trace("Guardando cambio de correo electronico en Base de datos");
 			            transaction4.commit();
+			            LOGGER.info("Realizando commit");
 			        }
 			        
 			        LOGGER.debug("Nuevo correo Subido");
@@ -1141,18 +1176,22 @@ public class LoginController extends HttpServlet {
 			
 			
 			if (!(password.matches(".*[A-Z].*"))) {
+				LOGGER.error("La contraseña debe contener como mínimo una mayuscula");
 				request.setAttribute("error", "La contraseña debe contener como mínimo una mayuscula");
 				request.getRequestDispatcher("Secure/configuracion.jsp?datPer=true").forward(request, response);
 			} 
 			else if (!(password.matches(".*[0-9].*"))) {
+				LOGGER.error("La contraseña debe contener un numero");
 				request.setAttribute("error", "La contraseña debe contener un numero");
 				request.getRequestDispatcher("Secure/configuracion.jsp?datPer=true").forward(request, response);
 			} 
 			else if (!(password.matches(".*[!¡@#$%^&*()¿?¬~].*"))) {
+				LOGGER.error("La contraseña debe contener como mínimo un caracter especial");
 				request.setAttribute("error", "La contraseña debe contener como mínimo un caracter especial");
 				request.getRequestDispatcher("Secure/configuracion.jsp?datPer=true").forward(request, response);
 			}
 			else if ((password.length() < 8) || (password.length() > 20)) {
+				LOGGER.error("a contraseña no puede ser inferior a los 8 caracteres ni superior a los 20");
 				request.setAttribute("error",
 						"La contraseña no puede ser inferior a los 8 caracteres ni superior a los 20");
 				request.getRequestDispatcher("Secure/configuracion.jsp?datPer=true").forward(request, response);
@@ -1163,11 +1202,11 @@ public class LoginController extends HttpServlet {
 				request.getSession().setAttribute("password", password);
 				
 				token = generarToken();
-				System.out.println("Token creado: " + token);
+				LOGGER.debug("Token creado: " + token);
 				
 				EmailValidator.cambio_password(email, token);
 				request.getSession().setAttribute("token", token);
-				System.out.println("Correo enviado");
+				LOGGER.debug("Correo enviado");
 				
 				request.getRequestDispatcher("Secure/confirmar_password.jsp").forward(request, response);
 				LOGGER.info("Redirigiendo a la pagina de verificacion de contraseña");
@@ -1189,32 +1228,37 @@ public class LoginController extends HttpServlet {
 			codVerificacion = request.getParameter("cod_verificacion");
 			email = (String) request.getSession().getAttribute("email");
 			token = (String) request.getSession().getAttribute("token");
-			System.out.println("TokenDef: " + token);
-			System.out.println("codVeri: " + codVerificacion);
+			LOGGER.debug("TokenDef: " + token);
+			LOGGER.debug("codVeri: " + codVerificacion);
 			
 			if (token.compareTo(codVerificacion) != 0) {
 				request.setAttribute("token", token);
 				request.setAttribute("email", email);
+				LOGGER.error("Codigo de verificacion incorrecto");
 				request.setAttribute("error", "Codigo de verificacion incorrecto");
 				request.getRequestDispatcher("Secure/confirmar_password.jsp").forward(request, response);
 			} else {
 				
 				EntityManagerFactory emf5 = HibernateUtils.getEmf();
 			    EntityManager em5 = emf5.createEntityManager();
+			    LOGGER.debug("Entity Manager creado");
 			    EntityTransaction transaction5 = null;
 				
 			    try {
 			    	transaction5 = em5.getTransaction();
 			    	transaction5.begin();
+			    	LOGGER.info("Transaccion iniciada");
 			    	
 			        Usuario user = em5.find(Usuario.class, idUsuario6);
-
+			        LOGGER.trace("Buscando usuario con id= "+idUsuario6);
 			        if (user != null) {
 			            user.setContrasenia(password);
 			            user.setUltima_modificacion_contrasenna(LocalDate.now());
 			            
 			            em5.merge(user);
+			            LOGGER.trace("Guardando cambio de contraseña en base de datos");
 			            transaction5.commit();
+			            LOGGER.info("Realizando commit");
 			        }
 
 			        
@@ -1245,19 +1289,22 @@ public class LoginController extends HttpServlet {
 			
 		    EntityManagerFactory emf6 = HibernateUtils.getEmf();
 		    EntityManager em6 = emf6.createEntityManager();
+		    LOGGER.debug("Entity Manager creado");
 		    EntityTransaction transaction6 = null;
 			
 		    try {
 		    	transaction6 = em6.getTransaction();
 		    	transaction6.begin();
+		    	LOGGER.info("Transaccion iniciada");
 		    	
 		        Usuario user = em6.find(Usuario.class, idUsuario7);
-
+		        LOGGER.trace("Buscando usuario con id= "+idUsuario7);
 		        if (user != null) {
 		            user.setNum_telefono(telefono);
-		            
 		            em6.merge(user);
+		            LOGGER.trace("Guardando cambio de numero de telefono en base de datos");
 		            transaction6.commit();
+		            LOGGER.info("Realizando commit");
 		        }
 
 		        
@@ -1285,21 +1332,24 @@ public class LoginController extends HttpServlet {
 		    Usuario usuario8 = (Usuario) session8.getAttribute("usuario");
 		    int idUsuario9 = usuario8.getId_usuario();
 			
-		    EntityManagerFactory emf7 = HibernateUtils.getEmf();
+		    EntityManagerFactory emf7 = HibernateUtils.getEmf();		    
 		    EntityManager em7 = emf7.createEntityManager();
+		    LOGGER.debug("Entity Manager creado");
 		    EntityTransaction transaction7 = null;
 			
 		    try {
 		    	transaction7 = em7.getTransaction();
 		    	transaction7.begin();
+		    	LOGGER.info("Transaccion iniciada");
 		    	
 		        Usuario user = em7.find(Usuario.class, idUsuario9);
-
+		        LOGGER.trace("Buscando usuario con id= "+idUsuario9);
 		        if (user != null) {
 		            user.setSexo(sexo);
-		            
 		            em7.merge(user);
+		            LOGGER.trace("Guardando cambio genero del usuario en la base de datos");
 		            transaction7.commit();
+		            LOGGER.info("Realizando Commit");
 		        }
 
 		        
@@ -1334,14 +1384,16 @@ public class LoginController extends HttpServlet {
 		    try {
 		    	transaction8 = em8.getTransaction();
 		    	transaction8.begin();
+		    	LOGGER.info("Transaccion iniciada");
 		    	
 		        Usuario user = em8.find(Usuario.class, idUsuario10);
-
+		        LOGGER.trace("Buscando usuario con id= "+idUsuario10);
 		        if (user != null) {
 		            user.setFecha_nacimiento(fecha_nacimiento);
-		            
 		            em8.merge(user);
+		            LOGGER.trace("Guardando cambio fecha de nacimiento en base de datos");
 		            transaction8.commit();
+		            LOGGER.info("Realizando commit");
 		        }
 		        
 		    } catch (Exception e) {
@@ -1361,21 +1413,36 @@ public class LoginController extends HttpServlet {
 			break;
 		default:
 			//Se inicia siempre al ejecutarse la aplicacion
+			LOGGER.info("Iniciando aplicacion en index.jsp");
 			response.sendRedirect("index.jsp");
 		}
 
 	}
-
+	
+	/**
+	 * Llama al metedo encargado de generar el token de verificacion de correo electronico 
+	 * @return String Token de verificacion.
+	 */
 	private String generarToken() {
 		// Implementa la lógica para generar un token de confirmación único
 		return UUID.randomUUID().toString();
 	}
 	
+	/**
+	 * Inicia sesion en la API de Amadeus mediante 2 tokens de acceso si las claves son correctas devolvera 
+	 * una instancia de Amadeus con el que podremos realizar las consultas a la API
+	 * @return Instancia de Amadeus.
+	 */
 	protected Amadeus iniciarApi() {
 		//Initialize using parameters
-		Amadeus amadeus = Amadeus
+		Amadeus amadeus = null;
+		try {
+			amadeus = Amadeus
 				.builder(configLoader.getProperty("util.apiKeyAmadeus1"), configLoader.getProperty("util.apiKeyAmadeus2"))
 		        .build();
+		}catch (IllegalArgumentException e) {
+			LOGGER.error("Una de las claves de acceso son incorrectas");
+		}
 		return amadeus;
 	}
 	/**
