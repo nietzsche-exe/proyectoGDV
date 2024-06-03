@@ -2,14 +2,16 @@
 <%@page import="java.util.List"%>
 <%@page import="org.json.JSONArray"%>
 <%@page import="modelo.Usuario" %>
-<%@ page import="java.util.stream.Collectors" %>
+<%@page import="java.util.stream.Collectors" %>
 <%@page import="controlador.LoginController"%>
+<%@page import="util.ConfigLoader"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Resultado Hoteles</title>
 <%
+    ConfigLoader configLoader = new ConfigLoader();
     HttpSession sessionA = request.getSession();
     Usuario usuario = (Usuario) sessionA.getAttribute("usuario");
 
@@ -403,7 +405,7 @@
 <div id="direcciones"></div>
 <script src="JavaScript/map.js"></script>
 <script src="JavaScript/geolocalizacion.js"></script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBm0vNj92eB8yjWcFe8ieb9doiwDVf2jO0&callback=iniciarMap"></script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCZuB7bki3m-dvgWkWfcclEjfwSDxVAlXo&callback=obtenerTodasLasDirecciones"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=<%=configLoader.getProperty("util.apiKeyMap")%>&callback=iniciarMap"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=<%=configLoader.getProperty("util.apiKeyGeo")%>&callback=obtenerTodasLasDirecciones"></script>
 </body>
 </html>

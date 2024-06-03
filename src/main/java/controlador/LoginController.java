@@ -55,6 +55,7 @@ import modelo.HotelBD;
 import modelo.HotelData;
 import modelo.Usuario;
 import modelo.Viaje;
+import util.ConfigLoader;
 import util.EmailValidator;
 
 
@@ -64,6 +65,7 @@ import util.EmailValidator;
 public class LoginController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static final Logger LOGGER = LoggerFactory.getLogger(LoginController.class);
+	ConfigLoader configLoader = new ConfigLoader();
 
 	@SuppressWarnings("unchecked")
 	protected void procesarPeticion(HttpServletRequest request, HttpServletResponse response)
@@ -346,6 +348,7 @@ public class LoginController extends HttpServlet {
 		    ArrayList<Hotel> listaHoteles = new ArrayList<>();
 		    ArrayList<HotelData> listaDatosHoteles= new ArrayList<HotelData>();
 		    try {
+		    	LOGGER.info("Buscando hoteles en Amadeus");
 		        Hotel[] hotels = amadeus.referenceData.locations.hotels.byCity.get(
 		                Params.with("cityCode", codigoCiudadDestino));
 //		                .and("radius", 8)
@@ -355,7 +358,7 @@ public class LoginController extends HttpServlet {
 			        	System.out.println(hotels[a].toString());
 			    		listaHoteles.add(hotels[a]);
 		    		}catch(ArrayIndexOutOfBoundsException e) {
-		    			System.out.println("No hay más hoteles en la lista.");
+		    			LOGGER.info("No hay más hoteles en la lista.");
 		    			break;
 		    		}
 		    		
@@ -660,9 +663,9 @@ public class LoginController extends HttpServlet {
 		    Integer idViajeEliminar =Integer.parseInt(request.getParameter("idViajeEliminar"));
 		    String idUsuarioStr = request.getParameter("idUsuario");
 		    
-		    System.out.println(idViajeEliminar + idUsuarioStr);
+		    LOGGER.info(idViajeEliminar + idUsuarioStr);
 
-		    System.out.println("Datos"+idViajeEliminar+idUsuarioStr);
+		    LOGGER.info("Datos " + idViajeEliminar + " " + idUsuarioStr);
 		    EntityManager emBorrar = modelo.HibernateUtils.getEmf().createEntityManager();
 		    EntityTransaction transactionBorrar = null;
 		    try {
@@ -817,6 +820,7 @@ public class LoginController extends HttpServlet {
 			break;
 			
 		case "cerrarSesion":
+			LOGGER.info("Cerrando Sesion de usuario");
 			HttpSession session10 = request.getSession();
 		    Usuario usuario10 = (Usuario) session10.getAttribute("usuario");
 		    int idUsuario11 = usuario10.getId_usuario();
@@ -846,19 +850,23 @@ public class LoginController extends HttpServlet {
 		    } catch (Exception e) {
 		        // Maneja cualquier excepción
 		        if (transaction10 != null && transaction10.isActive()) {
-		            transaction10.rollback();
+		            LOGGER.error("Error en el cierre de Sesion: " + e.getStackTrace());
+		        	transaction10.rollback();
+		        	LOGGER.error("Haciendo rollback");
 		        }
-		        e.printStackTrace();
+		        
 		    } finally {
 
 		    	em10.close();
-		    	
+		    	LOGGER.debug("Entity Manager cerrado");
 		    	response.sendRedirect("index.jsp");
+		    	LOGGER.info("Redirigiendo a la pagina principal");
 		    }
 			break;
 		
 		case "cambiar_tema":
 		    // Obtén el id del usuario de la sesión
+			LOGGER.info("Cambiando tema");
 		    HttpSession session = request.getSession();
 		    Usuario usuario = (Usuario) session.getAttribute("usuario");
 		    int idUsuario = usuario.getId_usuario();
@@ -889,26 +897,30 @@ public class LoginController extends HttpServlet {
 		    } catch (Exception e) {
 		        // Maneja cualquier excepción
 		        if (transaction != null && transaction.isActive()) {
+		        	LOGGER.error("Error en el cambio de tema: " + e.getStackTrace());
 		            transaction.rollback();
+		            LOGGER.error("Haciendo rollback");
 		        }
 		        e.printStackTrace();
 		    } finally {
 
 		    	em2.close();
-		    	
+		    	LOGGER.debug("Entity Manager cerrado");
 		    	response.sendRedirect("Secure/perfilUsuario.jsp");
+		    	LOGGER.info("Redirigiendo a la pagina principal de usuario");
 		    }
 		    break;
 
 		case "config":
 			
+			LOGGER.info("Redirigiendo a la pagina de configuracion de usuario");
 			response.sendRedirect("Secure/configuracion.jsp");
 			break;
 		
 		case "validarUser":
+			
+			LOGGER.info("Validacion de datos del usuario");
 			nombreUsuario= request.getParameter("nombreUsuario");
-			
-			
 			
 			 // Obtén el id del usuario de la sesión
 		    HttpSession session2 = request.getSession();
@@ -957,13 +969,16 @@ public class LoginController extends HttpServlet {
 			        
 			    } catch (Exception e) {
 			        if (transaction2 != null && transaction2.isActive()) {
+			        	LOGGER.error("Error en la validacion de datos del usuario: " + e.getStackTrace());
 			        	transaction2.rollback();
+			        	LOGGER.error("Haciendo rollback");
 			        }
 			        e.printStackTrace();
 			    } finally {
 			    	em3.close();
-			    	
+			    	LOGGER.debug("Entity Manager cerrado");
 			    	response.sendRedirect("Secure/configuracion.jsp?datPer=true");
+			    	LOGGER.info("Redirigiendo a la pagina de configuracion de usuario");
 			    }
 			}
 		    
@@ -971,6 +986,7 @@ public class LoginController extends HttpServlet {
 		
 		case "validar_tema":
 		    // Obtén el id del usuario de la sesión
+			LOGGER.info("Validacion de tema del usuario");
 		    HttpSession session3 = request.getSession();
 		    Usuario usuario3 = (Usuario) session3.getAttribute("usuario");
 		    int idUsuario3 = usuario3.getId_usuario();
@@ -1001,20 +1017,25 @@ public class LoginController extends HttpServlet {
 		    } catch (Exception e) {
 		        // Maneja cualquier excepción
 		        if (transaction3 != null && transaction3.isActive()) {
+		        	LOGGER.error("Error en la validacion de tema del usuario: " + e.getStackTrace());
 		        	transaction3.rollback();
+		        	LOGGER.error("Haciendo rollback");
+		        	
 		        }
 		        e.printStackTrace();
 		    } finally {
 		        // Cierra el EntityManager
 		    	em4.close();
-		    	
+		    	LOGGER.debug("Entity Manager cerrado");
 		    	response.sendRedirect("Secure/configuracion.jsp?datPer=true");
+		    	LOGGER.info("Redirigiendo a la pagina de configuracion de usuario");
 		    }
 		    break;
 		    
 
 		case "validar_correo":
 			
+			LOGGER.info("Validacion del correo de usuario al registrarse");
 			email = request.getParameter("emailUsuario");
 			if (email.length()<=10) {
 				request.setAttribute("error", "Formato de correo no valido");
@@ -1039,6 +1060,7 @@ public class LoginController extends HttpServlet {
 					
 					request.setAttribute("error", "Correo no valido");
 					request.getRequestDispatcher("Secure/configuracion.jsp?datPer=true").forward(request, response);
+					LOGGER.info("Redirigiendo a la pagina de configuracion de usuario");
 				}
 				else {
 					request.getSession().setAttribute("email", email);
@@ -1051,6 +1073,7 @@ public class LoginController extends HttpServlet {
 					System.out.println("Correo enviado");
 					
 					request.getRequestDispatcher("Secure/confirmar_correo2.jsp").forward(request, response);
+					LOGGER.info("Redirigiendo a la pagina de validacion de correo al cambiarlo desde configuracion");
 				}
 			}
 			
@@ -1058,6 +1081,8 @@ public class LoginController extends HttpServlet {
 			break;
 		    
 		case "verificarCorreo2":
+			
+			LOGGER.info("Validacion del correo de usuario al cambiarlo desde la configuracion");
 			HttpSession session4 = request.getSession();
 		    Usuario usuario4 = (Usuario) session4.getAttribute("usuario");
 		    int idUsuario4 = usuario4.getId_usuario();
@@ -1065,8 +1090,8 @@ public class LoginController extends HttpServlet {
 			codVerificacion = request.getParameter("cod_verificacion");
 			email = (String) request.getSession().getAttribute("email");
 			token = (String) request.getSession().getAttribute("token");
-			System.out.println("TokenDef: " + token);
-			System.out.println("codVeri: " + codVerificacion);
+			LOGGER.debug("TokenDef: " + token);
+			LOGGER.debug("codVeri: " + codVerificacion);
 			if (token.compareTo(codVerificacion) != 0) {
 				request.setAttribute("token", token);
 				request.setAttribute("email", email);
@@ -1089,20 +1114,25 @@ public class LoginController extends HttpServlet {
 			            transaction4.commit();
 			        }
 			        
-					System.out.println("Usuario Subido");
+			        LOGGER.debug("Nuevo correo Subido");
 				} catch (Exception e) {
-					System.err.println(e.getMessage());
+					LOGGER.error("Error en la validacion del correo del usuario: " + e.getStackTrace());
 					transaction4.rollback();
+					LOGGER.error("Haciendo rollback");
 				} finally {
-					em6.close();
 					
+					em6.close();
+					LOGGER.debug("Entity Manager cerrado");
 					response.sendRedirect("Secure/configuracion.jsp?datPer=true");
+					LOGGER.info("Redirigiendo a la pagina de configuracion de usuario");
 				}
 				
 			}
 			break;
 			
 		case "validar_password":
+			
+			LOGGER.info("Validacion de la contraseña");
 			password = request.getParameter("passwordUsuario");
 			
 			HttpSession session5 = request.getSession();
@@ -1140,6 +1170,7 @@ public class LoginController extends HttpServlet {
 				System.out.println("Correo enviado");
 				
 				request.getRequestDispatcher("Secure/confirmar_password.jsp").forward(request, response);
+				LOGGER.info("Redirigiendo a la pagina de verificacion de contraseña");
 				
 			}
 			
@@ -1147,6 +1178,8 @@ public class LoginController extends HttpServlet {
 			break;
 		
 		case "verificar_password":
+			
+			LOGGER.info("Verificacion de la contraseña");
 			password = (String) request.getSession().getAttribute("password");
 			
 			HttpSession session6 = request.getSession();
@@ -1187,19 +1220,23 @@ public class LoginController extends HttpServlet {
 			        
 			    } catch (Exception e) {
 			        if (transaction5 != null && transaction5.isActive()) {
+			        	LOGGER.error("Error en la verificacion de la contraseña del usuario: " + e.getStackTrace());
 			        	transaction5.rollback();
+			        	LOGGER.error("Haciendo rollback");
 			        }
-			        e.printStackTrace();
 			    } finally {
 			    	em5.close();
-			    	
+			    	LOGGER.debug("Entity Manager cerrado");
 			    	response.sendRedirect("Secure/configuracion.jsp?datPer=true");
+			    	LOGGER.info("Redirigiendo a la pagina de configuracion de usuario");
 			    }
 			
 			}
 			break;
 			
 		case "validar_telefono":
+			
+			LOGGER.info("Validacion del telefono");
 			telefono = request.getParameter("telefonoUsuario");
 			
 			HttpSession session7 = request.getSession();
@@ -1226,18 +1263,22 @@ public class LoginController extends HttpServlet {
 		        
 		    } catch (Exception e) {
 		        if (transaction6 != null && transaction6.isActive()) {
+		        	LOGGER.error("Error en la verificacion del telefono del usuario: " + e.getStackTrace());
 		        	transaction6.rollback();
+		        	LOGGER.error("Haciendo rollback");
 		        }
-		        e.printStackTrace();
 		    } finally {
 		    	em6.close();
-		    	
+		    	LOGGER.debug("Entity Manager cerrado");
 		    	response.sendRedirect("Secure/configuracion.jsp?datPer=true");
+		    	LOGGER.info("Redirigiendo a la pagina de configuracion de usuario");
 		    }
 			
 			break;
 			
 		case "validar_sexo":
+			
+			LOGGER.info("Validacion del sexo");
 			sexo = request.getParameter("sexoUsuario");
 			
 			HttpSession session8 = request.getSession();
@@ -1264,18 +1305,22 @@ public class LoginController extends HttpServlet {
 		        
 		    } catch (Exception e) {
 		        if (transaction7 != null && transaction7.isActive()) {
+		        	LOGGER.error("Error en la validacion del sexo del usuario: " + e.getStackTrace());
 		        	transaction7.rollback();
+		        	LOGGER.error("Haciendo rollback");
 		        }
-		        e.printStackTrace();
 		    } finally {
 		    	em7.close();
-		    	
+		    	LOGGER.debug("Entity Manager cerrado");
 		    	response.sendRedirect("Secure/configuracion.jsp?datPer=true");
+		    	LOGGER.info("Redirigiendo a la pagina de configuracion de usuario");
 		    }
 			
 			break;
 			
 		case "validar_fecha":
+			
+			LOGGER.info("Validacion de fecha");
 			fecha_nacimiento = LocalDate.parse(request.getParameter("fechaUsuario"));
 			
 			HttpSession session9 = request.getSession();
@@ -1301,12 +1346,16 @@ public class LoginController extends HttpServlet {
 		        
 		    } catch (Exception e) {
 		        if (transaction8 != null && transaction8.isActive()) {
+		        	LOGGER.error("Error en la validacion de fecha: " + e.getStackTrace());
 		        	transaction8.rollback();
+		        	LOGGER.error("Haciendo rollabck");
 		        }
 		        e.printStackTrace();
 		    } finally {
 		    	em8.close();
+		    	LOGGER.debug("Entity Manager cerrado");
 		    	response.sendRedirect("Secure/configuracion.jsp?datPer=true");
+		    	LOGGER.info("Redirigiendo a la pagina de configuracion de usuario");
 		    }
 			
 			break;
@@ -1325,8 +1374,7 @@ public class LoginController extends HttpServlet {
 	protected Amadeus iniciarApi() {
 		//Initialize using parameters
 		Amadeus amadeus = Amadeus
-				.builder("gsgMIsAnhxeixMDVFffGxzQzBLu47sV7", "uAAS4sUwGoGwWCVY")
-				//.builder("GjuqaJS0FoPfBd8BmaFIyhlV0os03g8A","ae0BLVGki48WV1DD")
+				.builder(configLoader.getProperty("util.apiKeyAmadeus1"), configLoader.getProperty("util.apiKeyAmadeus2"))
 		        .build();
 		return amadeus;
 	}
