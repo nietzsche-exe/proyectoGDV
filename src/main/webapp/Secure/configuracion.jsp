@@ -83,7 +83,7 @@
 	}
 %>
 <meta charset="UTF-8">
-<title>Página Configuracion</title>
+<title>Configuracion</title>
 </head>
 <body>
 	

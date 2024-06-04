@@ -9,7 +9,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Resultado Hoteles</title>
+<title>Hoteles</title>
 <%
     ConfigLoader configLoader = new ConfigLoader();
     HttpSession sessionA = request.getSession();

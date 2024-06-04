@@ -20,7 +20,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Login</title>
+<title>Inicio-Sesion</title>
 <link rel="stylesheet" href="Styles/Inicio_Sesion/cssInicioSesion.css">
 </head>
 <body>
