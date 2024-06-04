@@ -89,3 +89,52 @@ body {
     background-color: #45a049;
 }
 
+/* Aqui va el css para cuando la sesion este cerrada */
+.Contenedor_SesionCerrada {
+    background-color: #1e1e1e;
+    color: #e0e0e0;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    padding: 20px;
+    border: 1px solid #444;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+    max-width: 400px;
+    margin: 50px auto;
+}
+
+#Titulo {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #ff5555;
+}
+
+#Texto {
+    font-size: 16px;
+    margin: 10px 0;
+}
+
+#imgAdvertencia {
+    vertical-align: middle;
+    width: 24px;
+    height: 24px;
+}
+
+#Boton_Loger {
+    display: inline-block;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    margin-top: 20px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+#Boton_Loger:hover {
+    background-color: #45a049;
+}
