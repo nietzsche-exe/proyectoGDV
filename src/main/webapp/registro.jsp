@@ -27,7 +27,7 @@
 				
 		        <label for="nombreUsuario"><b>Nombre de Usuario</b></label><br>
 		        <label class="Texto_Ayuda">(superior a 3 caracteres)</label><br>
-		        <input class="Boton_Escribir" type="text" id="nombreUsuario" name="nombreUsuario" min="3"><br><br>
+		        <input class="Boton_Escribir" type="text" id="nombreUsuario" name="nombreUsuario" min="3" required><br><br>
 				
 				
 				<label for="genero"><b>Género</b></label><br>
@@ -43,26 +43,26 @@
 %>
 				<label for="fecha_nacimiento"><b>Fecha de Nacimiento</b></label><br>
 				<label class="Texto_Ayuda">(Tienes que tener 18 años o más)</label><br>
-		        <input type="date" id="fecha" name="fecha_nacimiento" max="<%= fechaMinima %>"><br><br>
+		        <input type="date" id="fecha" name="fecha_nacimiento" max="<%= fechaMinima %>" required><br><br>
 				
 				
 				<label for="correoUsuario"><b>Numero de Teléfono</b></label><br>
 		        <label class="Texto_Ayuda">(Tiene que contener 9 dígitos)</label><br>
-		        <input class="Boton_Escribir" type="text" id="num_telefono" name="num_telefono" ><br><br>
+		        <input class="Boton_Escribir" type="text" id="num_telefono" name="num_telefono" required><br><br>
 		        
 		        
 		        <label for="correoUsuario"><b>Correo Electrónico</b></label><br>
 		        <label class="Texto_Ayuda">Solo se permiten correos del dominio (@gmail.com)</label><br>
-		        <input class="Boton_Escribir" type="email" id="correoUsuario" name="correoUsuario" ><br><br>
+		        <input class="Boton_Escribir" type="email" id="correoUsuario" name="correoUsuario" required><br><br>
 				
 				
 		        <label for="contrasenia"><b>Contraseña</b></label><br>
 		        <label class="Texto_Ayuda">(Debe incluir un número, un símbolo especial(!?*%) y una mayúscula y ser superior a 8 e inferior a 20 caracteres)</label><br>
-		        <input class="Boton_Escribir" type="password" id="contrasenia" name="contrasenia"><br><br>
+		        <input class="Boton_Escribir" type="password" id="contrasenia" name="contrasenia" required><br><br>
 		        
 		        
 		        <label for="contraseniaRe"><b>Confirmar contraseña</b></label><br>
-		        <input class="Boton_Escribir" type="password" id="contraseniaRe" name="contraseniaRe"><br><br>
+		        <input class="Boton_Escribir" type="password" id="contraseniaRe" name="contraseniaRe" required><br><br>
 		        
 		       	
 		      	<input class="Botones" id="registrarme" type="submit" value="Confirmar"> <a class="Botones" href="login.jsp">Volver al inicio de sesion</a>
