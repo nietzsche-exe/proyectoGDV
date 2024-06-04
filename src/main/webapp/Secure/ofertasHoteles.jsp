@@ -30,6 +30,7 @@
 %>
 
 <%
+
     if (usuario.getTema() == false) {
 %>
 	<style>
@@ -407,11 +408,7 @@
 		<div id="direcciones"></div>
 		<script src="JavaScript/map.js"></script>
 		<script async defer src="https://maps.googleapis.com/maps/api/js?key=<%=configLoader.getProperty("util.apiKeyMap")%>&callback=iniciarMap&loading=async"></script>
-		<!--  
-		<script src="JavaScript/geolocalizacion.js"></script>
-		-->
-		<!--  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCZuB7bki3m-dvgWkWfcclEjfwSDxVAlXo&callback=obtenerTodasLasDirecciones"></script>
-		-->
+		
 <%
 	}else{
 		request.getSession().setAttribute("usuario", usuario);

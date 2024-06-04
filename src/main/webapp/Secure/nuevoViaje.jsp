@@ -12,7 +12,7 @@
 HttpSession a = request.getSession();
 // Obtiene los datos del usuario almacenados en la sesión
 Usuario usuario = (Usuario) a.getAttribute("usuario");
-usuario.getTema();
+
 System.out.println("Informacion usuario actual: "+usuario.toString());
 
 if (usuario.getTema()==true) {
@@ -26,13 +26,27 @@ if (usuario.getTema()==true) {
 }
 %>
 <script src="../JavaScript/nuevoViaje.js"></script>
+
+<script>
+        window.onload = function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const errorParam = urlParams.get('error');
+            if (errorParam === 'ciudades') {
+                alert('No se han encontrado datos para las ciudades ingresadas.');
+            } else if (errorParam === 'hoteles') {
+                alert('No se han encontrado hoteles u ofertas de hotel para el destino ingresado.');
+            }
+        }
+    </script>
 </head>
 <body>
 
 	<header id="Cabecero">
-		<form id="form_cabecero" action="LoginController?opcion=perfil" method="post">
-			<%a.setAttribute("usuario", usuario);%>
+		<form id="form_cabecero" action="../LoginController" method="post">
+			<input type="hidden" name="opcion" value="perfil">
+			<%a.setAttribute("usuario", usuario); %>
 			<input id="Cancelar" type="submit" value="cancelar">
+		
 		</form>
 	</header>
 	
@@ -73,6 +87,7 @@ if (usuario.getTema()==true) {
 	</div>
 
 	<%
+
 %>
 </body>
 </html>

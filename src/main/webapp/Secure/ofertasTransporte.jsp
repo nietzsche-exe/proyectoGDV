@@ -375,9 +375,6 @@
 	</header>
 <%
 	try{
-		
-	
-
 		if(flightOffers[0].getId()!=null){%>
 			<div id="Ofertas">
 <% 
@@ -568,16 +565,15 @@
 
 		}
 	}catch( ArrayIndexOutOfBoundsException e){
-		System.out.println("NO HAY VUELOS DISPONIBLES");
-		//response.sendRedirect("Secure/nuevoViaje.jsp");
 %>
 
 	<script>alert("Redirigiendo a la busqueda destinos \n"+
 			"NO HAY VUELOS DISPONIBLES PARA LA CIUDAD\n "<%=direccion.getNombre_ciudad()%>", "<%= direccion.getCodigo_pais()%>)</script>
 	
 <%
+	}finally{
 		sessionA.setAttribute("usuario",usuario);
-		response.sendRedirect("Secure/nuevoViaje.jsp");
+		response.sendRedirect("Secure/nuevoViaje.jsp");		
 	}
 %>
 	

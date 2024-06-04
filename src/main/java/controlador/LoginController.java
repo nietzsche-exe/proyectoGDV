@@ -325,6 +325,7 @@ public class LoginController extends HttpServlet {
 		        LOGGER.error("Error obteniendo datos de la ciudad origen: " + e.getMessage());
 		        errorOccurred = true;
 		    }
+		    
 
 		    try {
 		        LOGGER.trace("Realizando consulta a la API obtener datos de la Ciudad Destino");
@@ -342,7 +343,7 @@ public class LoginController extends HttpServlet {
 
 		    if (errorOccurred) {
 		        request.setAttribute("usuario", usuarioInfo2);
-		        response.sendRedirect("Secure/nuevoViaje.jsp");
+		        response.sendRedirect("Secure/nuevoViaje.jsp?error=ciudades");
 		        break;
 		    }
 
@@ -362,7 +363,6 @@ public class LoginController extends HttpServlet {
 		    		}
 		    		
 		    	}
-		        
 		       
 
 		        int i = 0;
@@ -427,7 +427,7 @@ public class LoginController extends HttpServlet {
 		    } catch (IllegalStateException | ResponseException e) {
 		        LOGGER.error(e.getMessage());
 		        request.setAttribute("usuario", usuarioInfo2);
-		        response.sendRedirect("Secure/nuevoViaje.jsp");
+		        response.sendRedirect("Secure/nuevoViaje.jsp?error=hoteles");
 		        break;
 		    }
 
@@ -445,7 +445,7 @@ public class LoginController extends HttpServlet {
 		    if (!listaDatosHoteles.isEmpty()) {
 		        request.getRequestDispatcher("Secure/ofertasHoteles.jsp").forward(request, response);
 		    } else {
-		        response.sendRedirect("Secure/nuevoViaje.jsp");
+		        response.sendRedirect("Secure/nuevoViaje.jsp?error=hoteles");
 		    }
 		    break;
 
