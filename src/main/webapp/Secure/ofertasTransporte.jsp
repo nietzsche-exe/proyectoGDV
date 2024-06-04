@@ -44,8 +44,6 @@
 	HttpSession sessionA=request.getSession();
 	//Obtiene los datos del usuario almacenados en la sesión
 	Usuario usuario = (Usuario) sessionA.getAttribute("usuario");
-	System.out.println("Informacion usuario actual: "+usuario.toString());
-	
 	Location[] locations= amadeus.referenceData.locations.get(
 			Params.with("subType", "AIRPORT")
 				.and("keyword", codigoCiudadOrigen)
@@ -73,6 +71,7 @@
 <meta charset="UTF-8">
 <title>Vuelos</title>
 	<%
+	try{
     if (usuario.getTema() == false) {
 %>
 	<style>
@@ -543,7 +542,7 @@
 										<input type="hidden" name="ciudadDestino" value="<%=locationsDestino[0].getAddress().getCityName()%>">
 										<input type="hidden" name="aeropuertoDestino" value="<%=locationsDestino[0].getName()%>">
 										<input type="hidden" name="tipoViajero" value="<%=pricings[0].getTravelerType()%>">
-										<input type="hidden" name="precioMedio" value="<%=flightOffers[0].getPrice().getTotal()%>">
+										<input type="hidden" name="precioMedio" value="<%=flightOffers[j].getPrice().getTotal()%>">
 										<input type="hidden" name="claseCabina" value="<%=bySegments[0].getCabin()%>">
 										<input type="hidden" name="numeroPersonasViaje" value="<%=numeroPersonas %>">
 										
@@ -575,7 +574,25 @@
 		sessionA.setAttribute("usuario",usuario);
 		response.sendRedirect("Secure/nuevoViaje.jsp");		
 	}
-%>
 	
+	}catch(NullPointerException e){
+%>
+<form name="tema" action="../LoginController" method="POST">
+			<input type="hidden" name="opcion" value="Loger">
+	
+			<div class="Contenedor_SesionCerrada">
+				<p id="Titulo">UPS</p>
+				<p id="Texto">
+					<img id="imgAdvertencia" src="../Resources/advertencia.png">
+					Tu sesión está cerrada 
+					<img id="imgAdvertencia" src="../Resources/advertencia.png">
+				</p>
+				<p id="Texto">Inicia sesión otra vez.</p>
+				<input type="submit" value="Volver a iniciar sesion">
+			</div>
+		</form>
+<%
+}
+%>
 </body>
 </html>

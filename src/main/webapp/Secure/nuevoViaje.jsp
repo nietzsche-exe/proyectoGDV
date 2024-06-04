@@ -16,7 +16,7 @@
 	Usuario usuario = (Usuario) a.getAttribute("usuario");
 	
 	EntityManager em = HibernateUtils.getEmf().createEntityManager();
-	
+	try{
 	Query query = em.createQuery("SELECT u.tema, u.sesionActiva FROM Usuario u WHERE u.id = :idUsuario");
 	query.setParameter("idUsuario", usuario.getId_usuario());
 
@@ -46,7 +46,7 @@
             const urlParams = new URLSearchParams(window.location.search);
             const errorParam = urlParams.get('error');
             if (errorParam === 'ciudades') {
-                alert('No se han encontrado datos para las ciudades ingresadas.');
+                alert('El nombre de la ciudad de origen o de destino es incorrecto.');
             } else if (errorParam === 'hoteles') {
                 alert('No se han encontrado hoteles u ofertas de hotel para el destino ingresado.');
             }
@@ -87,7 +87,7 @@
 		
 		    <div class="Contenedor_Titulo">
 		        <h1 class="Titulo">Buscar un hotel</h1>
-		        <h3 class="Titulo">(El nombre de las ciudades deben ser en inglés)</h3>
+		        <h3 class="Titulo">(Los nombres de las ciudades deben ser en inglés)</h3>
 		    </div> 
 		     
 		    <div class="Contenedor_Busqueda">
@@ -121,6 +121,27 @@
 
 <%
 	}
+
+	}catch(NullPointerException e){
+		
+	
+%>
+<form name="tema" action="../LoginController" method="POST">
+			<input type="hidden" name="opcion" value="Loger">
+	
+			<div class="Contenedor_SesionCerrada">
+				<p id="Titulo">UPS</p>
+				<p id="Texto">
+					<img id="imgAdvertencia" src="../Resources/advertencia.png">
+					Tu sesión está cerrada 
+					<img id="imgAdvertencia" src="../Resources/advertencia.png">
+				</p>
+				<p id="Texto">Inicia sesión otra vez.</p>
+				<input type="submit" value="Volver a iniciar sesion">
+			</div>
+		</form>
+<%
+}
 %>
 </body>
 </html>

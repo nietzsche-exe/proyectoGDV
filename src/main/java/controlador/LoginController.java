@@ -202,6 +202,11 @@ public class LoginController extends HttpServlet {
 								"El numero de telefono tiene que empezar por 6 o 7");
 						LOGGER.error("Error: el numero de telefono no empieza por 6 o 7");
 						request.getRequestDispatcher("registro.jsp").forward(request, response);
+					}else if(telefono.matches(".*[A-Z].*")||telefono.matches(".*[a-z].*")||telefono.matches(".*[!¡@#$%^&*()¿?¬~].*")) {
+						request.setAttribute("error",
+								"El numero de telefono no puede contener una letra o caracter especial");
+						LOGGER.error("Error: El numero de telefono no puede contener una letra o caracter especial([!¡@#$%^&*()¿?¬~])");
+						request.getRequestDispatcher("registro.jsp").forward(request, response);
 					}
 	
 					
@@ -551,105 +556,115 @@ public class LoginController extends HttpServlet {
 			LOGGER.debug("Enviando sesion de Amadeus a ofertasTransporte.jsp");
 			request.setAttribute("usuario", usuarioInfo);
 			LOGGER.debug("Enviando el usuario a ofertasTransporte.jsp");
-			request.getRequestDispatcher("Secure/ofertasTransporte.jsp").forward(request, response);
+			response.sendRedirect("Secure/ofertasTransporte.jsp");
 			break;
 
 		case "guardarOfertaViaje":
-			Direccion direccionFinal=(Direccion) request.getSession().getAttribute("direccion_Final");
-			HotelBD hotelFinal=(HotelBD) request.getSession().getAttribute("hotel_Final");
-			Habitacion habitacionFinal=(Habitacion) request.getSession().getAttribute("habitacion_Final");
-			Usuario usuarioFinal = (Usuario) request.getSession().getAttribute("usuario");
-			numeroPersonasViajeStr= (String) request.getParameter("numeroPersonasViaje");
-			System.out.println(numeroPersonasViajeStr);
-			Integer numeroPersonasViaje= (Integer) Integer.valueOf(numeroPersonasViajeStr);
-			LOGGER.info("Recuperando datos de ofertasTransporte.jsp: " +
-	                "\nDireccion Hotel= " + direccionFinal +
-	                "\nHotel= " + hotelFinal +
-	                "\nHabitacion= " + habitacionFinal +
-	                "\nUsuario= " +usuarioFinal+
-	                "\nViajeros= "+numeroPersonasViaje);
-			EntityManager em1 = modelo.HibernateUtils.getEmf().createEntityManager();
-			EntityTransaction transaction1= null;
-			
-			String aeropuerto_Origen = (String) request.getParameter("aeropuertoOrigen");
-			String ciudad_Origen = (String)request.getParameter("ciudadOrigen");
-			String compania_Area= (String)request.getParameter("companiaAerea");
-			String ciudad_destino= (String)request.getParameter("ciudadDestino");
-			String aeropuerto_Destino = (String)request.getParameter("aeropuertoDestino");
-			String tipo_Viajero = (String)request.getParameter("tipoViajero");
-			String precio_MedioStr = (String)request.getParameter("precioMedio");
-			String clase_Cabina = (String)request.getParameter("claseCabina");
-			LOGGER.info("Datos obtenidos de ofertasTransporte.jsp para crear una instancia de DatosVuelo: " +
-	                "\nAeropuerto Origen= " + aeropuerto_Origen +
-	                "\nCiudad Origen= " + ciudad_Origen +
-	                "\nCompañía Aérea= " + compania_Area +
-	                "\nCiudad Destino= " + ciudad_destino +
-	                "\nAeropuerto Destino= " + aeropuerto_Destino +
-	                "\nTipo Viajero= " + tipo_Viajero +
-	                "\nPrecio Medio= " + precio_MedioStr +
-	                "\nClase Cabina= " + clase_Cabina);
-			DatosVuelo datosVuelo=null; 
-			if(aeropuerto_Origen!=null&&ciudad_Origen!=null) {
-				Double precio_Medio = precio_MedioStr != null ? Double.valueOf(precio_MedioStr) : 0.0;
-				datosVuelo = new DatosVuelo(aeropuerto_Origen,ciudad_Origen,compania_Area,ciudad_destino
-							,aeropuerto_Destino, tipo_Viajero, precio_Medio,clase_Cabina);				
-			}
-			Viaje viaje= new Viaje(usuarioFinal,numeroPersonasViaje);
-			if (habitacionFinal != null) {
-	            viaje.setHabitacion(habitacionFinal);
-					LOGGER.info("Habitacion añadida al viaje");
-	        }
-	        if (datosVuelo != null) {
-	            viaje.setDatos_vuelo(datosVuelo);
-					LOGGER.info("Datos de vuelo añadidos al Viaje");
-	        }
-	        try {
-				transaction1=em1.getTransaction();
-				LOGGER.trace("Transaccion Iniciada");
-				transaction1.begin();
-				if(direccionFinal!=null) {
-					em1.merge(direccionFinal);		
-					LOGGER.debug("Direccion subida a Base de datos");
-				}
-				if(hotelFinal!=null) {
-					
-					em1.merge(hotelFinal);			
-					LOGGER.debug("Hotel subido a Base de datos");
-				}
-				if(habitacionFinal !=null) {
-					em1.merge(habitacionFinal);
-					LOGGER.debug("Habitacion subida a Base de datos");
-				}
-				if(datosVuelo!=null) {
-					
-					em1.merge(datosVuelo);				
-					LOGGER.debug("Datos de vuelo subidos a Base de datos");
-				}
-				if(viaje!=null) {
-					em1.merge(viaje);
-					LOGGER.debug("Viaje subido a Base de datos");
-				}
-				transaction1.commit();
-				LOGGER.trace("Commit relizado");
-			}catch(Exception e) {
-				LOGGER.error(e.getMessage());
-				 if (transaction1 != null && transaction1.isActive()) {
-			            transaction1.rollback();
-			            LOGGER.trace("Se ha realizado Rollback");
-			        }
-			}finally {
-				 if (em1 != null && em1.isOpen()) {
-			            em1.close();
-			            LOGGER.trace("Entity Manager Cerrado");
-			            request.getSession().setAttribute("usuario", usuarioFinal);
-			            response.sendRedirect("Secure/perfilUsuario.jsp");
-			        }else {
-			        	request.getSession().setAttribute("usuario", usuarioFinal);
-			            response.sendRedirect("Secure/perfilUsuario.jsp");
-			        }
-			}
+		    Direccion direccionFinal = (Direccion) request.getSession().getAttribute("direccion_Final");
+		    HotelBD hotelFinal = (HotelBD) request.getSession().getAttribute("hotel_Final");
+		    Habitacion habitacionFinal = (Habitacion) request.getSession().getAttribute("habitacion_Final");
+		    Usuario usuarioFinal = (Usuario) request.getSession().getAttribute("usuario");
+		    numeroPersonasViajeStr = request.getParameter("numeroPersonasViaje");
+		    Integer numeroPersonasViaje = Integer.valueOf(numeroPersonasViajeStr);
 
-	        break;
+		    LOGGER.info("Recuperando datos de ofertasTransporte.jsp: " +
+		            "\nDireccion Hotel= " + direccionFinal +
+		            "\nHotel= " + hotelFinal +
+		            "\nHabitacion= " + habitacionFinal +
+		            "\nUsuario= " + usuarioFinal +
+		            "\nViajeros= " + numeroPersonasViaje);
+
+		    EntityManager em1 = modelo.HibernateUtils.getEmf().createEntityManager();
+		    EntityTransaction transaction1 = null;
+
+		    // Datos de vuelo
+		    String aeropuerto_Origen = request.getParameter("aeropuertoOrigen");
+		    String ciudad_Origen = request.getParameter("ciudadOrigen");
+		    String compania_Area = request.getParameter("companiaAerea");
+		    String ciudad_destino = request.getParameter("ciudadDestino");
+		    String aeropuerto_Destino = request.getParameter("aeropuertoDestino");
+		    String tipo_Viajero = request.getParameter("tipoViajero");
+		    String precio_MedioStr = request.getParameter("precioMedio");
+		    String clase_Cabina = request.getParameter("claseCabina");
+
+		    LOGGER.info("Datos obtenidos de ofertasTransporte.jsp para crear una instancia de DatosVuelo: " +
+		            "\nAeropuerto Origen= " + aeropuerto_Origen +
+		            "\nCiudad Origen= " + ciudad_Origen +
+		            "\nCompañía Aérea= " + compania_Area +
+		            "\nCiudad Destino= " + ciudad_destino +
+		            "\nAeropuerto Destino= " + aeropuerto_Destino +
+		            "\nTipo Viajero= " + tipo_Viajero +
+		            "\nPrecio Medio= " + precio_MedioStr +
+		            "\nClase Cabina= " + clase_Cabina);
+
+		    DatosVuelo datosVuelo = null;
+		    if (aeropuerto_Origen != null && ciudad_Origen != null) {
+		        Double precio_Medio = precio_MedioStr != null ? Double.valueOf(precio_MedioStr) : 0.0;
+		        datosVuelo = new DatosVuelo(aeropuerto_Origen, ciudad_Origen, compania_Area, ciudad_destino, aeropuerto_Destino, tipo_Viajero, precio_Medio, clase_Cabina);
+		    }
+
+		    Viaje viaje = new Viaje(usuarioFinal, numeroPersonasViaje);
+
+		    if (habitacionFinal != null) {
+		        viaje.setHabitacion(habitacionFinal);
+		        hotelFinal.addHabitacion(habitacionFinal);
+		        LOGGER.info("Habitacion añadida al viaje");
+		    }
+
+		    if (datosVuelo != null) {
+		        viaje.setDatos_vuelo(datosVuelo);
+		        LOGGER.info("Datos de vuelo añadidos al Viaje");
+		    }
+
+		    try {
+		        transaction1 = em1.getTransaction();
+		        LOGGER.trace("Transaccion Iniciada");
+		        transaction1.begin();
+
+		        if (direccionFinal != null) {
+		            em1.merge(direccionFinal);
+		            LOGGER.debug("Direccion subida a Base de datos");
+		        }
+
+		        if (hotelFinal != null) {
+		            em1.merge(hotelFinal);
+		            LOGGER.debug("Hotel subido a Base de datos");
+		        }
+
+		        if (habitacionFinal != null) {
+		            em1.merge(habitacionFinal);
+		            LOGGER.debug("Habitacion subida a Base de datos");
+		        }
+
+		        if (datosVuelo != null) {
+		            em1.merge(datosVuelo);
+		            LOGGER.debug("Datos de vuelo subidos a Base de datos");
+		        }
+
+		        if (viaje != null) {
+		            em1.merge(viaje);
+		            LOGGER.debug("Viaje subido a Base de datos");
+		        }
+
+		        transaction1.commit();
+		        LOGGER.trace("Commit realizado");
+
+		    } catch (Exception e) {
+		        LOGGER.error(e.getMessage(), e);
+		        if (transaction1 != null && transaction1.isActive()) {
+		            transaction1.rollback();
+		            LOGGER.trace("Se ha realizado Rollback");
+		        }
+		    } finally {
+		        if (em1 != null && em1.isOpen()) {
+		            em1.close();
+		            LOGGER.trace("Entity Manager Cerrado");
+		        }
+		        request.getSession().setAttribute("usuario", usuarioFinal);
+		        response.sendRedirect("Secure/perfilUsuario.jsp");
+		    }
+		    break;
+
 		case "eliminarViajeUsuario":
 
 		    Usuario usuarioSeleccionado = (Usuario) request.getSession().getAttribute("UsuarioSeleccionado");
