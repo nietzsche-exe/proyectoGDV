@@ -11,6 +11,8 @@ import controlador.LoginController;
 /**
  * Clase encargada de validar/verficar la existencia de un correo electronico introducido por el usuario durante su registro
  * mediante la creacion de un token de verificacion
+ * @author Grupo 5
+ * @since 2024
  */
 public class EmailValidator {
 	private static final Logger LOGGER = LoggerFactory.getLogger(EmailValidator.class);

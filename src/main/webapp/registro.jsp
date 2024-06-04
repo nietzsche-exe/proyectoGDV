@@ -1,4 +1,6 @@
 <%@page import="java.time.LocalDate"%>
+<%@ page import="org.slf4j.Logger" %>
+<%@ page import="org.slf4j.LoggerFactory" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -9,6 +11,10 @@
 <link rel="stylesheet" href="Styles/Registrarse/cssRegistrarse.css"> 
 </head>
 <body>
+<%
+    Logger logger = LoggerFactory.getLogger("MiLogger");
+    logger.info("Página JSP cargada");
+%>
 	<div class="Contenedor_Registrarse">
 		<div id="Contenedor_Cabecero">
 			<img id="imgPerfil" alt="Logo_Empresa" src="Resources/logo_2.0.jpeg">

@@ -14,6 +14,8 @@
 <%@page import="com.amadeus.Amadeus"%>
 <%@page import="com.amadeus.resources.FlightOfferSearch"%>
 <%@page import="modelo.Usuario"%>
+<%@ page import="org.slf4j.Logger" %>
+<%@ page import="org.slf4j.LoggerFactory" %>
 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -365,7 +367,10 @@
 	
 
 <body>
-	
+<%
+    Logger logger = LoggerFactory.getLogger("MiLogger");
+    logger.info("Página JSP cargada");
+%>	
 	<header id="Cabecero">
 		<form id="form_cabecero" action="LoginController?opcion=perfil" method="post">
 			<%sessionA.setAttribute("usuario", usuario); %>

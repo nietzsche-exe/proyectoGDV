@@ -17,6 +17,8 @@ import jakarta.persistence.Table;
 
 /**
  * Esta clase representa un viaje realizado por un usuario.
+ * @author Grupo 5
+ * @since 2024
  */
 @Entity
 @Table(name = "viaje", schema = "gestion_viajes")

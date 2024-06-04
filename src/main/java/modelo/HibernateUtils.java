@@ -5,6 +5,8 @@ import jakarta.persistence.Persistence;
 
 /**
  * Clase utilitaria para obtener la instancia de EntityManagerFactory.
+ * @author Grupo 5
+ * @since 2024
  */
 public class HibernateUtils {
 	 /**

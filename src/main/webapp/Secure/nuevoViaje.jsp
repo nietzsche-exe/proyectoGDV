@@ -3,6 +3,8 @@
 <%@page import="jakarta.persistence.EntityManager"%>
 <%@page import="java.time.LocalDate"%>
 <%@page import="modelo.Usuario"%>
+<%@ page import="org.slf4j.Logger" %>
+<%@ page import="org.slf4j.LoggerFactory" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -43,6 +45,10 @@
 	<script src="../JavaScript/nuevoViaje.js"></script>
 </head>
 <body>
+<%
+    Logger logger = LoggerFactory.getLogger("MiLogger");
+    logger.info("Página JSP cargada");
+%>
 <%
 	if (usuario.getSesionActiva() == false) {
 %>

@@ -61,6 +61,8 @@ import util.HotelData;
 
 /**
  * La clase LoginController se encarga de actuar como un servlet con la extension HtttpServlet, respondiendo a las peticiones del usuario.
+ * @author Grupo 5
+ * @since 2024
  */
 public class LoginController extends HttpServlet {
 	private static final long serialVersionUID = 1L;

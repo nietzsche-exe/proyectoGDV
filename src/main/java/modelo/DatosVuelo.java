@@ -14,6 +14,8 @@ import jakarta.persistence.Table;
 
 /**
  * Esta clase representa los datos de una oferta de vuelo
+ * @author Grupo 5
+ * @since 2024
  */
 @Entity
 @Table(name = "datosVuelo", schema = "gestion_viajes")

@@ -15,7 +15,11 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-
+/**
+ * Esta clase representa un usuario en la base de datos.
+ * @author Grupo 5
+ * @since 2024
+ */
 @Entity
 @Table(name="usuarios", schema="gestion_viajes")
 public class Usuario implements Serializable{

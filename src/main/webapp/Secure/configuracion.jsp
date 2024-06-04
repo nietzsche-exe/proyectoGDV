@@ -7,6 +7,8 @@
 <%@page import="modelo.HibernateUtils"%>
 <%@page import="jakarta.persistence.EntityManager"%>
 <%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="org.slf4j.Logger" %>
+<%@ page import="org.slf4j.LoggerFactory" %>
 
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
@@ -86,7 +88,10 @@
 <title>Configuracion</title>
 </head>
 <body>
-	
+<%
+    Logger logger = LoggerFactory.getLogger("MiLogger");
+    logger.info("Página JSP cargada");
+%>	
 		
 		
 

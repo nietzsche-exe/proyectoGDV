@@ -8,6 +8,9 @@
 <%@page import="jakarta.persistence.EntityManager" %>
 <%@page import="jakarta.persistence.Query" %>
 <%@page import="java.util.List" %>
+
+<%@ page import="org.slf4j.Logger" %>
+<%@ page import="org.slf4j.LoggerFactory" %>
     
 <%@page import="modelo.HibernateUtils"%>
 <%@page import="jakarta.persistence.EntityManager" %>
@@ -24,7 +27,10 @@
 <link rel="stylesheet" href="Styles/Inicio_Sesion/cssInicioSesion.css">
 </head>
 <body>
-
+<%
+    Logger logger = LoggerFactory.getLogger("MiLogger");
+    logger.info("Página JSP cargada");
+%>
 	<div class="Contenedor_InicoSesion">
 		<div id="Contenedor_Cabecero">
 			<img id="imgPerfil" alt="Imagen Perfil" src="Resources/inicioSesion_01.jpeg">
