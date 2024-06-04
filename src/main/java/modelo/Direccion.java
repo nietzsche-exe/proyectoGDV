@@ -14,6 +14,8 @@ import jakarta.persistence.Table;
 
 /**
  * Esta clase representa la dirección de un hotel.
+ * @author Grupo 5
+ * @since 2024
  */
 @Entity
 @Table(name="direccion", schema = "gestion_viajes")

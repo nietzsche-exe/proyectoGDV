@@ -2,6 +2,8 @@
 <%@page import="util.EmailValidator"%>
 <%@page import="org.hibernate.internal.build.AllowSysOut"%>
 <%@page import="modelo.Usuario"%>
+<%@ page import="org.slf4j.Logger" %>
+<%@ page import="org.slf4j.LoggerFactory" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
@@ -87,7 +89,10 @@
 	
 </head>
 <body>
-
+<%
+    Logger logger = LoggerFactory.getLogger("MiLogger");
+    logger.info("Página JSP cargada");
+%>
 	<div class="Contenedor_Todo">
 		<div class="Contenedor_Error">
 		

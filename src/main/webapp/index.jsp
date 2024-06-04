@@ -1,4 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="org.slf4j.Logger" %>
+<%@ page import="org.slf4j.LoggerFactory" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,6 +9,10 @@
 <link rel="stylesheet" href="Styles/Pagina_Principal/cssIndex.css">
 </head>
 <body>
+<%
+    Logger logger = LoggerFactory.getLogger("MiLogger");
+    logger.info("Página JSP cargada");
+%>
 	<header class="Encabezado">
 		<div class="Contenedor_Logo">
 			<img id="logo" alt="Logo" src="Resources/logo_2.0.jpeg">

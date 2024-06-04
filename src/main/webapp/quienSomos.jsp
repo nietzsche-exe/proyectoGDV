@@ -1,4 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="org.slf4j.Logger" %>
+<%@ page import="org.slf4j.LoggerFactory" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,6 +9,10 @@
 <link rel="stylesheet" href="Styles/Pagina_Principal/cssQuienSomos.css">
 </head>
 <body>
+<%
+    Logger logger = LoggerFactory.getLogger("MiLogger");
+    logger.info("Página JSP cargada");
+%>
 <%
 	boolean principal = true, inicio_registro = false, destino = false, reserva = false, itinerarios = false, opiniones = false, soporte = false;
 %>	

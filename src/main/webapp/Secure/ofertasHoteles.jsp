@@ -5,6 +5,8 @@
 <%@page import="java.util.stream.Collectors" %>
 <%@page import="controlador.LoginController"%>
 <%@page import="util.ConfigLoader"%>
+<%@ page import="org.slf4j.Logger" %>
+<%@ page import="org.slf4j.LoggerFactory" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -302,7 +304,10 @@
 </head>
 
 <body>
-
+<%
+    Logger logger = LoggerFactory.getLogger("MiLogger");
+    logger.info("Página JSP cargada");
+%>
 	<header id="Cabecero">
 		<form id="form_cabecero" action="LoginController?opcion=perfil" method="post">
 			<%sessionA.setAttribute("usuario", usuario); %>

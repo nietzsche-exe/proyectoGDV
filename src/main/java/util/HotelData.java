@@ -2,6 +2,8 @@ package util;
 
 /**
  * Clase encargada de almacenar los datos del hotel y habitacion de la API de Amadeus
+ * @author Grupo 5
+ * @since 2024
  */
 public class HotelData {
 

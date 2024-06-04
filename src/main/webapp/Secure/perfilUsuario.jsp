@@ -22,6 +22,8 @@
 <%@page import="org.hibernate.Session"%>
 <%@page import="org.hibernate.Transaction"%>
 <%@page import="util.ConfigLoader" %>
+<%@ page import="org.slf4j.Logger" %>
+<%@ page import="org.slf4j.LoggerFactory" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -89,6 +91,10 @@ if (usuario.getTema() == false) {
 %>
 </head>
 <body>
+<%
+    Logger logger = LoggerFactory.getLogger("MiLogger");
+    logger.info("Página JSP cargada");
+%>
 <%
 	if (usuario.getSesionActiva() == false) {
 %>
