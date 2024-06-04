@@ -10,28 +10,18 @@ import java.util.List;
 import java.util.UUID;
 
 import org.slf4j.LoggerFactory;
-import org.json.JSONArray;
-import org.json.JSONObject;
 import org.slf4j.Logger;
 
 import com.amadeus.Amadeus;
 import com.amadeus.Params;
-import com.amadeus.referencedata.Locations;
 import com.amadeus.exceptions.ClientException;
 import com.amadeus.exceptions.ResponseException;
 import com.amadeus.resources.City;
 import com.amadeus.resources.HotelOfferSearch;
 import com.amadeus.resources.HotelOfferSearch.Offer;
-import com.amadeus.resources.HotelOfferSearch.QualifiedFreeText;
-import com.amadeus.referencedata.locations.Cities;
-import com.amadeus.referencedata.locations.Hotels;
 import com.amadeus.resources.Hotel;
-import com.amadeus.resources.Location;
-import com.amadeus.resources.Resource;
 
 
-import com.amadeus.resources.City;
-import com.amadeus.resources.Hotel.Address;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
