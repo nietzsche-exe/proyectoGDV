@@ -575,7 +575,6 @@
 			"NO HAY VUELOS DISPONIBLES PARA LA CIUDAD\n "<%=direccion.getNombre_ciudad()%>", "<%= direccion.getCodigo_pais()%>)</script>
 	
 <%
-	}finally{
 		sessionA.setAttribute("usuario",usuario);
 		response.sendRedirect("Secure/nuevoViaje.jsp");		
 	}

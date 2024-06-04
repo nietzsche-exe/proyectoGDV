@@ -29,10 +29,14 @@
 
     String latitudesJsonStr = latitudesJson.toString();
     String longitudesJsonStr = longitudesJson.toString();    
+/*
+util.apiKeyAmadeus1=0zyerw6GcNYgL2bFqMhnSqznQvA73f7I
+util.apiKeyAmadeus2=H7aFZhh8tAqe9WSC
+*/
 %>
 
 <%
-
+try{
     if (usuario.getTema() == false) {
 %>
 	<style>
@@ -419,6 +423,24 @@
 		request.getSession().setAttribute("usuario", usuario);
 		response.sendRedirect("perfilUsuario.jsp");
 	}
+}catch(NullPointerException e){
+	%>
+	form name="tema" action="../LoginController" method="POST">
+			<input type="hidden" name="opcion" value="Loger">
+	
+			<div class="Contenedor_SesionCerrada">
+				<p id="Titulo">UPS</p>
+				<p id="Texto">
+					<img id="imgAdvertencia" src="../Resources/advertencia.png">
+					Tu sesión está cerrada 
+					<img id="imgAdvertencia" src="../Resources/advertencia.png">
+				</p>
+				<p id="Texto">Inicia sesión otra vez.</p>
+				<input type="submit" value="Volver a iniciar sesion">
+			</div>
+		</form>
+	<% 
+}
 
 %>
 

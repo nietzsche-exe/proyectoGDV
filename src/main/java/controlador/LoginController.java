@@ -548,7 +548,7 @@ public class LoginController extends HttpServlet {
 			LOGGER.debug("Enviando sesion de Amadeus a ofertasTransporte.jsp");
 			request.setAttribute("usuario", usuarioInfo);
 			LOGGER.debug("Enviando el usuario a ofertasTransporte.jsp");
-			response.sendRedirect("Secure/ofertasTransporte.jsp");
+			request.getRequestDispatcher("Secure/ofertasTransporte.jsp").forward(request, response);
 			break;
 
 		case "guardarOfertaViaje":
@@ -597,10 +597,15 @@ public class LoginController extends HttpServlet {
 
 		    Viaje viaje = new Viaje(usuarioFinal, numeroPersonasViaje);
 
+		    if (direccionFinal != null) {
+		    	hotelFinal.setDireccion(direccionFinal);
+		    	LOGGER.debug("Direccion subida a Base de datos");
+		    }
 		    if (habitacionFinal != null) {
 		        viaje.setHabitacion(habitacionFinal);
+		        LOGGER.info("Habitacion añadida al viaje");		        
 		        hotelFinal.addHabitacion(habitacionFinal);
-		        LOGGER.info("Habitacion añadida al viaje");
+		        LOGGER.info("Habitacion añadida al hotel");
 		    }
 
 		    if (datosVuelo != null) {
@@ -613,29 +618,26 @@ public class LoginController extends HttpServlet {
 		        LOGGER.trace("Transaccion Iniciada");
 		        transaction1.begin();
 
-		        if (direccionFinal != null) {
-		            em1.merge(direccionFinal);
-		            LOGGER.debug("Direccion subida a Base de datos");
-		        }
 
-		        if (hotelFinal != null) {
-		            em1.merge(hotelFinal);
-		            LOGGER.debug("Hotel subido a Base de datos");
+		        if (datosVuelo != null) {
+		            em1.persist(datosVuelo);
+		            LOGGER.debug("Datos del vuelo persistidos en la Base de datos");
 		        }
 
 		        if (habitacionFinal != null) {
-		            em1.merge(habitacionFinal);
-		            LOGGER.debug("Habitacion subida a Base de datos");
-		        }
-
-		        if (datosVuelo != null) {
-		            em1.merge(datosVuelo);
-		            LOGGER.debug("Datos de vuelo subidos a Base de datos");
+		        	Habitacion habitacionExistente=em1.find(Habitacion.class, habitacionFinal.getId_habitacion());
+		        	if(habitacionExistente == null) {
+		        		LOGGER.info(habitacionFinal.toString());
+		        		em1.persist(habitacionFinal);		        		
+		        		LOGGER.debug("Habitacion persistida en la Base de datos");
+		        	}else {
+		        		em1.merge(habitacionFinal);
+		        	}
 		        }
 
 		        if (viaje != null) {
-		            em1.merge(viaje);
-		            LOGGER.debug("Viaje subido a Base de datos");
+		            em1.persist(viaje);
+		            LOGGER.debug("Viaje persistido en la Base de datos");
 		        }
 
 		        transaction1.commit();
