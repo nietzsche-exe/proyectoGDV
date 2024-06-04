@@ -71,7 +71,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Viajes: avion</title>
+<title>Vuelos</title>
 	<%
     if (usuario.getTema() == false) {
 %>
@@ -530,7 +530,7 @@
 							<tr class="Filas">
 				
 								<td colspan="2" class="Columna_1">Precio Total</td>
-								<td colspan="2" class="Columna_2"><%=flightOffers[0].getPrice().getTotal()+"/"+flightOffers[0].getPrice().getCurrency()%></td>
+								<td colspan="2" class="Columna_2"><%=flightOffers[j].getPrice().getTotal()+"/"+flightOffers[j].getPrice().getCurrency()%></td>
 							</tr>
 							
 							<tr class="Filas">
@@ -543,7 +543,7 @@
 										<input type="hidden" name="ciudadDestino" value="<%=locationsDestino[0].getAddress().getCityName()%>">
 										<input type="hidden" name="aeropuertoDestino" value="<%=locationsDestino[0].getName()%>">
 										<input type="hidden" name="tipoViajero" value="<%=pricings[0].getTravelerType()%>">
-										<input type="hidden" name="precioMedio" value="<%=pricings[0].getPrice().getTotal()%>">
+										<input type="hidden" name="precioMedio" value="<%=flightOffers[0].getPrice().getTotal()%>">
 										<input type="hidden" name="claseCabina" value="<%=bySegments[0].getCabin()%>">
 										<input type="hidden" name="numeroPersonasViaje" value="<%=numeroPersonas %>">
 										

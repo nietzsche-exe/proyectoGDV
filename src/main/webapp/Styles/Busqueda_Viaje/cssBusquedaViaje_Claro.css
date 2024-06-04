@@ -90,3 +90,55 @@ body {
 #busca:hover {
     background-color: #45a049;
 }
+
+/* Sesion Cerrada */
+.Contenedor_SesionCerrada {
+    background-color: #f5f5f5;
+    color: #333;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    margin: 50px auto;
+}
+
+#Titulo {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #ff0000;
+}
+
+#Texto {
+    font-size: 16px;
+    margin: 10px 0;
+}
+
+#imgAdvertencia {
+    vertical-align: middle;
+    width: 24px;
+    height: 24px;
+}
+
+#Boton_Loger {
+    display: inline-block;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    margin-top: 20px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+#Boton_Loger:hover {
+    background-color: #45a049;
+}
+
+

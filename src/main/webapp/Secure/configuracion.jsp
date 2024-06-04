@@ -83,7 +83,7 @@
 	}
 %>
 <meta charset="UTF-8">
-<title>Página Configuracion</title>
+<title>Configuracion</title>
 </head>
 <body>
 	
@@ -433,7 +433,7 @@
 								</p>
 							</div>
 							<div class="Contenedor_Con_Imagen2">
-								<img class="Contenedor_IMG" src="../Resources/gestion_viaje.png">
+								<img class="Contenedor_IMG" src="../Resources/gestion_viaje_01.png">
 							</div>
 						</div>
 						

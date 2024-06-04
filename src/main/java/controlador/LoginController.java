@@ -1151,7 +1151,7 @@ public class LoginController extends HttpServlet {
 			        
 			        LOGGER.debug("Nuevo correo Subido");
 				} catch (Exception e) {
-					LOGGER.error("Error en la validacion del correo del usuario: " + e.getStackTrace());
+					LOGGER.error("Error en la validacion del correo del usuario: " + e.getMessage());
 					transaction4.rollback();
 					LOGGER.error("Haciendo rollback");
 				} finally {

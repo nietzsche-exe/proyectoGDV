@@ -3,12 +3,10 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Página Principal</title>
+<title>Apsoca</title>
 <link rel="stylesheet" href="Styles/Pagina_Principal/cssIndex.css">
 </head>
 <body>
-
-
 	<header class="Encabezado">
 		<div class="Contenedor_Logo">
 			<img id="logo" alt="Logo" src="Resources/logo_2.0.jpeg">

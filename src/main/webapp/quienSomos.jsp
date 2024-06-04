@@ -3,7 +3,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Página Principal</title>
+<title>Quienes-Somos</title>
 <link rel="stylesheet" href="Styles/Pagina_Principal/cssQuienSomos.css">
 </head>
 <body>
