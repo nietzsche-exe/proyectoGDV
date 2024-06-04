@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Registro de usuario</title>
+<title>Registro</title>
 <link rel="stylesheet" href="Styles/Registrarse/cssRegistrarse.css"> 
 </head>
 <body>

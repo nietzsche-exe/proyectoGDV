@@ -71,7 +71,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Viajes: avion</title>
+<title>Vuelos</title>
 	<%
     if (usuario.getTema() == false) {
 %>
