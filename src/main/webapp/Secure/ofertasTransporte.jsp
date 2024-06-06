@@ -46,6 +46,8 @@
 	HttpSession sessionA=request.getSession();
 	//Obtiene los datos del usuario almacenados en la sesión
 	Usuario usuario = (Usuario) sessionA.getAttribute("usuario");
+	usuario=null;
+try{
 	Location[] locations= amadeus.referenceData.locations.get(
 			Params.with("subType", "AIRPORT")
 				.and("keyword", codigoCiudadOrigen)
@@ -72,292 +74,15 @@
 <head>
 <meta charset="UTF-8">
 <title>Vuelos</title>
-	<%
-	try{
+<%
+
     if (usuario.getTema() == false) {
 %>
-	<style>
-		body {
-		    background-color: #f0f0f0;
-		    color: #333333;
-		    font-family: Arial, sans-serif;
-		    margin: 0;
-		}
-		
-		#Cabecero {
-		    background-color: #ffffff;
-		    padding: 10px;
-		    text-align: right;
-		    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-		}
-		
-		#form_cabecero {
-		    display: inline;
-		}
-		
-		#Cancelar {
-		    background-color: #4CAF50;
-		    color: white;
-		    border: none;
-		    padding: 10px 20px;
-		    text-align: center;
-		    text-decoration: none;
-		    font-size: 16px;
-		    cursor: pointer;
-		    border-radius: 4px;
-		}
-		
-		#Cancelar:hover {
-		    background-color: #45a049;
-		}
-		
-		#Ofertas {
-		    margin-top: 2%;
-		    margin-left: 5%;
-		    margin-bottom: 1%;
-		    width: 90%;
-		    background-color: #ffffff;
-		    border-radius: 10px;
-		    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-		}
-		
-		#Tabla {
-		    display: inline-block;
-		    margin-top: 3%;
-		    width: 30%;
-		    margin-left: 13%;
-		    border-collapse: collapse;
-		    border-top-right-radius: 10px;
-		    border-top-left-radius: 10px;
-		    margin-bottom: 3%;
-		    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-		}
-		
-		.Contenedor_Titulo {
-		    background-color: #f8f8f8;
-		    text-align: center;
-		    padding: 1.5%;
-		    border-top-right-radius: 10px;
-		    border-top-left-radius: 10px;
-		}
-		
-		.Contenedor_Subtitulo {
-		    background-color: #f8f8f8;
-		    text-align: center;
-		    padding: 1.5%;
-		    border-bottom: solid 1px #ddd;
-		}
-		
-		.Titulo {
-		    font-size: x-large;
-		    color: #333333;
-		}
-		
-		.Subtitulo {
-		    font-size: large;
-		    color: #333333;
-		}
-		
-		.Texto {
-		    font-size: x-small;
-		    color: #666666;
-		}
-		
-		.Filas:nth-child(even) {
-		    background-color: #f9f9f9;
-		}
-		
-		.Filas:nth-child(odd) {
-		    background-color: #ffffff;
-		}
-		
-		.Columna_1, .Columna_2, .Columna_3, .Columna_4 {
-		    padding: 2%;
-		    color: #666666;
-		}
-		
-		.Columna_1 {
-		    font-size: small;
-		}
-		
-		.Columna_2 {
-		    font-size: medium;
-		    padding-left: 2%;
-		}
-		
-		.Columna_3 {
-		    font-size: small;
-		    padding-left: 2%;
-		    border-left: solid 1px #ddd;
-		}
-		
-		.Botones {
-		    background-color: #4CAF50;
-		    border: none;
-		    color: white;
-		    text-align: center;
-		    text-decoration: none;
-		    display: inline-block;
-		    font-size: small;
-		    margin: 1.5%;
-		    cursor: pointer;
-		    border-radius: 5px;
-		    padding: 2%;
-		}
-		
-		.Botones:disabled {
-		    background-color: #aaa;
-		    cursor: not-allowed;
-		}
-		
-		.Botones:hover {
-		    opacity: 0.8;
-		}
-
-
-	</style>
+		<link rel="stylesheet" href="Styles/Ofertas_Vuelos/cssOfertas_Vuelos_Claro.css">
 <%
     } else {
 %>
-	<style>
-		body {
-			background-color: #1e1e1e;
-		    color: #e0e0e0;
-		    font-family: Arial, sans-serif;
-		    margin: 0;
-		}
-		
-		#Cabecero {
-		    background-color: #2c2c2c;
-		    padding: 10px;
-		    text-align: right;
-		    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
-		}
-		
-		#form_cabecero {
-		    display: inline;
-		}
-		
-		#Cancelar {
-		    background-color: #4CAF50;
-		    color: white;
-		    border: none;
-		    padding: 10px 20px;
-		    text-align: center;
-		    text-decoration: none;
-		    font-size: 16px;
-		    cursor: pointer;
-		    border-radius: 4px;
-		}
-		
-		#Cancelar:hover {
-		    background-color: #45a049;
-		}
-		
-		#Ofertas {
-		    margin-top: 2%;
-		    margin-left: 5%;
-		    margin-bottom: 1%;
-		    width: 90%;
-		    background-color: #4c4c4c;
-		    border-radius: 10px;
-		}
-		
-		#Tabla {
-		    display: inline-block;
-		    margin-top: 3%;
-		    width: 30%;
-		    margin-left: 13%;
-		    border-collapse: collapse;
-		    border-top-right-radius: 10px;
-		    border-top-left-radius: 10px;
-		    margin-bottom: 3%;
-		    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.7);
-		}
-		
-		.Contenedor_Titulo {
-		    background-color: #3c3c3c;
-		    text-align: center;
-		    padding: 1.5%;
-		    border-top-right-radius: 10px;
-		    border-top-left-radius: 10px;
-		}
-		.Contenedor_Subtitulo {
-			background-color: #3c3c3c;
-			text-align: center;
-			padding: 1.5%;
-			border-bottom: solid;
-			border-bottom-color: gray;
-		}
-		
-		.Titulo {
-		    font-size: x-large;
-		    color: #e0e0e0;
-		}
-		
-		.Subtitulo {
-		    font-size: large;
-		    color: #e0e0e0;
-		}
-		
-		.Texto {
-		    font-size: x-small;
-		    color: #c0c0c0;
-		}
-		
-		.Filas:nth-child(even) {
-		    background-color: #3c3c3c;
-		}
-		
-		.Filas:nth-child(odd) {
-		    background-color: #2c2c2c;
-		}
-		
-		.Columna_1, .Columna_2, .Columna_3, .Columna_4{
-		    padding: 2%;
-		    color: #c0c0c0;
-		}
-		
-		.Columna_1 {
-		    font-size: small;
-		}
-		
-		.Columna_2 {
-		    font-size: medium;
-		    padding-left: 2%;
-		}
-		
-		.Columna_3 {
-		    font-size: small;
-		    padding-left: 2%;
-		    border-left: solid;
-		    border-left-color: gray;
-		}
-		.Botones {
-		    background-color: #4CAF50;
-		    border: none;
-		    color: white;
-		    text-align: center;
-		    text-decoration: none;
-		    display: inline-block;
-		    font-size: small;
-		    margin: 1.5%;
-		    cursor: pointer;
-		    border-radius: 5px;
-		    padding: 2%;
-		}
-		
-		.Botones:disabled {
-		    background-color: #555;
-		    cursor: not-allowed;
-		}
-		
-		.Botones:hover {
-		    opacity: 0.8;
-		}
-				
-	</style>
-
+		<link rel="stylesheet" href="Styles/Ofertas_Vuelos/cssOfertas_Vuelos_Oscuro.css">
 <%
     }
 %>
@@ -585,18 +310,22 @@
 	
 	}catch(NullPointerException e){
 %>
-<form name="tema" action="../LoginController" method="POST">
+<head>
+	<link rel="stylesheet" href="Styles/Ofertas_Vuelos/cssOfertas_Vuelos_Oscuro.css">
+</head>
+<body>
+	<form name="tema" action="LoginController" method="POST">
 			<input type="hidden" name="opcion" value="Loger">
 	
 			<div class="Contenedor_SesionCerrada">
 				<p id="Titulo">UPS</p>
 				<p id="Texto">
-					<img id="imgAdvertencia" src="../Resources/advertencia.png">
+					<img id="imgAdvertencia" src="Resources/advertencia.png">
 					Tu sesión está cerrada 
-					<img id="imgAdvertencia" src="../Resources/advertencia.png">
+					<img id="imgAdvertencia" src="Resources/advertencia.png">
 				</p>
 				<p id="Texto">Inicia sesión otra vez.</p>
-				<input type="submit" value="Volver a iniciar sesion">
+				<input id="Boton_Loger" type="submit" value="Volver a iniciar sesion">
 			</div>
 		</form>
 <%

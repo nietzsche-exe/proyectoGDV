@@ -18,9 +18,9 @@
 <%
 	HttpSession a = request.getSession();
 	Usuario usuario = (Usuario) a.getAttribute("usuario");
+	
 	EntityManager em = HibernateUtils.getEmf().createEntityManager();
 	try{
-		
 	
 	Query query = em.createQuery("SELECT u.nombre, u.tema, u.email, u.contrasenia, u.ultima_conexion, u.sexo, u.num_telefono," + 
 									"u.fecha_nacimiento, u.ultima_modificacion_contrasenna, u.sesionActiva FROM Usuario u WHERE u.id = :idUsuario");
@@ -550,10 +550,18 @@
 			        });
 		
 				</script>
+
 <%	
 			}
+%>
+</body>
+<%	
 		}catch(NullPointerException e){
 			%>
+<head>
+	<link rel="stylesheet" href="../Styles/Configuracion/cssConfiguracion_Oscuro.css">
+</head>
+<body>
 			<form name="tema" action="../LoginController" method="POST">
 				<input type="hidden" name="opcion" value="Loger">
 		
@@ -565,13 +573,14 @@
 						<img id="imgAdvertencia" src="../Resources/advertencia.png">
 					</p>
 					<p id="Texto">Inicia sesión otra vez.</p>
-					<input type="submit" value="Volver a iniciar sesion">
+					<input id="Boton_Loger" type="submit" value="Volver a iniciar sesion">
 				</div>
 			</form>
+</body>
 	<%					
 		}
 %>
 				
 	
-</body>
+
 </html>
