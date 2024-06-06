@@ -36,8 +36,10 @@
 HttpSession session2 = request.getSession(false);
 ConfigLoader configLoader = new ConfigLoader();
 // Verifica si la sesión existe y si el usuario está autenticado
-if (session2 == null || session2.getAttribute("usuario") == null) {
-	response.sendRedirect("login.jsp");
+Usuario usuario=(Usuario)session2.getAttribute("usuario");
+
+if (session2 == null || usuario== null) {
+	response.sendRedirect("../login.jsp");
 	return;
 }
 //Sesion Amadeus
@@ -45,7 +47,7 @@ if (session2 == null || session2.getAttribute("usuario") == null) {
 Amadeus amadeus = Amadeus.builder(configLoader.getProperty("util.apiKeyAmadeus1"), configLoader.getProperty("util.apiKeyAmadeus2")).build();
 
 // Obtiene los datos del usuario almacenados en la sesión
-Usuario usuario = (Usuario) session2.getAttribute("usuario");
+usuario = (Usuario) session2.getAttribute("usuario");
 
 //Enviar usuario
 session2.setAttribute("UsuarioSeleccionado", usuario);

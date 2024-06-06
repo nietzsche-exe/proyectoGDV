@@ -368,7 +368,7 @@
 <body>
 <%
     Logger logger = LoggerFactory.getLogger("MiLogger");
-    logger.info("Página JSP cargada");
+    logger.info("Página JSP cargada ofertasTransporte");
 %>	
 	<header id="Cabecero">
 		<form id="form_cabecero" action="LoginController?opcion=perfil" method="post">
@@ -568,12 +568,16 @@
 <%
 
 		}
-	}catch( ArrayIndexOutOfBoundsException e){
+	}catch(ArrayIndexOutOfBoundsException e){
 %>
 
-	<script>alert("Redirigiendo a la busqueda destinos \n"+
-			"NO HAY VUELOS DISPONIBLES PARA LA CIUDAD\n "<%=direccion.getNombre_ciudad()%>", "<%= direccion.getCodigo_pais()%>)</script>
-	
+	<script>
+		window.onload= function(){
+			alert('Redirigiendo a la busqueda de hotel \n'+
+				'NO HAY VUELOS DISPONIBLES PARA LA CIUDAD\n '<%=direccion.getNombre_ciudad()%>', '<%= direccion.getCodigo_pais()%>'.'));
+		}
+		
+	</script>
 <%
 		sessionA.setAttribute("usuario",usuario);
 		response.sendRedirect("Secure/nuevoViaje.jsp");		

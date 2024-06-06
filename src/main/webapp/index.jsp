@@ -11,7 +11,7 @@
 <body>
 <%
     Logger logger = LoggerFactory.getLogger("MiLogger");
-    logger.info("Página JSP cargada");
+    logger.info("Página JSP cargada index.jsp");
 %>
     <header class="Encabezado">
         <div class="Contenedor_Logo">

@@ -90,7 +90,7 @@
 <body>
 <%
     Logger logger = LoggerFactory.getLogger("MiLogger");
-    logger.info("Página JSP cargada");
+    logger.info("Página JSP cargada confirmar_correo");
 %>
 	<div class="Contenedor_Todo">
 		<div class="Contenedor_Error">
@@ -108,6 +108,7 @@
 				<input type="hidden" name="opcion" value="verificarCorreo">
 			
 				<label id="Texto_Encavecado">Código de verificación</label>
+				<label>Se ha enviado un codigo de verificación a tu correo</label>
 				
 				<input id="cod_verificacion" name="cod_verificacion" type="text">
 				

@@ -16,7 +16,7 @@
 
 	HttpSession a = request.getSession();
 	Usuario usuario = (Usuario) a.getAttribute("usuario");
-	
+	Logger logger = LoggerFactory.getLogger("MiLogger");
 	EntityManager em = HibernateUtils.getEmf().createEntityManager();
 	try{
 	Query query = em.createQuery("SELECT u.tema, u.sesionActiva FROM Usuario u WHERE u.id = :idUsuario");
@@ -30,7 +30,7 @@
 	usuario.setTema(tema);
 	usuario.setSesionActiva(sesion_Activa);
 	
-	System.out.println("Informacion usuario actual: "+usuario.toString());
+	logger.info("Informacion usuario actual: "+usuario.toString());
 
 	if (usuario.getTema()==true) {
 %>
@@ -58,8 +58,8 @@
 </head>
 <body>
 <%
-    Logger logger = LoggerFactory.getLogger("MiLogger");
-    logger.info("Página JSP cargada");
+    
+    logger.info("Página JSP cargada nuevoViaje");
 %>
 <%
 	if (usuario.getSesionActiva() == false) {
@@ -132,7 +132,7 @@
 		
 	
 %>
-<form name="tema" action="../LoginController" method="POST">
+		<form name="tema" action="../LoginController" method="POST">
 			<input type="hidden" name="opcion" value="Loger">
 	
 			<div class="Contenedor_SesionCerrada">

@@ -11,7 +11,7 @@
 <body>
 <%
     Logger logger = LoggerFactory.getLogger("MiLogger");
-    logger.info("Página JSP cargada");
+    logger.info("Página JSP cargada quienSomos");
 %>
 <%
 	boolean principal = true, inicio_registro = false, destino = false, reserva = false, itinerarios = false, opiniones = false, soporte = false;

@@ -310,7 +310,7 @@ try{
 <body>
 <%
     Logger logger = LoggerFactory.getLogger("MiLogger");
-    logger.info("Página JSP cargada");
+    logger.info("Página JSP cargada ofertasHoteles");
 %>
 	<header id="Cabecero">
 		<form id="form_cabecero" action="LoginController?opcion=perfil" method="post">

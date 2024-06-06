@@ -13,7 +13,7 @@
 <body>
 <%
     Logger logger = LoggerFactory.getLogger("MiLogger");
-    logger.info("Página JSP cargada");
+    logger.info("Página JSP cargada registro");
 %>
 	<div class="Contenedor_Registrarse">
 		<div id="Contenedor_Cabecero">

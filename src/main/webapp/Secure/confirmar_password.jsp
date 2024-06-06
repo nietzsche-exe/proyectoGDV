@@ -91,7 +91,7 @@
 <body>
 <%
     Logger logger = LoggerFactory.getLogger("MiLogger");
-    logger.info("Página JSP cargada");
+    logger.info("Página JSP cargada confirmar_password");
 %>
 	<div class="Contenedor_Todo">
 		<div class="Contenedor_Error">
@@ -108,7 +108,7 @@
 				<input type="hidden" name="opcion" value="verificar_password">
 			
 				<label id="Texto_Encavecado">Codigo de verificación</label>
-				
+				<label>Se ha enviado un codigo de verificación a tu correo</label>
 				<input id="cod_verificacion" name="cod_verificacion" type="text">
 				
 				<button id="btnVerificar" type="submit" >Verificar Contraseña</button>

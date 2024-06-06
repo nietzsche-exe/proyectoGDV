@@ -1136,9 +1136,9 @@ public class LoginController extends HttpServlet {
 			if (token.compareTo(codVerificacion) != 0) {
 				request.setAttribute("token", token);
 				request.setAttribute("email", email);
-				LOGGER.error("Codigo de verificaicon incorrecto");
+				LOGGER.error("Codigo de verificacion incorrecto");
 				request.setAttribute("error", "Codigo de verificacion incorrecto");
-				request.getRequestDispatcher("Secure/confirmar_correo.jsp").forward(request, response);
+				request.getRequestDispatcher("Secure/confirmar_correo2.jsp").forward(request, response);
 			} else {
 				
 				EntityManager em6 = HibernateUtils.getEmf().createEntityManager();

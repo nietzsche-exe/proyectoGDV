@@ -29,7 +29,7 @@
 <body>
 <%
     Logger logger = LoggerFactory.getLogger("MiLogger");
-    logger.info("Página JSP cargada");
+    logger.info("Página JSP cargada login");
 %>
 	<div class="Contenedor_InicoSesion">
 		<div id="Contenedor_Cabecero">
