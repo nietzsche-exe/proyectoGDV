@@ -24,17 +24,18 @@
             <button id="btnRegistro" class="Botones"><b>Registrarse</b></button>
         </div>
     </header>
-	<div>
-		<div>
-			<p>En caso de incidencias contacte con uno de los siguientes correo explicandoles su incidencia</p>
+    
+	<div id="Contenedor_cuerpo">
+		<div class="Contenedor_titulo">
+			<p id="Titulo">En caso de incidencias contacte con uno de los siguientes correo explicandoles su incidencia</p>
 		</div>
-		<div>
-			<label>Jose Julian</label>
-			<label>soy.jjulian@gmail.com</label>
-			<label>Álvaro Aparicio</label>
-			<label>alvaro.04apa@gmail.com</label>
-			<label>Carlos Vlelasco</label>
-			<label>caaarlosvelasco@gmail.com</label>
+		<div class="Contenedor_texto">
+			<label class="Nombre">Jose Julian</label>
+			<label class="Gmail">soy.jjulian@gmail.com</label>
+			<label class="Nombre">Álvaro Aparicio</label>
+			<label class="Gmail">alvaro.04apa@gmail.com</label>
+			<label class="Nombre">Carlos Vlelasco</label>
+			<label class="Gmail">caaarlosvelasco@gmail.com</label>
 		</div>
 	</div>
     <script>

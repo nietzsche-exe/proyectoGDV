@@ -59,59 +59,6 @@
 		</div>
 		
 	</div>
-		<br>
-		<br>
-		<br>
-    
-	    <form>
-	    
-	    
-	    <table>
-	    	<tr>
-	    		<th colspan="3">Lista Usuarios</th>
-	    	</tr>
-	 			<%! @SuppressWarnings("unchecked") %>
-	 			<%
-	 			EntityManager em = HibernateUtils.getEmf().createEntityManager(); //modelo.HibernateUtils.getEmf().createEntityManager();
-				//LOGGER.info("EntityManager creado");
-				try{
-					Query consulta = em.createQuery("FROM Usuario");
-					List<modelo.Usuario> usuarios = consulta.getResultList();
-					//LOGGER.info("Consulta SELECT de Actores realizada");
-						
-					if (usuarios.isEmpty()){
-						%>
-						<tr> <td colspan="3"> No existen usuarios </td></tr>
-						<%
-	
-					}
-					else{
-						for(modelo.Usuario usuario: usuarios){
-				%>
-							<tr> 
-								<td> <%= usuario.getId_usuario() %></td>
-								<td> <%= usuario.getNombre() %></td>
-								<td> <%= usuario.getContrasenia() %></td>
-								<td> <%= usuario.getEmail() %></td>
-							</tr>
-							<%
-						}
-						//LOGGER.info("Se han mostrado los actores");
-					}
-						
-					}
-					catch (Exception e){
-						//LOGGER.error("Error:"+e.getMessage());
-					}
-					finally{
-						em.close();
-						//LOGGER.info("EntityManager cerrado");
-					}
-				%> 		
-	    		
-	    </table>
-	    </form>
-	
 	
 </body>
 </html>
