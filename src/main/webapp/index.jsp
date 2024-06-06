@@ -13,40 +13,43 @@
     Logger logger = LoggerFactory.getLogger("MiLogger");
     logger.info("Página JSP cargada");
 %>
-	<header class="Encabezado">
-		<div class="Contenedor_Logo">
-			<img id="logo" alt="Logo" src="Resources/logo_2.0.jpeg">
-		</div>
-		<div class="Contenedor_Botones">
-			<button id="btnQuienSomos" class="Botones"><b>Quienes Somos</b></button>
-	    	<button id="btnIniciarSesion" class="Botones"><b>Iniciar Sesión</b></button>
-	    	<button id="btnRegistro" class="Botones"><b>Registrarse</b></button>
-		</div>
-	</header>
+    <header class="Encabezado">
+        <div class="Contenedor_Logo">
+            <img id="logo" alt="Logo" src="Resources/logo_2.0.jpeg">
+        </div>
+        <div class="Contenedor_Botones">
+            <button id="btnQuienSomos" class="Botones"><b>Quienes Somos</b></button>
+            <button id="btnManualUsuario" class="Botones"><b>Manual Usuario</b></button>
+            <button id="btnIniciarSesion" class="Botones"><b>Iniciar Sesión</b></button>
+            <button id="btnRegistro" class="Botones"><b>Registrarse</b></button>
+        </div>
+    </header>
 
-
-	<script>
+    <script>
         // Función para redirigir al usuario a la página de inicio de sesión
         function redirectToLoginPage() {
-            window.location.href = "login.jsp"; // Cambia "pagina-de-inicio-de-sesion.jsp" por la ruta de tu página de inicio de sesión
+            window.location.href = "login.jsp"; // Cambia "login.jsp" por la ruta de tu página de inicio de sesión
         }
 
         // Función para redirigir al usuario a la página de registro
         function redirectToRegistroPage() {
-            window.location.href = "registro.jsp"; // Cambia "pagina-de-registro.jsp" por la ruta de tu página de registro
+            window.location.href = "registro.jsp"; // Cambia "registro.jsp" por la ruta de tu página de registro
         }
         
         function redirectToQuienSomos() {
-            window.location.href = "quienSomos.jsp"; // Cambia "pagina-de-inicio-de-sesion.jsp" por la ruta de tu página de inicio de sesión
+            window.location.href = "quienSomos.jsp"; // Cambia "quienSomos.jsp" por la ruta de tu página de inicio de sesión
         }
 
-        // Agregar un event listener al botón de inicio de sesión para que llame a la función redirectToLoginPage cuando se haga clic en él
-        document.getElementById("btnIniciarSesion").addEventListener("click", redirectToLoginPage);
+        // Función para descargar el PDF
+        function redirectToManualUsuario() {
+            window.location.href = "Manual/HOJA SESION 23-24 VELOCIDAD 97.pdf"; // Cambia "Resources/tu_archivo.pdf" por la ruta de tu archivo PDF
+        }
 
-        // Agregar un event listener al botón de registro para que llame a la función redirectToRegistroPage cuando se haga clic en él
+        // Agregar event listeners a los botones
+        document.getElementById("btnIniciarSesion").addEventListener("click", redirectToLoginPage);
         document.getElementById("btnRegistro").addEventListener("click", redirectToRegistroPage);
-        
         document.getElementById("btnQuienSomos").addEventListener("click", redirectToQuienSomos);
+        document.getElementById("btnManualUsuario").addEventListener("click", redirectToManualUsuario);
     </script>
 
 </body>

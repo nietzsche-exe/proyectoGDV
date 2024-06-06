@@ -174,11 +174,6 @@
 						    </th>	
 						</tr>
 						<tr class="Filas">
-						    <td class="Columna_1">Foto de perfil</td>
-						    <td class="Columna_2">Aquí va la foto de perfil</td>
-						    <td class="Columna_3">Cambiar foto de perfil</td>
-						</tr>
-						<tr class="Filas">
 						    <td class="Columna_1">Usuario</td>
 						    <td class="Columna_2"><%= usuario.getNombre() %></td>
 						    <td class="Columna_3"><input type="text" id="nombreUsuario" name="nombreUsuario" oninput="validarUsuario()"> <input class="Confirmar" id="confirmarUsuario" type="submit" value="Confirmar" disabled></td>
