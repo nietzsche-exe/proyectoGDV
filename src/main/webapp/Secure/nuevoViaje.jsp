@@ -125,26 +125,30 @@
 		        </form>
 		    </div>
 		</div>
-
+	</body>
 <%
 	}
 
 	}catch(NullPointerException e){
 		
 	
-%>
-		<form name="tema" action="../LoginController" method="POST">
+%>	<head>
+		<link rel="stylesheet" href="../Styles/Busqueda_Viaje/cssBusquedaViaje_Oscuro.css">
+	</head>
+	<body>
+		<form name="tema" action="../LoginController" method="POST" >
 			<input type="hidden" name="opcion" value="Loger">
 	
 			<div class="Contenedor_SesionCerrada">
+														    
 				<p id="Titulo">UPS</p>
 				<p id="Texto">
-					<img id="imgAdvertencia" src="../Resources/advertencia.png">
+					<img id="imgAdvertencia" src="../Resources/advertencia.png" >
 					Tu sesión está cerrada 
-					<img id="imgAdvertencia" src="../Resources/advertencia.png">
+					<img id="imgAdvertencia" src="../Resources/advertencia.png" >
 				</p>
 				<p id="Texto">Inicia sesión otra vez.</p>
-				<input type="submit" value="Volver a iniciar sesion">
+				<input id="Boton_Loger" type="submit" value="Volver a iniciar sesion" >
 			</div>
 		</form>
 <%

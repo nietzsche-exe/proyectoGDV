@@ -16,6 +16,7 @@
     ConfigLoader configLoader = new ConfigLoader();
     HttpSession sessionA = request.getSession();
     Usuario usuario = (Usuario) sessionA.getAttribute("usuario");
+    
 
     List<HotelData> listaHoteles = (List<HotelData>) request.getAttribute("listaHoteles");
 
@@ -39,268 +40,11 @@ util.apiKeyAmadeus2=H7aFZhh8tAqe9WSC
 try{
     if (usuario.getTema() == false) {
 %>
-	<style>
-	    body {
-	        background-color: #BDFFBC;
-	        color: #333333;
-	        font-family: Arial, sans-serif;
-	        margin: 0%;
-	        background-image: url("");
-	    }
-		
-		#Cabecero {
-		    background-color: #ffffff;
-		    padding: 10px;
-		    text-align: right;
-		    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-		}
-		
-		#form_cabecero {
-		    display: inline;
-		}
-		
-		#Cancelar {
-		    background-color: #4CAF50;
-		    color: white;
-		    border: none;
-		    padding: 10px 20px;
-		    text-align: center;
-		    text-decoration: none;
-		    font-size: 16px;
-		    cursor: pointer;
-		    border-radius: 4px;
-		}
-		
-		#Cancelar:hover {
-		    background-color: #45a049;
-		}
-		
-		#Ofertas {
-			margin-top: 2%;
-			margin-left: 5%;
-			margin-bottom: 1%;
-			width: 90%;
-			background-color: #f7f7f7;
-			border-radius: 10px;
-		}
-			
-		#Tabla {
-		  	display: inline-block;
-			margin-top: 3%;
-		  	width: 25%;
-		  	margin-left: 6%;
-		  	border-collapse: collapse;
-			border-top-right-radius: 10px;
-			border-top-left-radius: 10px;
-		  	border-color: #888;
-		  	margin-bottom: 3%;
-		  	box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
-		}
-		
-		.Contenedor_Titulo {
-			background-color: #f2f2f2;
-			text-align: left;
-			padding: 1.5%;
-			border-top-right-radius: 10px;
-			border-top-left-radius: 10px;
-		}
-		
-		.Titulo {
-			font-size: large;
-			color: #353535;
-			text-align: left;
-		}
-		
-		.Texto {
-			font-size: x-small;
-			color: #444746;
-		}
-		
-		.Filas:nth-child(even) {
-		  	background-color: #ffffff;
-		}
-		
-		.Filas:nth-child(odd) {
-		  	background-color: #f9f9f9;
-		}
-		
-		.Columna_1, .Columna_2 {
-		  	padding: 2%;
-			color: #444746;
-		}
-		.Columna_1 {
-			font-size: small;
-		}
-		.Columna_2 {
-			font-size: medium;
-			padding-left: 2%;
-		}
-		
-		.Botones {
-		  	background-color: #4CAF50;
-		  	border: none;
-		  	color: white;
-		  	text-align: center;
-		  	text-decoration: none;
-		  	display: inline-block;
-		  	font-size: small;
-		  	margin: 1.5%;
-		  	cursor: pointer;
-		  	border-radius: 5px;
-		  	padding: 2%;
-		}
-		
-		.Botones:disabled {
-		  	background-color: #CCCCCC;
-		  	cursor: not-allowed;
-		}
-		.Botones:hover {
-			opacity: 0.8;
-		}
-	
-	    #map {
-		    margin-top: 20px;
-		    height: 500px; 
-		    width: 90%;
-		    margin-left: 5%;
-		    border-radius: 10px;
-		}
-	</style>
+	<link rel="stylesheet" href="Styles/Ofertas_Hoteles/cssOfertasHoteles_Claro.css">
 <%
     } else {
 %>
-	<style>
-		body {
-			background-color: #1e1e1e;
-		    color: #e0e0e0;
-		    font-family: Arial, sans-serif;
-		    margin: 0;
-		    background-image: url("");
-		}
-		
-		#Cabecero {
-		    background-color: #2c2c2c;
-		    padding: 10px;
-		    text-align: right;
-		    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
-		}
-		
-		#form_cabecero {
-		    display: inline;
-		}
-		
-		#Cancelar {
-		    background-color: #4CAF50;
-		    color: white;
-		    border: none;
-		    padding: 10px 20px;
-		    text-align: center;
-		    text-decoration: none;
-		    font-size: 16px;
-		    cursor: pointer;
-		    border-radius: 4px;
-		}
-		
-		#Cancelar:hover {
-		    background-color: #45a049;
-		}
-		
-		#Ofertas {
-		    margin-top: 2%;
-		    margin-left: 5%;
-		    margin-bottom: 1%;
-		    width: 90%;
-		    background-color: #2c2c2c;
-		    border-radius: 10px;
-		}
-		
-		#Tabla {
-		    display: inline-block;
-		    margin-top: 3%;
-		    width: 25%;
-		    margin-left: 6%;
-		    border-collapse: collapse;
-		    border-top-right-radius: 10px;
-		    border-top-left-radius: 10px;
-		    border-color: #444;
-		    margin-bottom: 3%;
-		    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.7);
-		}
-		
-		.Contenedor_Titulo {
-		    background-color: #3c3c3c;
-		    text-align: left;
-		    padding: 1.5%;
-		    border-top-right-radius: 10px;
-		    border-top-left-radius: 10px;
-		}
-		
-		.Titulo {
-		    font-size: large;
-		    color: #e0e0e0;
-			text-align: left;
-		}
-		
-		.Texto {
-		    font-size: x-small;
-		    color: #c0c0c0;
-		}
-		
-		.Filas:nth-child(even) {
-		    background-color: #2c2c2c;
-		}
-		
-		.Filas:nth-child(odd) {
-		    background-color: #3c3c3c;
-		}
-		
-		.Columna_1, .Columna_2 {
-		    padding: 2%;
-		    color: #c0c0c0;
-		}
-		
-		.Columna_1 {
-		    font-size: small;
-		}
-		
-		.Columna_2 {
-		    font-size: medium;
-		    padding-left: 2%;
-		}
-		
-		.Botones {
-		    background-color: #4CAF50;
-		    border: none;
-		    color: white;
-		    text-align: center;
-		    text-decoration: none;
-		    display: inline-block;
-		    font-size: small;
-		    margin: 1.5%;
-		    cursor: pointer;
-		    border-radius: 5px;
-		    padding: 2%;
-		}
-		
-		.Botones:disabled {
-		    background-color: #555;
-		    cursor: not-allowed;
-		}
-		
-		.Botones:hover {
-		    opacity: 0.8;
-		}
-		
-		#map {
-		    margin-top: 20px;
-		    height: 500px; 
-		    width: 90%;
-		    margin-left: 5%;
-		    border-radius: 10px;
-		}
-
-	</style>
-
+		<link rel="stylesheet" href="Styles/Ofertas_Hoteles/cssOfertasHoteles_Oscuro.css">
 <%
     }
 %>
@@ -423,20 +167,27 @@ try{
 		request.getSession().setAttribute("usuario", usuario);
 		response.sendRedirect("perfilUsuario.jsp");
 	}
+%>
+</body>
+<%
 }catch(NullPointerException e){
 	%>
-	form name="tema" action="../LoginController" method="POST">
+<head>
+	<link rel="stylesheet" href="Styles/Ofertas_Hoteles/cssOfertasHoteles_Oscuro.css">
+</head>
+<body>
+	<form name="tema" action="LoginController" method="POST">
 			<input type="hidden" name="opcion" value="Loger">
 	
 			<div class="Contenedor_SesionCerrada">
 				<p id="Titulo">UPS</p>
 				<p id="Texto">
-					<img id="imgAdvertencia" src="../Resources/advertencia.png">
+					<img id="imgAdvertencia" src="Resources/advertencia.png">
 					Tu sesión está cerrada 
-					<img id="imgAdvertencia" src="../Resources/advertencia.png">
+					<img id="imgAdvertencia" src="Resources/advertencia.png">
 				</p>
 				<p id="Texto">Inicia sesión otra vez.</p>
-				<input type="submit" value="Volver a iniciar sesion">
+				<input id="Boton_Loger" type="submit" value="Volver a iniciar sesion">
 			</div>
 		</form>
 	<% 

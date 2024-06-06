@@ -1,66 +1,125 @@
 body {
-    background-color: #FFFFFF;
-    color: #000000;
-    font-family: Arial, sans-serif;
+       background-color: #BDFFBC;
+       color: #333333;
+       font-family: Arial, sans-serif;
+       margin: 0%;
 }
 
-h1, h2 {
-    color: #000000;
+#Cabecero {
+    background-color: #ffffff;
+    padding: 10px;
+    text-align: right;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-table {
-    width: 100%;
-    border-collapse: collapse;
-    background-color: #F0F0F0;
+#form_cabecero {
+    display: inline;
 }
 
-th, td {
-    border: 2px solid #CCCCCC;
-    padding: 8px;
-    text-align: left;
-}
-
-th {
-    background-color: #DDDDDD;
-    color: #000000;
-}
-
-td {
-    background-color: #FFFFFF;
-    color: #000000;
-}
-
-input[type="submit"] {
+#Cancelar {
     background-color: #4CAF50;
     color: white;
     border: none;
     padding: 10px 20px;
     text-align: center;
     text-decoration: none;
-    display: inline-block;
     font-size: 16px;
-    margin: 4px 2px;
     cursor: pointer;
     border-radius: 4px;
 }
 
-input[type="submit"]:hover {
+#Cancelar:hover {
     background-color: #45a049;
 }
 
-#map {
+#Ofertas {
+	margin-top: 2%;
+	margin-left: 5%;
+	margin-bottom: 1%;
+	width: 90%;
+	background-color: #f7f7f7;
+	border-radius: 10px;
+}
+	
+#Tabla {
+  	display: inline-block;
+	margin-top: 3%;
+  	width: 25%;
+  	margin-left: 6%;
+  	border-collapse: collapse;
+	border-top-right-radius: 10px;
+	border-top-left-radius: 10px;
+  	border-color: #888;
+  	margin-bottom: 3%;
+  	box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+}
+
+.Contenedor_Titulo {
+	background-color: #f2f2f2;
+	text-align: left;
+	padding: 1.5%;
+	border-top-right-radius: 10px;
+	border-top-left-radius: 10px;
+}
+
+.Titulo {
+	font-size: large;
+	color: #353535;
+	text-align: left;
+}
+
+.Texto {
+	font-size: x-small;
+	color: #444746;
+}
+
+.Filas:nth-child(even) {
+  	background-color: #ffffff;
+}
+
+.Filas:nth-child(odd) {
+  	background-color: #f9f9f9;
+}
+
+.Columna_1, .Columna_2 {
+  	padding: 2%;
+	color: #444746;
+}
+.Columna_1 {
+	font-size: small;
+}
+.Columna_2 {
+	font-size: medium;
+	padding-left: 2%;
+}
+
+.Botones {
+  	background-color: #4CAF50;
+  	border: none;
+  	color: white;
+  	text-align: center;
+  	text-decoration: none;
+  	display: inline-block;
+  	font-size: small;
+  	margin: 1.5%;
+  	cursor: pointer;
+  	border-radius: 5px;
+  	padding: 2%;
+}
+
+.Botones:disabled {
+  	background-color: #CCCCCC;
+  	cursor: not-allowed;
+}
+.Botones:hover {
+	opacity: 0.8;
+}
+
+   #map {
     margin-top: 20px;
-}
-
-p {
-    color: #000000;
-}
-
-form {
-    margin: 0;
-}
-
-input[type="hidden"] {
-    display: none;
+    height: 500px; 
+    width: 90%;
+    margin-left: 5%;
+    border-radius: 10px;
 }
 

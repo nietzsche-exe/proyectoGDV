@@ -37,35 +37,45 @@ body {
     margin-left: 5%;
     margin-bottom: 1%;
     width: 90%;
-    background-color: #2c2c2c;
+    background-color: #4c4c4c;
     border-radius: 10px;
 }
 
 #Tabla {
     display: inline-block;
     margin-top: 3%;
-    width: 25%;
-    margin-left: 6%;
+    width: 30%;
+    margin-left: 13%;
     border-collapse: collapse;
     border-top-right-radius: 10px;
     border-top-left-radius: 10px;
-    border-color: #444;
     margin-bottom: 3%;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.7);
 }
 
 .Contenedor_Titulo {
     background-color: #3c3c3c;
-    text-align: left;
+    text-align: center;
     padding: 1.5%;
     border-top-right-radius: 10px;
     border-top-left-radius: 10px;
 }
+.Contenedor_Subtitulo {
+	background-color: #3c3c3c;
+	text-align: center;
+	padding: 1.5%;
+	border-bottom: solid;
+	border-bottom-color: gray;
+}
 
 .Titulo {
+    font-size: x-large;
+    color: #e0e0e0;
+}
+
+.Subtitulo {
     font-size: large;
     color: #e0e0e0;
-	text-align: left;
 }
 
 .Texto {
@@ -74,14 +84,14 @@ body {
 }
 
 .Filas:nth-child(even) {
-    background-color: #2c2c2c;
-}
-
-.Filas:nth-child(odd) {
     background-color: #3c3c3c;
 }
 
-.Columna_1, .Columna_2 {
+.Filas:nth-child(odd) {
+    background-color: #2c2c2c;
+}
+
+.Columna_1, .Columna_2, .Columna_3, .Columna_4{
     padding: 2%;
     color: #c0c0c0;
 }
@@ -95,6 +105,12 @@ body {
     padding-left: 2%;
 }
 
+.Columna_3 {
+    font-size: small;
+    padding-left: 2%;
+    border-left: solid;
+    border-left-color: gray;
+}
 .Botones {
     background-color: #4CAF50;
     border: none;
@@ -116,60 +132,4 @@ body {
 
 .Botones:hover {
     opacity: 0.8;
-}
-
-#map {
-    margin-top: 20px;
-    height: 500px; 
-    width: 90%;
-    margin-left: 5%;
-    border-radius: 10px;
-}
-.Contenedor_SesionCerrada {
-    background-color: #1e1e1e;
-    color: #e0e0e0;
-    font-family: Arial, sans-serif;
-    text-align: center;
-    padding: 20px;
-    border: 1px solid #444;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
-    max-width: 400px;
-    margin: 50px auto;
-}
-
-#Titulo {
-    font-size: 24px;
-    font-weight: bold;
-    margin-bottom: 10px;
-    color: #ff5555;
-}
-
-#Texto {
-    font-size: 16px;
-    margin: 10px 0;
-}
-
-#imgAdvertencia {
-    vertical-align: middle;
-    width: 24px;
-    height: 24px;
-}
-
-#Boton_Loger {
-    display: inline-block;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    text-align: center;
-    text-decoration: none;
-    font-size: 16px;
-    margin-top: 20px;
-    cursor: pointer;
-    border-radius: 4px;
-}
-
-#Boton_Loger:hover {
-    background-color: #45a049;
 }
