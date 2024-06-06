@@ -12,11 +12,11 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Buscar Hotel</title>
+	<link rel="icon" type="image/jpeg" href="../Resources/logo_03.png">
 <%
 
 	HttpSession a = request.getSession();
 	Usuario usuario = (Usuario) a.getAttribute("usuario");
-	usuario=null;
 	Logger logger = LoggerFactory.getLogger("MiLogger");
 	EntityManager em = HibernateUtils.getEmf().createEntityManager();
 	try{

@@ -46,8 +46,7 @@
 	HttpSession sessionA=request.getSession();
 	//Obtiene los datos del usuario almacenados en la sesión
 	Usuario usuario = (Usuario) sessionA.getAttribute("usuario");
-	usuario=null;
-try{
+
 	Location[] locations= amadeus.referenceData.locations.get(
 			Params.with("subType", "AIRPORT")
 				.and("keyword", codigoCiudadOrigen)
@@ -74,7 +73,9 @@ try{
 <head>
 <meta charset="UTF-8">
 <title>Vuelos</title>
+<link rel="icon" type="image/jpeg" href="Resources/logo_03.png">
 <%
+try{
 
     if (usuario.getTema() == false) {
 %>

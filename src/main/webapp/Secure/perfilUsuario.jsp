@@ -31,6 +31,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Perfil de Usuario</title>
+<link rel="icon" type="image/jpeg" href="../Resources/logo_03.png">
 <%
 // Obtiene la sesión actual
 HttpSession session2 = request.getSession(false);

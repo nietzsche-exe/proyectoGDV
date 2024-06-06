@@ -12,6 +12,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Hoteles</title>
+<link rel="icon" type="image/jpeg" href="Resources/logo_03.png">
 <%
     ConfigLoader configLoader = new ConfigLoader();
     HttpSession sessionA = request.getSession();
