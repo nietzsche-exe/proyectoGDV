@@ -23,7 +23,32 @@
 		    font-family: Arial, sans-serif;
 		    color: #333;
 		}
+		#Cabecero {
+		    background-color: #ffffff;
+		    padding: 10px;
+		    text-align: right;
+		    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+		}
 		
+		#form_cabecero {
+		    display: inline;
+		}
+		
+		#Cancelar {
+		    background-color: #4CAF50;
+		    color: white;
+		    border: none;
+		    padding: 10px 20px;
+		    text-align: center;
+		    text-decoration: none;
+		    font-size: 16px;
+		    cursor: pointer;
+		    border-radius: 4px;
+		}
+		
+		#Cancelar:hover {
+		    background-color: #45a049;
+		}
 		.Contenedor_Todo {
 		    width: 25%;
 		    margin: 10% auto;
@@ -92,9 +117,14 @@
     Logger logger = LoggerFactory.getLogger("MiLogger");
     logger.info("Página JSP cargada confirmar_correo");
 %>
+	<header id="Cabecero">
+		<form id="form_cabecero" action="LoginController?opcion=Loger" method="post">
+			<input id="Cancelar" type="submit" value="cancelar">
+		
+		</form>
+	</header>
 	<div class="Contenedor_Todo">
 		<div class="Contenedor_Error">
-		
 			<c:if test="${not empty error}">
 			    <p id="Texto_Error" style="color: red;">${error}</p>
 			</c:if>

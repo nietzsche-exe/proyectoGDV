@@ -151,7 +151,7 @@ public class LoginController extends HttpServlet {
 	
 					}
 					if ((password.compareTo(passwordRe) != 0)) {
-						request.setAttribute("error", "Las contraseñas debe coincidir");
+						request.setAttribute("error", "Las contraseñas deben coincidir");
 						LOGGER.error("Error: Las contraseñas debe coincidir");
 						request.getRequestDispatcher("registro.jsp").forward(request, response);
 					} else if (extensionCorreo.compareTo("@gmail.com") != 0) {
@@ -1219,7 +1219,6 @@ public class LoginController extends HttpServlet {
 				
 				request.getRequestDispatcher("Secure/confirmar_password.jsp").forward(request, response);
 				LOGGER.info("Redirigiendo a la pagina de verificacion de contraseña");
-				
 			}
 			
 			

@@ -24,7 +24,19 @@
             <button id="btnRegistro" class="Botones"><b>Registrarse</b></button>
         </div>
     </header>
-
+	<div>
+		<div>
+			<p>En caso de incidencias contacte con uno de los siguientes correo explicandoles su incidencia</p>
+		</div>
+		<div>
+			<label>Jose Julian</label>
+			<label>soy.jjulian@gmail.com</label>
+			<label>Álvaro Aparicio</label>
+			<label>alvaro.04apa@gmail.com</label>
+			<label>Carlos Vlelasco</label>
+			<label>caaarlosvelasco@gmail.com</label>
+		</div>
+	</div>
     <script>
         // Función para redirigir al usuario a la página de inicio de sesión
         function redirectToLoginPage() {

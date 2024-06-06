@@ -24,6 +24,7 @@
 		<div class="Contenedor_Botones">
 	    	<button id="btnIniciarSesion" class="Botones"><b>Iniciar Sesión</b></button>
 	    	<button id="btnRegistro" class="Botones"><b>Registrarse</b></button>
+	    	<button id="btnRegresarAIndex" class="Botones"><b>Volver</b></button>
 		</div>
 		<div class="biblioteca">
 			<a href="quienSomos.jsp?principal=true" class="Enlaces"><b>Informacion Principal</b></a>
@@ -306,12 +307,19 @@
         function redirectToRegistroPage() {
             window.location.href = "registro.jsp"; // Cambia "pagina-de-registro.jsp" por la ruta de tu página de registro
         }
+        
+        //Función para redirigir al usuario a la página de indice
+        function redirectToIndexPage() {
+            window.location.href = "index.jsp"; // Cambia "pagina-de-indice.jsp" por la ruta de tu página de registro
+        }
 
         // Agregar un event listener al botón de inicio de sesión para que llame a la función redirectToLoginPage cuando se haga clic en él
         document.getElementById("btnIniciarSesion").addEventListener("click", redirectToLoginPage);
 
         // Agregar un event listener al botón de registro para que llame a la función redirectToRegistroPage cuando se haga clic en él
         document.getElementById("btnRegistro").addEventListener("click", redirectToRegistroPage);
-    </script>
+        
+        document.getElementById("btnRegresarAIndex").addEventListener("click", redirectToIndexPage);
+        </script>
 </body>
 </html>

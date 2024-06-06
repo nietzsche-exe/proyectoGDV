@@ -54,7 +54,7 @@
 		        
 		        <input class="Botones" id="acceder" type="submit" value="Iniciar Sesión">
 		        <a class="Botones" href="javascript:void(0)" onclick="javascript:document.login.opcion.value='registrarse';document.login.submit();">Registrarse</a>
-		    	
+		    	<a class="Botones" href="javascript:void(0)" onclick="javascript:document.login.opcion.value='default';document.login.submit();">Volver</a>
 		    </form>
 		</div>
 		

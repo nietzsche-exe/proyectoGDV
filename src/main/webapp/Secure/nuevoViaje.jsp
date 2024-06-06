@@ -16,6 +16,7 @@
 
 	HttpSession a = request.getSession();
 	Usuario usuario = (Usuario) a.getAttribute("usuario");
+	usuario=null;
 	Logger logger = LoggerFactory.getLogger("MiLogger");
 	EntityManager em = HibernateUtils.getEmf().createEntityManager();
 	try{
