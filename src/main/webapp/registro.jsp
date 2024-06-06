@@ -8,6 +8,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Registro</title>
+<link rel="icon" type="image/jpeg" href="Resources/logo_03.png">
 <link rel="stylesheet" href="Styles/Registrarse/cssRegistrarse.css"> 
 </head>
 <body>

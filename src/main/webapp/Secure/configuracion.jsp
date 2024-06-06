@@ -87,6 +87,7 @@
 %>
 <meta charset="UTF-8">
 <title>Configuracion</title>
+<link rel="icon" type="image/jpeg" href="../Resources/logo_03.png">
 </head>
 <body>
 <%

@@ -24,6 +24,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Inicio-Sesion</title>
+<link rel="icon" type="image/jpeg" href="Resources/logo_03.png">
 <link rel="stylesheet" href="Styles/Inicio_Sesion/cssInicioSesion.css">
 </head>
 <body>

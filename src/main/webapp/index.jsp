@@ -6,6 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Apsoca</title>
+<link rel="icon" type="image/jpeg" href="Resources/logo_03.png">
 <link rel="stylesheet" href="Styles/Pagina_Principal/cssIndex.css">
 </head>
 <body>

@@ -16,6 +16,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Verificar correo</title>
+<link rel="icon" type="image/jpeg" href="Resources/logo_03.png">
 	<style>
 		body {
 		    background-color: #f0f0f0;
