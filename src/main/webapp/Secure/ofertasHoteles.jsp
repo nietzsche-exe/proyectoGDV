@@ -31,10 +31,7 @@
 
     String latitudesJsonStr = latitudesJson.toString();
     String longitudesJsonStr = longitudesJson.toString();    
-/*
-util.apiKeyAmadeus1=0zyerw6GcNYgL2bFqMhnSqznQvA73f7I
-util.apiKeyAmadeus2=H7aFZhh8tAqe9WSC
-*/
+
 %>
 
 <%

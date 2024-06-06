@@ -1,6 +1,8 @@
 /*
 * Funcion JavaScript que recibe coordenadas de una ubicacion 
-* para conectar con la API de Google Maps y crear un Mapa.
+* para conectar con la API de Google Maps y crear un Mapa,
+* además crea un marcador en el mapa cono la latitud y longitud 
+* de cada hotel que se encontro y que ofrece una habitación 
 */
 
 async function iniciarMap() {
@@ -9,9 +11,8 @@ async function iniciarMap() {
 
     var primeraLatitud = Number(latitudes[0]);
     var primeraLongitud = Number(longitudes[0]);
-
+    
     const { Map } = await google.maps.importLibrary("maps");
-   //const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
 
     let coord = { lat: primeraLatitud, lng: primeraLongitud };
     let map = new Map(document.getElementById('map'), {
@@ -30,6 +31,10 @@ async function iniciarMap() {
     }
 }
 
+/*
+* Recoje la direccion del hotel que se obtuvo por geolocalizacion y la inserta en cada uno de los hoteles
+* asi como en el valor hidden del form del hotel
+*/
 function obtenerDireccion(latlng, index) {
     var geocoder = new google.maps.Geocoder();
     geocoder.geocode({ 'location': latlng }, function (results, status) {
