@@ -178,6 +178,17 @@ body {
 	display: inline-block;
 }
 
+/* Itinerarios */
+#itinerario_01 {
+	margin-left: 20%;
+	width: 15%;
+	display: inline-block;
+}
+#itinerario_02 {
+	margin-left: 20%;
+	width: 15%;
+	display: inline-block;
+}
 
 /* Soporte */
 #soporte_01 {
