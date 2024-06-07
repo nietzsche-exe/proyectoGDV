@@ -203,22 +203,16 @@
 		<div id="Contenedor_Texto4" class="Contenedor_Texto">
 		<h2 class="titulo">Gestión de Itinerarios</h2>
 			<p>
-				Nuestra plataforma ofrece a los usuarios una serie de herramientas poderosas para organizar y gestionar sus itinerarios de viaje de manera eficiente, desde la etapa inicial de planificación hasta la confirmación de reservas y más allá. Nos esforzamos por brindar una experiencia integral que simplifique todo el proceso de viaje y garantice una experiencia sin problemas desde el principio hasta el final.
+				Nuestra plataforma ofrece a los usuarios unas actividades que pueden realizar en el sitio que visiten por nuestra app.
 			</p>
-			<p>	
-				Desde el momento en que los usuarios comienzan a planificar su viaje, nuestra plataforma les ofrece herramientas intuitivas para explorar destinos, comparar opciones y tomar decisiones informadas. Con funciones de búsqueda avanzadas y filtros personalizables, pueden encontrar fácilmente vuelos, alojamientos, actividades y más que se adapten a sus preferencias y presupuesto.
+			<p>		
+				Una vez que los usuarios han seleccionado sus opciones de viaje preferidas, nuestra plataforma facilita la reserva y la confirmación de todas las reservas necesarias. 
 			</p>
 			<br>
-			<p>		
-				Una vez que los usuarios han seleccionado sus opciones de viaje preferidas, nuestra plataforma facilita la reserva y la confirmación de todas las reservas necesarias. Con unos pocos clics, los usuarios pueden asegurar vuelos, reservar alojamientos, alquilar vehículos y reservar actividades turísticas, todo desde la comodidad de nuestra plataforma en línea. Además, ofrecemos la opción de recibir confirmaciones de reserva por correo electrónico para que los usuarios tengan una referencia fácil de sus planes de viaje.
-			</p>
+			<img id="itinerario_01" alt="itinerario_01" src="Resources/itinerario_01.png"> <img id="itinerario_02" alt="itinerario_02" src="Resources/itinerario_02.png">
 			<br>
 			<p>		
-				Pero nuestra dedicación a una experiencia de viaje sin problemas no termina con la confirmación de las reservas. Nuestra plataforma también ofrece herramientas para que los usuarios gestionen sus itinerarios de viaje de manera efectiva antes y durante su viaje. Pueden realizar cambios en sus reservas, agregar nuevas actividades, acceder a información útil sobre sus destinos y más, todo desde una ubicación centralizada y fácil de usar.
-			</p>
-			<br>
-			<p>		
-				En resumen, nuestra plataforma está diseñada para proporcionar a los usuarios todas las herramientas y recursos que necesitan para organizar y gestionar sus itinerarios de viaje de manera eficiente y sin problemas. Desde la planificación inicial hasta la confirmación de reservas y la gestión de itinerarios, estamos aquí para garantizar que cada paso del viaje sea lo más fácil y conveniente posible para nuestros usuarios.
+				En resumen, nuestra plataforma permite a los usuarios realizar actividades en los destinos que visiten a través de nuestra aplicación. Después de que los usuarios seleccionan sus opciones de viaje preferidas, nuestra plataforma facilita la reserva y la confirmación de todas las reservas necesarias.
 			</p>
 		</div>
 <%
