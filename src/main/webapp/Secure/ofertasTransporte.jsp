@@ -1,4 +1,5 @@
 
+<%@page import="com.amadeus.exceptions.ClientException"%>
 <%@page import="modelo.Habitacion"%>
 <%@page import="modelo.HotelBD"%>
 <%@page import="modelo.Direccion"%>
@@ -41,7 +42,7 @@
 	request.getSession().setAttribute("hotel_Final",hotel);
 	request.getSession().setAttribute("habitacion_Final",habitacion);
 	
-	
+		
 	//Obtiene la sesión actual
 	HttpSession sessionA=request.getSession();
 	//Obtiene los datos del usuario almacenados en la sesión
@@ -66,6 +67,7 @@
                     .and("nonStop", true)
                     .and("currencyCode", "EUR")
                     .and("max", 10));
+	
 	%>
                    
 <!DOCTYPE html>
@@ -294,6 +296,7 @@ try{
 <%
 
 		}
+
 	}catch(ArrayIndexOutOfBoundsException e){
 %>
 

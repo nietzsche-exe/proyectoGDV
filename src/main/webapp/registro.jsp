@@ -55,7 +55,7 @@
 				
 				<label for="correoUsuario"><b>Numero de Teléfono</b></label><br>
 		        <label class="Texto_Ayuda">(Tiene que contener 9 dígitos)</label><br>
-		        <input class="Boton_Escribir" type="text" id="num_telefono" name="num_telefono" required><br><br>
+		        <input class="Boton_Escribir" type="text" id="num_telefono" name="num_telefono" required maxlength="9"><br><br>
 		        
 		        
 		        <label for="correoUsuario"><b>Correo Electrónico</b></label><br>

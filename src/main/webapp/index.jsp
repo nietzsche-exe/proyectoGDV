@@ -56,7 +56,7 @@
 
         // Función para descargar el PDF
         function redirectToManualUsuario() {
-            window.location.href = "Manual/Manual_de_uso_aplicacion_GDV.pdf"; // Cambia "Resources/tu_archivo.pdf" por la ruta de tu archivo PDF
+            window.location.href = "Manual/Manual_de_uso_aplicacion_GDV.pdf"; // Cambia en "Manual/tu_archivo.pdf" por la ruta de tu archivo PDF
         }
 
         // Agregar event listeners a los botones

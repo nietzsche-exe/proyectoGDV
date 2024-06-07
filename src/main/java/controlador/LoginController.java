@@ -121,7 +121,7 @@ public class LoginController extends HttpServlet {
 			
 			if (email.length()<=10) {
 				request.setAttribute("error", "Formato de correo no valido");
-				LOGGER.error("Error: Correo invalido es muy corto");
+				LOGGER.error("Error: Correo es muy corto");
 				request.getRequestDispatcher("registro.jsp").forward(request, response);
 			}
 			else {
@@ -156,7 +156,7 @@ public class LoginController extends HttpServlet {
 						request.getRequestDispatcher("registro.jsp").forward(request, response);
 					} else if (extensionCorreo.compareTo("@gmail.com") != 0) {
 						System.out.println(email.substring(email.length() - 10, email.length()));
-						request.setAttribute("error", "Correo no valido");
+						request.setAttribute("error", "El correo no es valido debe acabar en '@gmail.com'");
 						LOGGER.error("Error: Correo no valido");
 						request.getRequestDispatcher("registro.jsp").forward(request, response);
 					} else if (!(password.matches(".*[A-Z].*"))) {
@@ -618,20 +618,27 @@ public class LoginController extends HttpServlet {
 		        LOGGER.trace("Transaccion Iniciada");
 		        transaction1.begin();
 
-
 		        if (datosVuelo != null) {
 		            em1.persist(datosVuelo);
 		            LOGGER.debug("Datos del vuelo persistidos en la Base de datos");
 		        }
-
+		        
+		        if (hotelFinal != null) {
+		            HotelBD hotelExistente = em1.find(HotelBD.class, hotelFinal.getId_hotel());
+		            if (hotelExistente == null) {
+		            	em1.persist(direccionFinal);
+		            	LOGGER.debug("Direccion del Hotel se ha persistido en la base de datos");
+		                em1.persist(hotelFinal);
+		                LOGGER.debug("Hotel persistido en la Base de datos");
+		            }
+		        }
+		        
 		        if (habitacionFinal != null) {
 		        	Habitacion habitacionExistente=em1.find(Habitacion.class, habitacionFinal.getId_habitacion());
 		        	if(habitacionExistente == null) {
 		        		LOGGER.info(habitacionFinal.toString());
 		        		em1.persist(habitacionFinal);		        		
 		        		LOGGER.debug("Habitacion persistida en la Base de datos");
-		        	}else {
-		        		em1.merge(habitacionFinal);
 		        	}
 		        }
 
